@@ -12,4 +12,4 @@ jobs:
           python-version: "3.11"
       - run: pip install ruff mypy
       - run: ruff check .
-      - run: mypy bot/
+      - run: mypy .
