@@ -3,9 +3,10 @@ description: Product, architecture, and technical documentation for the Virtual 
 remote_theme: just-the-docs/just-the-docs
 plugins:
   - jekyll-remote-theme
+  - jekyll-include-cache
 
-url: "https://docs.virtual-ai-patient.github.io"
-baseurl: ""
+url: "https://virtual-ai-patient.github.io"
+baseurl: "/platform"
 
 color_scheme: light
 
