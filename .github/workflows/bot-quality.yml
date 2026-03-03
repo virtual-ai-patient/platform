@@ -25,7 +25,7 @@ jobs:
         run: uv pip install --system ruff && ruff check .
 
       - name: Type check (MyPy)
-        run: uv pip install --system mypy==1.14.1 && mypy .
+        run: uv pip install --system . mypy==1.14.1 && mypy .
 
       - name: Tests
         run: uv pip install --system pytest && pytest -q

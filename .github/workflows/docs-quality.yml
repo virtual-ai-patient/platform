@@ -12,6 +12,7 @@ jobs:
       - name: Markdown lint
         uses: DavidAnson/markdownlint-cli2-action@v19
         with:
+          config: docs/.markdownlint-cli2.jsonc
           globs: |
             docs/**/*.md
 

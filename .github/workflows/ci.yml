@@ -43,8 +43,7 @@ jobs:
             docs:
               - 'docs/**'
               - '.github/workflows/**'
-              - '.markdownlint.jsonc'
-              - '.markdownlint-cli2.jsonc'
+              - 'docs/.markdownlint-cli2.jsonc'
 
   backend:
     needs: changes

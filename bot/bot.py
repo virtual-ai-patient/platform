@@ -1,5 +1,5 @@
 import asyncio
-from typing import Any, Dict
+from typing import Any, Dict, cast
 
 import httpx
 from aiogram import Bot, Dispatcher
@@ -21,7 +21,7 @@ async def login_to_backend(settings: Settings) -> str:
             },
         )
         response.raise_for_status()
-        data: Dict[str, Any] = response.json()
+        data = cast(Dict[str, Any], response.json())
         token = data.get("access_token")
         if not isinstance(token, str):
             raise RuntimeError("Backend did not return access_token")
@@ -37,7 +37,7 @@ async def fetch_current_user(settings: Settings, token: str) -> Dict[str, Any]:
             headers={"Authorization": f"Bearer {token}"},
         )
         response.raise_for_status()
-        return response.json()
+        return cast(Dict[str, Any], response.json())
 
 
 async def main() -> None:
@@ -46,7 +46,7 @@ async def main() -> None:
     bot = Bot(token=settings.telegram_token)
     dp = Dispatcher()
 
-    @dp.message(CommandStart())
+    @dp.message(CommandStart())  # type: ignore[misc]
     async def handle_start(message: Message) -> None:  # noqa: D401
         """
         /start handler that checks backend auth.
