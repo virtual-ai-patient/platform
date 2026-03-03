@@ -46,7 +46,7 @@ async def main() -> None:
     bot = Bot(token=settings.telegram_token)
     dp = Dispatcher()
 
-    @dp.message(CommandStart())  # type: ignore[misc]
+    @dp.message(CommandStart())
     async def handle_start(message: Message) -> None:  # noqa: D401
         """
         /start handler that checks backend auth.
