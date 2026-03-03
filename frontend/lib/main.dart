@@ -42,8 +42,8 @@ class _LoginScreenState extends State<LoginScreen> {
       _error = null;
     });
 
-    final backendBaseUrl =
-        const String.fromEnvironment('BACKEND_BASE_URL', defaultValue: 'http://localhost:8000');
+    final backendBaseUrl = const String.fromEnvironment('BACKEND_BASE_URL',
+        defaultValue: 'http://localhost:8000');
 
     try {
       final response = await http.post(

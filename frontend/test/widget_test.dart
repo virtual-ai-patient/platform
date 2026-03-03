@@ -3,7 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:frontend/main.dart';
 
 void main() {
-  testWidgets('shows login form and error on failed login', (WidgetTester tester) async {
+  testWidgets('shows login form and error on failed login',
+      (WidgetTester tester) async {
     // Build app
     await tester.pumpWidget(const MyApp());
 

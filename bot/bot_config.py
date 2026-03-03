@@ -19,4 +19,3 @@ class Settings(BaseModel):
             backend_username=os.getenv("BACKEND_USERNAME", "admin"),
             backend_password=os.getenv("BACKEND_PASSWORD", "password"),
         )
-

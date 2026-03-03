@@ -10,7 +10,9 @@ from bot_config import Settings
 
 
 async def login_to_backend(settings: Settings) -> str:
-    async with httpx.AsyncClient(base_url=settings.backend_base_url, timeout=10.0) as client:
+    async with httpx.AsyncClient(
+        base_url=settings.backend_base_url, timeout=10.0
+    ) as client:
         response = await client.post(
             "/login",
             json={
@@ -27,7 +29,9 @@ async def login_to_backend(settings: Settings) -> str:
 
 
 async def fetch_current_user(settings: Settings, token: str) -> Dict[str, Any]:
-    async with httpx.AsyncClient(base_url=settings.backend_base_url, timeout=10.0) as client:
+    async with httpx.AsyncClient(
+        base_url=settings.backend_base_url, timeout=10.0
+    ) as client:
         response = await client.get(
             "/me",
             headers={"Authorization": f"Bearer {token}"},
@@ -64,4 +68,3 @@ async def main() -> None:
 
 if __name__ == "__main__":
     asyncio.run(main())
-
