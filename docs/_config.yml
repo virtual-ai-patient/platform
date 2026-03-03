@@ -1,6 +1,8 @@
 title: Virtual AI Patient Docs
 description: Product, architecture, and technical documentation for the Virtual AI Patient project.
-theme: just-the-docs
+remote_theme: just-the-docs/just-the-docs
+plugins:
+  - jekyll-remote-theme
 
 url: https://<your-github-username>.github.io
 baseurl: /<your-repo-name>
