@@ -1,0 +1,90 @@
+name: Monorepo CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+permissions:
+  contents: read
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+      bot: ${{ steps.filter.outputs.bot }}
+      docs: ${{ steps.filter.outputs.docs }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Detect changed areas
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            backend:
+              - 'apps/backend/**'
+              - '.github/workflows/**'
+            bot:
+              - 'apps/bot/**'
+              - '.github/workflows/**'
+            docs:
+              - 'docs/**'
+              - '.github/workflows/**'
+              - '.markdownlint.jsonc'
+
+  backend-lint-typecheck:
+    needs: changes
+    if: needs.changes.outputs.backend == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14.0-alpha.4"
+          allow-prereleases: true
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Install dependencies
+        working-directory: apps/backend
+        run: |
+          uv sync --group dev
+
+      - name: Ruff
+        working-directory: apps/backend
+        run: |
+          uv run ruff check .
+
+      - name: MyPy
+        working-directory: apps/backend
+        run: |
+          uv run mypy .
+
+  docs-lint:
+    needs: changes
+    if: needs.changes.outputs.docs == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Markdown lint
+        uses: DavidAnson/markdownlint-cli2-action@v19
+        with:
+          globs: |
+            docs/**/*.md
+
+  bot-smoke:
+    needs: changes
+    if: needs.changes.outputs.bot == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Smoke check bot folder exists
+        run: |
+          test -f apps/bot/Dockerfile
+          test -f apps/bot/pyproject.toml
+
