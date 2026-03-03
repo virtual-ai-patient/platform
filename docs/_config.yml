@@ -1,0 +1,14 @@
+title: Virtual AI Patient Docs
+description: Product, architecture, and technical documentation for the Virtual AI Patient project.
+theme: just-the-docs
+
+url: https://<your-github-username>.github.io
+baseurl: /<your-repo-name>
+
+color_scheme: light
+
+nav_enabled: true
+aux_links:
+  "GitHub repository":
+    - "https://github.com/<your-github-username>/<your-repo-name>"
+

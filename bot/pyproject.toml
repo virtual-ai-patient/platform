@@ -1,0 +1,19 @@
+[project]
+name = "virtual-ai-patient-bot"
+version = "0.1.0"
+description = "Telegram bot for Virtual AI Patient"
+readme = "../README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "aiogram>=3.0.0",
+    "httpx>=0.27.0",
+    "pydantic>=2",
+]
+
+[tool.ruff]
+line-length = 88
+
+[tool.mypy]
+python_version = "3.14"
+strict = true
+

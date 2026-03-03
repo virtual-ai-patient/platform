@@ -1,0 +1,38 @@
+name: Frontend Quality
+
+on:
+  workflow_call:
+
+jobs:
+  frontend-quality:
+    runs-on: ubuntu-latest
+    if: ${{ hashFiles('frontend/pubspec.yaml') != '' }}
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.41.3"
+
+      - name: Flutter pub get
+        run: flutter pub get
+
+      - name: Format (check only)
+        run: flutter format --set-exit-if-changed .
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Tests
+        run: flutter test
+
+      - name: Build web
+        run: flutter build web --release
+
+      - name: Build Docker image
+        run: docker build -t virtual-ai-patient-frontend:ci .
+

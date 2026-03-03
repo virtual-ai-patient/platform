@@ -15,6 +15,7 @@ jobs:
     outputs:
       backend: ${{ steps.filter.outputs.backend }}
       bot: ${{ steps.filter.outputs.bot }}
+      frontend: ${{ steps.filter.outputs.frontend }}
       docs: ${{ steps.filter.outputs.docs }}
     steps:
       - uses: actions/checkout@v4
@@ -24,67 +25,36 @@ jobs:
         with:
           filters: |
             backend:
-              - 'apps/backend/**'
+              - 'backend/**'
               - '.github/workflows/**'
             bot:
-              - 'apps/bot/**'
+              - 'bot/**'
+              - '.github/workflows/**'
+            frontend:
+              - 'frontend/**'
               - '.github/workflows/**'
             docs:
               - 'docs/**'
               - '.github/workflows/**'
               - '.markdownlint.jsonc'
 
-  backend-lint-typecheck:
+  backend:
     needs: changes
     if: needs.changes.outputs.backend == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+    uses: ./.github/workflows/backend-quality.yml
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.14.0-alpha.4"
-          allow-prereleases: true
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v3
-
-      - name: Install dependencies
-        working-directory: apps/backend
-        run: |
-          uv sync --group dev
-
-      - name: Ruff
-        working-directory: apps/backend
-        run: |
-          uv run ruff check .
-
-      - name: MyPy
-        working-directory: apps/backend
-        run: |
-          uv run mypy .
-
-  docs-lint:
-    needs: changes
-    if: needs.changes.outputs.docs == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Markdown lint
-        uses: DavidAnson/markdownlint-cli2-action@v19
-        with:
-          globs: |
-            docs/**/*.md
-
-  bot-smoke:
+  bot:
     needs: changes
     if: needs.changes.outputs.bot == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Smoke check bot folder exists
-        run: |
-          test -f apps/bot/Dockerfile
-          test -f apps/bot/pyproject.toml
+    uses: ./.github/workflows/bot-quality.yml
+
+  frontend:
+    needs: changes
+    if: needs.changes.outputs.frontend == 'true'
+    uses: ./.github/workflows/frontend-quality.yml
+
+  docs:
+    needs: changes
+    if: needs.changes.outputs.docs == 'true'
+    uses: ./.github/workflows/docs-quality.yml
 

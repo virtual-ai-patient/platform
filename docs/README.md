@@ -1,6 +1,6 @@
 # Virtual AI Patient — Documentation
 
-This folder contains **product, market, and specification documents** for the *Virtual AI Patient* project. Source code lives in `apps/`.
+This folder contains **product, market, and specification documents** for the *Virtual AI Patient* project. Source code lives in `backend/`, `bot/`, and `frontend/`.
 
 ## What we are building
 Medical students and early-career physicians often lack a safe way to practice **clinical communication and diagnostic reasoning** before real patient encounters. Typical learning cases are static and do not provide experience of a real dialogue.

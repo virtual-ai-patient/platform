@@ -1,7 +1,0 @@
-{
-  "default": true,
-  "MD013": false, // line length
-  "MD033": false, // inline HTML allowed (e.g., badges if added later)
-  "MD041": false  // first line heading (some docs start with front matter later)
-}
-
