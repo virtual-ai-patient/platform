@@ -5,6 +5,13 @@ on:
     branches: [main, master]
   pull_request:
     branches: [main, master]
+  workflow_dispatch:
+    inputs:
+      run_all:
+        description: "Run all component workflows regardless of changed files"
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: read
@@ -40,21 +47,21 @@ jobs:
 
   backend:
     needs: changes
-    if: needs.changes.outputs.backend == 'true'
+    if: needs.changes.outputs.backend == 'true' || (github.event_name == 'workflow_dispatch' && inputs.run_all)
     uses: ./.github/workflows/backend-quality.yml
 
   bot:
     needs: changes
-    if: needs.changes.outputs.bot == 'true'
+    if: needs.changes.outputs.bot == 'true' || (github.event_name == 'workflow_dispatch' && inputs.run_all)
     uses: ./.github/workflows/bot-quality.yml
 
   frontend:
     needs: changes
-    if: needs.changes.outputs.frontend == 'true'
+    if: needs.changes.outputs.frontend == 'true' || (github.event_name == 'workflow_dispatch' && inputs.run_all)
     uses: ./.github/workflows/frontend-quality.yml
 
   docs:
     needs: changes
-    if: needs.changes.outputs.docs == 'true'
+    if: needs.changes.outputs.docs == 'true' || (github.event_name == 'workflow_dispatch' && inputs.run_all)
     uses: ./.github/workflows/docs-quality.yml
 

@@ -6,7 +6,6 @@ on:
 jobs:
   frontend-quality:
     runs-on: ubuntu-latest
-    if: ${{ hashFiles('frontend/pubspec.yaml') != '' }}
     defaults:
       run:
         working-directory: frontend
