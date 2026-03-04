@@ -2,7 +2,7 @@
 
 ## 1. Product summary
 Virtual AI Patient is a training platform where a learner (medical student / junior doctor) completes a full clinical workflow in a safe environment:
-1) history taking and communication, 2) diagnostic reasoning, 3) ordering investigations, 4) diagnosis, 5) treatment plan, 6) debriefing with feedback against a gold standard.
+1) history taking and communication, 2) diagnostic reasoning, 3) ordering medical tests, 4) diagnosis, 5) treatment plan, 6) debriefing with feedback against a gold standard.
 
 The platform provides **dynamic, realistic patient dialogue** and **clinically plausible data** (symptoms, timeline, risk factors, exam findings, and test results).
 
@@ -18,10 +18,11 @@ The platform provides **dynamic, realistic patient dialogue** and **clinically p
 - Creates and curates clinical cases and gold standards.
 - Reviews analytics (common mistakes, learning gaps).
 - Adjusts rubrics and acceptable-answer sets.
+- Feedback on results.
 
-### 2.3 Platform partner / integrator
-- Embeds the training module into an existing physician platform via APIs and SSO.
-- Retrieves learner progress and outcomes.
+### 2.3 Technical administrator
+- Collect statistics on tests amount to see the bottleneck .
+- Correct bottlenecks
 
 ## 3. Core product requirements (functional)
 ### 3.1 Case library
@@ -29,6 +30,7 @@ The platform provides **dynamic, realistic patient dialogue** and **clinically p
 - Each case has:
   - patient persona (age/sex/context)
   - chief complaint + symptoms timeline
+  - history of illness
   - structured “truth” (ground truth: diagnosis + key features)
   - expected diagnostics (must-have vs optional)
   - gold standard interpretation
@@ -42,21 +44,18 @@ The platform provides **dynamic, realistic patient dialogue** and **clinically p
   - progressive revelation (information is not dumped; it appears when asked)
 - Tone styles: neutral, anxious, irritated, distressed, etc.
 - Guardrails:
-  - no real-world medical advice disclaimers to user in training context (content is for simulated training),
+  - no real-world medical advice disclaimers to user in training context (content is for simulated training, LLM doesn't leave from the context of training),
   - avoid generating harmful instructions outside the case scenario.
 
-### 3.3 Investigation ordering and results
-- The learner can order labs/instrumental studies from a controlled catalog.
+### 3.3 Medical tests ordering and results
+- The learner can order labs/instrumental studies from a optional catalog, supported by human.
 - Results should be:
   - plausible for the clinical picture and timeline,
-  - internally consistent (e.g., electrolytes ↔ ECG changes),
   - optionally include uncertainty / borderline results.
-- If a test is not defined in the original case, the platform generates a plausible result consistent with the case’s ground truth and severity.
 
 ### 3.4 Decision capture (learner outputs)
 The system must allow structured submission of:
-- key history elements captured (optional structured checklist)
-- ordered investigations
+- ordered medical tests
 - differential diagnosis (ranked)
 - final diagnosis (ICD/SNOMED mapping optional for later)
 - treatment plan (medications, dose, non-pharmacological, referral, follow-up)
@@ -66,15 +65,15 @@ Evaluation compares learner decisions to the case gold standard:
 - Diagnosis correctness and reasoning quality
 - Diagnostic plan appropriateness (missing critical tests, ordering unnecessary tests)
 - Treatment plan safety and guideline alignment (at least for the supported conditions)
-- Communication quality (optional v2): empathy, clarity, structure, red flags
+- Communication quality (optional v2): empathy, clarity, structure
 
 Debriefing must include:
 - what was correct,
 - what was missing and why it matters,
 - what was unsafe/incorrect and potential consequences,
-- reference solution (history highlights, key findings, recommended tests, diagnosis, treatment).
+- reference solution (key findings, recommended tests, diagnosis, treatment).
 
-### 3.6 Case authoring & ingestion pipeline
+### 3.6 Case authoring & adding
 To reach 50+ cases efficiently, the platform needs:
 - a standardized case schema,
 - validation (required fields, consistency checks),
@@ -82,35 +81,42 @@ To reach 50+ cases efficiently, the platform needs:
 - versioning and status (draft → reviewed → published).
 
 ### 3.7 Integration
-- SSO/OAuth integration with partner physician platform.
+- Authorization and authentication integration with partner platform.
 - APIs for:
   - launching a case
   - retrieving progress and scores
   - exporting learning analytics
 
 ## 4. Non-functional requirements (high level)
-- **Safety**: training-only, with strong AI guardrails and safe completion.
-- **Reliability**: stable case progression and reproducible scoring.
-- **Latency**: conversational response times suitable for chat.
-- **Privacy**: no real patient personal data in cases; strict handling of user data.
-- **Scalability**: support cohorts (classes) and partner platform spikes.
-- **Observability**: logs, traces, evaluation artifacts for debugging and auditing.
+- **Performance**: virtual patient responses ≤ 3–5s; test results ≤ 2s; evaluation/debrief ≤ 5s; API p95 ≤ 500ms.
+- **Scalability**: support concurrent cohorts (≥500 active sessions initially) and partner platform traffic spikes; horizontal scaling of API and AI layer.
+- **Availability**: ≥99.5% uptime (MVP); graceful degradation if AI provider latency/failure occurs.
+- **Reliability**: no loss of session state, submissions, scores, or analytics; retry mechanisms for external AI calls.
+- **Security**: HTTPS (TLS 1.2+); RBAC (learner/educator/admin); encrypted data at rest; strict session isolation.
+- **Privacy**: no real patient personal data in cases; minimal PII storage; strict handling and deletion/anonymization of user data.
+- **AI Safety & Guardrails**: responses constrained to simulation context; no real-world medical advice outside cases; monitoring of unsafe outputs.
+- **Consistency & Determinism**: deterministic scoring independent of LLM randomness; prompt and model versioning.
+- **Extensibility**: pluggable AI provider adapter; ability to add new cases, tests, and scoring rubrics without core redesign.
+- **Observability**: structured logs, traces, AI latency metrics, evaluation artifacts for debugging and auditing.
+- **Analytics**: full trace of learner actions (questions, tests, diagnoses, plans); exportable performance analytics.
+- **Portability & Deployment**: containerized, environment-based configuration (dev/stage/prod), CI/CD-ready.
 
 ## 5. Platform concept (modules)
-- **Frontend (Flutter)**: chat UI, investigation ordering UI, submission forms, debrief view.
+- **Telegram-bot**: user stories flow, chat, medical tests ordering, submission forms, debrief view. 
+- **Frontend (Flutter)**: chat UI, medical tests ordering UI, submission forms, debrief view.
 - **Backend API (FastAPI)**:
-  - authentication/SSO
+  - authentication/authorization
   - case session state
-  - investigation ordering and result generation
+  - medical tests ordering and result generation
   - evaluation + scoring
   - analytics export
-- **AI Orchestrator** (backend module):
+- **Database Interface**:
+  - CRUD-operations
+  - Entities persistence  
+- **AI Interface** (backend module):
   - prompt templates + tool calls
   - policy/guardrails layer
   - OpenAI-compatible provider adapter (token-based)
-- **Case Content Store**:
-  - curated cases (structured data)
-  - attachments (optional imaging PDFs, ECG images, etc., in a later phase)
 
 ## 6. Scope boundaries (explicit)
 - Not a real medical device; not for real patient advice.
