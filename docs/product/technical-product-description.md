@@ -87,21 +87,7 @@ To reach 50+ cases efficiently, the platform needs:
   - retrieving progress and scores
   - exporting learning analytics
 
-## 4. Non-functional requirements (high level)
-- **Performance**: virtual patient responses ≤ 3–5s; test results ≤ 2s; evaluation/debrief ≤ 5s; API p95 ≤ 500ms.
-- **Scalability**: support concurrent cohorts (≥500 active sessions initially) and partner platform traffic spikes; horizontal scaling of API and AI layer.
-- **Availability**: ≥99.5% uptime (MVP); graceful degradation if AI provider latency/failure occurs.
-- **Reliability**: no loss of session state, submissions, scores, or analytics; retry mechanisms for external AI calls.
-- **Security**: HTTPS (TLS 1.2+); RBAC (learner/educator/admin); encrypted data at rest; strict session isolation.
-- **Privacy**: no real patient personal data in cases; minimal PII storage; strict handling and deletion/anonymization of user data.
-- **AI Safety & Guardrails**: responses constrained to simulation context; no real-world medical advice outside cases; monitoring of unsafe outputs.
-- **Consistency & Determinism**: deterministic scoring independent of LLM randomness; prompt and model versioning.
-- **Extensibility**: pluggable AI provider adapter; ability to add new cases, tests, and scoring rubrics without core redesign.
-- **Observability**: structured logs, traces, AI latency metrics, evaluation artifacts for debugging and auditing.
-- **Analytics**: full trace of learner actions (questions, tests, diagnoses, plans); exportable performance analytics.
-- **Portability & Deployment**: containerized, environment-based configuration (dev/stage/prod), CI/CD-ready.
-
-## 5. Platform concept (modules)
+## 4. Platform concept (modules)
 - **Telegram-bot**: user stories flow, chat, medical tests ordering, submission forms, debrief view. 
 - **Frontend (Flutter)**: chat UI, medical tests ordering UI, submission forms, debrief view.
 - **Backend API (FastAPI)**:
@@ -118,7 +104,7 @@ To reach 50+ cases efficiently, the platform needs:
   - policy/guardrails layer
   - OpenAI-compatible provider adapter (token-based)
 
-## 6. Scope boundaries (explicit)
+## 5. Scope boundaries (explicit)
 - Not a real medical device; not for real patient advice.
 - Initial versions focus on a limited set of conditions with high educational value and well-defined gold standards.
 - Results are *clinically plausible simulations*, not patient-specific evidence.
