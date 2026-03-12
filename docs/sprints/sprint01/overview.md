@@ -1,4 +1,4 @@
-# Participants: Speaker 1 (Mentor/University Representative), Speaker 2 (PM), Speaker 3 (Team Member).
+### Participants: Speaker 1 (Mentor/University Representative), Speaker 2 (PM), Speaker 3 (Team Member).
 
 # Main Topic: Discussion of next steps, customer interaction, legal aspects, and development strategy.
 
@@ -10,12 +10,12 @@
 - Conclusion: Using an LLM greatly simplifies development, as there's no need to manually script all dialogue variations and symptoms.
 
 ## 2. Customer Interaction & Product Hypotheses
-- Current stage: The customer (Innopolis) has asked the team to independently formalize the requirements and propose product hypotheses that would be interesting to the market.
+Current stage: The customer (Innopolis) has asked the team to independently formalize the requirements and propose product hypotheses that would be interesting to the market.
 
-- Dual audience: The team identified two key stakeholders:
+Dual audience: The team identified two key stakeholders:
 
-The Customer Company (Innopolis): The source of real medical data and cases.
-The University / Mentor: Evaluates the process and the application of the learned methodology.
+- The Customer Company (Innopolis): The source of real medical data and cases.
+- The University / Mentor: Evaluates the process and the application of the learned methodology.
 
 ## 3. Legal Risks and Document Signing
 - Main risk: Signing legal documents directly with the customer could be dangerous. The contract might contain unfulfillable obligations for which the customer could hold the students personally liable.
