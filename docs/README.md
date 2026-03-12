@@ -27,6 +27,9 @@ We are building a chat-based training platform with **virtual AI patients** that
 - **Technical product description**: `product/technical-product-description.md`
 - **Market assessment**: `market/market-assessment.md`
 - **Technical specification (incl. quality metrics)**: `spec/technical-specification.md`
+- **Quality Attributes** : `qa/qa-rev{N}.md`
+- **Sprint documents**: `sprints/sprint{N}/`
 - **System architecture (supporting)**: `architecture/system-architecture.md`
 - **Clinical case data format (supporting)**: `data/clinical-case-format.md`
 - **Integration notes (supporting)**: `integrations/integration-overview.md`
+- **Configuration Management rules**: `cm/configuration-management.md`
