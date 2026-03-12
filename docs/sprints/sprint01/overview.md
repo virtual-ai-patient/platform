@@ -1,34 +1,42 @@
-# Meeting Summary
-## Участники: Спикер 1 (ментор/представитель университета), Спикер 2 (PM), Спикер 3 (команда).
+# Participants: Speaker 1 (Mentor/University Representative), Speaker 2 (PM), Speaker 3 (Team Member).
 
-## Основная цель встречи: Обсуждение дальнейших шагов по проекту, взаимодействия с заказчиком (Иннополис) и стратегии разработки.
+# Main Topic: Discussion of next steps, customer interaction, legal aspects, and development strategy.
 
-1. Техническая реализация: Роль LLM
-- Уточнение концепции: Команда обсуждает, как именно будет работать симуляция пациента. Решено, что LLM будет генерировать ответы пациента, основываясь на контексте (симптомы, возраст, история болезни), который задается выбранным клиническим кейсом.
-- Процесс: Студент (доктор) видит контекст, общается с LLM, заказывает анализы (система выдает предопределенные для этого кейса результаты), а в конце заполняет карточку, чтобы сверить свой диагноз с правильным.
-- Вывод: Использование LLM значительно упрощает разработку, так как не нужно вручную прописывать все варианты диалогов и симптомов.
+## 1. Technical Implementation: The Role of LLM
+- Concept clarification: The team discussed how the patient simulation will work. The LLM will generate patient responses based on context (symptoms, age, medical history) provided by the selected clinical case.
 
-2. Взаимодействие с заказчиком и продуктовые гипотезы
-Текущий этап: Заказчик (Иннополис) просит команду самостоятельно формализовать требования и предложить продуктовые гипотезы, которые будут интересны рынку.
+- Workflow: The student (doctor) sees the context, talks to the LLM, orders tests (the system returns predefined results for that case), and finally fills out a card to compare their diagnosis with the correct one.
 
-Двойная аудитория: Команда определила двух ключевых стейкхолдеров (customer):
-- Компания-заказчик (Иннополис): Источник реальных данных и кейсов.
-- Университет / Ментор: Оценивает процесс и применение методологии.
+- Conclusion: Using an LLM greatly simplifies development, as there's no need to manually script all dialogue variations and symptoms.
 
-3. Юридические риски и подписание документов
-- Главный риск: Прямое подписание юридических документов с заказчиком может быть опасным. В договоре могут оказаться невыполнимые обязательства, за которые заказчик сможет привлечь к ответственности именно студентов.
-- Решение и рекомендация: Подписывать документы следует только с университетом. Университет, в свою очередь, должен подписать соглашение с заказчиком. Это защитит команду и создаст понятную зону ответственности.
+## 2. Customer Interaction & Product Hypotheses
+- Current stage: The customer (Innopolis) has asked the team to independently formalize the requirements and propose product hypotheses that would be interesting to the market.
 
-4. Критерии оценки и роли
-- Ключевой критерий: Основная оценка за проект будет исходить от университета, а не от заказчика.
-- Важность процесса: Университету важно видеть, что команда применяет изученную методологию, использует инструменты, работает с процессами и может аргументировать свои решения.
-- Отношения с заказчиком: Отношения с реальным заказчиком рассматриваются как "тренажер". Его мнение важно, но не является единственным и решающим для оценки. В случае конфликта или отсутствия информации от заказчика, команда должна уметь объяснить свои действия университету.
+- Dual audience: The team identified two key stakeholders:
 
-5. Стратегия разработки
-- Отсутствие блокеров: Команда может и должна начинать разработку, не дожидаясь официального подписания документов или получения реальных медицинских кейсов от заказчика.
-- Синтетические данные: Для прототипа можно использовать синтетические кейсы, сгенерированные с помощью ChatGPT. Это позволит отладить систему и продемонстрировать рабочую концепцию.
-- План действий: Формализовать требования, предложить продуктовые гипотезы и параллельно начинать писать код на основе синтетических данных.
+The Customer Company (Innopolis): The source of real medical data and cases.
+The University / Mentor: Evaluates the process and the application of the learned methodology.
 
-6. Организационные моменты
-- Встречи с ментором: Необходимо проводить встречи с ментором еженедельно.
-- Эскалация проблем: Если команда сталкивается с проблемами, которые не может решить (например, юридические), ментор готов эскалировать их руководству программы.
+## 3. Legal Risks and Document Signing
+- Main risk: Signing legal documents directly with the customer could be dangerous. The contract might contain unfulfillable obligations for which the customer could hold the students personally liable.
+
+- Solution and recommendation: Documents should be signed only with the university. The university would then sign a separate agreement with the customer. This protects the team and creates a clear chain of responsibility.
+
+## 4. Evaluation Criteria and Roles
+- Key criterion: The final grade for the project will come primarily from the university, not the external customer.
+
+- Process importance: The university needs to see that the team is applying the learned methodology, using proper tools, working with processes, and can argue their decisions.
+
+- Customer relationship: The relationship with the real customer is seen as a "training ground." Their opinion is important but is not the sole or deciding factor for the final grade. In case of conflict or lack of information, the team must be able to explain their actions to the university.
+
+## 5. Development Strategy
+- No blockers: The team can and should start development without waiting for official documents to be signed or real medical cases to be provided by the customer.
+
+- Synthetic data: For the prototype, the team can use synthetic cases generated with ChatGPT. This allows them to debug the system and demonstrate a working concept.
+
+- Action plan: Formalize requirements, propose product hypotheses, and simultaneously start writing code based on synthetic data.
+
+## 6. Organizational Matters
+- Mentor meetings: Regular weekly meetings with the mentor are required for reporting.
+
+- Problem escalation: If the team encounters unsolvable problems (e.g., legal issues), the mentor is ready to escalate them to the program leadership.
