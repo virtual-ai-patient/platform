@@ -1,6 +1,5 @@
 # Meeting Overview: Non-Functional Requirements Deep Dive
 
-**Date:** March 12, 2026
 **Topic:** Clarifying and refining key Non-Functional Requirements (Performance, Scalability, Availability, Security)
 
 ---
