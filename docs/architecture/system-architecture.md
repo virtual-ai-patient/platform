@@ -23,8 +23,8 @@
 ```mermaid
 flowchart TB
     subgraph Clients
-        TG[Telegram bot<br/>(primary client)]
-        WEB[Web frontend<br/>(secondary client)]
+        TG["Telegram bot\n(primary client)"]
+        WEB["Web frontend\n(secondary client)"]
     end
 
     TG --> NGINX[nginx]
@@ -34,10 +34,10 @@ flowchart TB
     subgraph Dependencies layer
         subgraph DBLayer[Database interaction interface]
             MOCKDB[Mock database]
-            PG[(PostgreSQL<br/>(internal dependency))]
+            PG[("PostgreSQL\n(internal dependency)")]
         end
 
-        subgraph LLMLayer[LLM interface<br/>(external dependency)]
+        subgraph LLMLayer["LLM interface\n(external dependency)"]
             LLM[LLM]
             MOCKLLM[Mock LLM]
         end
