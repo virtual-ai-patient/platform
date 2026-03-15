@@ -32,6 +32,7 @@ For our project, tactical planning operates on a **weekly cycle** centered aroun
 ## 3. The Weekly Iteration Loop
 
 ```
+text
 ┌─────────────────────────── ──────────────────────────────┐
 │                                                          │
 │    [Thursday]                                            │
@@ -233,8 +234,7 @@ Each person answers:
 | **Sprint completion rate** | ≥80% of planned tasks completed | Count closed vs planned |
 | **PR review time** | <24 hours | GitHub Insights |
 | **Blockers resolved** | <2 days | Time from `blocked` to resolved |
-| **Review action items** | ≥1 implemented per week | Track in next  |
-
+| **Review action items** | ≥1 implemented per week | Track in next |
 ---
 
 ## 8. Summary: Our Tactical Planning Rhythm
