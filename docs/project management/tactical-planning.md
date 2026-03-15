@@ -111,7 +111,7 @@ For our project, tactical planning operates on a **weekly cycle** centered aroun
 | **Check against goals** | Did we achieve what we planned Monday? |
 | **Document completed** | Ensure all done Issues are closed |
 
-**Output:** 
+**Output:**
 - Notes saved to `/docs/sprints/`
 - 1-2 action items for next week
 
