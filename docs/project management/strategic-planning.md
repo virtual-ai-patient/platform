@@ -21,7 +21,7 @@ For our project, strategic planning covers **5 months** (March–July 2026) and 
 
 ### Timeline at a Glance
 
-```
+```text
 March      April      May        June       July
 └────┬─────┴────┬─────┴────┬─────┴────┬─────┴────┬
      Foundation     Core MVP      Polish      Testing    Delivery
@@ -50,12 +50,12 @@ March      April      May        June       July
 
 ### Month 1: March — Foundation & Infrastructure
 
-#### Goals
+#### March Goals
 - Establish development infrastructure
 - Create working proof-of-concept
 - Set up team processes
 
-#### Key Deliverables
+#### March Key Deliverables
 
 | Deliverable | Description | Owner | Epic |
 |:---|:---|:---|:---|
@@ -67,7 +67,7 @@ March      April      May        June       July
 | **Database Schema** | Initial design for cases and users | Ilnar | EPIC-13 |
 | **Team Processes** | Tactical planning defined and adopted | Alina | — |
 
-#### Success Criteria by End of Month
+#### Success Criteria by End of March
 - [ ] New developer can clone repo and run entire stack with one command
 - [ ] Basic chat works (user types, AI responds with synthetic data)
 - [ ] All documentation in place
@@ -78,12 +78,12 @@ March      April      May        June       July
 
 ### Month 2: April — Core MVP Features
 
-#### Goals
+#### April Goals
 - User can log in and access cases
 - Full conversational patient with realistic behavior
 - Case library functional
 
-#### Key Deliverables
+#### April Key Deliverables
 
 | Deliverable | Description | Owner | Epic |
 |:---|:---|:---|:---|
@@ -95,7 +95,7 @@ March      April      May        June       July
 | **API Layer** | FastAPI endpoints for all core functions | Ilnar | EPIC-12 |
 | **Login UI** | Flutter screens for auth | Timur | EPIC-08 |
 
-#### Success Criteria by End of Month
+#### Success Criteria by End of April
 - [ ] User can register, log in, and log out
 - [ ] User can browse available cases
 - [ ] User can start a case and have full conversation with AI patient
@@ -106,12 +106,12 @@ March      April      May        June       July
 
 ### Month 3: May — Medical Workflow
 
-#### Goals
+#### May Goals
 - Add medical tests ordering
 - Capture diagnosis and treatment decisions
 - Polish frontend for realistic workflow
 
-#### Key Deliverables
+#### May Key Deliverables
 
 | Deliverable | Description | Owner | Epic |
 |:---|:---|:---|:---|
@@ -123,7 +123,7 @@ March      April      May        June       July
 | **Frontend Polish** | Improved UI/UX for main workflow | Timur | EPIC-08 |
 | **Case Authoring (Basic)** | Educators can create simple cases | Ilnar + Timur | EPIC-11 |
 
-#### Success Criteria by End of Month
+#### Success Criteria by End of May
 - [ ] User can order tests during conversation
 - [ ] Test results appear and are plausible for the case
 - [ ] User can submit differential diagnosis and treatment plan
@@ -134,12 +134,12 @@ March      April      May        June       July
 
 ### Month 4: June — Evaluation & Hardening
 
-#### Goals
+#### June Goals
 - Implement automated scoring and debriefing
 - Comprehensive testing
 - Bug fixing and performance optimization
 
-#### Key Deliverables
+#### June Key Deliverables
 
 | Deliverable | Description | Owner | Epic |
 |:---|:---|:---|:---|
@@ -151,7 +151,7 @@ March      April      May        June       July
 | **Integration Tests** | Full test suite for all endpoints | Karim | QA-REL |
 | **Bug Fixing** | Address all critical and high-priority bugs | All | — |
 
-#### Success Criteria by End of Month
+#### Success Criteria by End of June
 - [ ] After completing case, user receives detailed debrief
 - [ ] Scoring is consistent and matches gold standard
 - [ ] Educator can create, preview, and publish cases
@@ -163,12 +163,12 @@ March      April      May        June       July
 
 ### Month 5: July — Testing & Delivery
 
-#### Goals
+#### July Goals
 - Pilot with real users
 - Final polish
 - Prepare for final presentation
 
-#### Key Deliverables
+#### July Key Deliverables
 
 | Deliverable | Description | Owner | Epic |
 |:---|:---|:---|:---|
@@ -180,7 +180,7 @@ March      April      May        June       July
 | **Final Presentation** | Demo script, slides, live demo | Alina + All | — |
 | **Handover** | Repository clean, docs complete, code frozen | All | — |
 
-#### Success Criteria by End of Month
+#### Success Criteria by End of July
 - [ ] Pilot users can complete cases independently
 - [ ] Feedback collected and analyzed
 - [ ] All documentation complete and accurate
