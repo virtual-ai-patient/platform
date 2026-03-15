@@ -1,3 +1,10 @@
+---
+layout: default
+title: Sprint 02 Overview
+section: sprints
+subsection: sprint02
+---
+
 ### Participants: Speaker 1 (Mentor), Speaker 2 (Team Member/Backend), Speaker 3 (Team Member/PM)
 
 # 1. Progress Update & Team Roles

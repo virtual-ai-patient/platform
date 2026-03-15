@@ -1,3 +1,10 @@
+---
+layout: default
+title: Sprint 01 Action Points
+section: sprints
+subsection: sprint01
+---
+
 # Action Points
 1. Product: The team needs to prepare formalized requirements and product hypotheses for the client (Innopolis).
 2. Development: Begin developing a prototype using synthetic cases from ChatGPT, without waiting for input from the client.

@@ -1,3 +1,10 @@
+---
+layout: default
+title: Sprint 01 Overview
+section: sprints
+subsection: sprint01
+---
+
 ### Participants: Speaker 1 (Mentor/University Representative), Speaker 2 (PM), Speaker 3 (Team Member).
 
 # Main Topic: Discussion of next steps, customer interaction, legal aspects, and development strategy.

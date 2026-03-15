@@ -1,19 +1,67 @@
-<nav>
-  <details>
-    <summary style="cursor: pointer; font-weight: bold;">
-      QA <span style="font-size: 0.8em;">▼</span>
-    </summary>
-    <ul style="list-style: none; padding-left: 15px;">
-      {%- assign qa_pages = site.pages | where_exp: "item", "item.path contains 'qa/'" | sort: "nav_order" -%}
-      {%- for p in qa_pages -%}
-        {%- if p.title -%}
-          <li>
-            <a href="{{ p.url | relative_url }}" {% if page.url == p.url %}style="font-weight: bold;"{% endif %}>
-              {{ p.title }}
-            </a>
-          </li>
-        {%- endif -%}
-      {%- endfor -%}
-    </ul>
-  </details>
-</nav>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ page.title }}</title>
+    <style>
+        body { font-family: sans-serif; display: flex; margin: 0; }
+        aside { width: 300px; border-right: 1px solid #eee; padding: 20px; height: 100vh; overflow-y: auto; }
+        main { padding: 40px; flex: 1; }
+        details { margin-bottom: 10px; }
+        summary { cursor: pointer; font-weight: bold; padding: 5px; background: #f9f9f9; border-radius: 4px; }
+        ul { list-style: none; padding-left: 20px; }
+        li { margin: 5px 0; }
+        .active { color: #007bff; font-weight: bold; }
+        a { text-decoration: none; color: #333; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+<aside>
+    <h2>Docs</h2>
+    <nav>
+        {% assign sections = "architecture,cm,data,integrations,market,product,qa,spec" | split: "," %}
+        
+        {% for sec in sections %}
+            <details {% if page.section == sec %}open{% endif %}>
+                <summary>{{ sec | upcase }}</summary>
+                <ul>
+                    {% assign folder_path = sec | append: "/" %}
+                    {% assign items = site.pages | where_exp: "item", "item.path contains folder_path" | sort: "title" %}
+                    {% for item in items %}
+                        <li><a href="{{ item.url | relative_url }}" class="{% if page.url == item.url %}active{% endif %}">{{ item.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </details>
+        {% endfor %}
+
+        <hr>
+
+        <details {% if page.section == 'sprints' %}open{% endif %}>
+            <summary>SPRINTS</summary>
+            
+            {% assign sprint_folders = "sprint01,sprint02,sprint03" | split: "," %}
+            {% for spr in sprint_folders %}
+                <details style="margin-left: 15px; margin-top: 5px;" {% if page.subsection == spr %}open{% endif %}>
+                    <summary style="font-size: 0.9em; background: none;">{{ spr | capitalize }}</summary>
+                    <ul>
+                        {% assign spr_path = "sprints/" | append: spr %}
+                        {% assign spr_items = site.pages | where_exp: "item", "item.path contains spr_path" %}
+                        {% for item in spr_items %}
+                            <li><a href="{{ item.url | relative_url }}" style="font-size: 0.85em;" class="{% if page.url == item.url %}active{% endif %}">{{ item.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </details>
+            {% endfor %}
+        </details>
+    </nav>
+</aside>
+
+<main>
+    <h1>{{ page.title }}</h1>
+    {{ content }}
+</main>
+
+</body>
+</html>
