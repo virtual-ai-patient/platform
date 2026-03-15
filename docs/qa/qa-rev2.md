@@ -7,7 +7,7 @@ nav_order: 2
 
 # Quality Attributes (QA) — Virtual AI Patient
 **Document Version:** 2.0 (Revision 2)
-**URL:** https://virtual-ai-patient.github.io/platform/qa/qa-rev2
+**URL:** [Here](https://virtual-ai-patient.github.io/platform/qa/qa-rev2)
 
 ## 1. Overview
 This document defines the technical constraints and performance benchmarks for the platform. Revision 2 introduces "Real-World Context" anchors for scalability and availability, and a threat-focused security model.
@@ -23,7 +23,7 @@ This document defines the technical constraints and performance benchmarks for t
 * **Hospital Use Case:** 50–200 concurrent users during peak hospital training hours.
 * **University Use Case:** Support for a full medical school cohort (e.g., 300+ students) during synchronous exam windows.
 * **QA-SCALE-02:** Load testing (via Locust) must simulate these specific scenarios rather than arbitrary traffic.
-* **QA-SCALE-03:** **[UPDATED]** **Working Hours Availability:** The system must maintain **≥ 99.5% uptime during Mon–Fri, 09:00 – 21:00**. 
+* **QA-SCALE-03:** **[UPDATED]** **Working Hours Availability:** The system must maintain **≥ 99.5% uptime during Mon–Fri, 09:00 – 21:00**.
 * **QA-SCALE-04:** Maintenance and updates are restricted to weekend windows to avoid disrupting clinical training schedules.
 
 ## 4. Reliability & Data Integrity (QA-REL)
@@ -55,5 +55,5 @@ This document defines the technical constraints and performance benchmarks for t
 
 | Date | Revision | Author | Trigger / Source | Changes Made |
 | :--- | :--- | :--- | :--- | :--- |
-| 15-03-2026 | 2.0 | Karim Abdulkin | [Sprint 03 Overview](/sprints/sprint03/Meeting-Summary) | 1. Reduced chat latency target to 1-2s for "Human Feel".<br>2. Anchored scalability to Hospital/University use cases.<br>3. Shifted to "Working Hours" availability (99.5% Mon-Fri).<br>4. Redesigned Security section using a Risk/Mitigation matrix. |
+| 15-03-2026 | 2.0 | Karim Abdulkin | [Sprint 03 Overview](/sprints/sprint03/Meeting-Summary) | 1. Reduced chat latency target to 1-2s for "Human Feel". 2. Anchored scalability to Hospital/University use cases. 3. Shifted to "Working Hours" availability (99.5% Mon-Fri). 4. Redesigned Security section using a Risk/Mitigation matrix. |
 | 12-03-2026 | 1.0 | Karim Abdulkin | Initial Baseline | Extracted from `product_description.md`. |
