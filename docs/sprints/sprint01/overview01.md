@@ -6,9 +6,9 @@ has_children: true
 nav_order: 1
 ---
 
-### Participants: Speaker 1 (Mentor/University Representative), Speaker 2 (PM), Speaker 3 (Team Member).
+### Participants: Speaker 1 (Mentor/University Representative), Speaker 2 (PM), Speaker 3 (Team Member)
 
-# Main Topic: Discussion of next steps, customer interaction, legal aspects, and development strategy.
+# Main Topic: Discussion of next steps, customer interaction, legal aspects, and development strategy
 
 ## 1. Technical Implementation: The Role of LLM
 - Concept clarification: The team discussed how the patient simulation will work. The LLM will generate patient responses based on context (symptoms, age, medical history) provided by the selected clinical case.
