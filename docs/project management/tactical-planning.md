@@ -31,8 +31,8 @@ For our project, tactical planning operates on a **weekly cycle** centered aroun
 
 ## 3. The Weekly Iteration Loop
 
-```
-text
+```text
+
 ┌─────────────────────────── ──────────────────────────────┐
 │                                                          │
 │    [Thursday]                                            │
