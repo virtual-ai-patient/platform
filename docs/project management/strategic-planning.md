@@ -257,7 +257,7 @@ March      April      May        June       July
 
 ## 8. Connection to Tactical Planning
 
-```
+```text
 Strategic Roadmap (5 months)
     ↓
 Monthly Milestones
