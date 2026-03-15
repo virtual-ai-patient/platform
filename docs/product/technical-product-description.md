@@ -88,7 +88,7 @@ To reach 50+ cases efficiently, the platform needs:
   - exporting learning analytics
 
 ## 4. Platform concept (modules)
-- **Telegram-bot**: user stories flow, chat, medical tests ordering, submission forms, debrief view. 
+- **Telegram-bot**: user stories flow, chat, medical tests ordering, submission forms, debrief view.
 - **Frontend (Flutter)**: chat UI, medical tests ordering UI, submission forms, debrief view.
 - **Backend API (FastAPI)**:
   - authentication/authorization

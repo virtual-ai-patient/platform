@@ -7,7 +7,7 @@ nav_order: 1
 
 # Quality Attributes (QA) — Virtual AI Patient
 **Document Version:** 1.0 (Revision 1)
-**URL:** https://virtual-ai-patient.github.io/platform/qa/qa-rev1
+**URL:** <https://virtual-ai-patient.github.io/platform/qa/qa-rev1>
 
 ## 1. Overview
 This document defines the technical constraints, performance benchmarks, and security standards for the Virtual AI Patient platform. All implementation Tasks and Epics must satisfy the Acceptance Criteria (AC) derived from these Quality Attribute IDs.
@@ -50,6 +50,7 @@ This document defines the technical constraints, performance benchmarks, and sec
 ---
 
 ## Changelog
+
 | Date | Revision | Author | Trigger / Source | Changes Made |
 | :--- | :--- | :--- | :--- | :--- |
 | 03-03-2026 | 1.0 | Karim Abdulkin | Initial Project Setup | Extracted non-functional requirements from `product_description.md` (Section 4) to establish baseline QA metrics and assigned unique IDs. |
