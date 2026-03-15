@@ -1,6 +1,7 @@
 ---
 layout: default
 title: QA Revision 1
+parent: QA
 nav_order: 1
 ---
 

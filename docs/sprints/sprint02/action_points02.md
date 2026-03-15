@@ -1,3 +1,10 @@
+---
+layout: default
+title: Sprint 02 Action Points
+section: sprints
+parent: Sprint 02
+---
+
 # Action Points
 
 *   **ID:** AP-0001

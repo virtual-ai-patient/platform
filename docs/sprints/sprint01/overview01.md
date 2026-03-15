@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Sprint 01 Overview
-section: sprints
-subsection: sprint01
+parent: Sprints
+has_children: true
+nav_order: 1
 ---
 
 ### Participants: Speaker 1 (Mentor/University Representative), Speaker 2 (PM), Speaker 3 (Team Member).

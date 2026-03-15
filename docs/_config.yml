@@ -14,12 +14,3 @@ nav_enabled: true
 aux_links:
   "GitHub repository":
     - "https://github.com/virtual-ai-patient/platform"
-
-collections:
-  qa:
-    output: true
-    permalink: /qa/:name
-  sprints:
-    output: true
-    permalink: /sprints/:path
-

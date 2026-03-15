@@ -1,3 +1,11 @@
+---
+layout: default
+title: Sprint 03 Overview
+parent: Sprints
+has_children: true
+nav_order: 1
+---
+
 # Meeting Overview: Non-Functional Requirements Deep Dive
 
 **Topic:** Clarifying and refining key Non-Functional Requirements (Performance, Scalability, Availability, Security)

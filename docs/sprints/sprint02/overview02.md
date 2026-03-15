@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Sprint 02 Overview
-section: sprints
-subsection: sprint02
+parent: Sprints
+has_children: true
+nav_order: 1
 ---
 
 ### Participants: Speaker 1 (Mentor), Speaker 2 (Team Member/Backend), Speaker 3 (Team Member/PM)
