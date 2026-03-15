@@ -2,7 +2,7 @@
 layout: default
 title: Sprint 01 Transcription
 section: sprints
-parent: Sprint 01
+parent: Sprint 01 Overview
 ---
 
 Спикер 1:

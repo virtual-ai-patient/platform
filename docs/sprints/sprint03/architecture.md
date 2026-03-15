@@ -2,7 +2,7 @@
 layout: default
 title: Sprint 03 Architecture
 section: sprints
-parent: Sprint 03
+parent: Sprint 03 Overview
 ---
 
 ![Architecture diagram](https://github.com/user-attachments/assets/f32e1675-e55e-4566-a2c7-aea89bc63945)

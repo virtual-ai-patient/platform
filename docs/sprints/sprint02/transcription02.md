@@ -2,7 +2,7 @@
 layout: default
 title: Sprint 02 Transcription
 section: sprints
-parent: Sprint 02
+parent: Sprint 02 Overview
 ---
 
 Говорящий 2

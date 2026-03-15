@@ -2,7 +2,7 @@
 layout: default
 title: Sprint 02 Action Points
 section: sprints
-parent: Sprint 02
+parent: Sprint 02 Overview
 ---
 
 # Action Points
