@@ -235,6 +235,7 @@ Each person answers:
 | **PR review time** | <24 hours | GitHub Insights |
 | **Blockers resolved** | <2 days | Time from `blocked` to resolved |
 | **Review action items** | ≥1 implemented per week | Track in next |
+
 ---
 
 ## 8. Summary: Our Tactical Planning Rhythm
