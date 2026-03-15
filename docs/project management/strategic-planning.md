@@ -24,24 +24,24 @@ For our project, strategic planning covers **5 months** (March–July 2026) and 
 ```text
 March      April      May        June       July
 └────┬─────┴────┬─────┴────┬─────┴────┬─────┴────┬
-     Foundation     Core MVP      Polish      Testing    Delivery
-     (Weeks 1-4)    (Weeks 5-8)   (Weeks 9-12) (Weeks 13-16) (Week 17-20)
+Foundation   Core MVP    Medical    MVP        Final
+             Complete    Workflow   Complete   Polish
      
-     EPIC-00        EPIC-01,02    EPIC-05,06   EPIC-07      MVP Ready
-     EPIC-14        EPIC-03,04    EPIC-08,11   Testing      Presentation
-     EPIC-13        EPIC-12                      Bug fixes
+EPIC-00      EPIC-01,02  EPIC-05,06 EPIC-07    Testing
+EPIC-14      EPIC-03,04  EPIC-08,11 EPIC-10    Documentation
+EPIC-13      EPIC-12                EPIC-09    Presentation
 ```
 
 ### Key Milestones
 
 | Milestone | Target Date | Description |
 |:---|:---|:---|
-| **Project Kickoff** | February 1, 2026 | Team formed, repository created |
+| **Project Kickoff** | March 1, 2026 | Team formed, repository created |
 | **Foundation Complete** | March 31, 2026 | Repo, CI/CD, basic prototype working |
 | **MVP Core Complete** | April 30, 2026 | Auth, cases, chat working end-to-end |
 | **Medical Workflow Done** | May 31, 2026 | Tests, diagnosis, treatment implemented |
-| **Evaluation Ready** | June 30, 2026 | Scoring, debrief, case authoring working |
-| **MVP Delivery** | July 15, 2026 | Final presentation to stakeholders |
+| **MVP Feature Complete** | June 30, 2026 | Evaluation, debrief, analytics ready |
+| **Final Presentation** | July 15, 2026 | MVP demo to stakeholders |
 | **Project End** | July 31, 2026 | Documentation and handover complete |
 
 ---
@@ -67,7 +67,7 @@ March      April      May        June       July
 | **Database Schema** | Initial design for cases and users | Ilnar | EPIC-13 |
 | **Team Processes** | Tactical planning defined and adopted | Alina | — |
 
-#### Success Criteria by End of March
+#### March Success Criteria
 - [ ] New developer can clone repo and run entire stack with one command
 - [ ] Basic chat works (user types, AI responds with synthetic data)
 - [ ] All documentation in place
@@ -95,7 +95,7 @@ March      April      May        June       July
 | **API Layer** | FastAPI endpoints for all core functions | Ilnar | EPIC-12 |
 | **Login UI** | Flutter screens for auth | Timur | EPIC-08 |
 
-#### Success Criteria by End of April
+#### April Success Criteria
 - [ ] User can register, log in, and log out
 - [ ] User can browse available cases
 - [ ] User can start a case and have full conversation with AI patient
@@ -123,7 +123,7 @@ March      April      May        June       July
 | **Frontend Polish** | Improved UI/UX for main workflow | Timur | EPIC-08 |
 | **Case Authoring (Basic)** | Educators can create simple cases | Ilnar + Timur | EPIC-11 |
 
-#### Success Criteria by End of May
+#### May Success Criteria
 - [ ] User can order tests during conversation
 - [ ] Test results appear and are plausible for the case
 - [ ] User can submit differential diagnosis and treatment plan
@@ -132,12 +132,13 @@ March      April      May        June       July
 
 ---
 
-### Month 4: June — Evaluation & Hardening
+### Month 4: June — MVP Completion
 
 #### June Goals
 - Implement automated scoring and debriefing
-- Comprehensive testing
-- Bug fixing and performance optimization
+- Add analytics dashboard
+- Complete all MVP features
+- Prepare for pilot testing
 
 #### June Key Deliverables
 
@@ -146,51 +147,54 @@ March      April      May        June       July
 | **Evaluation Engine** | Compare learner decisions to gold standard | Ilnar | EPIC-07 |
 | **Debrief Generation** | Detailed feedback with reference solution | Ilnar + Aizat | EPIC-07 |
 | **Case Authoring (Full)** | Complete tools with validation and preview | Timur + Ilnar | EPIC-11 |
-| **Analytics** | Basic analytics dashboard | Ilnar + Timur | EPIC-10 |
-| **Load Testing** | Simulate 100+ concurrent users | Karim | QA-SCALE |
+| **Analytics Dashboard** | Basic analytics with export functionality | Ilnar + Timur | EPIC-10 |
+| **Telegram Bot (Complete)** | Full bot functionality with tests and debrief | Aizat | EPIC-09 |
 | **Integration Tests** | Full test suite for all endpoints | Karim | QA-REL |
-| **Bug Fixing** | Address all critical and high-priority bugs | All | — |
+| **Load Testing** | Simulate 100+ concurrent users | Karim | QA-SCALE |
 
-#### Success Criteria by End of June
+#### June Success Criteria
 - [ ] After completing case, user receives detailed debrief
 - [ ] Scoring is consistent and matches gold standard
 - [ ] Educator can create, preview, and publish cases
+- [ ] Analytics dashboard shows learner progress
+- [ ] Telegram bot supports full workflow
+- [ ] Test coverage >70%
 - [ ] System handles 100 concurrent users without degradation
-- [ ] Test coverage >80%
-- [ ] No critical bugs open
+- [ ] **MVP is feature-complete**
 
 ---
 
-### Month 5: July — Testing & Delivery
+### Month 5: July — Final Polish & Delivery
 
 #### July Goals
-- Pilot with real users
-- Final polish
-- Prepare for final presentation
+- Pilot with users
+- Bug fixing and performance optimization
+- Complete documentation
+- Deliver final presentation
 
 #### July Key Deliverables
 
 | Deliverable | Description | Owner | Epic |
 |:---|:---|:---|:---|
-| **User Testing** | Pilot with 5-10 medical students | Alina + Karim | — |
+| **User Testing** | Pilot with 5-10 students | Alina + Karim | — |
 | **Feedback Integration** | Incorporate pilot feedback | All | — |
-| **Analytics Dashboard** | Complete with export functionality | Ilnar + Timur | EPIC-10 |
-| **Documentation** | User guides, API docs, handover docs | All | — |
+| **Bug Fixing** | Address all critical and high-priority bugs | All | — |
 | **Performance Optimization** | Final tuning based on load tests | Ilnar | QA-PERF |
+| **Documentation** | User guides, API docs, handover docs | All | — |
 | **Final Presentation** | Demo script, slides, live demo | Alina + All | — |
 | **Handover** | Repository clean, docs complete, code frozen | All | — |
 
-#### Success Criteria by End of July
+#### July Success Criteria
 - [ ] Pilot users can complete cases independently
 - [ ] Feedback collected and analyzed
+- [ ] No critical bugs open
 - [ ] All documentation complete and accurate
 - [ ] Final presentation delivered successfully
 - [ ] Project handed over with clear next steps
 
 ---
 
-
-## 4. Critical Path Dependencies
+## 5. Critical Path Dependencies
 
 | Dependency | Affected Epics | Risk Level | Mitigation |
 |:---|:---|:---|:---|
@@ -199,11 +203,11 @@ March      April      May        June       July
 | **NDA / Legal Signing** | All (real data) | 🟡 Medium | Assume synthetic until signed; plan B |
 | **Team Availability (May–June)** | All | 🟡 Medium | Plan sprints around known time off |
 | **Denis Feedback Timeliness** | All | 🟢 Low | Weekly cycle accounts for feedback |
-| **Technical Complexity (Evaluation)** | EPIC-07 | 🟡 Medium | Spike solution in May; start early |
+| **Medical Expert Input** | EPIC-02, EPIC-07 | 🟡 Medium | Denis to connect experts in May–June |
 
 ---
 
-## 5. Resource Planning
+## 6. Resource Planning
 
 ### Team Capacity Assumptions
 
@@ -224,12 +228,12 @@ March      April      May        June       July
 | March | Foundation | 60 hrs | High |
 | April | Core MVP | 85 hrs | Medium |
 | May | Medical Workflow | 80 hrs | Medium |
-| June | Evaluation + Testing | 85 hrs | Medium |
-| July | Delivery | 60 hrs | High |
+| June | MVP Completion | 85 hrs | Medium |
+| July | Final Polish | 60 hrs | High |
 
 ---
 
-## 6. Risk Management
+## 7. Risk Management
 
 ### Top 5 Risks
 
@@ -239,34 +243,30 @@ March      April      May        June       July
 | **Team member unavailable** | Medium | Medium | Cross-train; "two is one" principle |
 | **Scope creep** | Medium | High | Strict MVP definition; features to backlog |
 | **Customer unresponsive** | Low | Medium | Build with synthetic data; document attempts |
-| **Technical challenges (evaluation)** | Medium | Medium | Start research early; consult Denis |
+| **Medical expert availability** | Medium | Medium | Denis to secure commitments early |
 
 ---
 
-## 7. Success Metrics
+## 8. Success Metrics
 
 | Metric | Target | Measurement |
 |:---|:---|:---|
 | **On-time delivery** | 100% of monthly milestones | Compare actual vs planned |
-| **Feature completion** | 100% of MVP features | Epic acceptance criteria |
+| **Feature completion** | 100% of MVP features by June 30 | Epic acceptance criteria |
 | **Quality** | <10 critical bugs at delivery | Bug tracker |
 | **User feedback** | Positive pilot feedback | Pilot surveys |
-| **Documentation** | 100% complete | Checklist |
+| **Documentation** | 100% complete by July 31 | Checklist |
 
 ---
 
-## 8. Connection to Tactical Planning
+## 9. Connection to Tactical Planning
 
 ```text
 Strategic Roadmap (5 months)
     ↓
 Monthly Milestones
     ↓
-Epics broken into quarterly goals
-    ↓
-Quarterly goals → Monthly milestones
-    ↓
-Monthly milestones → Sprint goals (2 weeks)
+Epics broken into sprint goals
     ↓
 Sprint goals → Daily tasks (tactical execution)
     ↓
@@ -281,16 +281,14 @@ Monthly progress → Roadmap achieved
 
 ---
 
-## 9. Summary: 5-Month Strategic Plan
+## 10. Summary: 5-Month Strategic Plan
 
 | Month | Theme | Key Epics | Deliverable |
 |:---|:---|:---|:---|
 | **March** | Foundation | 00, 14, 13, 03 | Working prototype, infrastructure ready |
 | **April** | Core MVP | 01, 02, 03, 04, 12 | Auth, cases, chat complete |
 | **May** | Medical Workflow | 05, 06, 08, 11 | Tests, diagnosis, treatment |
-| **June** | Evaluation | 07, 10, 11 | Scoring, debrief, analytics |
-| **July** | Delivery | All | MVP ready, presentation, handover |
+| **June** | **MVP Complete** | 07, 09, 10, 11 | **Evaluation, debrief, analytics ready** |
+| **July** | Final Polish | All | Pilot feedback, documentation, presentation |
 
 ---
-
-*Document Version: 1.0 — March 15, 2026*
