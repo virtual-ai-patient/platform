@@ -1,3 +1,9 @@
+---
+layout: default
+title: QA Revision 1
+nav_order: 1
+---
+
 # Quality Attributes (QA) — Virtual AI Patient
 **Document Version:** 1.0 (Revision 1)
 **URL:** https://virtual-ai-patient.github.io/platform/qa/qa-rev1

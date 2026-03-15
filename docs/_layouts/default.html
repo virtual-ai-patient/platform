@@ -1,0 +1,19 @@
+<nav>
+  <details>
+    <summary style="cursor: pointer; font-weight: bold;">
+      QA <span style="font-size: 0.8em;">▼</span>
+    </summary>
+    <ul style="list-style: none; padding-left: 15px;">
+      {%- assign qa_pages = site.pages | where_exp: "item", "item.path contains 'qa/'" | sort: "nav_order" -%}
+      {%- for p in qa_pages -%}
+        {%- if p.title -%}
+          <li>
+            <a href="{{ p.url | relative_url }}" {% if page.url == p.url %}style="font-weight: bold;"{% endif %}>
+              {{ p.title }}
+            </a>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </details>
+</nav>
