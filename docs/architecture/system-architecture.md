@@ -1,4 +1,6 @@
-### Architectural challenges and goals
+# System Architecture
+
+## Architectural challenges and goals
 
 - **Portability across clients**
   - The Virtual AI Patient must be accessible from multiple clients: web, Telegram bot, and potentially mobile or other channels.
@@ -16,7 +18,7 @@
   - Clear separation between clients, backend, and the dependency layer allows the business logic to be tested independently of infrastructure.
   - Mock implementations for both the database and LLM are first-class parts of the design, so automated tests can run deterministically without relying on external services or real data stores.
 
-### High-level architecture
+## High-level architecture
 
 ```mermaid
 flowchart TB
@@ -50,7 +52,7 @@ flowchart TB
     LLMLayer --> MOCKLLM
 ```
 
-### Dependencies layer
+## Dependencies layer
 
 - **Database interaction interface**
   - **Responsibility**: Provides an abstraction for all data-access operations so the backend does not depend on a concrete database implementation.
@@ -62,7 +64,7 @@ flowchart TB
   - **Production dependency**: **LLM** – external large language model service used in the main deployment.
   - **Testing/development dependency**: **Mock LLM** – deterministic or simplified implementation used for tests and offline development.
 
-### Components
+## Components
 - **Flutter Client**
   - Chat UI
   - Investigations ordering UI
@@ -87,7 +89,7 @@ flowchart TB
   - Session store (messages, orders, submissions)
   - Evaluation artifacts (scores, evidence)
 
-## 2. Data flow (typical session)
+## Data flow (typical session)
 ```mermaid
 sequenceDiagram
   autonumber
@@ -126,7 +128,7 @@ sequenceDiagram
   B-->>U: Debrief + scores
 ```
 
-## 3. Architectural principles
+## Architectural principles
 - **Case-grounded generation**: the AI layer must not invent facts that contradict the case truth.
 - **Reproducible scoring**: cases are versioned; scoring references a specific case version.
 - **Provider-agnostic AI adapter**: only one integration layer speaks OpenAI-compatible API.
