@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Sprint 01 Design Maket
-parent: Sprint 01
+parent: Sprint 01 Overview
 section: sprints
 ---
 
