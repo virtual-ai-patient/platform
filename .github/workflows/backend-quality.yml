@@ -15,8 +15,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
-          python-version: "3.14.0-alpha.4"
-          allow-prereleases: true
+          python-version: "3.14"
 
       - name: Install uv
         uses: astral-sh/setup-uv@v3
@@ -31,12 +30,7 @@ jobs:
         run: uv run mypy --strict .
 
       - name: Tests
-        run: |
-          if command -v pytest >/dev/null 2>&1; then
-            uv run pytest -q
-          else
-            echo "pytest not configured yet; skipping tests."
-          fi
+        run: uv run pytest -n auto
 
       - name: Build Docker image
         run: docker build -t virtual-ai-patient-backend:ci .
