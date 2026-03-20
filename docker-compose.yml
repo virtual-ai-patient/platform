@@ -1,17 +1,38 @@
 services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: virtual-ai-patient-postgres
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
     container_name: virtual-ai-patient-backend
+    env_file:
+      - .env
+    environment:
+      # Override DATABASE_URL to reach postgres via the Docker service name.
+      DATABASE_URL: "postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}"
+      PYTHONUNBUFFERED: "1"
     ports:
       - "8000:8000"
-    environment:
-      # Adjust these as needed; for now hard-coded demo credentials.
-      # BACKEND_USERNAME: admin
-      # BACKEND_PASSWORD: password
-      # SECRET_KEY: override via env or keep default in code
-      PYTHONUNBUFFERED: "1"
+    depends_on:
+      postgres:
+        condition: service_healthy
     restart: unless-stopped
 
   frontend:
@@ -45,3 +66,5 @@ services:
       BACKEND_PASSWORD: "password"
     restart: unless-stopped
 
+volumes:
+  postgres_data:

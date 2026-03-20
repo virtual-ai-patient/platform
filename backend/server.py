@@ -1,14 +1,25 @@
-from fastapi import Depends, FastAPI, HTTPException, status
+import logging
+from contextlib import asynccontextmanager
+from typing import AsyncGenerator
+
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.security import OAuth2PasswordBearer
-from jwt import InvalidTokenError
 
-from auth import create_access_token, decode_access_token
-from models_request import LoginRequest
-from models_response import CurrentUser, TokenResponse
+import models.database as _db
+from models.database import Base
+from routers import login, refresh, reset_password, signup, verify
+
+logging.basicConfig(level=logging.INFO)
 
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
+    async with _db.engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+    yield
+
+
+app = FastAPI(lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -18,39 +29,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
-
-
-@app.post("/login", response_model=TokenResponse)
-def login(payload: LoginRequest) -> TokenResponse:
-    if not (payload.username == "admin" and payload.password == "password"):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid username or password",
-        )
-
-    token = create_access_token(subject=payload.username)
-    return TokenResponse(access_token=token)
-
-
-def get_current_user(token: str = Depends(oauth2_scheme)) -> str:
-    try:
-        payload = decode_access_token(token)
-    except InvalidTokenError as exc:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid or expired token",
-        ) from exc
-
-    username = payload.get("sub")
-    if not isinstance(username, str):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid token payload",
-        )
-    return username
-
-
-@app.get("/me", response_model=CurrentUser)
-def read_current_user(username: str = Depends(get_current_user)) -> CurrentUser:
-    return CurrentUser(username=username)
+app.include_router(signup.router, prefix="/auth", tags=["auth"])
+app.include_router(login.router, prefix="/auth", tags=["auth"])
+app.include_router(refresh.router, prefix="/auth", tags=["auth"])
+app.include_router(verify.router, prefix="/auth", tags=["auth"])
+app.include_router(reset_password.router, prefix="/auth", tags=["auth"])

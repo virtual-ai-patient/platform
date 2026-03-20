@@ -16,16 +16,17 @@ repos:
       - id: ruff-format
         files: ^backend/|^bot/
 
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.14.0
+  - repo: local
     hooks:
       - id: mypy
-        files: ^backend/|^bot/
-        additional_dependencies: []
+        name: mypy (strict)
+        entry: uv run mypy --strict
+        language: system
+        types: [python]
+        files: ^backend/
 
   - repo: https://github.com/DavidAnson/markdownlint-cli2
     rev: v0.16.0
     hooks:
       - id: markdownlint-cli2
         files: ^docs/.*\.md$
-
