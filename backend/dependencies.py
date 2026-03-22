@@ -1,0 +1,44 @@
+from collections.abc import AsyncGenerator
+
+from fastapi import Depends, HTTPException, status
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from services.utils.auth import oauth2_scheme
+from models.database import SessionLocal
+from exceptions.auth_exceptions import AuthenticationError
+from models.db import User
+from repositories.reset_token_repository import ResetTokenRepository
+from repositories.user_repository import UserRepository
+from services.auth_service import AuthService
+
+
+async def get_db() -> AsyncGenerator[AsyncSession, None]:
+    async with SessionLocal() as session:
+        yield session
+
+
+def get_user_repo(db: AsyncSession = Depends(get_db)) -> UserRepository:
+    return UserRepository(db)
+
+
+def get_reset_token_repo(db: AsyncSession = Depends(get_db)) -> ResetTokenRepository:
+    return ResetTokenRepository(db)
+
+
+def get_auth_service(
+    user_repo: UserRepository = Depends(get_user_repo),
+    reset_token_repo: ResetTokenRepository = Depends(get_reset_token_repo),
+) -> AuthService:
+    return AuthService(user_repo, reset_token_repo)
+
+
+async def get_current_user(
+    token: str = Depends(oauth2_scheme),
+    auth_service: AuthService = Depends(get_auth_service),
+) -> User:
+    try:
+        return await auth_service.get_user_from_access_token(token)
+    except AuthenticationError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail=str(exc)
+        ) from exc

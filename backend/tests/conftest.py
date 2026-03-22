@@ -1,0 +1,76 @@
+# Set env vars before any app imports so config.py reads the right values.
+import os
+
+os.environ.setdefault("SECRET_KEY", "test-secret-key-that-is-long-enough-for-hs256")
+os.environ.setdefault("FRONTEND_URL", "http://localhost:8080")
+# DATABASE_URL is set per-worker in the session fixture below; provide a
+# fallback so the module-level import in database.py doesn't crash on collection.
+os.environ.setdefault("DATABASE_URL", "sqlite+aiosqlite:///./test_auth.db")
+
+import asyncio
+from collections.abc import AsyncGenerator, Generator
+
+import pytest
+from fastapi.testclient import TestClient
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+
+import models.database as database
+from models.database import Base
+from dependencies import get_db
+from server import app
+
+
+@pytest.fixture(scope="session", autouse=True)
+def _worker_db(worker_id: str) -> Generator[None, None, None]:
+    """Give each xdist worker its own SQLite file to avoid DB conflicts."""
+    db_file = "test_auth.db" if worker_id == "master" else f"test_auth_{worker_id}.db"
+    db_path = f"tests/{db_file}"
+    url = f"sqlite+aiosqlite:///./{db_path}"
+
+    # Remove stale DB from any previous interrupted run.
+    try:
+        os.remove(db_path)
+    except FileNotFoundError:
+        pass
+
+    engine = create_async_engine(url, connect_args={"check_same_thread": False})
+    session_local = async_sessionmaker(engine, expire_on_commit=False)
+
+    # Patch module-level references used by the app.
+    database.engine = engine
+    database.SessionLocal = session_local
+
+    async def _override_get_db() -> AsyncGenerator[AsyncSession, None]:
+        async with session_local() as session:
+            yield session
+
+    app.dependency_overrides[get_db] = _override_get_db
+
+    # Store on the database module so the client fixture can reference them.
+    database._test_engine = engine  # type: ignore[attr-defined]
+    database._TestSessionLocal = session_local  # type: ignore[attr-defined]
+
+    yield
+
+    # Clean up the DB file after the session.
+    asyncio.run(engine.dispose())
+    try:
+        os.remove(db_path)
+    except FileNotFoundError:
+        pass
+
+
+@pytest.fixture()
+def client() -> Generator[TestClient, None, None]:
+    # Each test gets a fresh schema.
+    engine = database._test_engine  # type: ignore[attr-defined]
+
+    async def _reset() -> None:
+        async with engine.begin() as conn:
+            await conn.run_sync(Base.metadata.drop_all)
+            await conn.run_sync(Base.metadata.create_all)
+
+    asyncio.run(_reset())
+
+    with TestClient(app, raise_server_exceptions=True) as c:
+        yield c
