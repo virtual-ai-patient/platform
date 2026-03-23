@@ -14,8 +14,8 @@ async def login_to_backend(settings: Settings) -> str:
         base_url=settings.backend_base_url, timeout=10.0
     ) as client:
         response = await client.post(
-            "/login",
-            json={
+            "/auth/login",
+            data={
                 "username": settings.backend_username,
                 "password": settings.backend_password,
             },
@@ -33,7 +33,7 @@ async def fetch_current_user(settings: Settings, token: str) -> Dict[str, Any]:
         base_url=settings.backend_base_url, timeout=10.0
     ) as client:
         response = await client.get(
-            "/me",
+            "/auth/verify",
             headers={"Authorization": f"Bearer {token}"},
         )
         response.raise_for_status()
