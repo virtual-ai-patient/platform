@@ -6,7 +6,7 @@ router = Router()
 
 _COMING_SOON = "Скоро будет доступно."
 
-_HELP_TEXT = (
+HELP_TEXT = (
     "Доступные команды:\n\n"
     "/start — главное меню и вход\n"
     "/cases — список доступных кейсов\n"
@@ -21,7 +21,7 @@ _HELP_TEXT = (
 
 @router.message(Command("help"))
 async def cmd_help(message: Message) -> None:
-    await message.answer(_HELP_TEXT)
+    await message.answer(HELP_TEXT)
 
 
 @router.message(Command("cases"))
@@ -52,3 +52,10 @@ async def cmd_debrief(message: Message) -> None:
 @router.message(Command("history"))
 async def cmd_history(message: Message) -> None:
     await message.answer(_COMING_SOON)
+
+
+@router.message()
+async def cmd_unknown(message: Message) -> None:
+    await message.answer(
+        "Не понимаю эту команду. Напишите /help для списка доступных команд."
+    )

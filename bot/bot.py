@@ -1,15 +1,14 @@
 import asyncio
 import logging
-from contextlib import asynccontextmanager
-from typing import AsyncGenerator
 
 from aiogram import Bot, Dispatcher
 from aiogram.fsm.storage.memory import MemoryStorage
+from aiogram.types import BotCommand
 
 from backend_client import BackendClient
 from bot_config import Settings
 from middleware import ThrottlingMiddleware
-from routers import auth, menu
+from routers import auth, errors, menu
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -36,8 +35,28 @@ async def main() -> None:
 
     dp.message.middleware(ThrottlingMiddleware(rate_limit=1.0))
 
+    dp.include_router(errors.router)
     dp.include_router(auth.router)
     dp.include_router(menu.router)
+
+    webhook_info = await bot.get_webhook_info()
+    if webhook_info.url:
+        logger.warning("Active webhook found: %s — deleting it", webhook_info.url)
+        await bot.delete_webhook(drop_pending_updates=False)
+    else:
+        logger.info("No active webhook, proceeding with polling")
+
+    await bot.set_my_commands([
+        BotCommand(command="start",      description="Главное меню и вход"),
+        BotCommand(command="cases",      description="Список доступных кейсов"),
+        BotCommand(command="order_test", description="Заказать медицинский тест"),
+        BotCommand(command="diagnosis",  description="Отправить дифференциальный диагноз"),
+        BotCommand(command="treatment",  description="Отправить план лечения"),
+        BotCommand(command="debrief",    description="Получить разбор завершённого кейса"),
+        BotCommand(command="history",    description="История прошлых сессий"),
+        BotCommand(command="help",       description="Список всех команд"),
+    ])
+    logger.info("Bot commands registered with Telegram")
 
     await dp.start_polling(bot)
 

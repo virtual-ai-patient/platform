@@ -14,6 +14,7 @@ from aiogram.types import (
 
 from backend_client import BackendClient
 from bot_config import Settings
+from routers.menu import HELP_TEXT
 from states import CaseStates
 
 router = Router()
@@ -79,13 +80,18 @@ async def _get_or_refresh_token(
 
 @router.message(CommandStart())
 async def handle_start(message: Message, state: FSMContext) -> None:
+    if message.from_user is None:
+        logger.warning("Received /start with no from_user, ignoring")
+        return
+
+    logger.info("Received /start from user %s", message.from_user.id)
+
     settings = Settings.from_env()
     client = BackendClient(
         base_url=settings.backend_base_url,
         secret_salt=settings.telegram_token,
     )
 
-    assert message.from_user is not None
     telegram_user_id = message.from_user.id
     first_name = message.from_user.first_name or "Пользователь"
 
@@ -147,7 +153,7 @@ async def handle_menu_callback(callback: CallbackQuery) -> None:
     stubs = {
         "cases": "Список кейсов — скоро будет доступно.",
         "history": "История сессий — скоро будет доступно.",
-        "help": "Доступные команды:\n/start — главное меню\n/cases — список кейсов\n/history — история\n/help — помощь",
+        "help": HELP_TEXT,
         "create_case": "Создание кейсов — скоро будет доступно.",
         "students": "Список студентов — скоро будет доступно.",
         "stats": "Статистика — скоро будет доступно.",
