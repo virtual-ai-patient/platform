@@ -1,67 +1,40 @@
 import asyncio
-from typing import Any, Dict, cast
+import logging
+from contextlib import asynccontextmanager
+from typing import AsyncGenerator
 
-import httpx
 from aiogram import Bot, Dispatcher
-from aiogram.filters import CommandStart
-from aiogram.types import Message
+from aiogram.fsm.storage.memory import MemoryStorage
 
+from backend_client import BackendClient
 from bot_config import Settings
+from routers import auth, menu
 
-
-async def login_to_backend(settings: Settings) -> str:
-    async with httpx.AsyncClient(
-        base_url=settings.backend_base_url, timeout=10.0
-    ) as client:
-        response = await client.post(
-            "/auth/login",
-            data={
-                "username": settings.backend_username,
-                "password": settings.backend_password,
-            },
-        )
-        response.raise_for_status()
-        data = cast(Dict[str, Any], response.json())
-        token = data.get("access_token")
-        if not isinstance(token, str):
-            raise RuntimeError("Backend did not return access_token")
-        return token
-
-
-async def fetch_current_user(settings: Settings, token: str) -> Dict[str, Any]:
-    async with httpx.AsyncClient(
-        base_url=settings.backend_base_url, timeout=10.0
-    ) as client:
-        response = await client.get(
-            "/auth/verify",
-            headers={"Authorization": f"Bearer {token}"},
-        )
-        response.raise_for_status()
-        return cast(Dict[str, Any], response.json())
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 async def main() -> None:
     settings = Settings.from_env()
+    client = BackendClient(
+        base_url=settings.backend_base_url,
+        secret_salt=settings.telegram_token,
+    )
+
+    # Health-check: verify the backend service account is reachable
+    try:
+        token = await client.login(settings.backend_username, settings.backend_password)
+        user = await client.verify(token)
+        logger.info("Backend connection verified. Service account: %s", user.get("username"))
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("Backend health-check failed: %s", exc)
 
     bot = Bot(token=settings.telegram_token)
-    dp = Dispatcher()
+    storage = MemoryStorage()
+    dp = Dispatcher(storage=storage)
 
-    @dp.message(CommandStart())
-    async def handle_start(message: Message) -> None:  # noqa: D401
-        """
-        /start handler that checks backend auth.
-        """
-        await message.answer("Logging in to backend...")
-
-        try:
-            token = await login_to_backend(settings)
-            user = await fetch_current_user(settings, token)
-        except Exception as exc:  # noqa: BLE001
-            await message.answer(f"Backend auth failed: {exc}")
-            return
-
-        username = user.get("username", "unknown")
-        await message.answer(f"Hello, {username}! Backend auth is working.")
+    dp.include_router(auth.router)
+    dp.include_router(menu.router)
 
     await dp.start_polling(bot)
 
