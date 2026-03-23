@@ -8,6 +8,7 @@ from aiogram.fsm.storage.memory import MemoryStorage
 
 from backend_client import BackendClient
 from bot_config import Settings
+from middleware import ThrottlingMiddleware
 from routers import auth, menu
 
 logging.basicConfig(level=logging.INFO)
@@ -32,6 +33,8 @@ async def main() -> None:
     bot = Bot(token=settings.telegram_token)
     storage = MemoryStorage()
     dp = Dispatcher(storage=storage)
+
+    dp.message.middleware(ThrottlingMiddleware(rate_limit=1.0))
 
     dp.include_router(auth.router)
     dp.include_router(menu.router)

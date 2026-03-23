@@ -14,6 +14,7 @@ from aiogram.types import (
 
 from backend_client import BackendClient
 from bot_config import Settings
+from states import CaseStates
 
 router = Router()
 logger = logging.getLogger(__name__)
@@ -98,6 +99,20 @@ async def handle_start(message: Message, state: FSMContext) -> None:
     role: str = user_info.get("role", "learner")
     username: str = user_info.get("username", first_name)
 
+    # Session persistence: offer to resume if user was in an active case
+    current_state = await state.get_state()
+    if current_state == CaseStates.in_conversation.state:
+        resume_kb = InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(text="Продолжить кейс", callback_data="session:resume"),
+             InlineKeyboardButton(text="Выйти из кейса", callback_data="session:exit")],
+        ])
+        await message.answer(
+            f"С возвращением, {first_name}! У вас есть незавершённый кейс.\n"
+            "Хотите продолжить?",
+            reply_markup=resume_kb,
+        )
+        return
+
     await message.answer(
         f"Добро пожаловать, {first_name}!\n"
         f"Вы вошли как <b>{username}</b> (роль: {role}).",
@@ -105,6 +120,25 @@ async def handle_start(message: Message, state: FSMContext) -> None:
         reply_markup=_menu_for_role(role),
     )
     logger.info("User %s authenticated (role=%s)", telegram_user_id, role)
+
+
+@router.callback_query(lambda c: c.data and c.data.startswith("session:"))
+async def handle_session_callback(callback: CallbackQuery, state: FSMContext) -> None:
+    action = (callback.data or "").split(":")[1]
+    await callback.answer()
+    assert isinstance(callback.message, Message)
+    if action == "resume":
+        await callback.message.answer(
+            "Возвращаемся к кейсу... (функция будет доступна после реализации модуля кейсов)"
+        )
+    elif action == "exit":
+        await state.clear()
+        data = await state.get_data()
+        role = "learner"
+        await callback.message.answer(
+            "Кейс завершён. Главное меню:",
+            reply_markup=_menu_for_role(role),
+        )
 
 
 @router.callback_query(lambda c: c.data and c.data.startswith("menu:"))
