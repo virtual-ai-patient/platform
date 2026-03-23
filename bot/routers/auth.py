@@ -139,7 +139,6 @@ async def handle_session_callback(callback: CallbackQuery, state: FSMContext) ->
         )
     elif action == "exit":
         await state.clear()
-        data = await state.get_data()
         role = "learner"
         await callback.message.answer(
             "Кейс завершён. Главное меню:",
