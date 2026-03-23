@@ -37,12 +37,12 @@ EPIC-13      EPIC-12                EPIC-09    Presentation
 | Milestone | Target Date | Description | Link to Milestone |
 |:---|:---|:---| :---|
 | **Project Kickoff** | March 1, 2026 | Team formed, repository created | |
-| **Foundation Complete** | March 31, 2026 | Repo, CI/CD, basic prototype working | https://github.com/virtual-ai-patient/platform/milestone/1 |
-| **MVP Core Complete** | April 30, 2026 | Auth, cases, chat working end-to-end | https://github.com/virtual-ai-patient/platform/milestone/2 |
-| **Medical Workflow Done** | May 31, 2026 | Tests, diagnosis, treatment implemented | https://github.com/virtual-ai-patient/platform/milestone/3 |
-| **MVP Feature Complete** | June 30, 2026 | Evaluation, debrief, analytics ready | https://github.com/virtual-ai-patient/platform/milestone/4 |
-| **Final Presentation** | July 15, 2026 | MVP demo to stakeholders | https://github.com/virtual-ai-patient/platform/milestone/5 |
-| **Project End** | July 31, 2026 | Documentation and handover complete | https://github.com/virtual-ai-patient/platform/milestone/6 |
+| **Foundation Complete** | March 31, 2026 | Repo, CI/CD, basic prototype working | <https://github.com/virtual-ai-patient/platform/milestone/1> |
+| **MVP Core Complete** | April 30, 2026 | Auth, cases, chat working end-to-end | <https://github.com/virtual-ai-patient/platform/milestone/2> |
+| **Medical Workflow Done** | May 31, 2026 | Tests, diagnosis, treatment implemented | <https://github.com/virtual-ai-patient/platform/milestone/3> |
+| **MVP Feature Complete** | June 30, 2026 | Evaluation, debrief, analytics ready | <https://github.com/virtual-ai-patient/platform/milestone/4> |
+| **Final Presentation** | July 15, 2026 | MVP demo to stakeholders | <https://github.com/virtual-ai-patient/platform/milestone/5> |
+| **Project End** | July 31, 2026 | Documentation and handover complete | <https://github.com/virtual-ai-patient/platform/milestone/6> |
 
 ---
 
