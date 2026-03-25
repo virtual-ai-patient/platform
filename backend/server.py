@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 import models.database as _db
 from models.database import Base
+from cases.router import router as cases_router
 from routers import login, refresh, reset_password, signup, verify
 
 logging.basicConfig(level=logging.INFO)
@@ -34,3 +35,4 @@ app.include_router(login.router, prefix="/auth", tags=["auth"])
 app.include_router(refresh.router, prefix="/auth", tags=["auth"])
 app.include_router(verify.router, prefix="/auth", tags=["auth"])
 app.include_router(reset_password.router, prefix="/auth", tags=["auth"])
+app.include_router(cases_router)

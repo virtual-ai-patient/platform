@@ -8,7 +8,9 @@ os.environ.setdefault("FRONTEND_URL", "http://localhost:8080")
 os.environ.setdefault("DATABASE_URL", "sqlite+aiosqlite:///./test_auth.db")
 
 import asyncio
+import uuid
 from collections.abc import AsyncGenerator, Generator
+from typing import cast
 
 import pytest
 from fastapi.testclient import TestClient
@@ -17,7 +19,11 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_asyn
 import models.database as database
 from models.database import Base
 from dependencies import get_db
+from models.db import User
 from server import app
+from services.utils.auth import hash_password
+
+_TEST_PASSWORD = "secret123"
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -74,3 +80,44 @@ def client() -> Generator[TestClient, None, None]:
 
     with TestClient(app, raise_server_exceptions=True) as c:
         yield c
+
+
+def _insert_user(username: str, role: str) -> None:
+    """Insert a user with the given role directly into the test DB."""
+
+    async def _run() -> None:
+        session_factory = cast(
+            async_sessionmaker[AsyncSession],
+            database._TestSessionLocal,  # type: ignore[attr-defined]
+        )
+        async with session_factory() as session:
+            session.add(
+                User(
+                    id=str(uuid.uuid4()),
+                    username=username,
+                    email=f"{username}@example.com",
+                    hashed_password=hash_password(_TEST_PASSWORD),
+                    role=role,
+                )
+            )
+            await session.commit()
+
+    asyncio.run(_run())
+
+
+@pytest.fixture()
+def educator_headers(client: TestClient) -> dict[str, str]:
+    _insert_user("educator", "educator")
+    tokens: dict[str, str] = client.post(
+        "/auth/login", data={"username": "educator", "password": _TEST_PASSWORD}
+    ).json()
+    return {"Authorization": f"Bearer {tokens['access_token']}"}
+
+
+@pytest.fixture()
+def learner_headers(client: TestClient) -> dict[str, str]:
+    _insert_user("learner", "learner")
+    tokens: dict[str, str] = client.post(
+        "/auth/login", data={"username": "learner", "password": _TEST_PASSWORD}
+    ).json()
+    return {"Authorization": f"Bearer {tokens['access_token']}"}
