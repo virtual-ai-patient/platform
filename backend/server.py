@@ -6,16 +6,35 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 import models.database as _db
+from config import ADMIN_EMAIL, ADMIN_PASSWORD, ADMIN_USERNAME
 from models.database import Base
+from repositories.user_repository import UserRepository
 from routers import login, refresh, reset_password, signup, verify
+from services.utils.auth import hash_password
 
 logging.basicConfig(level=logging.INFO)
+
+logger = logging.getLogger(__name__)
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     async with _db.engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+
+    async with _db.SessionLocal() as session:
+        repo = UserRepository(session)
+        if not await repo.exists_by_username_or_email(ADMIN_USERNAME, ADMIN_EMAIL):
+            await repo.create(
+                ADMIN_USERNAME,
+                ADMIN_EMAIL,
+                hash_password(ADMIN_PASSWORD),
+                role="admin",
+            )
+            logger.info("Admin user seeded: %s", ADMIN_USERNAME)
+        else:
+            logger.info("Admin user already exists, skipping seed")
+
     yield
 
 

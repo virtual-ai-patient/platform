@@ -3,6 +3,9 @@ import os
 
 os.environ.setdefault("SECRET_KEY", "test-secret-key-that-is-long-enough-for-hs256")
 os.environ.setdefault("FRONTEND_URL", "http://localhost:8080")
+os.environ.setdefault("ADMIN_USERNAME", "admin")
+os.environ.setdefault("ADMIN_EMAIL", "admin@example.com")
+os.environ.setdefault("ADMIN_PASSWORD", "changeme")
 # DATABASE_URL is set per-worker in the session fixture below; provide a
 # fallback so the module-level import in database.py doesn't crash on collection.
 os.environ.setdefault("DATABASE_URL", "sqlite+aiosqlite:///./test_auth.db")

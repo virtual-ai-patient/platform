@@ -28,8 +28,14 @@ class UserRepository:
         )
         return result.scalar_one_or_none() is not None
 
-    async def create(self, username: str, email: str, hashed_password: str) -> User:
-        user = User(username=username, email=email, hashed_password=hashed_password)
+    async def create(
+        self,
+        username: str,
+        email: str,
+        hashed_password: str,
+        role: str = "learner",
+    ) -> User:
+        user = User(username=username, email=email, hashed_password=hashed_password, role=role)
         self._session.add(user)
         await self._session.commit()
         await self._session.refresh(user)
