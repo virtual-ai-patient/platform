@@ -1,12 +1,13 @@
 import asyncio
 import os
+from typing import Any
 
 import models.database as database
 from fastapi.testclient import TestClient
+from models.db import User
 from repositories.user_repository import UserRepository
 from server import app
 from sqlalchemy import func, select
-from models.db import User
 
 
 # ---------------------------------------------------------------------------
@@ -14,7 +15,7 @@ from models.db import User
 # ---------------------------------------------------------------------------
 
 
-def _login_admin(client: TestClient) -> dict[str, str]:
+def _login_admin(client: TestClient) -> Any:
     r = client.post(
         "/auth/login",
         data={
@@ -22,7 +23,7 @@ def _login_admin(client: TestClient) -> dict[str, str]:
             "password": os.environ["ADMIN_PASSWORD"],
         },
     )
-    return r.json()  # type: ignore[return-value]
+    return r.json()
 
 
 # ---------------------------------------------------------------------------
@@ -80,6 +81,6 @@ def test_admin_seed_is_idempotent(client: TestClient) -> None:
             result = await session.execute(
                 select(func.count()).where(User.username == os.environ["ADMIN_USERNAME"])
             )
-            return result.scalar_one()  # type: ignore[return-value]
+            return int(result.scalar_one())
 
     assert asyncio.run(_count()) == 1  # exactly one admin row, not two
