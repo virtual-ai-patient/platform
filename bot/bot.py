@@ -1,67 +1,62 @@
 import asyncio
-from typing import Any, Dict, cast
+import logging
 
-import httpx
 from aiogram import Bot, Dispatcher
-from aiogram.filters import CommandStart
-from aiogram.types import Message
+from aiogram.fsm.storage.memory import MemoryStorage
+from aiogram.types import BotCommand
 
+from backend_client import BackendClient
 from bot_config import Settings
+from middleware import ThrottlingMiddleware
+from routers import auth, errors, menu
 
-
-async def login_to_backend(settings: Settings) -> str:
-    async with httpx.AsyncClient(
-        base_url=settings.backend_base_url, timeout=10.0
-    ) as client:
-        response = await client.post(
-            "/login",
-            json={
-                "username": settings.backend_username,
-                "password": settings.backend_password,
-            },
-        )
-        response.raise_for_status()
-        data = cast(Dict[str, Any], response.json())
-        token = data.get("access_token")
-        if not isinstance(token, str):
-            raise RuntimeError("Backend did not return access_token")
-        return token
-
-
-async def fetch_current_user(settings: Settings, token: str) -> Dict[str, Any]:
-    async with httpx.AsyncClient(
-        base_url=settings.backend_base_url, timeout=10.0
-    ) as client:
-        response = await client.get(
-            "/me",
-            headers={"Authorization": f"Bearer {token}"},
-        )
-        response.raise_for_status()
-        return cast(Dict[str, Any], response.json())
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 async def main() -> None:
     settings = Settings.from_env()
+    client = BackendClient(
+        base_url=settings.backend_base_url,
+        secret_salt=settings.telegram_token,
+    )
+
+    # Health-check: verify the backend service account is reachable
+    try:
+        token = await client.login(settings.backend_username, settings.backend_password)
+        user = await client.verify(token)
+        logger.info("Backend connection verified. Service account: %s", user.get("username"))
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("Backend health-check failed: %s", exc)
 
     bot = Bot(token=settings.telegram_token)
-    dp = Dispatcher()
+    storage = MemoryStorage()
+    dp = Dispatcher(storage=storage)
 
-    @dp.message(CommandStart())
-    async def handle_start(message: Message) -> None:  # noqa: D401
-        """
-        /start handler that checks backend auth.
-        """
-        await message.answer("Logging in to backend...")
+    dp.message.middleware(ThrottlingMiddleware(rate_limit=1.0))
 
-        try:
-            token = await login_to_backend(settings)
-            user = await fetch_current_user(settings, token)
-        except Exception as exc:  # noqa: BLE001
-            await message.answer(f"Backend auth failed: {exc}")
-            return
+    dp.include_router(errors.router)
+    dp.include_router(auth.router)
+    dp.include_router(menu.router)
 
-        username = user.get("username", "unknown")
-        await message.answer(f"Hello, {username}! Backend auth is working.")
+    webhook_info = await bot.get_webhook_info()
+    if webhook_info.url:
+        logger.warning("Active webhook found: %s — deleting it", webhook_info.url)
+        await bot.delete_webhook(drop_pending_updates=False)
+    else:
+        logger.info("No active webhook, proceeding with polling")
+
+    await bot.set_my_commands([
+        BotCommand(command="start",      description="Главное меню и вход"),
+        BotCommand(command="cases",      description="Список доступных кейсов"),
+        BotCommand(command="order_test", description="Заказать медицинский тест"),
+        BotCommand(command="diagnosis",  description="Отправить дифференциальный диагноз"),
+        BotCommand(command="treatment",  description="Отправить план лечения"),
+        BotCommand(command="debrief",    description="Получить разбор завершённого кейса"),
+        BotCommand(command="history",    description="История прошлых сессий"),
+        BotCommand(command="help",       description="Список всех команд"),
+    ])
+    logger.info("Bot commands registered with Telegram")
 
     await dp.start_polling(bot)
 
