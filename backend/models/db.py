@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Boolean, DateTime, Float, ForeignKey, Integer, String, Text
+from sqlalchemy import JSON, Boolean, DateTime, Float, ForeignKey, Integer, String, Text, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from models.database import Base
@@ -256,4 +256,31 @@ class CaseSafetyError(Base):
     error: Mapped[str] = mapped_column(Text, nullable=False)
     case: Mapped[ClinicalCase] = relationship(
         "ClinicalCase", back_populates="safety_errors"
+    )
+
+
+# ---------------------------------------------------------------------------
+# Case Session
+# ---------------------------------------------------------------------------
+
+
+class CaseSession(Base):
+    __tablename__ = "case_sessions"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=_uuid)
+    session_id: Mapped[str] = mapped_column(
+        String, unique=True, nullable=False, default=_uuid
+    )
+    user_id: Mapped[str] = mapped_column(
+        String, ForeignKey("users.id"), nullable=False
+    )
+    clinical_case_id: Mapped[str] = mapped_column(
+        String, ForeignKey("clinical_cases.id"), nullable=False
+    )
+    status: Mapped[str] = mapped_column(
+        String, nullable=False, default="active"
+    )  # active|completed|abandoned
+    frozen_case_snapshot: Mapped[dict] = mapped_column(JSON, nullable=False)
+    created_at: Mapped[DateTime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
     )

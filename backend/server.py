@@ -21,7 +21,11 @@ from models.database import Base
 from repositories.user_repository import UserRepository
 from cases.router import router as cases_router
 from routers import login, refresh, reset_password, signup, verify
+<<<<<<< HEAD
 from services.utils.auth import hash_password
+=======
+from sessions.router import router as sessions_router
+>>>>>>> 97d1017 (feat(backend): sessions:#28)
 
 logging.basicConfig(level=logging.INFO)
 
@@ -91,3 +95,4 @@ app.include_router(refresh.router, prefix="/auth", tags=["auth"])
 app.include_router(verify.router, prefix="/auth", tags=["auth"])
 app.include_router(reset_password.router, prefix="/auth", tags=["auth"])
 app.include_router(cases_router)
+app.include_router(sessions_router)
