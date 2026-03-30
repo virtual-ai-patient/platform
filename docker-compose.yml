@@ -59,11 +59,10 @@ services:
     container_name: virtual-ai-patient-bot
     depends_on:
       - backend
+    env_file:
+      - .env
     environment:
-      TELEGRAM_BOT_TOKEN: "REPLACE_WITH_REAL_TOKEN"
       BACKEND_BASE_URL: "http://backend:8000"
-      BACKEND_USERNAME: "admin"
-      BACKEND_PASSWORD: "password"
     restart: unless-stopped
 
 volumes:
