@@ -9,6 +9,7 @@ import models.database as _db
 from config import ADMIN_EMAIL, ADMIN_PASSWORD, ADMIN_USERNAME
 from models.database import Base
 from repositories.user_repository import UserRepository
+from cases.router import router as cases_router
 from routers import login, refresh, reset_password, signup, verify
 from services.utils.auth import hash_password
 
@@ -53,3 +54,4 @@ app.include_router(login.router, prefix="/auth", tags=["auth"])
 app.include_router(refresh.router, prefix="/auth", tags=["auth"])
 app.include_router(verify.router, prefix="/auth", tags=["auth"])
 app.include_router(reset_password.router, prefix="/auth", tags=["auth"])
+app.include_router(cases_router)
