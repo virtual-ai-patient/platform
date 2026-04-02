@@ -11,11 +11,8 @@ from models.database import Base
 from repositories.user_repository import UserRepository
 from cases.router import router as cases_router
 from routers import login, refresh, reset_password, signup, verify
-<<<<<<< HEAD
 from sessions.router import router as sessions_router
-=======
 from services.utils.auth import hash_password
->>>>>>> main
 
 logging.basicConfig(level=logging.INFO)
 
