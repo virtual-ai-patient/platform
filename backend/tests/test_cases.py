@@ -153,3 +153,151 @@ def test_create_case_scoring_weights_not_summing_to_one(
     payload["scoring"]["weight_diagnosis"] = 0.99
     r = client.post("/cases", json=payload, headers=educator_headers)
     assert r.status_code == 422
+
+
+# ---------------------------------------------------------------------------
+# GET /cases
+# ---------------------------------------------------------------------------
+
+
+def _minimal_case_alt(case_id: str) -> dict[str, Any]:
+    payload = _minimal_case()
+    payload["case_id"] = case_id
+    return payload
+
+
+def test_list_cases_learner_sees_only_published(
+    client: TestClient,
+    educator_headers: dict[str, str],
+    learner_headers: dict[str, str],
+) -> None:
+    client.post("/cases", json=_minimal_case(), headers=educator_headers)
+    r2 = client.post(
+        "/cases", json=_minimal_case_alt("chest_pain_002"), headers=educator_headers
+    )
+    assert r2.status_code == 201
+    pub_id = r2.json()["id"]
+    up = client.put(
+        f"/cases/{pub_id}",
+        json={"status": "published"},
+        headers=educator_headers,
+    )
+    assert up.status_code == 200
+
+    r = client.get("/cases", headers=learner_headers)
+    assert r.status_code == 200
+    body = r.json()
+    assert len(body) == 1
+    assert body[0]["case_id"] == "chest_pain_002"
+    assert body[0]["status"] == "published"
+
+
+def test_list_cases_educator_sees_all(
+    client: TestClient, educator_headers: dict[str, str]
+) -> None:
+    client.post("/cases", json=_minimal_case(), headers=educator_headers)
+    client.post(
+        "/cases", json=_minimal_case_alt("chest_pain_002"), headers=educator_headers
+    )
+    r = client.get("/cases", headers=educator_headers)
+    assert r.status_code == 200
+    assert len(r.json()) == 2
+
+
+def test_list_cases_educator_filter_by_status(
+    client: TestClient, educator_headers: dict[str, str]
+) -> None:
+    client.post("/cases", json=_minimal_case(), headers=educator_headers)
+    r2 = client.post(
+        "/cases", json=_minimal_case_alt("chest_pain_002"), headers=educator_headers
+    )
+    assert r2.status_code == 201
+    pub_id = r2.json()["id"]
+    client.put(
+        f"/cases/{pub_id}",
+        json={"status": "published"},
+        headers=educator_headers,
+    )
+
+    r = client.get("/cases?status=draft", headers=educator_headers)
+    assert r.status_code == 200
+    assert len(r.json()) == 1
+    assert r.json()[0]["case_id"] == "chest_pain_001"
+
+
+def test_list_cases_unauthenticated(client: TestClient) -> None:
+    r = client.get("/cases")
+    assert r.status_code == 401
+
+
+# ---------------------------------------------------------------------------
+# PUT /cases/{id}
+# ---------------------------------------------------------------------------
+
+
+def test_update_case_success(
+    client: TestClient, educator_headers: dict[str, str]
+) -> None:
+    r = client.post("/cases", json=_minimal_case(), headers=educator_headers)
+    assert r.status_code == 201
+    case_id = r.json()["id"]
+
+    r2 = client.put(
+        f"/cases/{case_id}",
+        json={"title": "Updated title"},
+        headers=educator_headers,
+    )
+    assert r2.status_code == 200
+    assert r2.json()["title"] == "Updated title"
+
+
+def test_update_case_publish_bumps_version(
+    client: TestClient, educator_headers: dict[str, str]
+) -> None:
+    r = client.post("/cases", json=_minimal_case(), headers=educator_headers)
+    assert r.status_code == 201
+    case_id = r.json()["id"]
+    assert r.json()["version"] == 1
+
+    r2 = client.put(
+        f"/cases/{case_id}",
+        json={"status": "published"},
+        headers=educator_headers,
+    )
+    assert r2.status_code == 200
+    assert r2.json()["status"] == "published"
+    assert r2.json()["version"] == 2
+
+
+def test_update_case_learner_forbidden(
+    client: TestClient,
+    educator_headers: dict[str, str],
+    learner_headers: dict[str, str],
+) -> None:
+    r = client.post("/cases", json=_minimal_case(), headers=educator_headers)
+    case_id = r.json()["id"]
+    r2 = client.put(
+        f"/cases/{case_id}",
+        json={"title": "Hack"},
+        headers=learner_headers,
+    )
+    assert r2.status_code == 403
+
+
+def test_update_case_not_found(
+    client: TestClient, educator_headers: dict[str, str]
+) -> None:
+    r = client.put(
+        "/cases/00000000-0000-0000-0000-000000000000",
+        json={"title": "Nope"},
+        headers=educator_headers,
+    )
+    assert r.status_code == 404
+
+
+def test_update_case_unauthenticated(client: TestClient) -> None:
+    r = client.put(
+        "/cases/00000000-0000-0000-0000-000000000000",
+        json={"title": "Nope"},
+    )
+    assert r.status_code == 401
