@@ -1,3 +1,5 @@
+from typing import Any
+
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -12,7 +14,7 @@ class SessionRepository:
         self,
         user_id: str,
         clinical_case_id: str,
-        snapshot: dict,
+        snapshot: dict[str, Any],
     ) -> CaseSession:
         record = CaseSession(
             user_id=user_id,
