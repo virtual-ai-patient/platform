@@ -1,4 +1,5 @@
 import 'package:frontend/network/openapi.dart' as generated;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthSession {
   const AuthSession({
@@ -16,6 +17,8 @@ abstract class AuthRepositoryContract {
     required String password,
   });
 
+  Future<void> logout();
+
   Future<generated.UserResponse> signup({
     required String username,
     required String email,
@@ -31,12 +34,50 @@ class AuthRepository implements AuthRepositoryContract {
     _authApi = _openapi.getAuthApi();
   }
 
+  static const _prefRefreshKey = 'vap_refresh_token';
+
+  /// Shared HTTP client and OAuth token store for other domain APIs (e.g. cases).
+  generated.Openapi get openapiClient => _openapi;
+
   late final generated.Openapi _openapi;
   late final generated.AuthApi _authApi;
   AuthSession? _session;
   String? _refreshToken;
 
   AuthSession? get currentSession => _session;
+
+  Future<void> _persistRefreshToken(String? token) async {
+    final prefs = await SharedPreferences.getInstance();
+    if (token == null || token.isEmpty) {
+      await prefs.remove(_prefRefreshKey);
+    } else {
+      await prefs.setString(_prefRefreshKey, token);
+    }
+  }
+
+  /// After a browser reload, exchange stored refresh token for new access and verify user.
+  Future<AuthSession?> restoreSession() async {
+    final prefs = await SharedPreferences.getInstance();
+    final stored = prefs.getString(_prefRefreshKey);
+    if (stored == null || stored.isEmpty) {
+      return null;
+    }
+    _openapi.setOAuthToken('OAuth2PasswordBearer', '');
+    try {
+      final tokens = await refreshToken(stored);
+      final user = await verifyCurrentToken();
+      final session = AuthSession(user: user, tokens: tokens);
+      _session = session;
+      await _persistRefreshToken(tokens.refreshToken);
+      return session;
+    } catch (_) {
+      await _persistRefreshToken(null);
+      _session = null;
+      _refreshToken = null;
+      _openapi.setOAuthToken('OAuth2PasswordBearer', '');
+      return null;
+    }
+  }
 
   @override
   Future<AuthSession> loginAndVerify({
@@ -64,6 +105,7 @@ class AuthRepository implements AuthRepositoryContract {
     final session = AuthSession(user: user, tokens: tokens);
     _session = session;
     _refreshToken = tokens.refreshToken;
+    await _persistRefreshToken(tokens.refreshToken);
     return session;
   }
 
@@ -107,6 +149,7 @@ class AuthRepository implements AuthRepositoryContract {
     if (_session != null) {
       _session = AuthSession(user: _session!.user, tokens: refreshed);
     }
+    await _persistRefreshToken(refreshed.refreshToken);
     return refreshed;
   }
 
@@ -153,8 +196,11 @@ class AuthRepository implements AuthRepositoryContract {
     return message;
   }
 
+  @override
   Future<void> logout() async {
+    await _persistRefreshToken(null);
     _session = null;
     _refreshToken = null;
+    _openapi.setOAuthToken('OAuth2PasswordBearer', '');
   }
 }

@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:dio/dio.dart';
 import 'package:frontend/domains/auth/auth_repository.dart';
+import 'package:frontend/domains/cases/case_repository.dart';
 import 'package:frontend/features/auth/presentation/login_screen.dart';
 import 'package:frontend/network/openapi.dart' as generated;
 
 void main() {
   testWidgets('shows user-facing auth controls', (WidgetTester tester) async {
     await tester.pumpWidget(
-      MaterialApp(home: LoginScreen(authRepository: _FakeAuthRepository())),
+      MaterialApp(
+        home: LoginScreen(
+          authRepository: _FakeAuthRepository(),
+          caseRepository: _FakeCaseRepository(),
+        ),
+      ),
     );
     expect(find.text('Virtual AI Patient'), findsOneWidget);
     expect(find.widgetWithText(TextField, 'Username'), findsOneWidget);
@@ -20,7 +26,12 @@ void main() {
 
   testWidgets('opens create-account dialog', (WidgetTester tester) async {
     await tester.pumpWidget(
-      MaterialApp(home: LoginScreen(authRepository: _FakeAuthRepository())),
+      MaterialApp(
+        home: LoginScreen(
+          authRepository: _FakeAuthRepository(),
+          caseRepository: _FakeCaseRepository(),
+        ),
+      ),
     );
 
     await tester.ensureVisible(find.text('Create account'));
@@ -34,7 +45,12 @@ void main() {
 
   testWidgets('opens reset-password dialog', (WidgetTester tester) async {
     await tester.pumpWidget(
-      MaterialApp(home: LoginScreen(authRepository: _FakeAuthRepository())),
+      MaterialApp(
+        home: LoginScreen(
+          authRepository: _FakeAuthRepository(),
+          caseRepository: _FakeCaseRepository(),
+        ),
+      ),
     );
 
     await tester.ensureVisible(find.text('Forgot password?'));
@@ -57,8 +73,14 @@ void main() {
       ),
     );
 
-    await tester
-        .pumpWidget(MaterialApp(home: LoginScreen(authRepository: repo)));
+    await tester.pumpWidget(
+      MaterialApp(
+        home: LoginScreen(
+          authRepository: repo,
+          caseRepository: _FakeCaseRepository(),
+        ),
+      ),
+    );
     await tester.enterText(
       find.widgetWithText(TextField, 'Username'),
       'wrong-user',
@@ -75,10 +97,15 @@ void main() {
     expect(find.text('Reset password'), findsOneWidget);
   });
 
-  testWidgets('navigates to dashboard on successful login',
+  testWidgets('navigates to case library on successful login',
       (WidgetTester tester) async {
     await tester.pumpWidget(
-      MaterialApp(home: LoginScreen(authRepository: _FakeAuthRepository())),
+      MaterialApp(
+        home: LoginScreen(
+          authRepository: _FakeAuthRepository(),
+          caseRepository: _FakeCaseRepository(),
+        ),
+      ),
     );
 
     await tester.enterText(find.widgetWithText(TextField, 'Username'), 'admin');
@@ -88,14 +115,42 @@ void main() {
     await tester.tap(find.text('Log in'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Dashboard'), findsOneWidget);
+    expect(find.text('Case Library'), findsOneWidget);
   });
+}
+
+class _FakeCaseRepository implements CaseRepositoryContract {
+  @override
+  Future<List<generated.CaseResponse>> listCases({String? status}) async => [];
+
+  @override
+  Future<generated.CaseResponse> createCase(
+    generated.CreateCaseRequest request,
+  ) async {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<generated.CaseResponse> updateCase({
+    required String id,
+    required generated.UpdateCaseRequest updateCaseRequest,
+  }) async {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> deleteCase({required String id}) async {
+    throw UnimplementedError();
+  }
 }
 
 class _FakeAuthRepository implements AuthRepositoryContract {
   _FakeAuthRepository({this.loginError});
 
   final Object? loginError;
+
+  @override
+  Future<void> logout() async {}
 
   @override
   Future<AuthSession> loginAndVerify({

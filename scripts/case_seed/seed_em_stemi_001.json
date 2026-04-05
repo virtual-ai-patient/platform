@@ -1,0 +1,61 @@
+{
+  "case_id": "seed_em_stemi_001",
+  "title": "Acute chest pain — ACS workup",
+  "language": "en",
+  "difficulty": "medium",
+  "specialty": "emergency_medicine",
+  "tags": ["chest_pain", "acs"],
+  "age": 54,
+  "sex": "male",
+  "persona": "Worried delivery driver, diaphoretic.",
+  "tone_presets": ["neutral", "anxious"],
+  "chief_complaint": "Crushing chest pain",
+  "history_of_present_illness": "Substernal pressure 45 minutes, radiates to jaw.",
+  "key_history_points": {
+    "must_ask": ["Onset and duration", "Associated symptoms"],
+    "nice_to_ask": ["Recent exertion", "Similar prior episodes"],
+    "red_flags": ["Syncope", "Hypotension"]
+  },
+  "final_diagnosis": "STEMI",
+  "differential": ["STEMI", "Unstable angina", "Aortic dissection"],
+  "investigations": {
+    "catalog_hints": ["ECG", "Troponin"],
+    "expected": {
+      "must_order": ["ECG", "Troponin"],
+      "optional": ["Chest X-ray"],
+      "should_not_order": ["Elective stress test"]
+    },
+    "results": [
+      {
+        "test_name": "ECG",
+        "result_type": "text_report",
+        "value": "ST elevation in inferior leads."
+      },
+      {
+        "test_name": "Troponin",
+        "result_type": "lab_value",
+        "value": "2.4",
+        "unit": "ng/mL",
+        "reference_range": "0.00-0.04"
+      }
+    ]
+  },
+  "management": {
+    "diagnostic_plan": ["Immediate ECG", "Serial troponins"],
+    "treatment_plan": ["Activate cath lab", "Dual antiplatelet therapy"],
+    "contraindications": ["Discharge before ACS ruled out"],
+    "follow_up": ["Cardiology clinic"]
+  },
+  "scoring": {
+    "weight_diagnosis": 0.35,
+    "weight_diagnostics": 0.25,
+    "weight_treatment": 0.30,
+    "weight_safety": 0.10,
+    "acceptable_answers": [
+      {"field": "final_diagnosis", "answer": "STEMI"},
+      {"field": "final_diagnosis", "answer": "ST-elevation MI"}
+    ],
+    "critical_safety_errors": ["Discharge with ongoing chest pain"]
+  },
+  "status": "published"
+}

@@ -16,3 +16,11 @@ SMTP_PASS: str = os.environ.get("SMTP_PASS", "")
 ADMIN_USERNAME: str = os.environ.get("ADMIN_USERNAME", "admin")
 ADMIN_EMAIL: str = os.environ.get("ADMIN_EMAIL", "admin@example.com")
 ADMIN_PASSWORD: str = os.environ.get("ADMIN_PASSWORD", "changeme")
+
+EDUCATOR_USERNAME: str = os.environ.get("EDUCATOR_USERNAME", "educator")
+EDUCATOR_EMAIL: str = os.environ.get("EDUCATOR_EMAIL", "educator@example.com")
+EDUCATOR_PASSWORD: str = os.environ.get("EDUCATOR_PASSWORD", "changeme")
+
+LEARNER_USERNAME: str = os.environ.get("LEARNER_USERNAME", "user")
+LEARNER_EMAIL: str = os.environ.get("LEARNER_EMAIL", "user@example.com")
+LEARNER_PASSWORD: str = os.environ.get("LEARNER_PASSWORD", "changeme")

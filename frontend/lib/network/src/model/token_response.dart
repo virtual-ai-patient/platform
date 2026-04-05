@@ -11,12 +11,11 @@ part 'token_response.g.dart';
 /// TokenResponse
 ///
 /// Properties:
-/// * [accessToken]
-/// * [refreshToken]
-/// * [tokenType]
+/// * [accessToken] 
+/// * [refreshToken] 
+/// * [tokenType] 
 @BuiltValue()
-abstract class TokenResponse
-    implements Built<TokenResponse, TokenResponseBuilder> {
+abstract class TokenResponse implements Built<TokenResponse, TokenResponseBuilder> {
   @BuiltValueField(wireName: r'access_token')
   String get accessToken;
 
@@ -28,15 +27,14 @@ abstract class TokenResponse
 
   TokenResponse._();
 
-  factory TokenResponse([void updates(TokenResponseBuilder b)]) =
-      _$TokenResponse;
+  factory TokenResponse([void updates(TokenResponseBuilder b)]) = _$TokenResponse;
 
   @BuiltValueHook(initializeBuilder: true)
-  static void _defaults(TokenResponseBuilder b) => b..tokenType = 'bearer';
+  static void _defaults(TokenResponseBuilder b) => b
+      ..tokenType = 'bearer';
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<TokenResponse> get serializer =>
-      _$TokenResponseSerializer();
+  static Serializer<TokenResponse> get serializer => _$TokenResponseSerializer();
 }
 
 class _$TokenResponseSerializer implements PrimitiveSerializer<TokenResponse> {
@@ -76,9 +74,7 @@ class _$TokenResponseSerializer implements PrimitiveSerializer<TokenResponse> {
     TokenResponse object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
   }
 
   void _deserializeProperties(
@@ -142,3 +138,4 @@ class _$TokenResponseSerializer implements PrimitiveSerializer<TokenResponse> {
     return result.build();
   }
 }
+

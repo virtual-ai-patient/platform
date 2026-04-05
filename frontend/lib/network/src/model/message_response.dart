@@ -11,28 +11,24 @@ part 'message_response.g.dart';
 /// MessageResponse
 ///
 /// Properties:
-/// * [message]
+/// * [message] 
 @BuiltValue()
-abstract class MessageResponse
-    implements Built<MessageResponse, MessageResponseBuilder> {
+abstract class MessageResponse implements Built<MessageResponse, MessageResponseBuilder> {
   @BuiltValueField(wireName: r'message')
   String get message;
 
   MessageResponse._();
 
-  factory MessageResponse([void updates(MessageResponseBuilder b)]) =
-      _$MessageResponse;
+  factory MessageResponse([void updates(MessageResponseBuilder b)]) = _$MessageResponse;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(MessageResponseBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<MessageResponse> get serializer =>
-      _$MessageResponseSerializer();
+  static Serializer<MessageResponse> get serializer => _$MessageResponseSerializer();
 }
 
-class _$MessageResponseSerializer
-    implements PrimitiveSerializer<MessageResponse> {
+class _$MessageResponseSerializer implements PrimitiveSerializer<MessageResponse> {
   @override
   final Iterable<Type> types = const [MessageResponse, _$MessageResponse];
 
@@ -57,9 +53,7 @@ class _$MessageResponseSerializer
     MessageResponse object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
   }
 
   void _deserializeProperties(
@@ -109,3 +103,4 @@ class _$MessageResponseSerializer
     return result.build();
   }
 }
+

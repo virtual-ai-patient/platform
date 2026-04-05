@@ -16,13 +16,14 @@ class AuthHeroPanel extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(28),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.borderSubtle),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Virtual AI Patient',
+            'Built for medical education',
             style: theme.textTheme.headlineMedium?.copyWith(
               fontWeight: FontWeight.w700,
               color: AppColors.primaryText,
@@ -30,7 +31,7 @@ class AuthHeroPanel extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            'A high-fidelity medical simulation platform for safe-to-fail clinical training.',
+            'A high-fidelity simulation platform for safe-to-fail clinical training.',
             style: theme.textTheme.bodyLarge?.copyWith(
               color: AppColors.secondaryText,
               height: 1.45,
@@ -58,7 +59,7 @@ class _HeroBullet extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
         children: [
-          const Icon(Icons.check_circle, color: AppColors.brand, size: 18),
+          const Icon(Icons.check_circle, color: AppColors.brandTeal, size: 18),
           const SizedBox(width: 10),
           Expanded(
             child: Text(

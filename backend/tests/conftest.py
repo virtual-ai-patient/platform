@@ -110,9 +110,12 @@ def _insert_user(username: str, role: str) -> None:
 
 @pytest.fixture()
 def educator_headers(client: TestClient) -> dict[str, str]:
-    _insert_user("educator", "educator")
+    # Distinct from the platform-seeded EDUCATOR_USERNAME (default "educator") so
+    # tests do not violate unique constraints after lifespan seeding.
+    _insert_user("test_educator", "educator")
     tokens: dict[str, str] = client.post(
-        "/auth/login", data={"username": "educator", "password": _TEST_PASSWORD}
+        "/auth/login",
+        data={"username": "test_educator", "password": _TEST_PASSWORD},
     ).json()
     return {"Authorization": f"Bearer {tokens['access_token']}"}
 
@@ -122,5 +125,15 @@ def learner_headers(client: TestClient) -> dict[str, str]:
     _insert_user("learner", "learner")
     tokens: dict[str, str] = client.post(
         "/auth/login", data={"username": "learner", "password": _TEST_PASSWORD}
+    ).json()
+    return {"Authorization": f"Bearer {tokens['access_token']}"}
+
+
+@pytest.fixture()
+def admin_headers(client: TestClient) -> dict[str, str]:
+    _insert_user("test_admin_api", "admin")
+    tokens: dict[str, str] = client.post(
+        "/auth/login",
+        data={"username": "test_admin_api", "password": _TEST_PASSWORD},
     ).json()
     return {"Authorization": f"Bearer {tokens['access_token']}"}

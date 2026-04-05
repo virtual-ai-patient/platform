@@ -353,3 +353,7 @@ class CaseRepository:
 
         await self._session.commit()
         return await self.get_by_id(case.id)  # type: ignore[return-value]
+
+    async def delete(self, case: ClinicalCase) -> None:
+        await self._session.delete(case)
+        await self._session.commit()

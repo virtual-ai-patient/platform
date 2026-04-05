@@ -127,3 +127,6 @@ class CaseService:
     async def update(self, case: ClinicalCase, data: UpdateCaseRequest) -> CaseResponse:
         updated = await self._repo.update(case, data)
         return _to_response(updated)
+
+    async def delete_existing(self, case: ClinicalCase) -> None:
+        await self._repo.delete(case)

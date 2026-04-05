@@ -1,0 +1,61 @@
+{
+  "case_id": "seed_im_dka_004",
+  "title": "Nausea and rapid breathing",
+  "language": "en",
+  "difficulty": "medium",
+  "specialty": "internal_medicine",
+  "tags": ["diabetes", "metabolic"],
+  "age": 28,
+  "sex": "other",
+  "persona": "College student with known T1DM; ran out of insulin.",
+  "tone_presets": ["neutral"],
+  "chief_complaint": "Vomiting and fast breathing",
+  "history_of_present_illness": "Polyuria, polydipsia, abdominal pain 24h; stopped insulin 2 days ago.",
+  "key_history_points": {
+    "must_ask": ["Insulin adherence", "Ketones", "Infection screen"],
+    "nice_to_ask": ["Recent illness"],
+    "red_flags": ["Altered mental status", "K+ extremes"]
+  },
+  "final_diagnosis": "Diabetic ketoacidosis",
+  "differential": ["DKA", "HHS", "Sepsis"],
+  "investigations": {
+    "catalog_hints": ["ABG", "Ketones", "Anion gap"],
+    "expected": {
+      "must_order": ["Basic metabolic panel", "Venous blood gas", "Ketones"],
+      "optional": ["HbA1c"],
+      "should_not_order": ["Unnecessary CT abdomen"]
+    },
+    "results": [
+      {
+        "test_name": "Venous blood gas",
+        "result_type": "text_report",
+        "value": "pH 7.12, bicarbonate low."
+      },
+      {
+        "test_name": "Glucose",
+        "result_type": "lab_value",
+        "value": "486",
+        "unit": "mg/dL",
+        "reference_range": "70-99"
+      }
+    ]
+  },
+  "management": {
+    "diagnostic_plan": ["Fluid resuscitation", "Electrolyte monitoring"],
+    "treatment_plan": ["Insulin infusion protocol", "Treat precipitant"],
+    "contraindications": ["Bolus insulin without fluids in severe DKA"],
+    "follow_up": ["Diabetes education"]
+  },
+  "scoring": {
+    "weight_diagnosis": 0.35,
+    "weight_diagnostics": 0.25,
+    "weight_treatment": 0.30,
+    "weight_safety": 0.10,
+    "acceptable_answers": [
+      {"field": "final_diagnosis", "answer": "Diabetic ketoacidosis"},
+      {"field": "final_diagnosis", "answer": "DKA"}
+    ],
+    "critical_safety_errors": ["Missing potassium monitoring with insulin"]
+  },
+  "status": "published"
+}
