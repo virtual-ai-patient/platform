@@ -341,7 +341,8 @@ class _NewCaseDialogState extends State<_NewCaseDialog> {
   void _submit() {
     final dxErr = validateFinalDiagnosisClient(_finalDx.text);
     if (dxErr != null) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(dxErr)));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(dxErr)));
       return;
     }
     Navigator.of(context).pop(
@@ -541,7 +542,8 @@ class _EditCaseDialogState extends State<_EditCaseDialog> {
     }
     final dxErr = validateFinalDiagnosisClient(_dx.text);
     if (dxErr != null) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(dxErr)));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(dxErr)));
       return;
     }
     setState(() => _ageError = null);

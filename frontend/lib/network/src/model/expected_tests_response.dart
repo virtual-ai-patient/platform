@@ -12,11 +12,12 @@ part 'expected_tests_response.g.dart';
 /// ExpectedTestsResponse
 ///
 /// Properties:
-/// * [mustOrder] 
-/// * [optional] 
-/// * [shouldNotOrder] 
+/// * [mustOrder]
+/// * [optional]
+/// * [shouldNotOrder]
 @BuiltValue()
-abstract class ExpectedTestsResponse implements Built<ExpectedTestsResponse, ExpectedTestsResponseBuilder> {
+abstract class ExpectedTestsResponse
+    implements Built<ExpectedTestsResponse, ExpectedTestsResponseBuilder> {
   @BuiltValueField(wireName: r'must_order')
   BuiltList<String> get mustOrder;
 
@@ -28,18 +29,24 @@ abstract class ExpectedTestsResponse implements Built<ExpectedTestsResponse, Exp
 
   ExpectedTestsResponse._();
 
-  factory ExpectedTestsResponse([void updates(ExpectedTestsResponseBuilder b)]) = _$ExpectedTestsResponse;
+  factory ExpectedTestsResponse(
+      [void updates(ExpectedTestsResponseBuilder b)]) = _$ExpectedTestsResponse;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(ExpectedTestsResponseBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<ExpectedTestsResponse> get serializer => _$ExpectedTestsResponseSerializer();
+  static Serializer<ExpectedTestsResponse> get serializer =>
+      _$ExpectedTestsResponseSerializer();
 }
 
-class _$ExpectedTestsResponseSerializer implements PrimitiveSerializer<ExpectedTestsResponse> {
+class _$ExpectedTestsResponseSerializer
+    implements PrimitiveSerializer<ExpectedTestsResponse> {
   @override
-  final Iterable<Type> types = const [ExpectedTestsResponse, _$ExpectedTestsResponse];
+  final Iterable<Type> types = const [
+    ExpectedTestsResponse,
+    _$ExpectedTestsResponse
+  ];
 
   @override
   final String wireName = r'ExpectedTestsResponse';
@@ -72,7 +79,9 @@ class _$ExpectedTestsResponseSerializer implements PrimitiveSerializer<ExpectedT
     ExpectedTestsResponse object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+    return _serializeProperties(serializers, object,
+            specifiedType: specifiedType)
+        .toList();
   }
 
   void _deserializeProperties(
@@ -136,4 +145,3 @@ class _$ExpectedTestsResponseSerializer implements PrimitiveSerializer<ExpectedT
     return result.build();
   }
 }
-

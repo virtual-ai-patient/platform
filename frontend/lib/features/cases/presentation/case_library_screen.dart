@@ -217,166 +217,170 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
                         builder: (context, constraints) {
                           final showDrawer = constraints.maxWidth < 900;
                           final filterPane = _FilterPane(
-                      specialties: specialties.toList()..sort(),
-                      specialtyFilters: _specialtyFilters,
-                      difficultyFilters: _difficultyFilters,
-                      statusFilters: _statusFilters,
-                      showStatus: _canFilterStatus,
-                      onClear: () => setState(() {
-                        _specialtyFilters.clear();
-                        _difficultyFilters.clear();
-                        _statusFilters.clear();
-                      }),
-                      onSpecialtyToggle: (s) => setState(() {
-                        if (_specialtyFilters.contains(s)) {
-                          _specialtyFilters.remove(s);
-                        } else {
-                          _specialtyFilters.add(s);
-                        }
-                        _page = 0;
-                      }),
-                      onDifficultyToggle: (d) => setState(() {
-                        if (_difficultyFilters.contains(d)) {
-                          _difficultyFilters.remove(d);
-                        } else {
-                          _difficultyFilters.add(d);
-                        }
-                        _page = 0;
-                      }),
-                      onStatusToggle: (s) => setState(() {
-                        if (_statusFilters.contains(s)) {
-                          _statusFilters.remove(s);
-                        } else {
-                          _statusFilters.add(s);
-                        }
-                        _page = 0;
-                      }),
-                    );
+                            specialties: specialties.toList()..sort(),
+                            specialtyFilters: _specialtyFilters,
+                            difficultyFilters: _difficultyFilters,
+                            statusFilters: _statusFilters,
+                            showStatus: _canFilterStatus,
+                            onClear: () => setState(() {
+                              _specialtyFilters.clear();
+                              _difficultyFilters.clear();
+                              _statusFilters.clear();
+                            }),
+                            onSpecialtyToggle: (s) => setState(() {
+                              if (_specialtyFilters.contains(s)) {
+                                _specialtyFilters.remove(s);
+                              } else {
+                                _specialtyFilters.add(s);
+                              }
+                              _page = 0;
+                            }),
+                            onDifficultyToggle: (d) => setState(() {
+                              if (_difficultyFilters.contains(d)) {
+                                _difficultyFilters.remove(d);
+                              } else {
+                                _difficultyFilters.add(d);
+                              }
+                              _page = 0;
+                            }),
+                            onStatusToggle: (s) => setState(() {
+                              if (_statusFilters.contains(s)) {
+                                _statusFilters.remove(s);
+                              } else {
+                                _statusFilters.add(s);
+                              }
+                              _page = 0;
+                            }),
+                          );
 
-                    if (showDrawer) {
-                      return RefreshIndicator(
-                        color: AppColors.primaryBlue,
-                        onRefresh: _refresh,
-                        child: CustomScrollView(
-                          slivers: [
-                            SliverToBoxAdapter(
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                                child: TextField(
-                                  controller: _searchController,
-                                  decoration: InputDecoration(
-                                    hintText: 'Search cases…',
-                                    prefixIcon:
-                                        const Icon(Icons.search_rounded),
-                                    filled: true,
-                                    fillColor: AppColors.surfaceMuted,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(999),
-                                      borderSide: BorderSide.none,
+                          if (showDrawer) {
+                            return RefreshIndicator(
+                              color: AppColors.primaryBlue,
+                              onRefresh: _refresh,
+                              child: CustomScrollView(
+                                slivers: [
+                                  SliverToBoxAdapter(
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          16, 16, 16, 0),
+                                      child: TextField(
+                                        controller: _searchController,
+                                        decoration: InputDecoration(
+                                          hintText: 'Search cases…',
+                                          prefixIcon:
+                                              const Icon(Icons.search_rounded),
+                                          filled: true,
+                                          fillColor: AppColors.surfaceMuted,
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(999),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            ),
-                            SliverToBoxAdapter(
-                              child: ExpansionTile(
-                                title: Text(
-                                  'FILTERS',
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 12,
-                                    letterSpacing: 0.6,
-                                  ),
-                                ),
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 16,
+                                  SliverToBoxAdapter(
+                                    child: ExpansionTile(
+                                      title: Text(
+                                        'FILTERS',
+                                        style: GoogleFonts.inter(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 12,
+                                          letterSpacing: 0.6,
+                                        ),
+                                      ),
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 16,
+                                          ),
+                                          child: filterPane,
+                                        ),
+                                      ],
                                     ),
-                                    child: filterPane,
+                                  ),
+                                  SliverToBoxAdapter(
+                                    child: _MainPane(
+                                      filtered: filtered,
+                                      gridView: _gridView,
+                                      sortIndex: _sortIndex,
+                                      page: _page,
+                                      pageSize: _pageSize,
+                                      onSort: (i) =>
+                                          setState(() => _sortIndex = i),
+                                      onToggleView: () => setState(
+                                          () => _gridView = !_gridView),
+                                      onPage: (p) => setState(() => _page = p),
+                                      onOpenCase: openBriefing,
+                                      isManageTab: isManageTab,
+                                      manageEditMode: _manageEditMode,
+                                      onManageEditModeChanged: (v) =>
+                                          setState(() => _manageEditMode = v),
+                                      creatingCase: _creatingCase,
+                                      onEducatorNewCase: educatorNewCase,
+                                      managingCaseId: _managingCaseId,
+                                      onEducatorEdit: educatorEdit,
+                                      onEducatorDelete: educatorDelete,
+                                    ),
                                   ),
                                 ],
                               ),
-                            ),
-                            SliverToBoxAdapter(
-                              child: _MainPane(
-                                filtered: filtered,
-                                gridView: _gridView,
-                                sortIndex: _sortIndex,
-                                page: _page,
-                                pageSize: _pageSize,
-                                onSort: (i) => setState(() => _sortIndex = i),
-                                onToggleView: () =>
-                                    setState(() => _gridView = !_gridView),
-                                onPage: (p) => setState(() => _page = p),
-                                onOpenCase: openBriefing,
-                                isManageTab: isManageTab,
-                                manageEditMode: _manageEditMode,
-                                onManageEditModeChanged: (v) =>
-                                    setState(() => _manageEditMode = v),
-                                creatingCase: _creatingCase,
-                                onEducatorNewCase: educatorNewCase,
-                                managingCaseId: _managingCaseId,
-                                onEducatorEdit: educatorEdit,
-                                onEducatorDelete: educatorDelete,
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
+                            );
+                          }
 
-                    return RefreshIndicator(
-                      color: AppColors.primaryBlue,
-                      onRefresh: _refresh,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: 260,
-                            child: SingleChildScrollView(
-                              padding:
-                                  const EdgeInsets.fromLTRB(20, 20, 12, 20),
-                              child: filterPane,
+                          return RefreshIndicator(
+                            color: AppColors.primaryBlue,
+                            onRefresh: _refresh,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: 260,
+                                  child: SingleChildScrollView(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        20, 20, 12, 20),
+                                    child: filterPane,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: SingleChildScrollView(
+                                    physics:
+                                        const AlwaysScrollableScrollPhysics(),
+                                    padding: const EdgeInsets.fromLTRB(
+                                        12, 20, 20, 20),
+                                    child: _MainPane(
+                                      filtered: filtered,
+                                      gridView: _gridView,
+                                      sortIndex: _sortIndex,
+                                      page: _page,
+                                      pageSize: _pageSize,
+                                      onSort: (i) =>
+                                          setState(() => _sortIndex = i),
+                                      onToggleView: () => setState(
+                                          () => _gridView = !_gridView),
+                                      onPage: (p) => setState(() => _page = p),
+                                      onOpenCase: openBriefing,
+                                      isManageTab: isManageTab,
+                                      manageEditMode: _manageEditMode,
+                                      onManageEditModeChanged: (v) =>
+                                          setState(() => _manageEditMode = v),
+                                      creatingCase: _creatingCase,
+                                      onEducatorNewCase: educatorNewCase,
+                                      managingCaseId: _managingCaseId,
+                                      onEducatorEdit: educatorEdit,
+                                      onEducatorDelete: educatorDelete,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          Expanded(
-                            child: SingleChildScrollView(
-                              physics: const AlwaysScrollableScrollPhysics(),
-                              padding:
-                                  const EdgeInsets.fromLTRB(12, 20, 20, 20),
-                              child: _MainPane(
-                                filtered: filtered,
-                                gridView: _gridView,
-                                sortIndex: _sortIndex,
-                                page: _page,
-                                pageSize: _pageSize,
-                                onSort: (i) => setState(() => _sortIndex = i),
-                                onToggleView: () =>
-                                    setState(() => _gridView = !_gridView),
-                                onPage: (p) => setState(() => _page = p),
-                                onOpenCase: openBriefing,
-                                isManageTab: isManageTab,
-                                manageEditMode: _manageEditMode,
-                                onManageEditModeChanged: (v) =>
-                                    setState(() => _manageEditMode = v),
-                                creatingCase: _creatingCase,
-                                onEducatorNewCase: educatorNewCase,
-                                managingCaseId: _managingCaseId,
-                                onEducatorEdit: educatorEdit,
-                                onEducatorDelete: educatorDelete,
-                              ),
-                            ),
-                          ),
-                        ],
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
-              ),
-            ],
-          );
+                    ),
+                  ],
+                );
               },
             ),
           ),
@@ -1014,7 +1018,8 @@ class _LibraryCaseCard extends StatelessWidget {
               ),
               if (showManageActions)
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
                     color: _caseWorkflowStatusColor(caseItem.status)
                         .withValues(alpha: 0.12),
@@ -1095,9 +1100,7 @@ class _LibraryCaseCard extends StatelessWidget {
                 alignment: WrapAlignment.end,
                 children: [
                   TextButton(
-                    onPressed: actionBusy || onEdit == null
-                        ? null
-                        : onEdit,
+                    onPressed: actionBusy || onEdit == null ? null : onEdit,
                     child: Text(
                       'Edit',
                       style: GoogleFonts.inter(
@@ -1107,9 +1110,7 @@ class _LibraryCaseCard extends StatelessWidget {
                     ),
                   ),
                   TextButton(
-                    onPressed: actionBusy || onDelete == null
-                        ? null
-                        : onDelete,
+                    onPressed: actionBusy || onDelete == null ? null : onDelete,
                     style: TextButton.styleFrom(
                       foregroundColor: AppColors.danger,
                     ),

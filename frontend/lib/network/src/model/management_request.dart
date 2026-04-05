@@ -12,12 +12,13 @@ part 'management_request.g.dart';
 /// ManagementRequest
 ///
 /// Properties:
-/// * [diagnosticPlan] 
-/// * [treatmentPlan] 
-/// * [contraindications] 
-/// * [followUp] 
+/// * [diagnosticPlan]
+/// * [treatmentPlan]
+/// * [contraindications]
+/// * [followUp]
 @BuiltValue()
-abstract class ManagementRequest implements Built<ManagementRequest, ManagementRequestBuilder> {
+abstract class ManagementRequest
+    implements Built<ManagementRequest, ManagementRequestBuilder> {
   @BuiltValueField(wireName: r'diagnostic_plan')
   BuiltList<String> get diagnosticPlan;
 
@@ -32,16 +33,19 @@ abstract class ManagementRequest implements Built<ManagementRequest, ManagementR
 
   ManagementRequest._();
 
-  factory ManagementRequest([void updates(ManagementRequestBuilder b)]) = _$ManagementRequest;
+  factory ManagementRequest([void updates(ManagementRequestBuilder b)]) =
+      _$ManagementRequest;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(ManagementRequestBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<ManagementRequest> get serializer => _$ManagementRequestSerializer();
+  static Serializer<ManagementRequest> get serializer =>
+      _$ManagementRequestSerializer();
 }
 
-class _$ManagementRequestSerializer implements PrimitiveSerializer<ManagementRequest> {
+class _$ManagementRequestSerializer
+    implements PrimitiveSerializer<ManagementRequest> {
   @override
   final Iterable<Type> types = const [ManagementRequest, _$ManagementRequest];
 
@@ -81,7 +85,9 @@ class _$ManagementRequestSerializer implements PrimitiveSerializer<ManagementReq
     ManagementRequest object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+    return _serializeProperties(serializers, object,
+            specifiedType: specifiedType)
+        .toList();
   }
 
   void _deserializeProperties(
@@ -152,4 +158,3 @@ class _$ManagementRequestSerializer implements PrimitiveSerializer<ManagementReq
     return result.build();
   }
 }
-

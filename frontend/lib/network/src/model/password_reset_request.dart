@@ -11,26 +11,33 @@ part 'password_reset_request.g.dart';
 /// PasswordResetRequest
 ///
 /// Properties:
-/// * [email] 
+/// * [email]
 @BuiltValue()
-abstract class PasswordResetRequest implements Built<PasswordResetRequest, PasswordResetRequestBuilder> {
+abstract class PasswordResetRequest
+    implements Built<PasswordResetRequest, PasswordResetRequestBuilder> {
   @BuiltValueField(wireName: r'email')
   String get email;
 
   PasswordResetRequest._();
 
-  factory PasswordResetRequest([void updates(PasswordResetRequestBuilder b)]) = _$PasswordResetRequest;
+  factory PasswordResetRequest([void updates(PasswordResetRequestBuilder b)]) =
+      _$PasswordResetRequest;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(PasswordResetRequestBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<PasswordResetRequest> get serializer => _$PasswordResetRequestSerializer();
+  static Serializer<PasswordResetRequest> get serializer =>
+      _$PasswordResetRequestSerializer();
 }
 
-class _$PasswordResetRequestSerializer implements PrimitiveSerializer<PasswordResetRequest> {
+class _$PasswordResetRequestSerializer
+    implements PrimitiveSerializer<PasswordResetRequest> {
   @override
-  final Iterable<Type> types = const [PasswordResetRequest, _$PasswordResetRequest];
+  final Iterable<Type> types = const [
+    PasswordResetRequest,
+    _$PasswordResetRequest
+  ];
 
   @override
   final String wireName = r'PasswordResetRequest';
@@ -53,7 +60,9 @@ class _$PasswordResetRequestSerializer implements PrimitiveSerializer<PasswordRe
     PasswordResetRequest object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+    return _serializeProperties(serializers, object,
+            specifiedType: specifiedType)
+        .toList();
   }
 
   void _deserializeProperties(
@@ -103,4 +112,3 @@ class _$PasswordResetRequestSerializer implements PrimitiveSerializer<PasswordRe
     return result.build();
   }
 }
-

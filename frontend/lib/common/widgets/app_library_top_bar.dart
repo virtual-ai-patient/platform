@@ -99,28 +99,28 @@ class AppLibraryTopBar extends StatelessWidget implements PreferredSizeWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                      Text(
-                        session.user.username,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.end,
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
-                          color: AppColors.primaryText,
+                        Text(
+                          session.user.username,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.end,
+                          style: GoogleFonts.inter(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                            color: AppColors.primaryText,
+                          ),
                         ),
-                      ),
-                      Text(
-                        _roleLabel,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.end,
-                        style: GoogleFonts.inter(
-                          fontSize: 12,
-                          color: AppColors.secondaryText,
+                        Text(
+                          _roleLabel,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.end,
+                          style: GoogleFonts.inter(
+                            fontSize: 12,
+                            color: AppColors.secondaryText,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
                     ),
                   ),
                 ),

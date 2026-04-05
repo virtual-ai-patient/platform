@@ -40,4 +40,3 @@ export 'package:frontend/network/src/model/token_response.dart';
 export 'package:frontend/network/src/model/update_case_request.dart';
 export 'package:frontend/network/src/model/user_response.dart';
 export 'package:frontend/network/src/model/validation_error.dart';
-

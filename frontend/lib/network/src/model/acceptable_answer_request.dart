@@ -11,10 +11,11 @@ part 'acceptable_answer_request.g.dart';
 /// AcceptableAnswerRequest
 ///
 /// Properties:
-/// * [field] 
-/// * [answer] 
+/// * [field]
+/// * [answer]
 @BuiltValue()
-abstract class AcceptableAnswerRequest implements Built<AcceptableAnswerRequest, AcceptableAnswerRequestBuilder> {
+abstract class AcceptableAnswerRequest
+    implements Built<AcceptableAnswerRequest, AcceptableAnswerRequestBuilder> {
   @BuiltValueField(wireName: r'field')
   String get field;
 
@@ -23,18 +24,25 @@ abstract class AcceptableAnswerRequest implements Built<AcceptableAnswerRequest,
 
   AcceptableAnswerRequest._();
 
-  factory AcceptableAnswerRequest([void updates(AcceptableAnswerRequestBuilder b)]) = _$AcceptableAnswerRequest;
+  factory AcceptableAnswerRequest(
+          [void updates(AcceptableAnswerRequestBuilder b)]) =
+      _$AcceptableAnswerRequest;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(AcceptableAnswerRequestBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<AcceptableAnswerRequest> get serializer => _$AcceptableAnswerRequestSerializer();
+  static Serializer<AcceptableAnswerRequest> get serializer =>
+      _$AcceptableAnswerRequestSerializer();
 }
 
-class _$AcceptableAnswerRequestSerializer implements PrimitiveSerializer<AcceptableAnswerRequest> {
+class _$AcceptableAnswerRequestSerializer
+    implements PrimitiveSerializer<AcceptableAnswerRequest> {
   @override
-  final Iterable<Type> types = const [AcceptableAnswerRequest, _$AcceptableAnswerRequest];
+  final Iterable<Type> types = const [
+    AcceptableAnswerRequest,
+    _$AcceptableAnswerRequest
+  ];
 
   @override
   final String wireName = r'AcceptableAnswerRequest';
@@ -62,7 +70,9 @@ class _$AcceptableAnswerRequestSerializer implements PrimitiveSerializer<Accepta
     AcceptableAnswerRequest object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+    return _serializeProperties(serializers, object,
+            specifiedType: specifiedType)
+        .toList();
   }
 
   void _deserializeProperties(
@@ -119,4 +129,3 @@ class _$AcceptableAnswerRequestSerializer implements PrimitiveSerializer<Accepta
     return result.build();
   }
 }
-
