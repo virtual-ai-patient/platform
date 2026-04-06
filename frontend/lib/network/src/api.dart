@@ -10,6 +10,7 @@ import 'package:frontend/network/src/auth/basic_auth.dart';
 import 'package:frontend/network/src/auth/bearer_auth.dart';
 import 'package:frontend/network/src/auth/oauth.dart';
 import 'package:frontend/network/src/api/auth_api.dart';
+import 'package:frontend/network/src/api/cases_api.dart';
 
 class Openapi {
   static const String basePath = r'http://localhost';
@@ -80,5 +81,11 @@ class Openapi {
   /// by doing that all interceptors will not be executed
   AuthApi getAuthApi() {
     return AuthApi(dio, serializers);
+  }
+
+  /// Get CasesApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  CasesApi getCasesApi() {
+    return CasesApi(dio, serializers);
   }
 }

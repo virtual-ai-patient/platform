@@ -17,7 +17,6 @@ class User(Base):
     hashed_password: Mapped[str] = mapped_column(String, nullable=False)
     role: Mapped[str] = mapped_column(String, nullable=False, default="learner")
 
-
 class ResetToken(Base):
     __tablename__ = "reset_tokens"
 

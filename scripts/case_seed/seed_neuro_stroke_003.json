@@ -1,0 +1,61 @@
+{
+  "case_id": "seed_neuro_stroke_003",
+  "title": "Sudden weakness and speech difficulty",
+  "language": "en",
+  "difficulty": "hard",
+  "specialty": "neurology",
+  "tags": ["stroke", "neurology"],
+  "age": 72,
+  "sex": "male",
+  "persona": "Retired teacher; wife noticed slurred speech this morning.",
+  "tone_presets": ["neutral", "anxious"],
+  "chief_complaint": "Left arm weak, words slurred",
+  "history_of_present_illness": "Awakening deficit; last known well unclear; on anticoagulant for AF.",
+  "key_history_points": {
+    "must_ask": ["Last known well", "Anticoagulation", "NIHSS-oriented exam"],
+    "nice_to_ask": ["Recent trauma", "Seizure"],
+    "red_flags": ["Rapid deterioration", "Coma"]
+  },
+  "final_diagnosis": "Acute ischemic stroke",
+  "differential": ["Ischemic stroke", "Seizure Todd paralysis", "Hypoglycemia"],
+  "investigations": {
+    "catalog_hints": ["CT head", "Glucose"],
+    "expected": {
+      "must_order": ["Non-contrast CT head", "Glucose", "Coagulation panel"],
+      "optional": ["CTA", "MRI"],
+      "should_not_order": ["Lumbar puncture before imaging"]
+    },
+    "results": [
+      {
+        "test_name": "Non-contrast CT head",
+        "result_type": "text_report",
+        "value": "No hemorrhage; early ischemic changes subtle."
+      },
+      {
+        "test_name": "Glucose",
+        "result_type": "lab_value",
+        "value": "112",
+        "unit": "mg/dL",
+        "reference_range": "70-99"
+      }
+    ]
+  },
+  "management": {
+    "diagnostic_plan": ["Code stroke pathway", "Neuroimaging"],
+    "treatment_plan": ["Thrombolysis/thrombectomy per criteria"],
+    "contraindications": ["Delaying time-sensitive evaluation"],
+    "follow_up": ["Stroke rehab planning"]
+  },
+  "scoring": {
+    "weight_diagnosis": 0.35,
+    "weight_diagnostics": 0.25,
+    "weight_treatment": 0.30,
+    "weight_safety": 0.10,
+    "acceptable_answers": [
+      {"field": "final_diagnosis", "answer": "Acute ischemic stroke"},
+      {"field": "final_diagnosis", "answer": "Ischemic stroke"}
+    ],
+    "critical_safety_errors": ["Missing anticoagulation before lytics"]
+  },
+  "status": "published"
+}

@@ -97,6 +97,20 @@ def test_create_case_learner_forbidden(
     assert r.status_code == 403
 
 
+def test_list_cases_admin_forbidden(
+    client: TestClient, admin_headers: dict[str, str]
+) -> None:
+    r = client.get("/cases", headers=admin_headers)
+    assert r.status_code == 403
+
+
+def test_create_case_admin_forbidden(
+    client: TestClient, admin_headers: dict[str, str]
+) -> None:
+    r = client.post("/cases", json=_minimal_case(), headers=admin_headers)
+    assert r.status_code == 403
+
+
 def test_create_case_unauthenticated(client: TestClient) -> None:
     r = client.post("/cases", json=_minimal_case())
     assert r.status_code == 401
@@ -133,6 +147,15 @@ def test_create_case_invalid_language(
 ) -> None:
     payload = _minimal_case()
     payload["language"] = "fr"
+    r = client.post("/cases", json=payload, headers=educator_headers)
+    assert r.status_code == 422
+
+
+def test_create_case_placeholder_final_diagnosis(
+    client: TestClient, educator_headers: dict[str, str]
+) -> None:
+    payload = _minimal_case()
+    payload["final_diagnosis"] = "unknown"
     r = client.post("/cases", json=payload, headers=educator_headers)
     assert r.status_code == 422
 
@@ -300,4 +323,50 @@ def test_update_case_unauthenticated(client: TestClient) -> None:
         "/cases/00000000-0000-0000-0000-000000000000",
         json={"title": "Nope"},
     )
+    assert r.status_code == 401
+
+
+# ---------------------------------------------------------------------------
+# DELETE /cases/{id}
+# ---------------------------------------------------------------------------
+
+
+def test_delete_case_success(
+    client: TestClient, educator_headers: dict[str, str]
+) -> None:
+    r = client.post("/cases", json=_minimal_case(), headers=educator_headers)
+    assert r.status_code == 201
+    case_id = r.json()["id"]
+
+    d = client.delete(f"/cases/{case_id}", headers=educator_headers)
+    assert d.status_code == 204
+
+    r2 = client.get("/cases", headers=educator_headers)
+    assert r2.status_code == 200
+    assert len(r2.json()) == 0
+
+
+def test_delete_case_learner_forbidden(
+    client: TestClient,
+    educator_headers: dict[str, str],
+    learner_headers: dict[str, str],
+) -> None:
+    r = client.post("/cases", json=_minimal_case(), headers=educator_headers)
+    case_id = r.json()["id"]
+    d = client.delete(f"/cases/{case_id}", headers=learner_headers)
+    assert d.status_code == 403
+
+
+def test_delete_case_not_found(
+    client: TestClient, educator_headers: dict[str, str]
+) -> None:
+    d = client.delete(
+        "/cases/00000000-0000-0000-0000-000000000000",
+        headers=educator_headers,
+    )
+    assert d.status_code == 404
+
+
+def test_delete_case_unauthenticated(client: TestClient) -> None:
+    r = client.delete("/cases/00000000-0000-0000-0000-000000000000")
     assert r.status_code == 401

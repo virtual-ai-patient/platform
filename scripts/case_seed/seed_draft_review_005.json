@@ -1,0 +1,53 @@
+{
+  "case_id": "seed_draft_review_005",
+  "title": "Chronic cough (draft example)",
+  "language": "en",
+  "difficulty": "easy",
+  "specialty": "primary_care",
+  "tags": ["respiratory", "draft"],
+  "age": 45,
+  "sex": "female",
+  "persona": "Non-smoker office worker; cough 6 weeks.",
+  "tone_presets": ["neutral"],
+  "chief_complaint": "Persistent dry cough",
+  "history_of_present_illness": "Post-viral; no fever; worse at night.",
+  "key_history_points": {
+    "must_ask": ["Duration", "Hemoptysis", "Weight loss"],
+    "nice_to_ask": ["GERD symptoms", "ACE inhibitor"],
+    "red_flags": ["Hemoptysis", "Night sweats"]
+  },
+  "final_diagnosis": "Post-infectious cough",
+  "differential": ["Post-infectious cough", "Asthma", "GERD"],
+  "investigations": {
+    "catalog_hints": ["CXR if red flags"],
+    "expected": {
+      "must_order": ["Chest X-ray"],
+      "optional": ["Spirometry"],
+      "should_not_order": ["Broad antibiotics without indication"]
+    },
+    "results": [
+      {
+        "test_name": "Chest X-ray",
+        "result_type": "text_report",
+        "value": "Clear lungs."
+      }
+    ]
+  },
+  "management": {
+    "diagnostic_plan": ["Rule out serious causes"],
+    "treatment_plan": ["Symptomatic care", "Reassurance"],
+    "contraindications": ["Missing TB or malignancy signs"],
+    "follow_up": ["Return if red flags"]
+  },
+  "scoring": {
+    "weight_diagnosis": 0.35,
+    "weight_diagnostics": 0.25,
+    "weight_treatment": 0.30,
+    "weight_safety": 0.10,
+    "acceptable_answers": [
+      {"field": "final_diagnosis", "answer": "Post-infectious cough"}
+    ],
+    "critical_safety_errors": ["Ignoring hemoptysis"]
+  },
+  "status": "draft"
+}

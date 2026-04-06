@@ -1,0 +1,54 @@
+{
+  "case_id": "seed_peds_otitis_002",
+  "title": "Ear pain in a child",
+  "language": "en",
+  "difficulty": "easy",
+  "specialty": "pediatrics",
+  "tags": ["ear_pain", "primary_care"],
+  "age": 4,
+  "sex": "female",
+  "persona": "Toddler with mother; irritable, tugging ear.",
+  "tone_presets": ["neutral"],
+  "chief_complaint": "Ear hurts",
+  "history_of_present_illness": "Two days nasal congestion, fever to 38.6°C, decreased sleep.",
+  "key_history_points": {
+    "must_ask": ["Duration", "Fever pattern", "Prior ear infections"],
+    "nice_to_ask": ["Daycare exposure"],
+    "red_flags": ["Neck stiffness", "Facial swelling"]
+  },
+  "final_diagnosis": "Acute otitis media",
+  "differential": ["Otitis media", "Otitis externa", "Referred dental pain"],
+  "investigations": {
+    "catalog_hints": ["Otoscopy"],
+    "expected": {
+      "must_order": ["Otoscopic exam"],
+      "optional": ["Tympanometry"],
+      "should_not_order": ["CT head"]
+    },
+    "results": [
+      {
+        "test_name": "Otoscopic exam",
+        "result_type": "text_report",
+        "value": "Bulging erythematous TM, middle ear effusion."
+      }
+    ]
+  },
+  "management": {
+    "diagnostic_plan": ["Focused ENT exam", "Age-appropriate analgesia"],
+    "treatment_plan": ["Antibiotics per guideline", "Follow-up"],
+    "contraindications": ["Ignoring mastoid tenderness"],
+    "follow_up": ["Re-evaluate if fever persists"]
+  },
+  "scoring": {
+    "weight_diagnosis": 0.35,
+    "weight_diagnostics": 0.25,
+    "weight_treatment": 0.30,
+    "weight_safety": 0.10,
+    "acceptable_answers": [
+      {"field": "final_diagnosis", "answer": "Acute otitis media"},
+      {"field": "final_diagnosis", "answer": "AOM"}
+    ],
+    "critical_safety_errors": ["Missing complicated infection signs"]
+  },
+  "status": "published"
+}

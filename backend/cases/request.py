@@ -53,6 +53,34 @@ class AcceptableAnswerRequest(BaseModel):
 
 _WEIGHT_TOLERANCE = 1e-6
 
+_FINAL_DIAGNOSIS_PLACEHOLDERS = frozenset(
+    {
+        "to be determined",
+        "tbd",
+        "unknown",
+        "n/a",
+        "na",
+        "pending",
+        "???",
+        "none",
+        "placeholder",
+    }
+)
+
+
+def validate_final_diagnosis_value(v: str) -> str:
+    """Ground truth must be concrete (not empty or generic placeholder)."""
+    t = v.strip()
+    if len(t) < 2:
+        raise ValueError(
+            "Final diagnosis (ground truth) must be at least 2 characters"
+        )
+    if t.lower() in _FINAL_DIAGNOSIS_PLACEHOLDERS:
+        raise ValueError(
+            "Enter a specific final diagnosis (ground truth), not a placeholder"
+        )
+    return t
+
 
 class ScoringRequest(BaseModel):
     weight_diagnosis: Annotated[float, ">=0"]
@@ -104,6 +132,11 @@ class CreateCaseRequest(BaseModel):
             raise ValueError("case_id must not be empty")
         return v
 
+    @field_validator("final_diagnosis")
+    @classmethod
+    def final_diagnosis_ground_truth(cls, v: str) -> str:
+        return validate_final_diagnosis_value(v)
+
 
 class UpdateCaseRequest(BaseModel):
     title: str | None = None
@@ -125,3 +158,10 @@ class UpdateCaseRequest(BaseModel):
     management: ManagementRequest | None = None
     scoring: ScoringRequest | None = None
     status: Literal["draft", "review", "published"] | None = None
+
+    @field_validator("final_diagnosis")
+    @classmethod
+    def final_diagnosis_if_set(cls, v: str | None) -> str | None:
+        if v is None:
+            return None
+        return validate_final_diagnosis_value(v)

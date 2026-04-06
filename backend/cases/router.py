@@ -80,3 +80,17 @@ async def create_case(
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT, detail=str(exc)
         ) from exc
+
+
+@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_case(
+    id: str,
+    current_user: User = Depends(_require_educator),
+    service: CaseService = Depends(get_case_service),
+) -> None:
+    case = await service.get_by_id(id)
+    if case is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Case not found"
+        )
+    await service.delete_existing(case)

@@ -235,10 +235,250 @@
                     }
                 }
             }
+        },
+        "/cases": {
+            "get": {
+                "tags": [
+                    "cases"
+                ],
+                "summary": "List Cases",
+                "operationId": "list_cases_cases_get",
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "enum": [
+                                        "draft",
+                                        "review",
+                                        "published"
+                                    ],
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Educators: filter by workflow status",
+                            "title": "Status"
+                        },
+                        "description": "Educators: filter by workflow status"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CaseResponse"
+                                    },
+                                    "title": "Response List Cases Cases Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "cases"
+                ],
+                "summary": "Create Case",
+                "operationId": "create_case_cases_post",
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateCaseRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CaseResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/cases/{id}": {
+            "put": {
+                "tags": [
+                    "cases"
+                ],
+                "summary": "Update Case",
+                "operationId": "update_case_cases__id__put",
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateCaseRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CaseResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "cases"
+                ],
+                "summary": "Delete Case",
+                "operationId": "delete_case_cases__id__delete",
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful Response"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
         "schemas": {
+            "AcceptableAnswerRequest": {
+                "properties": {
+                    "field": {
+                        "type": "string",
+                        "title": "Field"
+                    },
+                    "answer": {
+                        "type": "string",
+                        "title": "Answer"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "field",
+                    "answer"
+                ],
+                "title": "AcceptableAnswerRequest"
+            },
+            "AcceptableAnswerResponse": {
+                "properties": {
+                    "field": {
+                        "type": "string",
+                        "title": "Field"
+                    },
+                    "answer": {
+                        "type": "string",
+                        "title": "Answer"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "field",
+                    "answer"
+                ],
+                "title": "AcceptableAnswerResponse"
+            },
             "Body_login_auth_login_post": {
                 "properties": {
                     "grant_type": {
@@ -298,6 +538,340 @@
                 ],
                 "title": "Body_login_auth_login_post"
             },
+            "CaseResponse": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
+                    "case_id": {
+                        "type": "string",
+                        "title": "Case Id"
+                    },
+                    "status": {
+                        "type": "string",
+                        "title": "Status"
+                    },
+                    "version": {
+                        "type": "integer",
+                        "title": "Version"
+                    },
+                    "created_by": {
+                        "type": "string",
+                        "title": "Created By"
+                    },
+                    "title": {
+                        "type": "string",
+                        "title": "Title"
+                    },
+                    "language": {
+                        "type": "string",
+                        "title": "Language"
+                    },
+                    "difficulty": {
+                        "type": "string",
+                        "title": "Difficulty"
+                    },
+                    "specialty": {
+                        "type": "string",
+                        "title": "Specialty"
+                    },
+                    "tags": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Tags"
+                    },
+                    "age": {
+                        "type": "integer",
+                        "title": "Age"
+                    },
+                    "sex": {
+                        "type": "string",
+                        "title": "Sex"
+                    },
+                    "persona": {
+                        "type": "string",
+                        "title": "Persona"
+                    },
+                    "tone_presets": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Tone Presets"
+                    },
+                    "chief_complaint": {
+                        "type": "string",
+                        "title": "Chief Complaint"
+                    },
+                    "history_of_present_illness": {
+                        "type": "string",
+                        "title": "History Of Present Illness"
+                    },
+                    "key_history_points": {
+                        "$ref": "#/components/schemas/KeyHistoryPointsResponse"
+                    },
+                    "final_diagnosis": {
+                        "type": "string",
+                        "title": "Final Diagnosis"
+                    },
+                    "differential": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Differential"
+                    },
+                    "severity_or_stage": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Severity Or Stage"
+                    },
+                    "investigations": {
+                        "$ref": "#/components/schemas/InvestigationsResponse"
+                    },
+                    "management": {
+                        "$ref": "#/components/schemas/ManagementResponse"
+                    },
+                    "scoring": {
+                        "$ref": "#/components/schemas/ScoringResponse"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "case_id",
+                    "status",
+                    "version",
+                    "created_by",
+                    "title",
+                    "language",
+                    "difficulty",
+                    "specialty",
+                    "tags",
+                    "age",
+                    "sex",
+                    "persona",
+                    "tone_presets",
+                    "chief_complaint",
+                    "history_of_present_illness",
+                    "key_history_points",
+                    "final_diagnosis",
+                    "differential",
+                    "severity_or_stage",
+                    "investigations",
+                    "management",
+                    "scoring"
+                ],
+                "title": "CaseResponse"
+            },
+            "CreateCaseRequest": {
+                "properties": {
+                    "case_id": {
+                        "type": "string",
+                        "title": "Case Id"
+                    },
+                    "title": {
+                        "type": "string",
+                        "title": "Title"
+                    },
+                    "language": {
+                        "type": "string",
+                        "const": "en",
+                        "title": "Language"
+                    },
+                    "difficulty": {
+                        "type": "string",
+                        "enum": [
+                            "easy",
+                            "medium",
+                            "hard"
+                        ],
+                        "title": "Difficulty"
+                    },
+                    "specialty": {
+                        "type": "string",
+                        "title": "Specialty"
+                    },
+                    "tags": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Tags",
+                        "default": []
+                    },
+                    "age": {
+                        "type": "integer",
+                        "title": "Age"
+                    },
+                    "sex": {
+                        "type": "string",
+                        "enum": [
+                            "female",
+                            "male",
+                            "other"
+                        ],
+                        "title": "Sex"
+                    },
+                    "persona": {
+                        "type": "string",
+                        "title": "Persona"
+                    },
+                    "tone_presets": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Tone Presets",
+                        "default": []
+                    },
+                    "chief_complaint": {
+                        "type": "string",
+                        "title": "Chief Complaint"
+                    },
+                    "history_of_present_illness": {
+                        "type": "string",
+                        "title": "History Of Present Illness"
+                    },
+                    "key_history_points": {
+                        "$ref": "#/components/schemas/KeyHistoryPointsRequest"
+                    },
+                    "final_diagnosis": {
+                        "type": "string",
+                        "title": "Final Diagnosis"
+                    },
+                    "differential": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Differential",
+                        "default": []
+                    },
+                    "severity_or_stage": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Severity Or Stage"
+                    },
+                    "investigations": {
+                        "$ref": "#/components/schemas/InvestigationsRequest"
+                    },
+                    "management": {
+                        "$ref": "#/components/schemas/ManagementRequest"
+                    },
+                    "scoring": {
+                        "$ref": "#/components/schemas/ScoringRequest"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "draft",
+                            "review",
+                            "published"
+                        ],
+                        "title": "Status",
+                        "default": "draft"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "case_id",
+                    "title",
+                    "language",
+                    "difficulty",
+                    "specialty",
+                    "age",
+                    "sex",
+                    "persona",
+                    "chief_complaint",
+                    "history_of_present_illness",
+                    "key_history_points",
+                    "final_diagnosis",
+                    "investigations",
+                    "management",
+                    "scoring"
+                ],
+                "title": "CreateCaseRequest"
+            },
+            "ExpectedTestsRequest": {
+                "properties": {
+                    "must_order": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Must Order"
+                    },
+                    "optional": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Optional"
+                    },
+                    "should_not_order": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Should Not Order"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "must_order",
+                    "optional",
+                    "should_not_order"
+                ],
+                "title": "ExpectedTestsRequest"
+            },
+            "ExpectedTestsResponse": {
+                "properties": {
+                    "must_order": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Must Order"
+                    },
+                    "optional": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Optional"
+                    },
+                    "should_not_order": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Should Not Order"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "must_order",
+                    "optional",
+                    "should_not_order"
+                ],
+                "title": "ExpectedTestsResponse"
+            },
             "HTTPValidationError": {
                 "properties": {
                     "detail": {
@@ -310,6 +884,302 @@
                 },
                 "type": "object",
                 "title": "HTTPValidationError"
+            },
+            "InvestigationResultRequest": {
+                "properties": {
+                    "test_name": {
+                        "type": "string",
+                        "title": "Test Name"
+                    },
+                    "result_type": {
+                        "type": "string",
+                        "enum": [
+                            "text_report",
+                            "lab_value"
+                        ],
+                        "title": "Result Type"
+                    },
+                    "value": {
+                        "type": "string",
+                        "title": "Value"
+                    },
+                    "unit": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Unit"
+                    },
+                    "reference_range": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Reference Range"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "test_name",
+                    "result_type",
+                    "value"
+                ],
+                "title": "InvestigationResultRequest"
+            },
+            "InvestigationResultResponse": {
+                "properties": {
+                    "test_name": {
+                        "type": "string",
+                        "title": "Test Name"
+                    },
+                    "result_type": {
+                        "type": "string",
+                        "title": "Result Type"
+                    },
+                    "value": {
+                        "type": "string",
+                        "title": "Value"
+                    },
+                    "unit": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Unit"
+                    },
+                    "reference_range": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Reference Range"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "test_name",
+                    "result_type",
+                    "value",
+                    "unit",
+                    "reference_range"
+                ],
+                "title": "InvestigationResultResponse"
+            },
+            "InvestigationsRequest": {
+                "properties": {
+                    "catalog_hints": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Catalog Hints",
+                        "default": []
+                    },
+                    "expected": {
+                        "$ref": "#/components/schemas/ExpectedTestsRequest"
+                    },
+                    "results": {
+                        "items": {
+                            "$ref": "#/components/schemas/InvestigationResultRequest"
+                        },
+                        "type": "array",
+                        "title": "Results",
+                        "default": []
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "expected"
+                ],
+                "title": "InvestigationsRequest"
+            },
+            "InvestigationsResponse": {
+                "properties": {
+                    "catalog_hints": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Catalog Hints"
+                    },
+                    "expected": {
+                        "$ref": "#/components/schemas/ExpectedTestsResponse"
+                    },
+                    "results": {
+                        "items": {
+                            "$ref": "#/components/schemas/InvestigationResultResponse"
+                        },
+                        "type": "array",
+                        "title": "Results"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "catalog_hints",
+                    "expected",
+                    "results"
+                ],
+                "title": "InvestigationsResponse"
+            },
+            "KeyHistoryPointsRequest": {
+                "properties": {
+                    "must_ask": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Must Ask"
+                    },
+                    "nice_to_ask": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Nice To Ask"
+                    },
+                    "red_flags": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Red Flags"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "must_ask",
+                    "nice_to_ask",
+                    "red_flags"
+                ],
+                "title": "KeyHistoryPointsRequest"
+            },
+            "KeyHistoryPointsResponse": {
+                "properties": {
+                    "must_ask": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Must Ask"
+                    },
+                    "nice_to_ask": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Nice To Ask"
+                    },
+                    "red_flags": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Red Flags"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "must_ask",
+                    "nice_to_ask",
+                    "red_flags"
+                ],
+                "title": "KeyHistoryPointsResponse"
+            },
+            "ManagementRequest": {
+                "properties": {
+                    "diagnostic_plan": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Diagnostic Plan"
+                    },
+                    "treatment_plan": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Treatment Plan"
+                    },
+                    "contraindications": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Contraindications"
+                    },
+                    "follow_up": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Follow Up"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "diagnostic_plan",
+                    "treatment_plan",
+                    "contraindications",
+                    "follow_up"
+                ],
+                "title": "ManagementRequest"
+            },
+            "ManagementResponse": {
+                "properties": {
+                    "diagnostic_plan": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Diagnostic Plan"
+                    },
+                    "treatment_plan": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Treatment Plan"
+                    },
+                    "contraindications": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Contraindications"
+                    },
+                    "follow_up": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Follow Up"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "diagnostic_plan",
+                    "treatment_plan",
+                    "contraindications",
+                    "follow_up"
+                ],
+                "title": "ManagementResponse"
             },
             "MessageResponse": {
                 "properties": {
@@ -369,6 +1239,94 @@
                 ],
                 "title": "RefreshRequest"
             },
+            "ScoringRequest": {
+                "properties": {
+                    "weight_diagnosis": {
+                        "type": "number",
+                        "title": "Weight Diagnosis"
+                    },
+                    "weight_diagnostics": {
+                        "type": "number",
+                        "title": "Weight Diagnostics"
+                    },
+                    "weight_treatment": {
+                        "type": "number",
+                        "title": "Weight Treatment"
+                    },
+                    "weight_safety": {
+                        "type": "number",
+                        "title": "Weight Safety"
+                    },
+                    "acceptable_answers": {
+                        "items": {
+                            "$ref": "#/components/schemas/AcceptableAnswerRequest"
+                        },
+                        "type": "array",
+                        "title": "Acceptable Answers",
+                        "default": []
+                    },
+                    "critical_safety_errors": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Critical Safety Errors",
+                        "default": []
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "weight_diagnosis",
+                    "weight_diagnostics",
+                    "weight_treatment",
+                    "weight_safety"
+                ],
+                "title": "ScoringRequest"
+            },
+            "ScoringResponse": {
+                "properties": {
+                    "weight_diagnosis": {
+                        "type": "number",
+                        "title": "Weight Diagnosis"
+                    },
+                    "weight_diagnostics": {
+                        "type": "number",
+                        "title": "Weight Diagnostics"
+                    },
+                    "weight_treatment": {
+                        "type": "number",
+                        "title": "Weight Treatment"
+                    },
+                    "weight_safety": {
+                        "type": "number",
+                        "title": "Weight Safety"
+                    },
+                    "acceptable_answers": {
+                        "items": {
+                            "$ref": "#/components/schemas/AcceptableAnswerResponse"
+                        },
+                        "type": "array",
+                        "title": "Acceptable Answers"
+                    },
+                    "critical_safety_errors": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Critical Safety Errors"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "weight_diagnosis",
+                    "weight_diagnostics",
+                    "weight_treatment",
+                    "weight_safety",
+                    "acceptable_answers",
+                    "critical_safety_errors"
+                ],
+                "title": "ScoringResponse"
+            },
             "SignupRequest": {
                 "properties": {
                     "username": {
@@ -415,6 +1373,242 @@
                     "refresh_token"
                 ],
                 "title": "TokenResponse"
+            },
+            "UpdateCaseRequest": {
+                "properties": {
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title"
+                    },
+                    "language": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "const": "en"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Language"
+                    },
+                    "difficulty": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "easy",
+                                    "medium",
+                                    "hard"
+                                ]
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Difficulty"
+                    },
+                    "specialty": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Specialty"
+                    },
+                    "tags": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tags"
+                    },
+                    "age": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Age"
+                    },
+                    "sex": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "female",
+                                    "male",
+                                    "other"
+                                ]
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Sex"
+                    },
+                    "persona": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Persona"
+                    },
+                    "tone_presets": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tone Presets"
+                    },
+                    "chief_complaint": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Chief Complaint"
+                    },
+                    "history_of_present_illness": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "History Of Present Illness"
+                    },
+                    "key_history_points": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/KeyHistoryPointsRequest"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "final_diagnosis": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Final Diagnosis"
+                    },
+                    "differential": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Differential"
+                    },
+                    "severity_or_stage": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Severity Or Stage"
+                    },
+                    "investigations": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/InvestigationsRequest"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "management": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/ManagementRequest"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "scoring": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/ScoringRequest"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "status": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "draft",
+                                    "review",
+                                    "published"
+                                ]
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Status"
+                    }
+                },
+                "type": "object",
+                "title": "UpdateCaseRequest"
             },
             "UserResponse": {
                 "properties": {

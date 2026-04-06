@@ -28,9 +28,16 @@ services:
       # Override DATABASE_URL to reach postgres via the Docker service name.
       DATABASE_URL: "postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}"
       PYTHONUNBUFFERED: "1"
-      ADMIN_USERNAME: ${ADMIN_USERNAME}
-      ADMIN_EMAIL: ${ADMIN_EMAIL}
-      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      # Defaults match backend/config.py when unset (avoids Compose "variable is not set" warnings).
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@example.com}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-changeme}
+      EDUCATOR_USERNAME: ${EDUCATOR_USERNAME:-educator}
+      EDUCATOR_EMAIL: ${EDUCATOR_EMAIL:-educator@example.com}
+      EDUCATOR_PASSWORD: ${EDUCATOR_PASSWORD:-changeme}
+      LEARNER_USERNAME: ${LEARNER_USERNAME:-user}
+      LEARNER_EMAIL: ${LEARNER_EMAIL:-user@example.com}
+      LEARNER_PASSWORD: ${LEARNER_PASSWORD:-changeme}
     ports:
       - "8000:8000"
     depends_on:
@@ -55,19 +62,19 @@ services:
       BACKEND_BASE_URL: "http://backend:8000"
     restart: unless-stopped
 
-  bot:
-    build:
-      context: ./bot
-      dockerfile: Dockerfile
-    container_name: virtual-ai-patient-bot
-    depends_on:
-      - backend
-    environment:
-      TELEGRAM_BOT_TOKEN: "REPLACE_WITH_REAL_TOKEN"
-      BACKEND_BASE_URL: "http://backend:8000"
-      BACKEND_USERNAME: "admin"
-      BACKEND_PASSWORD: "password"
-    restart: unless-stopped
+  # bot:
+  #   build:
+  #     context: ./bot
+  #     dockerfile: Dockerfile
+  #   container_name: virtual-ai-patient-bot
+  #   depends_on:
+  #     - backend
+  #   environment:
+  #     TELEGRAM_BOT_TOKEN: "REPLACE_WITH_REAL_TOKEN"
+  #     BACKEND_BASE_URL: "http://backend:8000"
+  #     BACKEND_USERNAME: "admin"
+  #     BACKEND_PASSWORD: "password"
+  #   restart: unless-stopped
 
 volumes:
   postgres_data:

@@ -41,12 +41,26 @@ import sys
 from pathlib import Path
 
 target = Path(sys.argv[1])
+
+# Optional GET query params: generator encodes null as '' so FastAPI sees status= and returns 422.
+_cases_query_old = """    final _queryParameters = <String, dynamic>{
+      r'status': encodeQueryParameter(_serializers, status, const FullType(String)),
+    };"""
+_cases_query_new = """    // Omit optional query param when unset — encodeQueryParameter(null) becomes '' and
+    // breaks FastAPI (GET /cases?status= → 422).
+    final _queryParameters = <String, dynamic>{
+      if (status != null && status.isNotEmpty)
+        r'status': encodeQueryParameter(_serializers, status, const FullType(String)),
+    };"""
+
 for file in target.rglob("*.dart"):
     text = file.read_text()
     text = text.replace(
         "package:openapi/network/src/",
         "package:frontend/network/src/",
     )
+    if file.name == "cases_api.dart":
+        text = text.replace(_cases_query_old, _cases_query_new)
     file.write_text(text)
 PY
 
