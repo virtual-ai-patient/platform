@@ -6,21 +6,12 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 import models.database as _db
-from config import (
-    ADMIN_EMAIL,
-    ADMIN_PASSWORD,
-    ADMIN_USERNAME,
-    EDUCATOR_EMAIL,
-    EDUCATOR_PASSWORD,
-    EDUCATOR_USERNAME,
-    LEARNER_EMAIL,
-    LEARNER_PASSWORD,
-    LEARNER_USERNAME,
-)
+from config import ADMIN_EMAIL, ADMIN_PASSWORD, ADMIN_USERNAME
 from models.database import Base
 from repositories.user_repository import UserRepository
 from cases.router import router as cases_router
 from routers import login, refresh, reset_password, signup, verify
+from sessions.router import router as sessions_router
 from services.utils.auth import hash_password
 
 logging.basicConfig(level=logging.INFO)
@@ -46,32 +37,6 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
         else:
             logger.info("Admin user already exists, skipping seed")
 
-        if not await repo.exists_by_username_or_email(
-            EDUCATOR_USERNAME, EDUCATOR_EMAIL
-        ):
-            await repo.create(
-                EDUCATOR_USERNAME,
-                EDUCATOR_EMAIL,
-                hash_password(EDUCATOR_PASSWORD),
-                role="educator",
-            )
-            logger.info("Educator user seeded: %s", EDUCATOR_USERNAME)
-        else:
-            logger.info("Educator user already exists, skipping seed")
-
-        if not await repo.exists_by_username_or_email(
-            LEARNER_USERNAME, LEARNER_EMAIL
-        ):
-            await repo.create(
-                LEARNER_USERNAME,
-                LEARNER_EMAIL,
-                hash_password(LEARNER_PASSWORD),
-                role="learner",
-            )
-            logger.info("Learner user seeded: %s", LEARNER_USERNAME)
-        else:
-            logger.info("Learner user already exists, skipping seed")
-
     yield
 
 
@@ -91,3 +56,4 @@ app.include_router(refresh.router, prefix="/auth", tags=["auth"])
 app.include_router(verify.router, prefix="/auth", tags=["auth"])
 app.include_router(reset_password.router, prefix="/auth", tags=["auth"])
 app.include_router(cases_router)
+app.include_router(sessions_router)
