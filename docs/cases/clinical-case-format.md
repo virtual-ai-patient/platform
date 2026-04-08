@@ -1,3 +1,13 @@
+## Status
+
+This document describes the MVP version of the clinical case format.
+
+See `clinical-case-format-v2.md` for the extended version.
+
+Related:
+- Design rationale: `case-design-rationale.md`
+- Data sources: `../data/clinical-case-sources.md`
+
 # Clinical Case Data Format — MVP
 
 This document defines a **minimal, scalable** schema for clinical cases and the “gold standard” required for evaluation.

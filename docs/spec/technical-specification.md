@@ -79,7 +79,7 @@ The case schema MUST support:
 - Scoring rubric: weights, acceptable variants/synonyms, safety rules
 - Conversation controls: tone presets, partial-recall behavior settings
 
-Case format details are defined in `data/clinical-case-format.md`.
+Case format details are defined in `cases/clinical-case-format.md`.
 
 ## 4. Dialogue orchestration requirements
 ### 4.1 Case grounding

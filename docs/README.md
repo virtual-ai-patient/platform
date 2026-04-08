@@ -30,6 +30,6 @@ We are building a chat-based training platform with **virtual AI patients** that
 - **Quality Attributes** : `qa/qa-rev{N}.md`
 - **Sprint documents**: `sprints/sprint{N}/`
 - **System architecture (supporting)**: `architecture/system-architecture.md`
-- **Clinical case data format (supporting)**: `data/clinical-case-format.md`
+- **Clinical case data format (supporting)**: `cases/clinical-case-format.md`
 - **Integration notes (supporting)**: `integrations/integration-overview.md`
 - **Configuration Management rules**: `cm/configuration-management.md`
