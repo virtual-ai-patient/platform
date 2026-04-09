@@ -15,6 +15,7 @@ SMTP_PASS: str = os.environ.get("SMTP_PASS", "")
 
 USE_MOCK_AI: bool = os.environ.get("USE_MOCK_AI", "true").lower() == "true"
 OPENAI_API_KEY: str = os.environ.get("OPENAI_API_KEY", "")
+OPENAI_MODEL: str = os.environ.get("OPENAI_MODEL", "llama-3.1-8b-instant")
 
 ADMIN_USERNAME: str = os.environ.get("ADMIN_USERNAME", "admin")
 ADMIN_EMAIL: str = os.environ.get("ADMIN_EMAIL", "admin@example.com")

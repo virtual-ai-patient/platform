@@ -5,6 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 import config
 from ai.mock_provider import MockProvider
+from ai.openai_provider import OpenAIProvider
 from ai.provider import AIProvider
 from services.utils.auth import oauth2_scheme
 from models.database import SessionLocal
@@ -38,7 +39,7 @@ def get_auth_service(
 def get_ai_provider() -> AIProvider:
     if config.USE_MOCK_AI:
         return MockProvider()
-    raise NotImplementedError("Real AI provider not configured")
+    return OpenAIProvider(api_key=config.OPENAI_API_KEY, model=config.OPENAI_MODEL)
 
 
 async def get_current_user(
