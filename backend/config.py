@@ -13,6 +13,9 @@ SMTP_PORT: int = int(os.environ.get("SMTP_PORT", "587"))
 SMTP_USER: str = os.environ.get("SMTP_USER", "")
 SMTP_PASS: str = os.environ.get("SMTP_PASS", "")
 
+USE_MOCK_AI: bool = os.environ.get("USE_MOCK_AI", "true").lower() == "true"
+OPENAI_API_KEY: str = os.environ.get("OPENAI_API_KEY", "")
+
 ADMIN_USERNAME: str = os.environ.get("ADMIN_USERNAME", "admin")
 ADMIN_EMAIL: str = os.environ.get("ADMIN_EMAIL", "admin@example.com")
 ADMIN_PASSWORD: str = os.environ.get("ADMIN_PASSWORD", "changeme")

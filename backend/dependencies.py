@@ -3,6 +3,9 @@ from collections.abc import AsyncGenerator
 from fastapi import Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
+import config
+from ai.mock_provider import MockProvider
+from ai.provider import AIProvider
 from services.utils.auth import oauth2_scheme
 from models.database import SessionLocal
 from exceptions.auth_exceptions import AuthenticationError
@@ -30,6 +33,12 @@ def get_auth_service(
     reset_token_repo: ResetTokenRepository = Depends(get_reset_token_repo),
 ) -> AuthService:
     return AuthService(user_repo, reset_token_repo)
+
+
+def get_ai_provider() -> AIProvider:
+    if config.USE_MOCK_AI:
+        return MockProvider()
+    raise NotImplementedError("Real AI provider not configured")
 
 
 async def get_current_user(
