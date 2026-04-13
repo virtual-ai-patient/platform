@@ -2,7 +2,17 @@ import uuid
 from datetime import datetime
 from typing import Any
 
-from sqlalchemy import JSON, Boolean, DateTime, Float, ForeignKey, Integer, String, Text, func
+from sqlalchemy import (
+    JSON,
+    Boolean,
+    DateTime,
+    Float,
+    ForeignKey,
+    Integer,
+    String,
+    Text,
+    func,
+)
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from models.database import Base
@@ -18,6 +28,7 @@ class User(Base):
     email: Mapped[str] = mapped_column(String, unique=True, nullable=False)
     hashed_password: Mapped[str] = mapped_column(String, nullable=False)
     role: Mapped[str] = mapped_column(String, nullable=False, default="learner")
+
 
 class ResetToken(Base):
     __tablename__ = "reset_tokens"
@@ -273,9 +284,7 @@ class CaseSession(Base):
     session_id: Mapped[str] = mapped_column(
         String, unique=True, nullable=False, default=_uuid
     )
-    user_id: Mapped[str] = mapped_column(
-        String, ForeignKey("users.id"), nullable=False
-    )
+    user_id: Mapped[str] = mapped_column(String, ForeignKey("users.id"), nullable=False)
     clinical_case_id: Mapped[str] = mapped_column(
         String, ForeignKey("clinical_cases.id"), nullable=False
     )
@@ -283,6 +292,25 @@ class CaseSession(Base):
         String, nullable=False, default="active"
     )  # active|completed|abandoned
     frozen_case_snapshot: Mapped[dict[str, Any]] = mapped_column(JSON, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
+
+
+# ---------------------------------------------------------------------------
+# Action Log
+# ---------------------------------------------------------------------------
+
+
+class ActionLog(Base):
+    __tablename__ = "action_logs"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=_uuid)
+    session_id: Mapped[str] = mapped_column(
+        String, ForeignKey("case_sessions.session_id"), nullable=False
+    )
+    role: Mapped[str] = mapped_column(String, nullable=False)  # "user" | "assistant"
+    content: Mapped[str] = mapped_column(Text, nullable=False)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
     )
