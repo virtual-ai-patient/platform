@@ -1,17 +1,28 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_chat_core/flutter_chat_core.dart';
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:frontend/common/theme/app_colors.dart';
 import 'package:frontend/common/widgets/app_logo_mark.dart';
+import 'package:frontend/domains/sessions/session_repository.dart';
 import 'package:frontend/network/openapi.dart' as generated;
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-/// Simulation shell (chat + sidebar). UI is illustrative until messaging is wired.
 class CaseSimulationScreen extends StatefulWidget {
   const CaseSimulationScreen({
     super.key,
     required this.caseItem,
+    required this.sessionId,
+    required this.sessionRepository,
   });
 
   final generated.CaseResponse caseItem;
+  final String sessionId;
+  final SessionRepositoryContract sessionRepository;
 
   @override
   State<CaseSimulationScreen> createState() => _CaseSimulationScreenState();
@@ -20,19 +31,224 @@ class CaseSimulationScreen extends StatefulWidget {
 class _CaseSimulationScreenState extends State<CaseSimulationScreen>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
-  final _inputController = TextEditingController();
+  late final InMemoryChatController _chatController;
+
+  static const _doctorUserId = 'doctor';
+  static const _patientUserId = 'patient';
+  static const _systemUserId = 'system';
+
+  bool _sending = false;
+  String? _lastSentMessage;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+    _chatController = InMemoryChatController();
+    _restorePersistedMessages();
   }
 
   @override
   void dispose() {
+    _chatController.dispose();
     _tabController.dispose();
-    _inputController.dispose();
     super.dispose();
+  }
+
+  Future<void> _handleSend(String text) async {
+    if (text.trim().isEmpty || _sending) return;
+    text = text.trim();
+    final outgoing = Message.text(
+      id: _nextMessageId(),
+      authorId: _doctorUserId,
+      text: text,
+      createdAt: DateTime.now(),
+      sentAt: DateTime.now(),
+    );
+    await _chatController.insertMessage(outgoing);
+    await _persistMessages();
+
+    setState(() {
+      _sending = true;
+      _lastSentMessage = text;
+    });
+
+    try {
+      final reply = await widget.sessionRepository.sendMessage(
+        sessionId: widget.sessionId,
+        message: text,
+      );
+      if (!mounted) return;
+      await _chatController.insertMessage(
+        Message.text(
+          id: _nextMessageId(),
+          authorId: _patientUserId,
+          text: reply.response,
+          createdAt: reply.loggedAt,
+          sentAt: reply.loggedAt,
+        ),
+      );
+      await _persistMessages();
+    } catch (_) {
+      if (mounted) {
+        await _chatController.insertMessage(
+          Message.system(
+            id: _nextMessageId(),
+            authorId: _systemUserId,
+            text: 'Unable to reach patient. Please try again.',
+            createdAt: DateTime.now(),
+            metadata: {'isError': true, 'failedText': text},
+          ),
+        );
+        await _persistMessages();
+      }
+    } finally {
+      if (mounted) setState(() => _sending = false);
+    }
+  }
+
+  String _nextMessageId() =>
+      '${DateTime.now().microsecondsSinceEpoch}-${_chatController.messages.length}';
+
+  String get _historyStorageKey => 'chat-history-${widget.sessionId}';
+
+  Future<void> _persistMessages() async {
+    final prefs = await SharedPreferences.getInstance();
+    final data = _chatController.messages
+        .where((m) => m is TextMessage || m is SystemMessage)
+        .map((m) {
+      if (m is TextMessage) {
+        return <String, dynamic>{
+          'type': 'text',
+          'id': m.id,
+          'authorId': m.authorId,
+          'text': m.text,
+          'createdAt': m.createdAt?.millisecondsSinceEpoch,
+          'sentAt': m.sentAt?.millisecondsSinceEpoch,
+          'metadata': m.metadata,
+        };
+      }
+      final s = m as SystemMessage;
+      return <String, dynamic>{
+        'type': 'system',
+        'id': s.id,
+        'authorId': s.authorId,
+        'text': s.text,
+        'createdAt': s.createdAt?.millisecondsSinceEpoch,
+        'metadata': s.metadata,
+      };
+    }).toList(growable: false);
+    await prefs.setString(_historyStorageKey, jsonEncode(data));
+  }
+
+  Future<void> _restorePersistedMessages() async {
+    final prefs = await SharedPreferences.getInstance();
+    final raw = prefs.getString(_historyStorageKey);
+    if (raw == null || raw.isEmpty) return;
+    try {
+      final decoded = jsonDecode(raw);
+      if (decoded is! List) return;
+      final restored = <Message>[];
+      for (final entry in decoded) {
+        if (entry is! Map) continue;
+        final map = Map<String, dynamic>.from(entry);
+        final createdAtMs = map['createdAt'] as int?;
+        final sentAtMs = map['sentAt'] as int?;
+        final createdAt =
+            createdAtMs == null ? null : DateTime.fromMillisecondsSinceEpoch(createdAtMs);
+        final sentAt =
+            sentAtMs == null ? null : DateTime.fromMillisecondsSinceEpoch(sentAtMs);
+        final metadata = map['metadata'] is Map
+            ? Map<String, dynamic>.from(map['metadata'] as Map)
+            : null;
+        if (map['type'] == 'system') {
+          restored.add(
+            Message.system(
+              id: map['id'] as String,
+              authorId: map['authorId'] as String,
+              text: map['text'] as String,
+              createdAt: createdAt,
+              metadata: metadata,
+            ),
+          );
+        } else {
+          restored.add(
+            Message.text(
+              id: map['id'] as String,
+              authorId: map['authorId'] as String,
+              text: map['text'] as String,
+              createdAt: createdAt,
+              sentAt: sentAt,
+              metadata: metadata,
+            ),
+          );
+        }
+      }
+      if (restored.isNotEmpty && mounted) {
+        await _chatController.setMessages(restored);
+      }
+    } catch (_) {
+      // Ignore corrupted local history and start fresh.
+    }
+  }
+
+  Future<void> _showMessageActions(Message message) async {
+    final messageText = switch (message) {
+      TextMessage m => m.text,
+      SystemMessage m => m.text,
+      _ => null,
+    };
+    final failedText = message.metadata?['failedText'] as String?;
+    final isError = message.metadata?['isError'] == true;
+    if (messageText == null && !(isError && failedText != null)) return;
+    if (!mounted) return;
+
+    await showModalBottomSheet<void>(
+      context: context,
+      builder: (context) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (messageText != null)
+              ListTile(
+                leading: const Icon(Icons.copy_rounded),
+                title: const Text('Copy message'),
+                onTap: () async {
+                  await Clipboard.setData(ClipboardData(text: messageText));
+                  if (context.mounted) Navigator.of(context).pop();
+                  if (mounted) {
+                    ScaffoldMessenger.of(this.context).showSnackBar(
+                      const SnackBar(content: Text('Message copied')),
+                    );
+                  }
+                },
+              ),
+            if (isError && failedText != null)
+              ListTile(
+                leading: const Icon(Icons.refresh_rounded),
+                title: const Text('Retry send'),
+                onTap: _sending
+                    ? null
+                    : () {
+                        Navigator.of(context).pop();
+                        _handleSend(failedText);
+                      },
+              ),
+            if (_lastSentMessage != null && message.authorId == _doctorUserId)
+              ListTile(
+                leading: const Icon(Icons.reply_rounded),
+                title: const Text('Send again'),
+                onTap: _sending
+                    ? null
+                    : () {
+                        Navigator.of(context).pop();
+                        _handleSend(_lastSentMessage!);
+                      },
+              ),
+          ],
+        ),
+      ),
+    );
   }
 
   @override
@@ -42,7 +258,7 @@ class _CaseSimulationScreenState extends State<CaseSimulationScreen>
       backgroundColor: AppColors.canvasBackground,
       body: Column(
         children: [
-          _SimulationHeader(caseItem: c),
+          _SimulationHeader(caseItem: c, sessionId: widget.sessionId),
           Expanded(
             child: LayoutBuilder(
               builder: (context, constraints) {
@@ -51,10 +267,7 @@ class _CaseSimulationScreenState extends State<CaseSimulationScreen>
                   tabController: _tabController,
                   caseItem: c,
                 );
-                final chat = _SimulationChatArea(
-                  caseItem: c,
-                  inputController: _inputController,
-                );
+                final chat = _buildChat();
                 if (wide) {
                   return Row(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -77,18 +290,158 @@ class _CaseSimulationScreenState extends State<CaseSimulationScreen>
       ),
     );
   }
+
+  Widget _buildChat() {
+    return Stack(
+      children: [
+        Chat(
+          currentUserId: _doctorUserId,
+          chatController: _chatController,
+          onMessageSend: _handleSend,
+          builders: Builders(
+            textMessageBuilder: _buildMarkdownTextMessage,
+            systemMessageBuilder: _buildMarkdownSystemMessage,
+          ),
+          onMessageLongPress: (context, message,
+              {required index, required details}) {
+            _showMessageActions(message);
+          },
+          onMessageSecondaryTap: (context, message,
+              {required index, details}) {
+            _showMessageActions(message);
+          },
+          resolveUser: (id) async => User(id: id, name: _displayName(id)),
+          theme: ChatTheme.fromThemeData(
+            Theme.of(context).copyWith(
+              textTheme:
+                  GoogleFonts.interTextTheme(Theme.of(context).textTheme),
+            ),
+          ),
+        ),
+        if (_sending)
+          Positioned(
+            right: 16,
+            bottom: 80,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                color: AppColors.surface,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: AppColors.borderSubtle),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      width: 12,
+                      height: 12,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                    SizedBox(width: 8),
+                    Text('Patient is thinking...'),
+                  ],
+                ),
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+
+  String _displayName(String id) {
+    if (id == _doctorUserId) return 'You (Doctor)';
+    if (id == _systemUserId) return 'System';
+    return 'Virtual Patient';
+  }
+
+  Widget _buildMarkdownTextMessage(
+    BuildContext context,
+    TextMessage message,
+    int index, {
+    required bool isSentByMe,
+    MessageGroupStatus? groupStatus,
+  }) {
+    final isDoctorMessage = message.authorId == _doctorUserId;
+    final bubbleColor =
+        isDoctorMessage ? AppColors.doctorBubbleBg : AppColors.patientBubbleBg;
+    final textColor = isDoctorMessage ? Colors.white : AppColors.primaryText;
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        color: bubbleColor,
+        borderRadius: BorderRadius.circular(12),
+        border: isDoctorMessage
+            ? null
+            : Border.all(color: AppColors.borderSubtle),
+      ),
+      child: MarkdownBody(
+        data: message.text,
+        selectable: true,
+        styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
+          p: GoogleFonts.inter(
+            fontSize: 14,
+            height: 1.4,
+            color: textColor,
+          ),
+          code: GoogleFonts.robotoMono(
+            fontSize: 12,
+            color: textColor,
+          ),
+          listBullet: GoogleFonts.inter(
+            fontSize: 14,
+            color: textColor,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMarkdownSystemMessage(
+    BuildContext context,
+    SystemMessage message,
+    int index, {
+    required bool isSentByMe,
+    MessageGroupStatus? groupStatus,
+  }) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        color: AppColors.dangerSoftBg,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: const Color(0xFFFECACA)),
+      ),
+      child: MarkdownBody(
+        data: message.text,
+        selectable: true,
+        styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
+          p: GoogleFonts.inter(
+            fontSize: 14,
+            height: 1.4,
+            color: AppColors.danger,
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class _SimulationHeader extends StatelessWidget {
   const _SimulationHeader({
     required this.caseItem,
+    required this.sessionId,
   });
 
   final generated.CaseResponse caseItem;
+  final String sessionId;
 
   @override
   Widget build(BuildContext context) {
     final sexAbb = caseItem.sex.isNotEmpty ? caseItem.sex[0].toUpperCase() : '';
+    final shortSession =
+        sessionId.length > 8 ? sessionId.substring(0, 8) : sessionId;
     return Material(
       color: AppColors.surface,
       child: Container(
@@ -97,10 +450,7 @@ class _SimulationHeader extends StatelessWidget {
         decoration: const BoxDecoration(
           border: Border(bottom: BorderSide(color: AppColors.borderSubtle)),
         ),
-        child: Wrap(
-          crossAxisAlignment: WrapCrossAlignment.center,
-          spacing: 8,
-          runSpacing: 8,
+        child: Row(
           children: [
             IconButton(
               onPressed: () => Navigator.of(context).pop(),
@@ -111,14 +461,15 @@ class _SimulationHeader extends StatelessWidget {
               compact: true,
               subtitle: 'Medical Training Simulation',
             ),
-            const SizedBox(width: 8),
-            Flexible(
+            const SizedBox(width: 12),
+            Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
                     '${caseItem.caseId} · ${caseItem.title}',
+                    overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.inter(
                       fontWeight: FontWeight.w700,
                       fontSize: 13,
@@ -126,7 +477,8 @@ class _SimulationHeader extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '${caseItem.age}$sexAbb',
+                    '${caseItem.age}$sexAbb · Session $shortSession…',
+                    overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.inter(
                       fontSize: 12,
                       color: AppColors.secondaryText,
@@ -135,50 +487,7 @@ class _SimulationHeader extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-              decoration: BoxDecoration(
-                color: const Color(0xFFFFF4E6),
-                borderRadius: BorderRadius.circular(999),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    width: 8,
-                    height: 8,
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFEA580C),
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                  const SizedBox(width: 6),
-                  Text(
-                    'Anxious',
-                    style: GoogleFonts.inter(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFF9A3412),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(Icons.schedule_rounded,
-                    size: 18, color: AppColors.secondaryText),
-                const SizedBox(width: 4),
-                Text(
-                  '12:34',
-                  style: GoogleFonts.inter(
-                    fontSize: 13,
-                    color: AppColors.secondaryText,
-                  ),
-                ),
-              ],
-            ),
+            const SizedBox(width: 12),
             OutlinedButton.icon(
               onPressed: () => Navigator.of(context).pop(),
               style: OutlinedButton.styleFrom(
@@ -196,246 +505,6 @@ class _SimulationHeader extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _SimulationChatArea extends StatelessWidget {
-  const _SimulationChatArea({
-    required this.caseItem,
-    required this.inputController,
-  });
-
-  final generated.CaseResponse caseItem;
-  final TextEditingController inputController;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: Container(
-            color: AppColors.canvasBackground,
-            child: ListView(
-              padding: const EdgeInsets.all(20),
-              children: [
-                _PatientBubble(
-                  name: 'Virtual patient',
-                  time: '09:15',
-                  text: caseItem.chiefComplaint.isNotEmpty
-                      ? caseItem.chiefComplaint
-                      : 'Hello doctor, I am not feeling well.',
-                ),
-                const SizedBox(height: 16),
-                const _DoctorBubble(
-                  time: '09:16',
-                  text:
-                      'Thank you for sharing. Can you tell me when this started?',
-                ),
-              ],
-            ),
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
-          color: AppColors.surface,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    _SuggestionChip(label: 'Onset details'),
-                    const SizedBox(width: 8),
-                    _SuggestionChip(label: 'Radiation pattern'),
-                    const SizedBox(width: 8),
-                    _SuggestionChip(label: 'Associated symptoms'),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: inputController,
-                      decoration: InputDecoration(
-                        hintText: 'Type your question or response…',
-                        filled: true,
-                        fillColor: AppColors.surfaceMuted,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(999),
-                          borderSide: BorderSide.none,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  FilledButton(
-                    onPressed: () {},
-                    style: FilledButton.styleFrom(
-                      shape: const CircleBorder(),
-                      padding: const EdgeInsets.all(14),
-                    ),
-                    child: const Icon(Icons.send_rounded, size: 20),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _SuggestionChip extends StatelessWidget {
-  const _SuggestionChip({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return OutlinedButton(
-      onPressed: () {},
-      style: OutlinedButton.styleFrom(
-        foregroundColor: AppColors.primaryBlue,
-        side: const BorderSide(color: AppColors.primaryBlue),
-        backgroundColor: AppColors.primaryBlueLight,
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
-      ),
-      child: Text(
-        label,
-        style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w500),
-      ),
-    );
-  }
-}
-
-class _PatientBubble extends StatelessWidget {
-  const _PatientBubble({
-    required this.name,
-    required this.time,
-    required this.text,
-  });
-
-  final String name;
-  final String time;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CircleAvatar(
-          radius: 16,
-          backgroundColor: AppColors.successTeal,
-          child:
-              const Icon(Icons.person_rounded, color: Colors.white, size: 18),
-        ),
-        const SizedBox(width: 10),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '$name (Patient)  $time',
-                style: GoogleFonts.inter(
-                  fontSize: 11,
-                  color: AppColors.secondaryText,
-                ),
-              ),
-              const SizedBox(height: 6),
-              Container(
-                padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  color: AppColors.patientBubbleBg,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(4),
-                    topRight: Radius.circular(12),
-                    bottomLeft: Radius.circular(12),
-                    bottomRight: Radius.circular(12),
-                  ),
-                  border: Border.all(color: AppColors.borderSubtle),
-                ),
-                child: Text(
-                  text,
-                  style: GoogleFonts.inter(
-                    fontSize: 14,
-                    height: 1.45,
-                    color: AppColors.primaryText,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _DoctorBubble extends StatelessWidget {
-  const _DoctorBubble({
-    required this.time,
-    required this.text,
-  });
-
-  final String time;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Flexible(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                '$time  You (Doctor)',
-                style: GoogleFonts.inter(
-                  fontSize: 11,
-                  color: AppColors.secondaryText,
-                ),
-              ),
-              const SizedBox(height: 6),
-              Container(
-                padding: const EdgeInsets.all(14),
-                decoration: const BoxDecoration(
-                  color: AppColors.doctorBubbleBg,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(12),
-                    topRight: Radius.circular(4),
-                    bottomLeft: Radius.circular(12),
-                    bottomRight: Radius.circular(12),
-                  ),
-                ),
-                child: Text(
-                  text,
-                  style: GoogleFonts.inter(
-                    fontSize: 14,
-                    height: 1.45,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(width: 10),
-        CircleAvatar(
-          radius: 16,
-          backgroundColor: AppColors.primaryBlue,
-          child: const Icon(Icons.medical_services_rounded,
-              color: Colors.white, size: 18),
-        ),
-      ],
     );
   }
 }
@@ -481,22 +550,6 @@ class _SimulationSidebar extends StatelessWidget {
                   const _PlaceholderTab(text: 'Orders will appear here.'),
                   const _PlaceholderTab(text: 'Your notes will appear here.'),
                 ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: FilledButton.icon(
-                onPressed: () {},
-                style: FilledButton.styleFrom(
-                  backgroundColor: AppColors.successTeal,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                ),
-                icon: const Icon(Icons.assignment_outlined, size: 20),
-                label: Text(
-                  'Order Investigations',
-                  style: GoogleFonts.inter(fontWeight: FontWeight.w700),
-                ),
               ),
             ),
           ],

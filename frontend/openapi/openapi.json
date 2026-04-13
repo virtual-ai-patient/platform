@@ -439,6 +439,109 @@
                     }
                 }
             }
+        },
+        "/sessions/start": {
+            "post": {
+                "tags": [
+                    "sessions"
+                ],
+                "summary": "Start Session",
+                "operationId": "start_session_sessions_start_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StartSessionRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SessionResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ]
+            }
+        },
+        "/sessions/{session_id}/chat": {
+            "post": {
+                "tags": [
+                    "sessions"
+                ],
+                "summary": "Chat With Patient",
+                "operationId": "chat_with_patient_sessions__session_id__chat_post",
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "session_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Session Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ChatRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChatResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -672,6 +775,39 @@
                     "scoring"
                 ],
                 "title": "CaseResponse"
+            },
+            "ChatRequest": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "minLength": 1,
+                        "title": "Message"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "message"
+                ],
+                "title": "ChatRequest"
+            },
+            "ChatResponse": {
+                "properties": {
+                    "response": {
+                        "type": "string",
+                        "title": "Response"
+                    },
+                    "logged_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Logged At"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "response",
+                    "logged_at"
+                ],
+                "title": "ChatResponse"
             },
             "CreateCaseRequest": {
                 "properties": {
@@ -1327,6 +1463,35 @@
                 ],
                 "title": "ScoringResponse"
             },
+            "SessionResponse": {
+                "properties": {
+                    "session_id": {
+                        "type": "string",
+                        "title": "Session Id"
+                    },
+                    "case_id": {
+                        "type": "string",
+                        "title": "Case Id"
+                    },
+                    "status": {
+                        "type": "string",
+                        "title": "Status"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created At"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "session_id",
+                    "case_id",
+                    "status",
+                    "created_at"
+                ],
+                "title": "SessionResponse"
+            },
             "SignupRequest": {
                 "properties": {
                     "username": {
@@ -1350,6 +1515,19 @@
                     "password"
                 ],
                 "title": "SignupRequest"
+            },
+            "StartSessionRequest": {
+                "properties": {
+                    "case_id": {
+                        "type": "string",
+                        "title": "Case Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "case_id"
+                ],
+                "title": "StartSessionRequest"
             },
             "TokenResponse": {
                 "properties": {
