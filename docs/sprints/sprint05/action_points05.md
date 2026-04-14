@@ -5,7 +5,9 @@ section: sprints
 parent: Sprint 05 Overview
 ---
 
-# Action Points
+# Sprint 5 AP
+
+## Action Points
 
 ### AP-001: Document Clinical Case Structure
 - **Owner:** Alina + Team
@@ -114,7 +116,7 @@ parent: Sprint 05 Overview
 
 ### Critical Path Forward
 
-```
+```doc
 1. Document case structure (AP-001)
 2. Create synthetic cases (AP-002)
 3. Build evaluation harness (AP-003)
