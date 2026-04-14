@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Sprint 03 Overview
+title: Sprint 04 Overview
 parent: Sprints
 has_children: true
 nav_order: 1
@@ -43,7 +43,7 @@ The team's configuration management documentation described **an ideal process**
 
 ### The Actual Process We Use (to document)
 
-```
+```doc
 1. Thursday meeting with Denis → feedback received
 2. Action points documented in meeting minutes
 3. PM reviews action points for requirement impact

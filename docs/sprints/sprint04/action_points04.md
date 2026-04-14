@@ -1,4 +1,12 @@
-# Action Points
+---
+layout: default
+title: Sprint 04 Action Points
+section: sprints
+parent: Sprint 04 Overview
+---
+# Sprint 4 AP
+
+## Action Points
 
 ### AP-001: Rewrite Configuration Management to Describe Actual Process
 - **Owner:** Alina

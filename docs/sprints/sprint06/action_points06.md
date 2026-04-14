@@ -1,4 +1,14 @@
-# 1. Action Points
+---
+layout: default
+title: Sprint 06 Action Points
+section: sprints
+parent: Sprint 06 Overview
+---
+
+
+# Sprint 6 AP
+
+## 1. Sprint Action Points
 
 ### AP-001: Produce LLM Experiment Artifact (Jupyter Notebook)
 - **Owner:** Aizat
