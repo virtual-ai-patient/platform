@@ -1,3 +1,10 @@
+---
+layout: default
+title: Sprint 05 Transcription
+section: sprints
+parent: Sprint 05 Overview
+---
+
 ## Transcription of a Meeting
 
 Говорящий 1

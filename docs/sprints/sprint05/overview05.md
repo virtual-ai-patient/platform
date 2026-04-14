@@ -1,3 +1,11 @@
+---
+layout: default
+title: Sprint 05 Overview
+parent: Sprints
+has_children: true
+nav_order: 1
+---
+
 # Meeting Overview
 
 ## Mentor Meeting — April 2, 2026

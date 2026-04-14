@@ -1,3 +1,9 @@
+---
+layout: default
+title: Sprint 05 Action Points
+section: sprints
+parent: Sprint 05 Overview
+---
 
 # Action Points
 
