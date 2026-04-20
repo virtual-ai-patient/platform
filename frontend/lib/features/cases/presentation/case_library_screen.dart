@@ -4,6 +4,7 @@ import 'package:frontend/common/widgets/app_library_top_bar.dart';
 import 'package:frontend/common/widgets/app_page_footer.dart';
 import 'package:frontend/domains/auth/auth_repository.dart';
 import 'package:frontend/domains/cases/case_repository.dart';
+import 'package:frontend/domains/sessions/session_repository.dart';
 import 'package:frontend/features/cases/presentation/case_briefing_screen.dart';
 import 'package:frontend/features/cases/presentation/educator_case_manage_panel.dart';
 import 'package:frontend/network/openapi.dart' as generated;
@@ -16,12 +17,14 @@ class CaseLibraryScreen extends StatefulWidget {
     super.key,
     required this.session,
     required this.caseRepository,
+    required this.sessionRepository,
     required this.authRepository,
     required this.buildLoginPage,
   });
 
   final AuthSession session;
   final CaseRepositoryContract caseRepository;
+  final SessionRepositoryContract sessionRepository;
   final AuthRepositoryContract authRepository;
   final Widget Function() buildLoginPage;
 
@@ -44,14 +47,17 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
   String? _managingCaseId;
   bool _creatingCase = false;
 
-  bool get _isCaseManager => widget.session.user.role == 'educator';
+  bool get _isCaseManager =>
+      widget.session.user.role == 'educator' ||
+      widget.session.user.role == 'admin';
 
   bool get _canFilterStatus => _isCaseManager;
 
   @override
   void initState() {
     super.initState();
-    _load = widget.caseRepository.listCases();
+    _load = widget.caseRepository
+        .listCases(status: _isCaseManager ? null : 'published');
     _searchController.addListener(() => setState(() {}));
   }
 
@@ -63,7 +69,8 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
 
   Future<void> _refresh() async {
     setState(() {
-      _load = widget.caseRepository.listCases();
+      _load = widget.caseRepository
+          .listCases(status: _isCaseManager ? null : 'published');
       _page = 0;
     });
     await _load;
@@ -143,7 +150,8 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
                 if (snapshot.hasError) {
                   return _ErrorBody(
                     message: 'Could not load cases.',
-                    detail: '${snapshot.error}',
+                    detail:
+                        'The server may be unreachable. Check your connection and try again.',
                     onRetry: _refresh,
                   );
                 }
@@ -154,7 +162,10 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
                 void openBriefing(generated.CaseResponse c) {
                   Navigator.of(context).push(
                     MaterialPageRoute<void>(
-                      builder: (_) => CaseBriefingScreen(caseItem: c),
+                      builder: (_) => CaseBriefingScreen(
+                        caseItem: c,
+                        sessionRepository: widget.sessionRepository,
+                      ),
                     ),
                   );
                 }

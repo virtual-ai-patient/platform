@@ -17,6 +17,9 @@ dependencies:
   cupertino_icons: ^1.0.8
   google_fonts: ^6.2.1
   shared_preferences: ^2.5.3
+  flutter_chat_ui: ^2.11.1
+  flutter_chat_core: ^2.9.0
+  flutter_markdown: ^0.7.7+1
 
 dev_dependencies:
   flutter_test:

@@ -12,10 +12,13 @@ export 'package:frontend/network/src/model/date.dart';
 
 export 'package:frontend/network/src/api/auth_api.dart';
 export 'package:frontend/network/src/api/cases_api.dart';
+export 'package:frontend/network/src/api/sessions_api.dart';
 
 export 'package:frontend/network/src/model/acceptable_answer_request.dart';
 export 'package:frontend/network/src/model/acceptable_answer_response.dart';
 export 'package:frontend/network/src/model/case_response.dart';
+export 'package:frontend/network/src/model/chat_request.dart';
+export 'package:frontend/network/src/model/chat_response.dart';
 export 'package:frontend/network/src/model/create_case_request.dart';
 export 'package:frontend/network/src/model/expected_tests_request.dart';
 export 'package:frontend/network/src/model/expected_tests_response.dart';
@@ -35,7 +38,9 @@ export 'package:frontend/network/src/model/password_reset_request.dart';
 export 'package:frontend/network/src/model/refresh_request.dart';
 export 'package:frontend/network/src/model/scoring_request.dart';
 export 'package:frontend/network/src/model/scoring_response.dart';
+export 'package:frontend/network/src/model/session_response.dart';
 export 'package:frontend/network/src/model/signup_request.dart';
+export 'package:frontend/network/src/model/start_session_request.dart';
 export 'package:frontend/network/src/model/token_response.dart';
 export 'package:frontend/network/src/model/update_case_request.dart';
 export 'package:frontend/network/src/model/user_response.dart';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/domains/auth/auth_repository.dart';
 import 'package:frontend/domains/cases/case_repository.dart';
+import 'package:frontend/domains/sessions/session_repository.dart';
 import 'package:frontend/features/auth/presentation/dialogs/reset_password_dialog.dart';
 import 'package:frontend/features/auth/presentation/dialogs/signup_dialog.dart';
 import 'package:frontend/features/auth/presentation/mappers/auth_error_mapper.dart';
@@ -16,10 +17,12 @@ class LoginScreen extends StatefulWidget {
     super.key,
     required this.authRepository,
     required this.caseRepository,
+    required this.sessionRepository,
   });
 
   final AuthRepositoryContract authRepository;
   final CaseRepositoryContract caseRepository;
+  final SessionRepositoryContract sessionRepository;
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -48,6 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
         session: session,
         authRepository: widget.authRepository,
         caseRepository: widget.caseRepository,
+        sessionRepository: widget.sessionRepository,
       );
       Navigator.of(context).pushReplacement(
         MaterialPageRoute<void>(builder: (_) => home),
