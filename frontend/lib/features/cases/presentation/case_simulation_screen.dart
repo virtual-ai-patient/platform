@@ -154,10 +154,12 @@ class _CaseSimulationScreenState extends State<CaseSimulationScreen>
         final map = Map<String, dynamic>.from(entry);
         final createdAtMs = map['createdAt'] as int?;
         final sentAtMs = map['sentAt'] as int?;
-        final createdAt =
-            createdAtMs == null ? null : DateTime.fromMillisecondsSinceEpoch(createdAtMs);
-        final sentAt =
-            sentAtMs == null ? null : DateTime.fromMillisecondsSinceEpoch(sentAtMs);
+        final createdAt = createdAtMs == null
+            ? null
+            : DateTime.fromMillisecondsSinceEpoch(createdAtMs);
+        final sentAt = sentAtMs == null
+            ? null
+            : DateTime.fromMillisecondsSinceEpoch(sentAtMs);
         final metadata = map['metadata'] is Map
             ? Map<String, dynamic>.from(map['metadata'] as Map)
             : null;
@@ -306,8 +308,7 @@ class _CaseSimulationScreenState extends State<CaseSimulationScreen>
               {required index, required details}) {
             _showMessageActions(message);
           },
-          onMessageSecondaryTap: (context, message,
-              {required index, details}) {
+          onMessageSecondaryTap: (context, message, {required index, details}) {
             _showMessageActions(message);
           },
           resolveUser: (id) async => User(id: id, name: _displayName(id)),
@@ -372,9 +373,8 @@ class _CaseSimulationScreenState extends State<CaseSimulationScreen>
       decoration: BoxDecoration(
         color: bubbleColor,
         borderRadius: BorderRadius.circular(12),
-        border: isDoctorMessage
-            ? null
-            : Border.all(color: AppColors.borderSubtle),
+        border:
+            isDoctorMessage ? null : Border.all(color: AppColors.borderSubtle),
       ),
       child: MarkdownBody(
         data: message.text,

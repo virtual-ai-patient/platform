@@ -48,7 +48,8 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
   bool _creatingCase = false;
 
   bool get _isCaseManager =>
-      widget.session.user.role == 'educator' || widget.session.user.role == 'admin';
+      widget.session.user.role == 'educator' ||
+      widget.session.user.role == 'admin';
 
   bool get _canFilterStatus => _isCaseManager;
 
