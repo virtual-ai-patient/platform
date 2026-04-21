@@ -12,6 +12,9 @@ from sessions.chat_repository import ActionLogRepository
 from sessions.chat_request import ChatRequest
 from sessions.chat_response import ChatResponse
 from sessions.chat_service import chat
+from sessions.diagnostics_request import OrderTestRequest
+from sessions.diagnostics_response import AvailableTestsResponse, TestResultResponse
+from sessions.diagnostics_service import get_available_tests, order_test
 from sessions.repository import SessionRepository
 from sessions.request import StartSessionRequest
 from sessions.response import SessionResponse
@@ -41,6 +44,46 @@ async def start_session(
     try:
         return await service.start_session(
             data.case_id, current_user, case_repo, session_repo
+        )
+    except NotFoundError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)
+        ) from exc
+    except ForbiddenError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail=str(exc)
+        ) from exc
+
+
+@router.get("/{session_id}/available-tests", response_model=AvailableTestsResponse)
+async def available_tests(
+    session_id: str,
+    current_user: User = Depends(get_current_user),
+    session_repo: SessionRepository = Depends(get_session_repo),
+) -> AvailableTestsResponse:
+    try:
+        return await get_available_tests(session_id, current_user, session_repo)
+    except NotFoundError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)
+        ) from exc
+    except ForbiddenError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail=str(exc)
+        ) from exc
+
+
+@router.post("/{session_id}/order-test", response_model=TestResultResponse)
+async def order_test_endpoint(
+    session_id: str,
+    data: OrderTestRequest,
+    current_user: User = Depends(get_current_user),
+    session_repo: SessionRepository = Depends(get_session_repo),
+    log_repo: ActionLogRepository = Depends(get_log_repo),
+) -> TestResultResponse:
+    try:
+        return await order_test(
+            session_id, data.test_id, current_user, session_repo, log_repo
         )
     except NotFoundError as exc:
         raise HTTPException(
