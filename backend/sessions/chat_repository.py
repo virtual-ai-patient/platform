@@ -22,3 +22,13 @@ class ActionLogRepository:
             .order_by(ActionLog.created_at)
         )
         return list(result.scalars().all())
+
+    async def find_test_order(self, session_id: str, test_id: str) -> ActionLog | None:
+        result = await self._session.execute(
+            select(ActionLog).where(
+                ActionLog.session_id == session_id,
+                ActionLog.role == "system",
+                ActionLog.content == f"TEST_ORDERED:{test_id}",
+            )
+        )
+        return result.scalar_one_or_none()
