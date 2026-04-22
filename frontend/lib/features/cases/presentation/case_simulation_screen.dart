@@ -39,6 +39,16 @@ class _CaseSimulationScreenState extends State<CaseSimulationScreen>
 
   bool _sending = false;
   String? _lastSentMessage;
+  bool _loadingTests = false;
+  String? _testsError;
+  List<generated.AvailableTestItem> _availableTests = const [];
+  generated.TestResultResponse? _lastTestResult;
+  String? _orderingTestId;
+  final Set<String> _selectedTests = <String>{};
+  final Set<String> _pendingTests = <String>{};
+  final List<generated.TestResultResponse> _completedResults =
+      <generated.TestResultResponse>[];
+  String _testsQuery = '';
 
   @override
   void initState() {
@@ -46,6 +56,7 @@ class _CaseSimulationScreenState extends State<CaseSimulationScreen>
     _tabController = TabController(length: 3, vsync: this);
     _chatController = InMemoryChatController();
     _restorePersistedMessages();
+    _loadAvailableTests();
   }
 
   @override
@@ -253,6 +264,79 @@ class _CaseSimulationScreenState extends State<CaseSimulationScreen>
     );
   }
 
+  Future<void> _loadAvailableTests() async {
+    setState(() {
+      _loadingTests = true;
+      _testsError = null;
+    });
+    try {
+      final response = await widget.sessionRepository.getAvailableTests(
+        sessionId: widget.sessionId,
+      );
+      if (!mounted) return;
+      setState(() => _availableTests = response.tests.toList());
+    } catch (_) {
+      if (!mounted) return;
+      setState(() {
+        _testsError = 'Unable to load tests.';
+      });
+    } finally {
+      if (mounted) {
+        setState(() => _loadingTests = false);
+      }
+    }
+  }
+
+  Future<void> _orderTest(String testName) async {
+    if (_orderingTestId != null) return;
+    setState(() {
+      _orderingTestId = testName;
+      _pendingTests.add(testName);
+    });
+    try {
+      final result = await widget.sessionRepository.orderTest(
+        sessionId: widget.sessionId,
+        testId: testName,
+      );
+      if (!mounted) return;
+      setState(() {
+        _lastTestResult = result;
+        _completedResults.removeWhere((r) => r.testName == result.testName);
+        _completedResults.insert(0, result);
+      });
+      await _chatController.insertMessage(
+        Message.system(
+          id: _nextMessageId(),
+          authorId: _systemUserId,
+          text:
+              'Test ordered: ${result.testName}\n\nResult: ${result.value}${result.unit == null ? '' : ' ${result.unit}'}${result.referenceRange == null ? '' : '\nReference: ${result.referenceRange}'}',
+          createdAt: DateTime.now(),
+        ),
+      );
+      await _persistMessages();
+    } catch (_) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Could not order this test right now.')),
+      );
+    } finally {
+      if (mounted) {
+        setState(() {
+          _orderingTestId = null;
+          _pendingTests.remove(testName);
+          _selectedTests.remove(testName);
+        });
+      }
+    }
+  }
+
+  Future<void> _orderSelectedTests() async {
+    final queue = _selectedTests.toList(growable: false);
+    for (final test in queue) {
+      await _orderTest(test);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final c = widget.caseItem;
@@ -268,6 +352,28 @@ class _CaseSimulationScreenState extends State<CaseSimulationScreen>
                 final sidebar = _SimulationSidebar(
                   tabController: _tabController,
                   caseItem: c,
+                  loadingTests: _loadingTests,
+                  testsError: _testsError,
+                  availableTests: _availableTests,
+                  lastResult: _lastTestResult,
+                  orderingTestId: _orderingTestId,
+                  selectedTests: _selectedTests,
+                  pendingTests: _pendingTests,
+                  completedResults: _completedResults,
+                  testsQuery: _testsQuery,
+                  onQueryChanged: (v) => setState(() => _testsQuery = v),
+                  onToggleTestSelection: (testName) {
+                    setState(() {
+                      if (_selectedTests.contains(testName)) {
+                        _selectedTests.remove(testName);
+                      } else {
+                        _selectedTests.add(testName);
+                      }
+                    });
+                  },
+                  onOrderSelectedTests: _orderSelectedTests,
+                  onRetryLoadTests: _loadAvailableTests,
+                  onOrderTest: _orderTest,
                 );
                 final chat = _buildChat();
                 if (wide) {
@@ -513,10 +619,38 @@ class _SimulationSidebar extends StatelessWidget {
   const _SimulationSidebar({
     required this.tabController,
     required this.caseItem,
+    required this.loadingTests,
+    required this.testsError,
+    required this.availableTests,
+    required this.lastResult,
+    required this.orderingTestId,
+    required this.selectedTests,
+    required this.pendingTests,
+    required this.completedResults,
+    required this.testsQuery,
+    required this.onQueryChanged,
+    required this.onToggleTestSelection,
+    required this.onOrderSelectedTests,
+    required this.onRetryLoadTests,
+    required this.onOrderTest,
   });
 
   final TabController tabController;
   final generated.CaseResponse caseItem;
+  final bool loadingTests;
+  final String? testsError;
+  final List<generated.AvailableTestItem> availableTests;
+  final generated.TestResultResponse? lastResult;
+  final String? orderingTestId;
+  final Set<String> selectedTests;
+  final Set<String> pendingTests;
+  final List<generated.TestResultResponse> completedResults;
+  final String testsQuery;
+  final ValueChanged<String> onQueryChanged;
+  final ValueChanged<String> onToggleTestSelection;
+  final Future<void> Function() onOrderSelectedTests;
+  final VoidCallback onRetryLoadTests;
+  final Future<void> Function(String testName) onOrderTest;
 
   @override
   Widget build(BuildContext context) {
@@ -539,7 +673,7 @@ class _SimulationSidebar extends StatelessWidget {
               tabs: const [
                 Tab(text: 'Patient Summary'),
                 Tab(text: 'Orders'),
-                Tab(text: 'Notes'),
+                Tab(text: 'Lab Reports'),
               ],
             ),
             Expanded(
@@ -547,8 +681,26 @@ class _SimulationSidebar extends StatelessWidget {
                 controller: tabController,
                 children: [
                   _SummaryTab(caseItem: caseItem),
-                  const _PlaceholderTab(text: 'Orders will appear here.'),
-                  const _PlaceholderTab(text: 'Your notes will appear here.'),
+                  _OrdersTab(
+                    loadingTests: loadingTests,
+                    testsError: testsError,
+                    availableTests: availableTests,
+                    lastResult: lastResult,
+                    orderingTestId: orderingTestId,
+                    selectedTests: selectedTests,
+                    pendingTests: pendingTests,
+                    completedResults: completedResults,
+                    testsQuery: testsQuery,
+                    onQueryChanged: onQueryChanged,
+                    onToggleTestSelection: onToggleTestSelection,
+                    onOrderSelectedTests: onOrderSelectedTests,
+                    onRetryLoadTests: onRetryLoadTests,
+                    onOrderTest: onOrderTest,
+                  ),
+                  _LabReportsTab(
+                    pendingTests: pendingTests,
+                    completedResults: completedResults,
+                  ),
                 ],
               ),
             ),
@@ -630,4 +782,317 @@ class _PlaceholderTab extends StatelessWidget {
       ),
     );
   }
+}
+
+class _OrdersTab extends StatelessWidget {
+  const _OrdersTab({
+    required this.loadingTests,
+    required this.testsError,
+    required this.availableTests,
+    required this.lastResult,
+    required this.orderingTestId,
+    required this.selectedTests,
+    required this.pendingTests,
+    required this.completedResults,
+    required this.testsQuery,
+    required this.onQueryChanged,
+    required this.onToggleTestSelection,
+    required this.onOrderSelectedTests,
+    required this.onRetryLoadTests,
+    required this.onOrderTest,
+  });
+
+  final bool loadingTests;
+  final String? testsError;
+  final List<generated.AvailableTestItem> availableTests;
+  final generated.TestResultResponse? lastResult;
+  final String? orderingTestId;
+  final Set<String> selectedTests;
+  final Set<String> pendingTests;
+  final List<generated.TestResultResponse> completedResults;
+  final String testsQuery;
+  final ValueChanged<String> onQueryChanged;
+  final ValueChanged<String> onToggleTestSelection;
+  final Future<void> Function() onOrderSelectedTests;
+  final VoidCallback onRetryLoadTests;
+  final Future<void> Function(String testName) onOrderTest;
+
+  @override
+  Widget build(BuildContext context) {
+    if (loadingTests) {
+      return const Center(child: CircularProgressIndicator(strokeWidth: 2));
+    }
+    if (testsError != null) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(testsError!,
+                  style: GoogleFonts.inter(color: AppColors.danger)),
+              const SizedBox(height: 8),
+              OutlinedButton(
+                onPressed: onRetryLoadTests,
+                child: const Text('Retry'),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+    final q = testsQuery.trim().toLowerCase();
+    final visibleTests = availableTests.where((t) {
+      if (q.isEmpty) return true;
+      return t.testName.toLowerCase().contains(q) ||
+          t.category.toLowerCase().contains(q);
+    }).toList(growable: false);
+    final grouped = <String, List<generated.AvailableTestItem>>{};
+    for (final test in visibleTests) {
+      grouped.putIfAbsent(test.category, () => <generated.AvailableTestItem>[]);
+      grouped[test.category]!.add(test);
+    }
+
+    return ListView(
+      padding: const EdgeInsets.all(12),
+      children: [
+        Text(
+          'Instrumental tests',
+          style: GoogleFonts.inter(fontWeight: FontWeight.w700, fontSize: 13),
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          decoration: const InputDecoration(
+            hintText: 'Search tests',
+            prefixIcon: Icon(Icons.search_rounded),
+            isDense: true,
+          ),
+          onChanged: onQueryChanged,
+        ),
+        const SizedBox(height: 8),
+        if (visibleTests.isEmpty)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Text(
+              'No tests match your query.',
+              style: GoogleFonts.inter(color: AppColors.secondaryText),
+            ),
+          ),
+        for (final category in grouped.keys.toList()..sort()) ...[
+          Padding(
+            padding: const EdgeInsets.only(top: 6, bottom: 4),
+            child: Text(
+              category.replaceAll('_', ' ').toUpperCase(),
+              style: GoogleFonts.inter(
+                fontSize: 11,
+                fontWeight: FontWeight.w700,
+                color: AppColors.secondaryText,
+              ),
+            ),
+          ),
+          ...grouped[category]!.map(
+            (t) => Card(
+              margin: const EdgeInsets.only(bottom: 6),
+              child: ListTile(
+                dense: true,
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                title: Text(t.testName, style: GoogleFonts.inter(fontSize: 12)),
+                subtitle: Text(
+                  pendingTests.contains(t.testName)
+                      ? 'Pending'
+                      : completedResults.any((r) => r.testName == t.testName)
+                          ? 'Completed'
+                          : 'Not ordered',
+                  style: GoogleFonts.inter(
+                    fontSize: 11,
+                    color: pendingTests.contains(t.testName)
+                        ? AppColors.primaryBlue
+                        : AppColors.secondaryText,
+                  ),
+                ),
+                trailing: Wrap(
+                  spacing: 6,
+                  children: [
+                    Checkbox(
+                      value: selectedTests.contains(t.testName),
+                      onChanged: pendingTests.contains(t.testName)
+                          ? null
+                          : (_) => onToggleTestSelection(t.testName),
+                    ),
+                    OutlinedButton(
+                      onPressed: orderingTestId == null
+                          ? () => onOrderTest(t.testName)
+                          : null,
+                      child: orderingTestId == t.testName
+                          ? const SizedBox(
+                              height: 12,
+                              width: 12,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            )
+                          : const Text('Order'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+        const SizedBox(height: 6),
+        FilledButton.icon(
+          onPressed: selectedTests.isEmpty || orderingTestId != null
+              ? null
+              : onOrderSelectedTests,
+          icon: const Icon(Icons.shopping_cart_checkout_rounded, size: 16),
+          label: Text(
+            'Order selected (${selectedTests.length})',
+            style: GoogleFonts.inter(fontWeight: FontWeight.w600),
+          ),
+        ),
+        if (lastResult != null) ...[
+          const SizedBox(height: 12),
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: AppColors.surfaceMuted,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: AppColors.borderSubtle),
+            ),
+            child: Text(
+              'Latest: ${lastResult!.testName}\n${lastResult!.value}${lastResult!.unit == null ? '' : ' ${lastResult!.unit}'}${lastResult!.referenceRange == null ? '' : '\nRef: ${lastResult!.referenceRange}'}',
+              style:
+                  GoogleFonts.inter(fontSize: 12, color: AppColors.primaryText),
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+class _LabReportsTab extends StatelessWidget {
+  const _LabReportsTab({
+    required this.pendingTests,
+    required this.completedResults,
+  });
+
+  final Set<String> pendingTests;
+  final List<generated.TestResultResponse> completedResults;
+
+  @override
+  Widget build(BuildContext context) {
+    if (pendingTests.isEmpty && completedResults.isEmpty) {
+      return const _PlaceholderTab(text: 'Order tests to see lab reports.');
+    }
+    return ListView(
+      padding: const EdgeInsets.all(12),
+      children: [
+        if (pendingTests.isNotEmpty) ...[
+          Text(
+            'Pending',
+            style: GoogleFonts.inter(fontWeight: FontWeight.w700, fontSize: 13),
+          ),
+          const SizedBox(height: 8),
+          ...pendingTests.map(
+            (name) => ListTile(
+              dense: true,
+              leading: const SizedBox(
+                width: 14,
+                height: 14,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
+              title: Text(name, style: GoogleFonts.inter(fontSize: 12)),
+              subtitle: Text(
+                'Ordering...',
+                style: GoogleFonts.inter(
+                  fontSize: 11,
+                  color: AppColors.secondaryText,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+        ],
+        if (completedResults.isNotEmpty) ...[
+          Text(
+            'Completed',
+            style: GoogleFonts.inter(fontWeight: FontWeight.w700, fontSize: 13),
+          ),
+          const SizedBox(height: 8),
+          ...completedResults.map((result) {
+            final isAbnormal = _isAbnormalResult(result);
+            return Container(
+              margin: const EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color:
+                    isAbnormal ? AppColors.warningBg : AppColors.surfaceMuted,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  color: isAbnormal
+                      ? AppColors.warningBorder
+                      : AppColors.borderSubtle,
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    result.testName,
+                    style: GoogleFonts.inter(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 12,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    '${result.value}${result.unit == null ? '' : ' ${result.unit}'}',
+                    style: GoogleFonts.inter(fontSize: 12),
+                  ),
+                  if (result.referenceRange != null)
+                    Text(
+                      'Reference: ${result.referenceRange}',
+                      style: GoogleFonts.inter(
+                        fontSize: 11,
+                        color: AppColors.secondaryText,
+                      ),
+                    ),
+                  const SizedBox(height: 2),
+                  Text(
+                    isAbnormal ? 'Abnormal' : 'Normal',
+                    style: GoogleFonts.inter(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w600,
+                      color:
+                          isAbnormal ? AppColors.danger : AppColors.successTeal,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }),
+        ],
+      ],
+    );
+  }
+}
+
+bool _isAbnormalResult(generated.TestResultResponse result) {
+  if (result.isNormalDefault) return false;
+  final reference = result.referenceRange;
+  final numericValue = double.tryParse(result.value.trim());
+  if (reference != null && numericValue != null) {
+    final rangeParts = reference.split('-');
+    if (rangeParts.length == 2) {
+      final low = double.tryParse(rangeParts[0].trim());
+      final high = double.tryParse(rangeParts[1].trim());
+      if (low != null && high != null) {
+        return numericValue < low || numericValue > high;
+      }
+    }
+  }
+  final v = result.value.toLowerCase();
+  return v.contains('abnormal') ||
+      v.contains('elevation') ||
+      v.contains('st elevation');
 }
