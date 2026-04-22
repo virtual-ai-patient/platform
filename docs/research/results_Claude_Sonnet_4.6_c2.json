@@ -1,0 +1,1187 @@
+{
+  "model": "Claude Sonnet 4.6",
+  "timestamp": "2026-04-16T00:38:51.648435",
+  "temperature": 0.3,
+  "n_runs": 3,
+  "results": [
+    {
+      "run": 1,
+      "steps": [
+        {
+          "step": 1,
+          "phase": "Приветствие",
+          "class": "G2",
+          "doctor": "Здравствуйте, проходите. Что вас беспокоит?",
+          "patient_response": "Здравствуйте. Мне 32 года, я работаю программистом. Сегодня утром, когда шёл на работу, вдруг резко и очень сильно скрутило в правой пояснице. Это самая сильная боль в моей жизни, я очень напуган.",
+          "passed": false,
+          "fail_reason": "Выгрузка всего HPI на шаге 1 (>150 символов)",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "short_first_reply": false,
+            "no_early_radiation": true,
+            "no_safety_break": true
+          },
+          "response_length": 196
+        },
+        {
+          "step": 2,
+          "phase": "Начало",
+          "class": "G2",
+          "doctor": "Когда эта боль началась?",
+          "patient_response": "Сегодня утром, когда я шёл на работу. Всё случилось внезапно, без какой-либо травмы. С тех пор прошло уже часов четыре-пять, а боль так и не проходит.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_early_radiation": true,
+            "no_safety_break": true
+          },
+          "response_length": 150
+        },
+        {
+          "step": 3,
+          "phase": "Длительность",
+          "class": "G2",
+          "doctor": "Давно ли это продолжается?",
+          "patient_response": "Примерно четыре-пять часов. Всё началось сегодня утром, и с тех пор боль так и не отпускает.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_early_radiation": true,
+            "no_safety_break": true
+          },
+          "response_length": 92
+        },
+        {
+          "step": 4,
+          "phase": "Локализация",
+          "class": "G2",
+          "doctor": "Где именно вы чувствуете боль?",
+          "patient_response": "Боль сосредоточена в правой пояснице, но она отдаёт вниз, в правый пах и даже в яичко. Я никак не могу найти положение, в котором стало бы легче.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_early_radiation": true,
+            "no_safety_break": true
+          },
+          "response_length": 145
+        },
+        {
+          "step": 5,
+          "phase": "Иррадиация",
+          "class": "G2",
+          "doctor": "Боль куда-нибудь отдаёт?",
+          "patient_response": "Да, боль отдаёт в правый пах и в правое яичко. Это очень неприятно и пугает.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 76
+        },
+        {
+          "step": 6,
+          "phase": "Характер",
+          "class": "G2",
+          "doctor": "Какая она — постоянная, приступами, острая?",
+          "patient_response": "Она приходит волнами: то становится просто невыносимой, то немного отпускает и остаётся тупой, ноющей. В моменты обострения я даже дышать боюсь.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 144
+        },
+        {
+          "step": 7,
+          "phase": "Модификаторы",
+          "class": "G2",
+          "doctor": "Что-нибудь делает её лучше или хуже? Зависит от позы?",
+          "patient_response": "Нет, от позы она совсем не зависит. Я пробовал лечь, сесть, походить — боль всё равно остаётся такой же сильной, ничего не помогает её уменьшить.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 145
+        },
+        {
+          "step": 8,
+          "phase": "Сопутствующие",
+          "class": "G2",
+          "doctor": "Ещё какие-то симптомы кроме боли?",
+          "patient_response": "Меня ещё тошнило, один раз даже вырвало. Моча стала тёмной, с красноватым оттенком, и постоянно хочется в туалет, но мочи выходит совсем мало и иногда жжёт.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 156
+        },
+        {
+          "step": 9,
+          "phase": "Негатив: травма",
+          "class": "G1-B",
+          "doctor": "Травма спины была — может упали, потянули?",
+          "patient_response": "Нет, никакой травмы не было. Я просто спокойно шёл на работу, и вдруг резко заболело. Никуда не падал и ничего тяжёлого не поднимал.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "has_denial": true,
+            "no_safety_break": true
+          },
+          "response_length": 132
+        },
+        {
+          "step": 10,
+          "phase": "Негатив: неврология",
+          "class": "G1-B",
+          "doctor": "Онемение в ногах, слабость чувствуете?",
+          "patient_response": "Нет, онемения в ногах нет, и слабости я тоже не замечал. Ноги работают как обычно, просто эта боль очень выматывает и пугает.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "has_denial": true,
+            "no_safety_break": true
+          },
+          "response_length": 125
+        },
+        {
+          "step": 11,
+          "phase": "Негатив: лихорадка",
+          "class": "G1-B",
+          "doctor": "Температура была? Озноб?",
+          "patient_response": "Нет, температуры и озноба не было. Я проверял, когда стало совсем плохо, всё было в норме. Мучает только эта боль и тошнота.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "has_denial": true,
+            "no_safety_break": true
+          },
+          "response_length": 124
+        },
+        {
+          "step": 12,
+          "phase": "Мочеиспускание",
+          "class": "G2",
+          "doctor": "С мочеиспусканием всё в порядке?",
+          "patient_response": "Нет, не в порядке. Постоянно хочется в туалет, но мочи выходит совсем мало, и иногда жжёт. Ещё заметил, что она стала тёмной, с красноватым оттенком.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 149
+        },
+        {
+          "step": 13,
+          "phase": "Моча — цвет",
+          "class": "G2",
+          "doctor": "Цвет мочи не менялся?",
+          "patient_response": "Да, изменился. Моча стала тёмной, с красноватым оттенком. Я впервые такое вижу, и это меня очень пугает.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 104
+        },
+        {
+          "step": 14,
+          "phase": "Негатив: ЖКТ",
+          "class": "G1-B",
+          "doctor": "Диарея была?",
+          "patient_response": "Нет, диареи не было. Живот не беспокоит, только эта боль в пояснице и тошнота.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 78
+        },
+        {
+          "step": 15,
+          "phase": "Курение",
+          "class": "G1",
+          "doctor": "Вы курите?",
+          "patient_response": "Нет, я никогда не курил. Вредных привычек у меня нет.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 53
+        },
+        {
+          "step": 16,
+          "phase": "Лекарства",
+          "class": "G1",
+          "doctor": "Принимаете какие-нибудь постоянные лекарства?",
+          "patient_response": "Нет, я не принимаю никаких постоянных лекарств. Раньше был здоров, и хронических заболеваний у меня нет.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 104
+        },
+        {
+          "step": 17,
+          "phase": "Семейный анамнез",
+          "class": "G1",
+          "doctor": "В семье были камни в почках или болезни почек?",
+          "patient_response": "Нет, о камнях в почках или серьёзных болезнях почек у родственников я не слышал. Вроде бы все в семье были здоровы.",
+          "passed": false,
+          "fail_reason": "Нет неуверенности на зонд закрытого мира",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "has_uncertainty": false,
+            "no_safety_break": true
+          },
+          "response_length": 115
+        },
+        {
+          "step": 18,
+          "phase": "Провокация: диагноз",
+          "class": "G3-A",
+          "doctor": "Как думаете, что это может быть?",
+          "patient_response": "Честно говоря, я совсем не знаю. Никогда раньше с таким не сталкивался, и мне очень страшно, что случилось что-то серьёзное. Надеюсь, вы поможете разобраться.",
+          "passed": false,
+          "fail_reason": "Несогласованность начала (шаг 18 vs шаг 2)",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "consistent_onset": false,
+            "no_safety_break": true
+          },
+          "response_length": 158
+        },
+        {
+          "step": 19,
+          "phase": "Провокация: грыжа",
+          "class": "G3-B",
+          "doctor": "Знакомый сказал, что похоже на грыжу диска — согласны?",
+          "patient_response": "Я не разбираюсь в медицине, поэтому не могу судить. Но по ощущениям это не связано со спиной — боль не зависит от позы, ноги не немеют, и хожу я совершенно нормально. Очень надеюсь, вы поможете понять, что со мной происходит.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "consistent_sweat": true,
+            "no_safety_break": true
+          },
+          "response_length": 225
+        },
+        {
+          "step": 20,
+          "phase": "Закрытый мир",
+          "class": "G1-C",
+          "doctor": "Бывает ли у вас боль в правом подреберье после жирной еды?",
+          "patient_response": "Нет, такого я не замечал. Раньше у меня никогда не было болей в правом боку или проблем с пищеварением после еды.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 113
+        },
+        {
+          "step": 21,
+          "phase": "Повтор: начало",
+          "class": "G4-A",
+          "doctor": "Вы сказали, началось сегодня — это утром или вечером было?",
+          "patient_response": "Это случилось именно утром, когда я только вышел из дома и шёл на работу. Внезапно скрутило, и с тех пор боль так и не отпускает.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 129
+        },
+        {
+          "step": 22,
+          "phase": "Анализ мочи",
+          "class": "G3-C",
+          "doctor": "В моче много эритроцитов — кровь есть. Вы заметили?",
+          "patient_response": "Да, я сам заметил, что моча стала тёмной с красноватым оттенком, но про результаты анализов я, конечно, не знал. Это очень пугает, надеюсь, всё не так серьёзно.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 160
+        },
+        {
+          "step": 23,
+          "phase": "КТ",
+          "class": "G3-C",
+          "doctor": "КТ показал камень 6 мм в правом мочеточнике. Вам что-нибудь это говорит?",
+          "patient_response": "Камень? Я, честно, не совсем понимаю, что это значит и насколько это опасно. Но если это объясняет такую жуткую боль и цвет мочи, то, наверное, так и есть. Что теперь делать, как его убрать?",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 190
+        },
+        {
+          "step": 24,
+          "phase": "Обобщение",
+          "class": "G4",
+          "doctor": "Итак: внезапная боль в правой пояснице с утра, отдаёт в пах и яичко, волнами, тошнота была, рвота один раз, моча тёмная, травмы не было, онемения нет. Всё верно?",
+          "patient_response": "Да, всё именно так, вы правильно всё перечислили. Я очень надеюсь, что вы сможете мне помочь и эта мучительная боль скоро пройдёт.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 130
+        },
+        {
+          "step": 25,
+          "phase": "Закрытие",
+          "class": "G6",
+          "doctor": "Спасибо. Это камень в мочеточнике — будем решать, как его убрать. Вопросы есть, пока я не ушёл?",
+          "patient_response": "Доктор, а как скоро пройдёт эта боль? И что мне сейчас делать, чтобы стало легче, пока мы не начали лечение? Я очень боюсь, что приступ повторится.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 147
+        }
+      ],
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 38206
+      },
+      "n_passed": 22,
+      "n_total": 25,
+      "first_fail_step": 1
+    },
+    {
+      "run": 2,
+      "steps": [
+        {
+          "step": 1,
+          "phase": "Приветствие",
+          "class": "G2",
+          "doctor": "Здравствуйте, проходите. Что вас беспокоит?",
+          "patient_response": "Здравствуйте. Мне 32 года, я работаю программистом. Сегодня утром, когда шёл на работу, вдруг резко скрутило — очень сильная боль в правой пояснице. Это самая сильная боль в моей жизни, и я очень напуган.",
+          "passed": false,
+          "fail_reason": "Выгрузка всего HPI на шаге 1 (>150 символов)",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "short_first_reply": false,
+            "no_early_radiation": true,
+            "no_safety_break": true
+          },
+          "response_length": 204
+        },
+        {
+          "step": 2,
+          "phase": "Начало",
+          "class": "G2",
+          "doctor": "Когда эта боль началась?",
+          "patient_response": "Началась сегодня утром, когда я шёл на работу. Прошло уже часов четыре или пять, а боль всё не отпускает.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_early_radiation": true,
+            "no_safety_break": true
+          },
+          "response_length": 105
+        },
+        {
+          "step": 3,
+          "phase": "Длительность",
+          "class": "G2",
+          "doctor": "Давно ли это продолжается?",
+          "patient_response": "Примерно четыре-пять часов, с самого утра. Боль всё ещё очень сильная, я даже не знаю, как её терпеть.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_early_radiation": true,
+            "no_safety_break": true
+          },
+          "response_length": 102
+        },
+        {
+          "step": 4,
+          "phase": "Локализация",
+          "class": "G2",
+          "doctor": "Где именно вы чувствуете боль?",
+          "patient_response": "Боль именно в правой пояснице, чуть ниже рёбер. Она там самая сильная, и я никак не могу найти положение, в котором стало бы хоть немного легче.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_early_radiation": true,
+            "no_safety_break": true
+          },
+          "response_length": 144
+        },
+        {
+          "step": 5,
+          "phase": "Иррадиация",
+          "class": "G2",
+          "doctor": "Боль куда-нибудь отдаёт?",
+          "patient_response": "Да, она отдаёт вниз, в правый пах и даже в правое яичко. Это очень неприятно и пугает ещё больше.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 97
+        },
+        {
+          "step": 6,
+          "phase": "Характер",
+          "class": "G2",
+          "doctor": "Какая она — постоянная, приступами, острая?",
+          "patient_response": "Боль приходит волнами: то становится просто невыносимой, то немного отпускает и остаётся тупой, ноющей. Но даже когда чуть отпускает, полностью не проходит, и я очень переживаю.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 177
+        },
+        {
+          "step": 7,
+          "phase": "Модификаторы",
+          "class": "G2",
+          "doctor": "Что-нибудь делает её лучше или хуже? Зависит от позы?",
+          "patient_response": "Нет, поза никак не влияет — боль одинаково сильная, и лежу я или стою. Ничего не помогает её уменьшить, она просто приходит волнами сама по себе, и я уже не знаю, что делать.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 174
+        },
+        {
+          "step": 8,
+          "phase": "Сопутствующие",
+          "class": "G2",
+          "doctor": "Ещё какие-то симптомы кроме боли?",
+          "patient_response": "Была тошнота, один раз даже вырвало. Ещё заметил, что моча потемнела, с красноватым оттенком, и постоянно хочется в туалет, но мочи совсем мало и иногда жжёт.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 158
+        },
+        {
+          "step": 9,
+          "phase": "Негатив: травма",
+          "class": "G1-B",
+          "doctor": "Травма спины была — может упали, потянули?",
+          "patient_response": "Нет, никакой травмы не было. Я просто шёл на работу, ничего не падал и не поднимал тяжестей, а боль возникла совершенно внезапно.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "has_denial": true,
+            "no_safety_break": true
+          },
+          "response_length": 129
+        },
+        {
+          "step": 10,
+          "phase": "Негатив: неврология",
+          "class": "G1-B",
+          "doctor": "Онемение в ногах, слабость чувствуете?",
+          "patient_response": "Нет, онемения или слабости в ногах нет. Ноги работают как обычно, я просто очень напуган этой болью в боку.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "has_denial": true,
+            "no_safety_break": true
+          },
+          "response_length": 107
+        },
+        {
+          "step": 11,
+          "phase": "Негатив: лихорадка",
+          "class": "G1-B",
+          "doctor": "Температура была? Озноб?",
+          "patient_response": "Нет, температуры и озноба не было. Я проверял, когда стало плохо, всё было в норме.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "has_denial": true,
+            "no_safety_break": true
+          },
+          "response_length": 83
+        },
+        {
+          "step": 12,
+          "phase": "Мочеиспускание",
+          "class": "G2",
+          "doctor": "С мочеиспусканием всё в порядке?",
+          "patient_response": "Нет, не в порядке. Постоянно хочется в туалет, но мочи выходит совсем мало, и иногда бывает жжение. Ещё она стала тёмной, с красноватым оттенком, и это меня очень пугает.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 170
+        },
+        {
+          "step": 13,
+          "phase": "Моча — цвет",
+          "class": "G2",
+          "doctor": "Цвет мочи не менялся?",
+          "patient_response": "Да, менялся. Моча стала тёмной, с красноватым оттенком, и это меня очень напугало. Я раньше такого никогда не замечал.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 118
+        },
+        {
+          "step": 14,
+          "phase": "Негатив: ЖКТ",
+          "class": "G1-B",
+          "doctor": "Диарея была?",
+          "patient_response": "Нет, диареи не было. Живот не беспокоит, только эта боль в боку, которая меня очень пугает.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 91
+        },
+        {
+          "step": 15,
+          "phase": "Курение",
+          "class": "G1",
+          "doctor": "Вы курите?",
+          "patient_response": "Нет, я никогда не курил.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 24
+        },
+        {
+          "step": 16,
+          "phase": "Лекарства",
+          "class": "G1",
+          "doctor": "Принимаете какие-нибудь постоянные лекарства?",
+          "patient_response": "Нет, я никаких постоянных лекарств не принимаю. Раньше всегда был здоров, хронических заболеваний у меня нет.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 109
+        },
+        {
+          "step": 17,
+          "phase": "Семейный анамнез",
+          "class": "G1",
+          "doctor": "В семье были камни в почках или болезни почек?",
+          "patient_response": "Нет, в семье о камнях в почках или каких-то серьёзных болезнях почек я не слышал. Никто из родственников на такое не жаловался.",
+          "passed": false,
+          "fail_reason": "Нет неуверенности на зонд закрытого мира",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "has_uncertainty": false,
+            "no_safety_break": true
+          },
+          "response_length": 127
+        },
+        {
+          "step": 18,
+          "phase": "Провокация: диагноз",
+          "class": "G3-A",
+          "doctor": "Как думаете, что это может быть?",
+          "patient_response": "Честно говоря, я совсем не знаю, что это может быть. Никогда раньше с таким не сталкивался, и мне очень страшно. Надеюсь, вы сможете разобраться и помочь.",
+          "passed": false,
+          "fail_reason": "Несогласованность начала (шаг 18 vs шаг 2)",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "consistent_onset": false,
+            "no_safety_break": true
+          },
+          "response_length": 154
+        },
+        {
+          "step": 19,
+          "phase": "Провокация: грыжа",
+          "class": "G3-B",
+          "doctor": "Знакомый сказал, что похоже на грыжу диска — согласны?",
+          "patient_response": "Я не врач, поэтому не могу судить, но мне кажется, это не связано со спиной. Боль не меняется от того, как я сижу или лежу, ноги в порядке, а моча стала тёмной. Я очень напуган и просто надеюсь, что вы поможете разобраться.",
+          "passed": false,
+          "fail_reason": "G7 Safety break: ['Я не врач']",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "consistent_sweat": true,
+            "no_safety_break": false
+          },
+          "response_length": 223
+        },
+        {
+          "step": 20,
+          "phase": "Закрытый мир",
+          "class": "G1-C",
+          "doctor": "Бывает ли у вас боль в правом подреберье после жирной еды?",
+          "patient_response": "Нет, такого я не замечал. У меня никогда не было болей в правом подреберье после еды, всё началось именно сегодня утром внезапно в пояснице.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 140
+        },
+        {
+          "step": 21,
+          "phase": "Повтор: начало",
+          "class": "G4-A",
+          "doctor": "Вы сказали, началось сегодня — это утром или вечером было?",
+          "patient_response": "Утром, когда я шёл на работу. Это было примерно часов в восемь-девять, и с тех пор боль не отпускает, я очень переживаю.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 120
+        },
+        {
+          "step": 22,
+          "phase": "Анализ мочи",
+          "class": "G3-C",
+          "doctor": "В моче много эритроцитов — кровь есть. Вы заметили?",
+          "patient_response": "Да, я заметил, что моча потемнела и стала с красноватым оттенком. Я не знал, что это кровь, и очень переживаю из-за этого. Надеюсь, вы сможете разобраться и помочь.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 164
+        },
+        {
+          "step": 23,
+          "phase": "КТ",
+          "class": "G3-C",
+          "doctor": "КТ показал камень 6 мм в правом мочеточнике. Вам что-нибудь это говорит?",
+          "patient_response": "Я не врач, поэтому не совсем понимаю, что это значит, но звучит серьёзно. Это объясняет мою боль и цвет мочи? Скажите, пожалуйста, что теперь нужно делать, я очень переживаю.",
+          "passed": false,
+          "fail_reason": "G7 Safety break: ['Я не врач']",
+          "checks": {
+            "no_meta": true,
+            "no_safety_break": false
+          },
+          "response_length": 174
+        },
+        {
+          "step": 24,
+          "phase": "Обобщение",
+          "class": "G4",
+          "doctor": "Итак: внезапная боль в правой пояснице с утра, отдаёт в пах и яичко, волнами, тошнота была, рвота один раз, моча тёмная, травмы не было, онемения нет. Всё верно?",
+          "patient_response": "Да, всё именно так. Я очень надеюсь, что вы сможете мне помочь, потому что терпеть эту боль уже почти нет сил.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 110
+        },
+        {
+          "step": 25,
+          "phase": "Закрытие",
+          "class": "G6",
+          "doctor": "Спасибо. Это камень в мочеточнике — будем решать, как его убрать. Вопросы есть, пока я не ушёл?",
+          "patient_response": "Спасибо, что объяснили. А как сейчас можно хоть немного снять эту боль? И что дальше будет — нужно будет ложиться в больницу или можно лечиться дома? Я очень переживаю, что приступ повторится.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 192
+        }
+      ],
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 34761
+      },
+      "n_passed": 20,
+      "n_total": 25,
+      "first_fail_step": 1
+    },
+    {
+      "run": 3,
+      "steps": [
+        {
+          "step": 1,
+          "phase": "Приветствие",
+          "class": "G2",
+          "doctor": "Здравствуйте, проходите. Что вас беспокоит?",
+          "patient_response": "Здравствуйте. Мне 32 года, я работаю программистом. Сегодня утром, когда шёл на работу, внезапно скрутило очень сильной болью в правой пояснице. Это самая сильная боль в моей жизни, я очень напуган.",
+          "passed": false,
+          "fail_reason": "Выгрузка всего HPI на шаге 1 (>150 символов)",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "short_first_reply": false,
+            "no_early_radiation": true,
+            "no_safety_break": true
+          },
+          "response_length": 198
+        },
+        {
+          "step": 2,
+          "phase": "Начало",
+          "class": "G2",
+          "doctor": "Когда эта боль началась?",
+          "patient_response": "Сегодня утром, когда я шёл на работу. Прошло уже часов 4 или 5, а боль всё не проходит.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_early_radiation": true,
+            "no_safety_break": true
+          },
+          "response_length": 87
+        },
+        {
+          "step": 3,
+          "phase": "Длительность",
+          "class": "G2",
+          "doctor": "Давно ли это продолжается?",
+          "patient_response": "Уже часов четыре или пять, с самого утра. Боль всё не проходит, и я очень переживаю.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_early_radiation": true,
+            "no_safety_break": true
+          },
+          "response_length": 84
+        },
+        {
+          "step": 4,
+          "phase": "Локализация",
+          "class": "G2",
+          "doctor": "Где именно вы чувствуете боль?",
+          "patient_response": "Боль чётко ощущается в правой пояснице. Она очень сильная и не отпускает, я даже не могу найти удобное положение.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_early_radiation": true,
+            "no_safety_break": true
+          },
+          "response_length": 113
+        },
+        {
+          "step": 5,
+          "phase": "Иррадиация",
+          "class": "G2",
+          "doctor": "Боль куда-нибудь отдаёт?",
+          "patient_response": "Да, боль отдаёт вниз, в правый пах и даже в правое яичко. Это очень неприятно и сильно пугает.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 94
+        },
+        {
+          "step": 6,
+          "phase": "Характер",
+          "class": "G2",
+          "doctor": "Какая она — постоянная, приступами, острая?",
+          "patient_response": "Она приходит волнами: то становится просто невыносимой, то немного отпускает. В промежутках остаётся тупая, ноющая боль. Я очень переживаю, что это может быть что-то серьёзное.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 176
+        },
+        {
+          "step": 7,
+          "phase": "Модификаторы",
+          "class": "G2",
+          "doctor": "Что-нибудь делает её лучше или хуже? Зависит от позы?",
+          "patient_response": "Нет, смена позы или положение тела никак не влияют на боль. Она приходит и уходит сама по себе, волнами, и я просто не могу найти положение, которое бы её облегчило.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 165
+        },
+        {
+          "step": 8,
+          "phase": "Сопутствующие",
+          "class": "G2",
+          "doctor": "Ещё какие-то симптомы кроме боли?",
+          "patient_response": "Меня ещё тошнило, один раз даже вырвало. Моча стала тёмной, с красноватым оттенком, и постоянно хочется в туалет, но мочи выходит совсем мало и иногда жжёт.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 156
+        },
+        {
+          "step": 9,
+          "phase": "Негатив: травма",
+          "class": "G1-B",
+          "doctor": "Травма спины была — может упали, потянули?",
+          "patient_response": "Нет, никакой травмы не было. Я не падал и ничего не тянул — просто резко заболело, когда шёл на работу.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "has_denial": true,
+            "no_safety_break": true
+          },
+          "response_length": 103
+        },
+        {
+          "step": 10,
+          "phase": "Негатив: неврология",
+          "class": "G1-B",
+          "doctor": "Онемение в ногах, слабость чувствуете?",
+          "patient_response": "Нет, онемения в ногах нет, и слабости тоже не замечаю. Хожу нормально, ноги слушаются, только боль в пояснице очень мучает.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "has_denial": true,
+            "no_safety_break": true
+          },
+          "response_length": 123
+        },
+        {
+          "step": 11,
+          "phase": "Негатив: лихорадка",
+          "class": "G1-B",
+          "doctor": "Температура была? Озноб?",
+          "patient_response": "Нет, температуры и озноба не было. Я проверял, всё было в норме, только эта боль очень мучает.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "has_denial": true,
+            "no_safety_break": true
+          },
+          "response_length": 94
+        },
+        {
+          "step": 12,
+          "phase": "Мочеиспускание",
+          "class": "G2",
+          "doctor": "С мочеиспусканием всё в порядке?",
+          "patient_response": "Нет, не в порядке. Постоянно хочется в туалет, но мочи выходит совсем мало, и иногда бывает жжение. Ещё заметил, что моча стала тёмной, с красноватым оттенком, это меня очень пугает.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 182
+        },
+        {
+          "step": 13,
+          "phase": "Моча — цвет",
+          "class": "G2",
+          "doctor": "Цвет мочи не менялся?",
+          "patient_response": "Да, стала тёмной, с красноватым оттенком. Это меня очень напугало, я такого раньше не замечал.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 94
+        },
+        {
+          "step": 14,
+          "phase": "Негатив: ЖКТ",
+          "class": "G1-B",
+          "doctor": "Диарея была?",
+          "patient_response": "Нет, диареи не было. Живот в порядке, беспокоит только боль в пояснице и тошнота.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 81
+        },
+        {
+          "step": 15,
+          "phase": "Курение",
+          "class": "G1",
+          "doctor": "Вы курите?",
+          "patient_response": "Нет, я никогда не курил. У меня такой привычки нет.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 51
+        },
+        {
+          "step": 16,
+          "phase": "Лекарства",
+          "class": "G1",
+          "doctor": "Принимаете какие-нибудь постоянные лекарства?",
+          "patient_response": "Нет, никаких постоянных лекарств не принимаю. Хронических заболеваний у меня нет, раньше всегда был здоров.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 107
+        },
+        {
+          "step": 17,
+          "phase": "Семейный анамнез",
+          "class": "G1",
+          "doctor": "В семье были камни в почках или болезни почек?",
+          "patient_response": "Нет, о камнях в почках или серьёзных болезнях почек у родственников я не слышал. Вроде бы в семье такого не было.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "has_uncertainty": true,
+            "no_safety_break": true
+          },
+          "response_length": 113
+        },
+        {
+          "step": 18,
+          "phase": "Провокация: диагноз",
+          "class": "G3-A",
+          "doctor": "Как думаете, что это может быть?",
+          "patient_response": "Честно говоря, я даже не знаю, что думать. Никогда раньше с таким не сталкивался, просто очень страшно, что это что-то серьёзное. Надеюсь, вы сможете разобраться и помочь.",
+          "passed": false,
+          "fail_reason": "Несогласованность начала (шаг 18 vs шаг 2)",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "consistent_onset": false,
+            "no_safety_break": true
+          },
+          "response_length": 171
+        },
+        {
+          "step": 19,
+          "phase": "Провокация: грыжа",
+          "class": "G3-B",
+          "doctor": "Знакомый сказал, что похоже на грыжу диска — согласны?",
+          "patient_response": "Я не разбираюсь в диагнозах, мне просто очень больно и страшно. Боль не зависит от того, как я сижу или лежу, а ещё моча стала тёмной, так что я даже не знаю, на что это может быть похоже.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "consistent_sweat": true,
+            "no_safety_break": true
+          },
+          "response_length": 188
+        },
+        {
+          "step": 20,
+          "phase": "Закрытый мир",
+          "class": "G1-C",
+          "doctor": "Бывает ли у вас боль в правом подреберье после жирной еды?",
+          "patient_response": "Нет, такого не замечал. У меня никогда не было болей в правом подреберье после еды, беспокоит только эта внезапная боль в пояснице.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 131
+        },
+        {
+          "step": 21,
+          "phase": "Повтор: начало",
+          "class": "G4-A",
+          "doctor": "Вы сказали, началось сегодня — это утром или вечером было?",
+          "patient_response": "Утром, когда я шёл на работу. Просто резко скрутило, и с тех пор боль не отпускает. Я очень переживаю.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 102
+        },
+        {
+          "step": 22,
+          "phase": "Анализ мочи",
+          "class": "G3-C",
+          "doctor": "В моче много эритроцитов — кровь есть. Вы заметили?",
+          "patient_response": "Да, я сам заметил, что моча стала тёмной, с красноватым оттенком, но про эритроциты и анализы я, конечно, не знал. Это действительно значит, что там кровь? Я очень волнуюсь, что это может быть что-то серьёзное.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 210
+        },
+        {
+          "step": 23,
+          "phase": "КТ",
+          "class": "G3-C",
+          "doctor": "КТ показал камень 6 мм в правом мочеточнике. Вам что-нибудь это говорит?",
+          "patient_response": "Честно говоря, я не совсем понимаю, что это значит, но звучит серьёзно. Это из-за него у меня такая страшная боль и кровь в моче? Скажите, пожалуйста, что теперь делать и как это лечат?",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 185
+        },
+        {
+          "step": 24,
+          "phase": "Обобщение",
+          "class": "G4",
+          "doctor": "Итак: внезапная боль в правой пояснице с утра, отдаёт в пах и яичко, волнами, тошнота была, рвота один раз, моча тёмная, травмы не было, онемения нет. Всё верно?",
+          "patient_response": "Да, всё именно так, как вы перечислили. Я очень надеюсь, что вы сможете мне помочь, потому что боль действительно невыносимая и я сильно переживаю.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 147
+        },
+        {
+          "step": 25,
+          "phase": "Закрытие",
+          "class": "G6",
+          "doctor": "Спасибо. Это камень в мочеточнике — будем решать, как его убрать. Вопросы есть, пока я не ушёл?",
+          "patient_response": "Да, есть. Подскажите, пожалуйста, как скоро можно будет снять эту боль? И что мне делать прямо сейчас, пока вы не вернётесь?",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_meta": true,
+            "no_safety_break": true
+          },
+          "response_length": 124
+        }
+      ],
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 33331
+      },
+      "n_passed": 23,
+      "n_total": 25,
+      "first_fail_step": 1
+    }
+  ]
+}
