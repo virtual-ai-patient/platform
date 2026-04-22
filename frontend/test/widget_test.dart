@@ -207,38 +207,6 @@ class _FakeSessionRepository implements SessionRepositoryContract {
       ..response = 'Mock AI response'
       ..loggedAt = DateTime.utc(2026));
   }
-
-  @override
-  Future<generated.AvailableTestsResponse> getAvailableTests({
-    required String sessionId,
-  }) async {
-    return generated.AvailableTestsResponse(
-      (b) => b
-        ..tests.add(
-          generated.AvailableTestItem(
-            (t) => t
-              ..testName = 'ECG'
-              ..category = 'must_order',
-          ),
-        ),
-    );
-  }
-
-  @override
-  Future<generated.TestResultResponse> orderTest({
-    required String sessionId,
-    required String testId,
-  }) async {
-    return generated.TestResultResponse(
-      (b) => b
-        ..testName = testId
-        ..resultType = 'text_report'
-        ..value = 'Normal / No significant findings.'
-        ..unit = null
-        ..referenceRange = null
-        ..isNormalDefault = true,
-    );
-  }
 }
 
 class _FakeCaseRepository implements CaseRepositoryContract {
