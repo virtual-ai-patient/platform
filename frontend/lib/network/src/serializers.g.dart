@@ -9,6 +9,8 @@ part of 'serializers.dart';
 Serializers _$serializers = (Serializers().toBuilder()
       ..add(AcceptableAnswerRequest.serializer)
       ..add(AcceptableAnswerResponse.serializer)
+      ..add(AvailableTestItem.serializer)
+      ..add(AvailableTestsResponse.serializer)
       ..add(CaseResponse.serializer)
       ..add(ChatRequest.serializer)
       ..add(ChatResponse.serializer)
@@ -31,6 +33,7 @@ Serializers _$serializers = (Serializers().toBuilder()
       ..add(ManagementRequest.serializer)
       ..add(ManagementResponse.serializer)
       ..add(MessageResponse.serializer)
+      ..add(OrderTestRequest.serializer)
       ..add(PasswordResetConfirm.serializer)
       ..add(PasswordResetRequest.serializer)
       ..add(RefreshRequest.serializer)
@@ -39,6 +42,7 @@ Serializers _$serializers = (Serializers().toBuilder()
       ..add(SessionResponse.serializer)
       ..add(SignupRequest.serializer)
       ..add(StartSessionRequest.serializer)
+      ..add(TestResultResponse.serializer)
       ..add(TokenResponse.serializer)
       ..add(UpdateCaseRequest.serializer)
       ..add(UpdateCaseRequestDifficultyEnum.serializer)
@@ -61,6 +65,9 @@ Serializers _$serializers = (Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
           () => ListBuilder<String>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(AvailableTestItem)]),
+          () => ListBuilder<AvailableTestItem>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(LocationInner)]),
           () => ListBuilder<LocationInner>())
