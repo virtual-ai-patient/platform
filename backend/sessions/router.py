@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ai.provider import AIProvider
+from core.provider import AIProvider
 from cases.repository import CaseRepository
 from cases.router import get_case_repo
 from dependencies import get_ai_provider, get_current_user, get_db
