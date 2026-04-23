@@ -94,8 +94,8 @@ def test_build_system_prompt_includes_disclosure_and_safe_guard() -> None:
             "key_history_points": {},
         }
     )
-    assert "Progressive" in sp or "progressive" in sp.lower()
-    assert "an AI" in sp or "not say you are an" in sp.lower() or "Never say you are" in sp
+    assert "Прогрессив" in sp or "прогрессив" in sp.lower()
+    assert "ИИ" in sp or "чат-бот" in sp
 
 
 def test_window_history_respects_length_and_char_cap() -> None:
@@ -103,16 +103,16 @@ def test_window_history_respects_length_and_char_cap() -> None:
     for i in range(3):
         rows.append(
             SimpleNamespace(
-                role="user", content=f"u{i}" * 5, id=f"{i}u"  # type: ignore[arg-type]
+                role="user", content=f"u{i}" * 5, id=f"{i}u"
             )
         )
         rows.append(
             SimpleNamespace(
-                role="assistant", content=f"a{i}" * 5, id=f"{i}a"  # type: ignore[arg-type]
+                role="assistant", content=f"a{i}" * 5, id=f"{i}a"
             )
         )
+    # Duck-typed like ActionLog
     w = window_history(
-        # type: ignore — duck-typed like ActionLog
         rows,  # type: ignore[arg-type]
         max_turn_pairs=2,
         max_context_chars=10**6,
