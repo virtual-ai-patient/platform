@@ -40,10 +40,16 @@ def get_ai_provider() -> AIProvider:
     name = config.resolved_ai_provider()
     if name == "mock":
         return MockProvider()
+    extra: dict[str, str] = {}
+    if config.OPENROUTER_HTTP_REFERER.strip():
+        extra["HTTP-Referer"] = config.OPENROUTER_HTTP_REFERER.strip()
+    if config.OPENROUTER_APP_NAME.strip():
+        extra["X-Title"] = config.OPENROUTER_APP_NAME.strip()
     return OpenAIProvider(
         api_key=config.OPENAI_API_KEY,
         model=config.OPENAI_MODEL,
         base_url=config.OPENAI_BASE_URL,
+        default_headers=extra or None,
         max_tokens=config.OPENAI_MAX_TOKENS,
         timeout=config.OPENAI_TIMEOUT_SEC,
     )

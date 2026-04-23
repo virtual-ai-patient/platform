@@ -22,10 +22,10 @@ def get_case_service(repo: CaseRepository = Depends(get_case_repo)) -> CaseServi
     return CaseService(repo)
 
 
-def _require_educator(current_user: User = Depends(get_current_user)) -> User:
-    if current_user.role != "educator":
+def _require_educator_or_admin(current_user: User = Depends(get_current_user)) -> User:
+    if current_user.role not in ("educator", "admin"):
         raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN, detail="Educators only"
+            status_code=status.HTTP_403_FORBIDDEN, detail="Educators or admins only"
         )
     return current_user
 
@@ -57,7 +57,7 @@ async def list_cases(
 async def update_case(
     id: str,
     data: UpdateCaseRequest,
-    current_user: User = Depends(_require_educator),
+    current_user: User = Depends(_require_educator_or_admin),
     service: CaseService = Depends(get_case_service),
 ) -> CaseResponse:
     case = await service.get_by_id(id)
@@ -71,7 +71,7 @@ async def update_case(
 @router.post("", response_model=CaseResponse, status_code=status.HTTP_201_CREATED)
 async def create_case(
     data: CreateCaseRequest,
-    current_user: User = Depends(_require_educator),
+    current_user: User = Depends(_require_educator_or_admin),
     service: CaseService = Depends(get_case_service),
 ) -> CaseResponse:
     try:
@@ -85,7 +85,7 @@ async def create_case(
 @router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_case(
     id: str,
-    current_user: User = Depends(_require_educator),
+    current_user: User = Depends(_require_educator_or_admin),
     service: CaseService = Depends(get_case_service),
 ) -> None:
     case = await service.get_by_id(id)

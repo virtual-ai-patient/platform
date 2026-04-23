@@ -22,6 +22,9 @@ OPENAI_MODEL: str = os.environ.get("OPENAI_MODEL", "llama-3.1-8b-instant")
 OPENAI_BASE_URL: str | None = os.environ.get("OPENAI_BASE_URL") or None
 OPENAI_MAX_TOKENS: int = int(os.environ.get("OPENAI_MAX_TOKENS", "1024"))
 OPENAI_TIMEOUT_SEC: float = float(os.environ.get("OPENAI_TIMEOUT_SEC", "60"))
+# OpenRouter (optional; sent as extra HTTP headers on the OpenAI-compatible client)
+OPENROUTER_HTTP_REFERER: str = os.environ.get("OPENROUTER_HTTP_REFERER", "")
+OPENROUTER_APP_NAME: str = os.environ.get("OPENROUTER_APP_NAME", "")
 AI_MAX_HISTORY_TURN_PAIRS: int = int(os.environ.get("AI_MAX_HISTORY_TURN_PAIRS", "24"))
 AI_MAX_CONTEXT_CHARS: int = int(os.environ.get("AI_MAX_CONTEXT_CHARS", "32000"))
 

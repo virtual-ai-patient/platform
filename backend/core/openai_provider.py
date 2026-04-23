@@ -8,6 +8,7 @@ class OpenAIProvider:
         model: str = "gpt-4o-mini",
         base_url: str | None = None,
         *,
+        default_headers: dict[str, str] | None = None,
         max_tokens: int = 1024,
         timeout: float = 60.0,
     ) -> None:
@@ -15,6 +16,7 @@ class OpenAIProvider:
             api_key=api_key,
             base_url=base_url,
             timeout=timeout,
+            default_headers=default_headers,
         )
         self._model = model
         self._max_tokens = max_tokens
