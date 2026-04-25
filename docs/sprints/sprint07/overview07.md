@@ -12,7 +12,7 @@ nav_order: 1
 
 ---
 
-## 1. Summary
+### 1. Summary
 
 The team demonstrated two major achievements:
 
@@ -38,7 +38,7 @@ The mentor also reminded the team to use Pull Requests for visibility and to cre
 
 ---
 
-## 2. Key Decisions
+### 2. Key Decisions
 
 | Decision | Rationale |
 |:---|:---|
