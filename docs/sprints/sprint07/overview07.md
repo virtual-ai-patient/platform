@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Sprint 06 Overview
+title: Sprint 07 Overview
 parent: Sprints
 has_children: true
 nav_order: 1
