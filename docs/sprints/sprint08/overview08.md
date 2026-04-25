@@ -1,4 +1,12 @@
-# Meeting Overview & Action Points
+---
+layout: default
+title: Sprint 08 Overview
+parent: Sprints
+has_children: true
+nav_order: 1
+---
+
+# Meeting Overview# Meeting Overview & Action Points
 
 ## Mentor Meeting — April 23, 2026
 
