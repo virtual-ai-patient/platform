@@ -1,8 +1,8 @@
 ---
 layout: default
-title: Sprint 06 Action Points
+title: Sprint 07 Transcription
 section: sprints
-parent: Sprint 06 Overview
+parent: Sprint 07 Overview
 ---
 
 # Transcription of the Meeting
