@@ -6,6 +6,13 @@ abstract class SessionRepositoryContract {
     required String sessionId,
     required String message,
   });
+  Future<generated.AvailableTestsResponse> getAvailableTests({
+    required String sessionId,
+  });
+  Future<generated.TestResultResponse> orderTest({
+    required String sessionId,
+    required String testId,
+  });
 }
 
 class SessionRepository implements SessionRepositoryContract {
@@ -32,6 +39,30 @@ class SessionRepository implements SessionRepositoryContract {
     final response = await _api.chatWithPatientSessionsSessionIdChatPost(
       sessionId: sessionId,
       chatRequest: body,
+    );
+    return response.data!;
+  }
+
+  @override
+  Future<generated.AvailableTestsResponse> getAvailableTests({
+    required String sessionId,
+  }) async {
+    final response =
+        await _api.availableTestsSessionsSessionIdAvailableTestsGet(
+      sessionId: sessionId,
+    );
+    return response.data!;
+  }
+
+  @override
+  Future<generated.TestResultResponse> orderTest({
+    required String sessionId,
+    required String testId,
+  }) async {
+    final body = generated.OrderTestRequest((b) => b..testId = testId);
+    final response = await _api.orderTestEndpointSessionsSessionIdOrderTestPost(
+      sessionId: sessionId,
+      orderTestRequest: body,
     );
     return response.data!;
   }
