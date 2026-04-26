@@ -113,7 +113,7 @@ def test_window_history_respects_length_and_char_cap() -> None:
         )
     # Duck-typed like ActionLog
     w = window_history(
-        rows,  # type: ignore[arg-type]
+        rows,
         max_turn_pairs=2,
         max_context_chars=10**6,
     )

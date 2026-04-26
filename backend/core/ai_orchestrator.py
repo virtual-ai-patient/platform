@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import time
-from typing import Any, Protocol, runtime_checkable
+from typing import Any, Protocol, TypeVar, runtime_checkable
 
 import config
 from core.provider import AIProvider
@@ -15,6 +15,9 @@ from models.db import ActionLog
 class _HasRoleContent(Protocol):
     role: str
     content: str
+
+
+TLog = TypeVar("TLog", bound=_HasRoleContent)
 
 
 def _literacy(difficulty: str) -> str:
@@ -141,23 +144,23 @@ def build_system_prompt(snapshot: dict[str, Any]) -> str:
 
 
 def window_history(
-    entries: list[ActionLog] | list[_HasRoleContent],
+    entries: list[TLog],
     *,
     max_turn_pairs: int,
     max_context_chars: int,
-) -> list[ActionLog] | list[_HasRoleContent]:
+) -> list[TLog]:
     if not entries:
         return []
-    rows = list(entries)
+    rows: list[TLog] = list(entries)
     if len(rows) % 2:
         rows = rows[:-1]
     if not rows:
         return []
     take = min(max_turn_pairs, len(rows) // 2)
     start = len(rows) - take * 2
-    windowed = list(rows[start:])
+    windowed: list[TLog] = list(rows[start:])
 
-    def chars(xs: list[Any]) -> int:
+    def chars(xs: list[TLog]) -> int:
         return sum(len(x.content) for x in xs)
 
     while len(windowed) > 2 and chars(windowed) > max_context_chars:
