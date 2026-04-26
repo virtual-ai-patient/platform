@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import time
-from typing import Any, Protocol, TypeVar, runtime_checkable
+from typing import Any, Protocol, TypeAlias, cast, overload, runtime_checkable
 
 import config
 from core.provider import AIProvider
@@ -12,12 +12,18 @@ from models.db import ActionLog
 
 
 @runtime_checkable
-class _HasRoleContent(Protocol):
+class ChatLogEntry(Protocol):
+    """Minimal row shape for history windowing (ORM or test doubles).
+
+    Kept separate from `list[ActionLog]` because SQLAlchemy `Mapped[str]` is not
+    always treated as a structural subtype of this Protocol under mypy --strict.
+    """
+
     role: str
     content: str
 
 
-TLog = TypeVar("TLog", bound=_HasRoleContent)
+_LogRows: TypeAlias = list[ActionLog] | list[ChatLogEntry]
 
 
 def _literacy(difficulty: str) -> str:
@@ -51,7 +57,9 @@ def _tone_lines(presets: list[str]) -> str:
         elif pl in ("neutral", "calm", "flat"):
             lines.append(f"- «{p}» (нейтрально): спокойно, по делу, без драмы.")
         else:
-            lines.append(f"- «{p}»: тон влияет на формулировки и темп, без новых симптомов.")
+            lines.append(
+                f"- «{p}»: тон влияет на формулировки и темп, без новых симптомов."
+            )
     return "\n".join(lines)
 
 
@@ -95,9 +103,7 @@ def build_system_prompt(snapshot: dict[str, Any]) -> str:
         else "(жалоба в кейсе не задана — отвечай коротко, без выдуманных деталей.)"
     )
     hpi_shown = (
-        hpi
-        if hpi
-        else "(подробный анамнез в кейсе пуст — не придумывай клинику.)"
+        hpi if hpi else "(подробный анамнез в кейсе пуст — не придумывай клинику.)"
     )
     parts.append(
         "--- ПЕРВЫЙ ВИЗИТ / ТОЛЬКО ОБЩИЕ ВОПРОСЫ ---\n"
@@ -105,10 +111,7 @@ def build_system_prompt(snapshot: dict[str, Any]) -> str:
         "Не пересказывай полный анамнез в первом ответе.\n"
         f"Жалоба: {chief_shown}"
     )
-    parts.append(
-        "--- ПОЛНЫЙ АНАМНЕЗ (только по уточняющим вопросам) ---\n"
-        f"{hpi_shown}"
-    )
+    parts.append(f"--- ПОЛНЫЙ АНАМНЕЗ (только по уточняющим вопросам) ---\n{hpi_shown}")
     if isinstance(khp, dict) and (khp.get("must_ask") or khp.get("red_flags")):
         bits: list[str] = []
         if khp.get("must_ask"):
@@ -143,24 +146,42 @@ def build_system_prompt(snapshot: dict[str, Any]) -> str:
     return "\n\n".join(parts).strip()
 
 
+@overload
 def window_history(
-    entries: list[TLog],
+    entries: list[ActionLog],
     *,
     max_turn_pairs: int,
     max_context_chars: int,
-) -> list[TLog]:
+) -> list[ActionLog]: ...
+
+
+@overload
+def window_history(
+    entries: list[ChatLogEntry],
+    *,
+    max_turn_pairs: int,
+    max_context_chars: int,
+) -> list[ChatLogEntry]: ...
+
+
+def window_history(
+    entries: list[ActionLog] | list[ChatLogEntry],
+    *,
+    max_turn_pairs: int,
+    max_context_chars: int,
+) -> list[ActionLog] | list[ChatLogEntry]:
     if not entries:
         return []
-    rows: list[TLog] = list(entries)
+    rows: _LogRows = cast(_LogRows, list(entries))
     if len(rows) % 2:
         rows = rows[:-1]
     if not rows:
         return []
     take = min(max_turn_pairs, len(rows) // 2)
     start = len(rows) - take * 2
-    windowed: list[TLog] = list(rows[start:])
+    windowed: _LogRows = cast(_LogRows, list(rows[start:]))
 
-    def chars(xs: list[TLog]) -> int:
+    def chars(xs: _LogRows) -> int:
         return sum(len(x.content) for x in xs)
 
     while len(windowed) > 2 and chars(windowed) > max_context_chars:
@@ -173,7 +194,7 @@ def window_history(
 def build_messages(
     *,
     system: str,
-    history: list[ActionLog] | list[_HasRoleContent],
+    history: list[ActionLog] | list[ChatLogEntry],
     user_message: str,
 ) -> list[dict[str, str]]:
     out: list[dict[str, str]] = [{"role": "system", "content": system}]
@@ -201,6 +222,4 @@ async def run_turn(
     )
     t0 = time.perf_counter()
     text = await provider.complete(messages)
-    return TurnResult(
-        text=text, latency_ms=(time.perf_counter() - t0) * 1000.0
-    )
+    return TurnResult(text=text, latency_ms=(time.perf_counter() - t0) * 1000.0)

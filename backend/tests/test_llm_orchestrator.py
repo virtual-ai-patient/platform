@@ -15,7 +15,12 @@ from sqlalchemy import update
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 import models.database as database
-from core.ai_orchestrator import build_system_prompt, run_turn, window_history
+from core.ai_orchestrator import (
+    ChatLogEntry,
+    build_system_prompt,
+    run_turn,
+    window_history,
+)
 from core.mock_provider import MockProvider
 from models.db import ClinicalCase
 
@@ -71,7 +76,10 @@ def _case_payload(case_id: str, **overrides: Any) -> dict[str, Any]:
             "weight_treatment": 0.25,
             "weight_safety": 0.25,
             "acceptable_answers": [
-                {"field": "final_diagnosis", "answer": "Acute fixture diagnosis for automated tests"}
+                {
+                    "field": "final_diagnosis",
+                    "answer": "Acute fixture diagnosis for automated tests",
+                }
             ],
             "critical_safety_errors": [],
         },
@@ -101,19 +109,11 @@ def test_build_system_prompt_includes_disclosure_and_safe_guard() -> None:
 def test_window_history_respects_length_and_char_cap() -> None:
     rows: list[SimpleNamespace] = []
     for i in range(3):
-        rows.append(
-            SimpleNamespace(
-                role="user", content=f"u{i}" * 5, id=f"{i}u"
-            )
-        )
-        rows.append(
-            SimpleNamespace(
-                role="assistant", content=f"a{i}" * 5, id=f"{i}a"
-            )
-        )
-    # Duck-typed like ActionLog
+        rows.append(SimpleNamespace(role="user", content=f"u{i}" * 5, id=f"{i}u"))
+        rows.append(SimpleNamespace(role="assistant", content=f"a{i}" * 5, id=f"{i}a"))
+    # Duck-typed like ActionLog (list invariance: cast for mypy --strict).
     w = window_history(
-        rows,
+        cast(list[ChatLogEntry], rows),
         max_turn_pairs=2,
         max_context_chars=10**6,
     )
@@ -181,7 +181,9 @@ def grumpy_and_anxious_sessions(
         cid = f"llm_orch_tone_{tone}"
         assert (
             client.post(
-                "/cases", json=_case_payload(cid, tone_presets=[tone]), headers=educator_headers
+                "/cases",
+                json=_case_payload(cid, tone_presets=[tone]),
+                headers=educator_headers,
             ).status_code
             == 201
         )
@@ -291,10 +293,14 @@ def test_role_ten_replies_no_assistant_phrase(
         ).json()["session_id"]
     )
     for k in range(10):
-        out = client.post(
-            f"/sessions/{sid}/chat",
-            json={"message": f"Question number {k}"},
-            headers=learner_headers,
-        ).json()["response"].lower()
+        out = (
+            client.post(
+                f"/sessions/{sid}/chat",
+                json={"message": f"Question number {k}"},
+                headers=learner_headers,
+            )
+            .json()["response"]
+            .lower()
+        )
         assert "as an ai" not in out
         assert "language model" not in out
