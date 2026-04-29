@@ -52,3 +52,14 @@ async def get_current_user(
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail=str(exc)
         ) from exc
+
+
+async def require_educator_or_admin(
+    current_user: User = Depends(get_current_user),
+) -> User:
+    if current_user.role not in ("educator", "admin"):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Educator or admin role required",
+        )
+    return current_user

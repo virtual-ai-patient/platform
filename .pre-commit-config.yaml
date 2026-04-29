@@ -20,10 +20,18 @@ repos:
     hooks:
       - id: mypy
         name: mypy (strict)
-        entry: uv run mypy --strict
+        entry: bash -c 'cd backend && uv run mypy --strict .'
         language: system
         types: [python]
         files: ^backend/
+        pass_filenames: false
+
+      - id: pytest-cov
+        name: pytest (coverage ≥ 80%)
+        entry: bash -c 'cd backend && uv run pytest -q'
+        language: system
+        files: ^backend/.*\.py$
+        pass_filenames: false
 
   - repo: https://github.com/DavidAnson/markdownlint-cli2
     rev: v0.16.0
