@@ -23,6 +23,7 @@ def get_case_service(repo: CaseRepository = Depends(get_case_repo)) -> CaseServi
 
 
 def _require_educator(current_user: User = Depends(get_current_user)) -> User:
+    """Case authoring: educators only (admins manage accounts, not cases)."""
     if current_user.role != "educator":
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN, detail="Educators only"

@@ -4,9 +4,9 @@ from fastapi import Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 import config
-from ai.mock_provider import MockProvider
-from ai.openai_provider import OpenAIProvider
-from ai.provider import AIProvider
+from core.mock_provider import MockProvider
+from core.openai_provider import OpenAIProvider
+from core.provider import AIProvider
 from services.utils.auth import oauth2_scheme
 from models.database import SessionLocal
 from exceptions.auth_exceptions import AuthenticationError
@@ -37,9 +37,22 @@ def get_auth_service(
 
 
 def get_ai_provider() -> AIProvider:
-    if config.USE_MOCK_AI:
+    name = config.resolved_ai_provider()
+    if name == "mock":
         return MockProvider()
-    return OpenAIProvider(api_key=config.OPENAI_API_KEY, model=config.OPENAI_MODEL)
+    extra: dict[str, str] = {}
+    if config.OPENROUTER_HTTP_REFERER.strip():
+        extra["HTTP-Referer"] = config.OPENROUTER_HTTP_REFERER.strip()
+    if config.OPENROUTER_APP_NAME.strip():
+        extra["X-Title"] = config.OPENROUTER_APP_NAME.strip()
+    return OpenAIProvider(
+        api_key=config.OPENAI_API_KEY,
+        model=config.OPENAI_MODEL,
+        base_url=config.OPENAI_BASE_URL,
+        default_headers=extra or None,
+        max_tokens=config.OPENAI_MAX_TOKENS,
+        timeout=config.OPENAI_TIMEOUT_SEC,
+    )
 
 
 async def get_current_user(
