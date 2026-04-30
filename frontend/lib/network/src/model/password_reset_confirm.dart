@@ -11,11 +11,10 @@ part 'password_reset_confirm.g.dart';
 /// PasswordResetConfirm
 ///
 /// Properties:
-/// * [token]
-/// * [newPassword]
+/// * [token] 
+/// * [newPassword] 
 @BuiltValue()
-abstract class PasswordResetConfirm
-    implements Built<PasswordResetConfirm, PasswordResetConfirmBuilder> {
+abstract class PasswordResetConfirm implements Built<PasswordResetConfirm, PasswordResetConfirmBuilder> {
   @BuiltValueField(wireName: r'token')
   String get token;
 
@@ -24,24 +23,18 @@ abstract class PasswordResetConfirm
 
   PasswordResetConfirm._();
 
-  factory PasswordResetConfirm([void updates(PasswordResetConfirmBuilder b)]) =
-      _$PasswordResetConfirm;
+  factory PasswordResetConfirm([void updates(PasswordResetConfirmBuilder b)]) = _$PasswordResetConfirm;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(PasswordResetConfirmBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<PasswordResetConfirm> get serializer =>
-      _$PasswordResetConfirmSerializer();
+  static Serializer<PasswordResetConfirm> get serializer => _$PasswordResetConfirmSerializer();
 }
 
-class _$PasswordResetConfirmSerializer
-    implements PrimitiveSerializer<PasswordResetConfirm> {
+class _$PasswordResetConfirmSerializer implements PrimitiveSerializer<PasswordResetConfirm> {
   @override
-  final Iterable<Type> types = const [
-    PasswordResetConfirm,
-    _$PasswordResetConfirm
-  ];
+  final Iterable<Type> types = const [PasswordResetConfirm, _$PasswordResetConfirm];
 
   @override
   final String wireName = r'PasswordResetConfirm';
@@ -69,9 +62,7 @@ class _$PasswordResetConfirmSerializer
     PasswordResetConfirm object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
   }
 
   void _deserializeProperties(
@@ -128,3 +119,4 @@ class _$PasswordResetConfirmSerializer
     return result.build();
   }
 }
+

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/domains/admin/admin_repository.dart';
 import 'package:frontend/domains/auth/auth_repository.dart';
 import 'package:frontend/domains/cases/case_repository.dart';
 import 'package:frontend/domains/sessions/session_repository.dart';
@@ -13,11 +14,13 @@ class AppSessionRouter {
     required AuthRepositoryContract authRepository,
     required CaseRepositoryContract caseRepository,
     required SessionRepositoryContract sessionRepository,
+    AdminRepositoryContract? adminRepository,
   }) {
     return LoginScreen(
       authRepository: authRepository,
       caseRepository: caseRepository,
       sessionRepository: sessionRepository,
+      adminRepository: adminRepository,
     );
   }
 
@@ -26,17 +29,20 @@ class AppSessionRouter {
     required AuthRepositoryContract authRepository,
     required CaseRepositoryContract caseRepository,
     required SessionRepositoryContract sessionRepository,
+    AdminRepositoryContract? adminRepository,
   }) {
     LoginScreen createLoginScreen() => loginScreen(
           authRepository: authRepository,
           caseRepository: caseRepository,
           sessionRepository: sessionRepository,
+          adminRepository: adminRepository,
         );
     return CaseLibraryScreen(
       session: session,
       caseRepository: caseRepository,
       sessionRepository: sessionRepository,
       authRepository: authRepository,
+      adminRepository: adminRepository,
       buildLoginPage: createLoginScreen,
     );
   }

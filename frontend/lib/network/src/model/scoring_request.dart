@@ -13,15 +13,14 @@ part 'scoring_request.g.dart';
 /// ScoringRequest
 ///
 /// Properties:
-/// * [weightDiagnosis]
-/// * [weightDiagnostics]
-/// * [weightTreatment]
-/// * [weightSafety]
-/// * [acceptableAnswers]
-/// * [criticalSafetyErrors]
+/// * [weightDiagnosis] 
+/// * [weightDiagnostics] 
+/// * [weightTreatment] 
+/// * [weightSafety] 
+/// * [acceptableAnswers] 
+/// * [criticalSafetyErrors] 
 @BuiltValue()
-abstract class ScoringRequest
-    implements Built<ScoringRequest, ScoringRequestBuilder> {
+abstract class ScoringRequest implements Built<ScoringRequest, ScoringRequestBuilder> {
   @BuiltValueField(wireName: r'weight_diagnosis')
   num get weightDiagnosis;
 
@@ -42,21 +41,18 @@ abstract class ScoringRequest
 
   ScoringRequest._();
 
-  factory ScoringRequest([void updates(ScoringRequestBuilder b)]) =
-      _$ScoringRequest;
+  factory ScoringRequest([void updates(ScoringRequestBuilder b)]) = _$ScoringRequest;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(ScoringRequestBuilder b) => b
-    ..acceptableAnswers = ListBuilder()
-    ..criticalSafetyErrors = ListBuilder();
+      ..acceptableAnswers = ListBuilder()
+      ..criticalSafetyErrors = ListBuilder();
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<ScoringRequest> get serializer =>
-      _$ScoringRequestSerializer();
+  static Serializer<ScoringRequest> get serializer => _$ScoringRequestSerializer();
 }
 
-class _$ScoringRequestSerializer
-    implements PrimitiveSerializer<ScoringRequest> {
+class _$ScoringRequestSerializer implements PrimitiveSerializer<ScoringRequest> {
   @override
   final Iterable<Type> types = const [ScoringRequest, _$ScoringRequest];
 
@@ -92,8 +88,7 @@ class _$ScoringRequestSerializer
       yield r'acceptable_answers';
       yield serializers.serialize(
         object.acceptableAnswers,
-        specifiedType:
-            const FullType(BuiltList, [FullType(AcceptableAnswerRequest)]),
+        specifiedType: const FullType(BuiltList, [FullType(AcceptableAnswerRequest)]),
       );
     }
     if (object.criticalSafetyErrors != null) {
@@ -111,9 +106,7 @@ class _$ScoringRequestSerializer
     ScoringRequest object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
   }
 
   void _deserializeProperties(
@@ -159,8 +152,7 @@ class _$ScoringRequestSerializer
         case r'acceptable_answers':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType:
-                const FullType(BuiltList, [FullType(AcceptableAnswerRequest)]),
+            specifiedType: const FullType(BuiltList, [FullType(AcceptableAnswerRequest)]),
           ) as BuiltList<AcceptableAnswerRequest>;
           result.acceptableAnswers.replace(valueDes);
           break;
@@ -199,3 +191,4 @@ class _$ScoringRequestSerializer
     return result.build();
   }
 }
+

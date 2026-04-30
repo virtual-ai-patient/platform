@@ -19,6 +19,7 @@ import 'package:frontend/network/src/model/start_session_request.dart';
 import 'package:frontend/network/src/model/test_result_response.dart';
 
 class SessionsApi {
+
   final Dio _dio;
 
   final Serializers _serializers;
@@ -26,10 +27,10 @@ class SessionsApi {
   const SessionsApi(this._dio, this._serializers);
 
   /// Available Tests
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [sessionId]
+  /// * [sessionId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -39,8 +40,7 @@ class SessionsApi {
   ///
   /// Returns a [Future] containing a [Response] with a [AvailableTestsResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<AvailableTestsResponse>>
-      availableTestsSessionsSessionIdAvailableTestsGet({
+  Future<Response<AvailableTestsResponse>> availableTestsSessionsSessionIdAvailableTestsGet({ 
     required String sessionId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -49,10 +49,7 @@ class SessionsApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/sessions/{session_id}/available-tests'.replaceAll(
-        '{' r'session_id' '}',
-        encodeQueryParameter(_serializers, sessionId, const FullType(String))
-            .toString());
+    final _path = r'/sessions/{session_id}/available-tests'.replaceAll('{' r'session_id' '}', encodeQueryParameter(_serializers, sessionId, const FullType(String)).toString());
     final _options = Options(
       method: r'GET',
       headers: <String, dynamic>{
@@ -82,12 +79,11 @@ class SessionsApi {
 
     try {
       final rawResponse = _response.data;
-      _responseData = rawResponse == null
-          ? null
-          : _serializers.deserialize(
-              rawResponse,
-              specifiedType: const FullType(AvailableTestsResponse),
-            ) as AvailableTestsResponse;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(AvailableTestsResponse),
+      ) as AvailableTestsResponse;
+
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
@@ -111,11 +107,11 @@ class SessionsApi {
   }
 
   /// Chat With Patient
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [sessionId]
-  /// * [chatRequest]
+  /// * [sessionId] 
+  /// * [chatRequest] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -125,7 +121,7 @@ class SessionsApi {
   ///
   /// Returns a [Future] containing a [Response] with a [ChatResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ChatResponse>> chatWithPatientSessionsSessionIdChatPost({
+  Future<Response<ChatResponse>> chatWithPatientSessionsSessionIdChatPost({ 
     required String sessionId,
     required ChatRequest chatRequest,
     CancelToken? cancelToken,
@@ -135,10 +131,7 @@ class SessionsApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/sessions/{session_id}/chat'.replaceAll(
-        '{' r'session_id' '}',
-        encodeQueryParameter(_serializers, sessionId, const FullType(String))
-            .toString());
+    final _path = r'/sessions/{session_id}/chat'.replaceAll('{' r'session_id' '}', encodeQueryParameter(_serializers, sessionId, const FullType(String)).toString());
     final _options = Options(
       method: r'POST',
       headers: <String, dynamic>{
@@ -162,9 +155,10 @@ class SessionsApi {
     try {
       const _type = FullType(ChatRequest);
       _bodyData = _serializers.serialize(chatRequest, specifiedType: _type);
-    } catch (error, stackTrace) {
+
+    } catch(error, stackTrace) {
       throw DioException(
-        requestOptions: _options.compose(
+         requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
@@ -187,12 +181,11 @@ class SessionsApi {
 
     try {
       final rawResponse = _response.data;
-      _responseData = rawResponse == null
-          ? null
-          : _serializers.deserialize(
-              rawResponse,
-              specifiedType: const FullType(ChatResponse),
-            ) as ChatResponse;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(ChatResponse),
+      ) as ChatResponse;
+
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
@@ -216,11 +209,11 @@ class SessionsApi {
   }
 
   /// Order Test Endpoint
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [sessionId]
-  /// * [orderTestRequest]
+  /// * [sessionId] 
+  /// * [orderTestRequest] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -230,8 +223,7 @@ class SessionsApi {
   ///
   /// Returns a [Future] containing a [Response] with a [TestResultResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<TestResultResponse>>
-      orderTestEndpointSessionsSessionIdOrderTestPost({
+  Future<Response<TestResultResponse>> orderTestEndpointSessionsSessionIdOrderTestPost({ 
     required String sessionId,
     required OrderTestRequest orderTestRequest,
     CancelToken? cancelToken,
@@ -241,10 +233,7 @@ class SessionsApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/sessions/{session_id}/order-test'.replaceAll(
-        '{' r'session_id' '}',
-        encodeQueryParameter(_serializers, sessionId, const FullType(String))
-            .toString());
+    final _path = r'/sessions/{session_id}/order-test'.replaceAll('{' r'session_id' '}', encodeQueryParameter(_serializers, sessionId, const FullType(String)).toString());
     final _options = Options(
       method: r'POST',
       headers: <String, dynamic>{
@@ -267,11 +256,11 @@ class SessionsApi {
 
     try {
       const _type = FullType(OrderTestRequest);
-      _bodyData =
-          _serializers.serialize(orderTestRequest, specifiedType: _type);
-    } catch (error, stackTrace) {
+      _bodyData = _serializers.serialize(orderTestRequest, specifiedType: _type);
+
+    } catch(error, stackTrace) {
       throw DioException(
-        requestOptions: _options.compose(
+         requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
@@ -294,12 +283,11 @@ class SessionsApi {
 
     try {
       final rawResponse = _response.data;
-      _responseData = rawResponse == null
-          ? null
-          : _serializers.deserialize(
-              rawResponse,
-              specifiedType: const FullType(TestResultResponse),
-            ) as TestResultResponse;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(TestResultResponse),
+      ) as TestResultResponse;
+
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
@@ -323,10 +311,10 @@ class SessionsApi {
   }
 
   /// Start Session
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [startSessionRequest]
+  /// * [startSessionRequest] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -336,7 +324,7 @@ class SessionsApi {
   ///
   /// Returns a [Future] containing a [Response] with a [SessionResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<SessionResponse>> startSessionSessionsStartPost({
+  Future<Response<SessionResponse>> startSessionSessionsStartPost({ 
     required StartSessionRequest startSessionRequest,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -368,11 +356,11 @@ class SessionsApi {
 
     try {
       const _type = FullType(StartSessionRequest);
-      _bodyData =
-          _serializers.serialize(startSessionRequest, specifiedType: _type);
-    } catch (error, stackTrace) {
+      _bodyData = _serializers.serialize(startSessionRequest, specifiedType: _type);
+
+    } catch(error, stackTrace) {
       throw DioException(
-        requestOptions: _options.compose(
+         requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
@@ -395,12 +383,11 @@ class SessionsApi {
 
     try {
       final rawResponse = _response.data;
-      _responseData = rawResponse == null
-          ? null
-          : _serializers.deserialize(
-              rawResponse,
-              specifiedType: const FullType(SessionResponse),
-            ) as SessionResponse;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(SessionResponse),
+      ) as SessionResponse;
+
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
@@ -422,4 +409,5 @@ class SessionsApi {
       extra: _response.extra,
     );
   }
+
 }

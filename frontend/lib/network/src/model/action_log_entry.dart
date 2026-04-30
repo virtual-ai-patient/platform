@@ -6,60 +6,69 @@
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
-part 'available_test_item.g.dart';
+part 'action_log_entry.g.dart';
 
-/// AvailableTestItem
+/// ActionLogEntry
 ///
 /// Properties:
-/// * [testName] 
-/// * [category] 
+/// * [role] 
+/// * [content] 
+/// * [createdAt] 
 @BuiltValue()
-abstract class AvailableTestItem implements Built<AvailableTestItem, AvailableTestItemBuilder> {
-  @BuiltValueField(wireName: r'test_name')
-  String get testName;
+abstract class ActionLogEntry implements Built<ActionLogEntry, ActionLogEntryBuilder> {
+  @BuiltValueField(wireName: r'role')
+  String get role;
 
-  @BuiltValueField(wireName: r'category')
-  String get category;
+  @BuiltValueField(wireName: r'content')
+  String get content;
 
-  AvailableTestItem._();
+  @BuiltValueField(wireName: r'created_at')
+  DateTime get createdAt;
 
-  factory AvailableTestItem([void updates(AvailableTestItemBuilder b)]) = _$AvailableTestItem;
+  ActionLogEntry._();
+
+  factory ActionLogEntry([void updates(ActionLogEntryBuilder b)]) = _$ActionLogEntry;
 
   @BuiltValueHook(initializeBuilder: true)
-  static void _defaults(AvailableTestItemBuilder b) => b;
+  static void _defaults(ActionLogEntryBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<AvailableTestItem> get serializer => _$AvailableTestItemSerializer();
+  static Serializer<ActionLogEntry> get serializer => _$ActionLogEntrySerializer();
 }
 
-class _$AvailableTestItemSerializer implements PrimitiveSerializer<AvailableTestItem> {
+class _$ActionLogEntrySerializer implements PrimitiveSerializer<ActionLogEntry> {
   @override
-  final Iterable<Type> types = const [AvailableTestItem, _$AvailableTestItem];
+  final Iterable<Type> types = const [ActionLogEntry, _$ActionLogEntry];
 
   @override
-  final String wireName = r'AvailableTestItem';
+  final String wireName = r'ActionLogEntry';
 
   Iterable<Object?> _serializeProperties(
     Serializers serializers,
-    AvailableTestItem object, {
+    ActionLogEntry object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
-    yield r'test_name';
+    yield r'role';
     yield serializers.serialize(
-      object.testName,
+      object.role,
       specifiedType: const FullType(String),
     );
-    yield r'category';
+    yield r'content';
     yield serializers.serialize(
-      object.category,
+      object.content,
       specifiedType: const FullType(String),
+    );
+    yield r'created_at';
+    yield serializers.serialize(
+      object.createdAt,
+      specifiedType: const FullType(DateTime),
     );
   }
 
   @override
   Object serialize(
     Serializers serializers,
-    AvailableTestItem object, {
+    ActionLogEntry object, {
     FullType specifiedType = FullType.unspecified,
   }) {
     return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
@@ -70,26 +79,33 @@ class _$AvailableTestItemSerializer implements PrimitiveSerializer<AvailableTest
     Object serialized, {
     FullType specifiedType = FullType.unspecified,
     required List<Object?> serializedList,
-    required AvailableTestItemBuilder result,
+    required ActionLogEntryBuilder result,
     required List<Object?> unhandled,
   }) {
     for (var i = 0; i < serializedList.length; i += 2) {
       final key = serializedList[i] as String;
       final value = serializedList[i + 1];
       switch (key) {
-        case r'test_name':
+        case r'role':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(String),
           ) as String;
-          result.testName = valueDes;
+          result.role = valueDes;
           break;
-        case r'category':
+        case r'content':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(String),
           ) as String;
-          result.category = valueDes;
+          result.content = valueDes;
+          break;
+        case r'created_at':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(DateTime),
+          ) as DateTime;
+          result.createdAt = valueDes;
           break;
         default:
           unhandled.add(key);
@@ -100,12 +116,12 @@ class _$AvailableTestItemSerializer implements PrimitiveSerializer<AvailableTest
   }
 
   @override
-  AvailableTestItem deserialize(
+  ActionLogEntry deserialize(
     Serializers serializers,
     Object serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = AvailableTestItemBuilder();
+    final result = ActionLogEntryBuilder();
     final serializedList = (serialized as Iterable<Object?>).toList();
     final unhandled = <Object?>[];
     _deserializeProperties(

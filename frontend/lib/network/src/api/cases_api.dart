@@ -16,6 +16,7 @@ import 'package:frontend/network/src/model/http_validation_error.dart';
 import 'package:frontend/network/src/model/update_case_request.dart';
 
 class CasesApi {
+
   final Dio _dio;
 
   final Serializers _serializers;
@@ -23,10 +24,10 @@ class CasesApi {
   const CasesApi(this._dio, this._serializers);
 
   /// Create Case
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [createCaseRequest]
+  /// * [createCaseRequest] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -36,7 +37,7 @@ class CasesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [CaseResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<CaseResponse>> createCaseCasesPost({
+  Future<Response<CaseResponse>> createCaseCasesPost({ 
     required CreateCaseRequest createCaseRequest,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -68,11 +69,11 @@ class CasesApi {
 
     try {
       const _type = FullType(CreateCaseRequest);
-      _bodyData =
-          _serializers.serialize(createCaseRequest, specifiedType: _type);
-    } catch (error, stackTrace) {
+      _bodyData = _serializers.serialize(createCaseRequest, specifiedType: _type);
+
+    } catch(error, stackTrace) {
       throw DioException(
-        requestOptions: _options.compose(
+         requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
@@ -95,12 +96,11 @@ class CasesApi {
 
     try {
       final rawResponse = _response.data;
-      _responseData = rawResponse == null
-          ? null
-          : _serializers.deserialize(
-              rawResponse,
-              specifiedType: const FullType(CaseResponse),
-            ) as CaseResponse;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(CaseResponse),
+      ) as CaseResponse;
+
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
@@ -124,10 +124,10 @@ class CasesApi {
   }
 
   /// Delete Case
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [id]
+  /// * [id] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -137,7 +137,7 @@ class CasesApi {
   ///
   /// Returns a [Future]
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<void>> deleteCaseCasesIdDelete({
+  Future<Response<void>> deleteCaseCasesIdDelete({ 
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -146,10 +146,7 @@ class CasesApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/cases/{id}'.replaceAll(
-        '{' r'id' '}',
-        encodeQueryParameter(_serializers, id, const FullType(String))
-            .toString());
+    final _path = r'/cases/{id}'.replaceAll('{' r'id' '}', encodeQueryParameter(_serializers, id, const FullType(String)).toString());
     final _options = Options(
       method: r'DELETE',
       headers: <String, dynamic>{
@@ -179,7 +176,7 @@ class CasesApi {
   }
 
   /// List Cases
-  ///
+  /// 
   ///
   /// Parameters:
   /// * [status] - Educators: filter by workflow status
@@ -192,7 +189,7 @@ class CasesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [BuiltList<CaseResponse>] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<BuiltList<CaseResponse>>> listCasesCasesGet({
+  Future<Response<BuiltList<CaseResponse>>> listCasesCasesGet({ 
     String? status,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -223,8 +220,7 @@ class CasesApi {
     // breaks FastAPI (GET /cases?status= → 422).
     final _queryParameters = <String, dynamic>{
       if (status != null && status.isNotEmpty)
-        r'status':
-            encodeQueryParameter(_serializers, status, const FullType(String)),
+        r'status': encodeQueryParameter(_serializers, status, const FullType(String)),
     };
 
     final _response = await _dio.request<Object>(
@@ -240,13 +236,11 @@ class CasesApi {
 
     try {
       final rawResponse = _response.data;
-      _responseData = rawResponse == null
-          ? null
-          : _serializers.deserialize(
-              rawResponse,
-              specifiedType:
-                  const FullType(BuiltList, [FullType(CaseResponse)]),
-            ) as BuiltList<CaseResponse>;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(BuiltList, [FullType(CaseResponse)]),
+      ) as BuiltList<CaseResponse>;
+
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
@@ -270,11 +264,11 @@ class CasesApi {
   }
 
   /// Update Case
-  ///
+  /// 
   ///
   /// Parameters:
-  /// * [id]
-  /// * [updateCaseRequest]
+  /// * [id] 
+  /// * [updateCaseRequest] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -284,7 +278,7 @@ class CasesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [CaseResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<CaseResponse>> updateCaseCasesIdPut({
+  Future<Response<CaseResponse>> updateCaseCasesIdPut({ 
     required String id,
     required UpdateCaseRequest updateCaseRequest,
     CancelToken? cancelToken,
@@ -294,10 +288,7 @@ class CasesApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/cases/{id}'.replaceAll(
-        '{' r'id' '}',
-        encodeQueryParameter(_serializers, id, const FullType(String))
-            .toString());
+    final _path = r'/cases/{id}'.replaceAll('{' r'id' '}', encodeQueryParameter(_serializers, id, const FullType(String)).toString());
     final _options = Options(
       method: r'PUT',
       headers: <String, dynamic>{
@@ -320,11 +311,11 @@ class CasesApi {
 
     try {
       const _type = FullType(UpdateCaseRequest);
-      _bodyData =
-          _serializers.serialize(updateCaseRequest, specifiedType: _type);
-    } catch (error, stackTrace) {
+      _bodyData = _serializers.serialize(updateCaseRequest, specifiedType: _type);
+
+    } catch(error, stackTrace) {
       throw DioException(
-        requestOptions: _options.compose(
+         requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
@@ -347,12 +338,11 @@ class CasesApi {
 
     try {
       final rawResponse = _response.data;
-      _responseData = rawResponse == null
-          ? null
-          : _serializers.deserialize(
-              rawResponse,
-              specifiedType: const FullType(CaseResponse),
-            ) as CaseResponse;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(CaseResponse),
+      ) as CaseResponse;
+
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
@@ -374,4 +364,5 @@ class CasesApi {
       extra: _response.extra,
     );
   }
+
 }

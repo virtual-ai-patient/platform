@@ -11,28 +11,24 @@ part 'order_test_request.g.dart';
 /// OrderTestRequest
 ///
 /// Properties:
-/// * [testId]
+/// * [testId] 
 @BuiltValue()
-abstract class OrderTestRequest
-    implements Built<OrderTestRequest, OrderTestRequestBuilder> {
+abstract class OrderTestRequest implements Built<OrderTestRequest, OrderTestRequestBuilder> {
   @BuiltValueField(wireName: r'test_id')
   String get testId;
 
   OrderTestRequest._();
 
-  factory OrderTestRequest([void updates(OrderTestRequestBuilder b)]) =
-      _$OrderTestRequest;
+  factory OrderTestRequest([void updates(OrderTestRequestBuilder b)]) = _$OrderTestRequest;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(OrderTestRequestBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<OrderTestRequest> get serializer =>
-      _$OrderTestRequestSerializer();
+  static Serializer<OrderTestRequest> get serializer => _$OrderTestRequestSerializer();
 }
 
-class _$OrderTestRequestSerializer
-    implements PrimitiveSerializer<OrderTestRequest> {
+class _$OrderTestRequestSerializer implements PrimitiveSerializer<OrderTestRequest> {
   @override
   final Iterable<Type> types = const [OrderTestRequest, _$OrderTestRequest];
 
@@ -57,9 +53,7 @@ class _$OrderTestRequestSerializer
     OrderTestRequest object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
   }
 
   void _deserializeProperties(
@@ -109,3 +103,4 @@ class _$OrderTestRequestSerializer
     return result.build();
   }
 }
+

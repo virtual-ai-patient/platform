@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:frontend/common/theme/app_colors.dart';
 import 'package:frontend/common/widgets/app_library_top_bar.dart';
 import 'package:frontend/common/widgets/app_page_footer.dart';
+import 'package:frontend/domains/admin/admin_repository.dart';
 import 'package:frontend/domains/auth/auth_repository.dart';
 import 'package:frontend/domains/cases/case_repository.dart';
 import 'package:frontend/domains/sessions/session_repository.dart';
+import 'package:frontend/features/admin/presentation/admin_sessions_dashboard_screen.dart';
 import 'package:frontend/features/cases/presentation/case_briefing_screen.dart';
 import 'package:frontend/features/cases/presentation/educator_case_manage_panel.dart';
 import 'package:frontend/network/openapi.dart' as generated;
@@ -19,6 +21,7 @@ class CaseLibraryScreen extends StatefulWidget {
     required this.caseRepository,
     required this.sessionRepository,
     required this.authRepository,
+    required this.adminRepository,
     required this.buildLoginPage,
   });
 
@@ -26,6 +29,7 @@ class CaseLibraryScreen extends StatefulWidget {
   final CaseRepositoryContract caseRepository;
   final SessionRepositoryContract sessionRepository;
   final AuthRepositoryContract authRepository;
+  final AdminRepositoryContract? adminRepository;
   final Widget Function() buildLoginPage;
 
   @override
@@ -158,6 +162,8 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
                 final all = snapshot.data ?? [];
                 final filtered = _applyFilters(all);
                 final specialties = _specialtiesFrom(all);
+                final canOpenAdminTrace =
+                    _isCaseManager && widget.adminRepository != null;
 
                 void openBriefing(generated.CaseResponse c) {
                   Navigator.of(context).push(
@@ -165,6 +171,18 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
                       builder: (_) => CaseBriefingScreen(
                         caseItem: c,
                         sessionRepository: widget.sessionRepository,
+                      ),
+                    ),
+                  );
+                }
+
+                void openAdminTrace() {
+                  if (!canOpenAdminTrace) return;
+                  Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => AdminSessionsDashboardScreen(
+                        session: widget.session,
+                        adminRepository: widget.adminRepository!,
                       ),
                     ),
                   );
@@ -222,6 +240,18 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
                             _manageEditMode = false;
                           }
                         }),
+                      ),
+                    if (canOpenAdminTrace)
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(12, 8, 12, 4),
+                          child: OutlinedButton.icon(
+                            onPressed: openAdminTrace,
+                            icon: const Icon(Icons.timeline_rounded, size: 18),
+                            label: const Text('Student Sessions'),
+                          ),
+                        ),
                       ),
                     Expanded(
                       child: LayoutBuilder(

@@ -11,15 +11,13 @@ part 'investigation_result_response.g.dart';
 /// InvestigationResultResponse
 ///
 /// Properties:
-/// * [testName]
-/// * [resultType]
-/// * [value]
-/// * [unit]
-/// * [referenceRange]
+/// * [testName] 
+/// * [resultType] 
+/// * [value] 
+/// * [unit] 
+/// * [referenceRange] 
 @BuiltValue()
-abstract class InvestigationResultResponse
-    implements
-        Built<InvestigationResultResponse, InvestigationResultResponseBuilder> {
+abstract class InvestigationResultResponse implements Built<InvestigationResultResponse, InvestigationResultResponseBuilder> {
   @BuiltValueField(wireName: r'test_name')
   String get testName;
 
@@ -37,25 +35,18 @@ abstract class InvestigationResultResponse
 
   InvestigationResultResponse._();
 
-  factory InvestigationResultResponse(
-          [void updates(InvestigationResultResponseBuilder b)]) =
-      _$InvestigationResultResponse;
+  factory InvestigationResultResponse([void updates(InvestigationResultResponseBuilder b)]) = _$InvestigationResultResponse;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(InvestigationResultResponseBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<InvestigationResultResponse> get serializer =>
-      _$InvestigationResultResponseSerializer();
+  static Serializer<InvestigationResultResponse> get serializer => _$InvestigationResultResponseSerializer();
 }
 
-class _$InvestigationResultResponseSerializer
-    implements PrimitiveSerializer<InvestigationResultResponse> {
+class _$InvestigationResultResponseSerializer implements PrimitiveSerializer<InvestigationResultResponse> {
   @override
-  final Iterable<Type> types = const [
-    InvestigationResultResponse,
-    _$InvestigationResultResponse
-  ];
+  final Iterable<Type> types = const [InvestigationResultResponse, _$InvestigationResultResponse];
 
   @override
   final String wireName = r'InvestigationResultResponse';
@@ -81,19 +72,15 @@ class _$InvestigationResultResponseSerializer
       specifiedType: const FullType(String),
     );
     yield r'unit';
-    yield object.unit == null
-        ? null
-        : serializers.serialize(
-            object.unit,
-            specifiedType: const FullType.nullable(String),
-          );
+    yield object.unit == null ? null : serializers.serialize(
+      object.unit,
+      specifiedType: const FullType.nullable(String),
+    );
     yield r'reference_range';
-    yield object.referenceRange == null
-        ? null
-        : serializers.serialize(
-            object.referenceRange,
-            specifiedType: const FullType.nullable(String),
-          );
+    yield object.referenceRange == null ? null : serializers.serialize(
+      object.referenceRange,
+      specifiedType: const FullType.nullable(String),
+    );
   }
 
   @override
@@ -102,9 +89,7 @@ class _$InvestigationResultResponseSerializer
     InvestigationResultResponse object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
   }
 
   void _deserializeProperties(
@@ -184,3 +169,4 @@ class _$InvestigationResultResponseSerializer
     return result.build();
   }
 }
+

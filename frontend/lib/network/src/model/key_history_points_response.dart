@@ -12,13 +12,11 @@ part 'key_history_points_response.g.dart';
 /// KeyHistoryPointsResponse
 ///
 /// Properties:
-/// * [mustAsk]
-/// * [niceToAsk]
-/// * [redFlags]
+/// * [mustAsk] 
+/// * [niceToAsk] 
+/// * [redFlags] 
 @BuiltValue()
-abstract class KeyHistoryPointsResponse
-    implements
-        Built<KeyHistoryPointsResponse, KeyHistoryPointsResponseBuilder> {
+abstract class KeyHistoryPointsResponse implements Built<KeyHistoryPointsResponse, KeyHistoryPointsResponseBuilder> {
   @BuiltValueField(wireName: r'must_ask')
   BuiltList<String> get mustAsk;
 
@@ -30,25 +28,18 @@ abstract class KeyHistoryPointsResponse
 
   KeyHistoryPointsResponse._();
 
-  factory KeyHistoryPointsResponse(
-          [void updates(KeyHistoryPointsResponseBuilder b)]) =
-      _$KeyHistoryPointsResponse;
+  factory KeyHistoryPointsResponse([void updates(KeyHistoryPointsResponseBuilder b)]) = _$KeyHistoryPointsResponse;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(KeyHistoryPointsResponseBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<KeyHistoryPointsResponse> get serializer =>
-      _$KeyHistoryPointsResponseSerializer();
+  static Serializer<KeyHistoryPointsResponse> get serializer => _$KeyHistoryPointsResponseSerializer();
 }
 
-class _$KeyHistoryPointsResponseSerializer
-    implements PrimitiveSerializer<KeyHistoryPointsResponse> {
+class _$KeyHistoryPointsResponseSerializer implements PrimitiveSerializer<KeyHistoryPointsResponse> {
   @override
-  final Iterable<Type> types = const [
-    KeyHistoryPointsResponse,
-    _$KeyHistoryPointsResponse
-  ];
+  final Iterable<Type> types = const [KeyHistoryPointsResponse, _$KeyHistoryPointsResponse];
 
   @override
   final String wireName = r'KeyHistoryPointsResponse';
@@ -81,9 +72,7 @@ class _$KeyHistoryPointsResponseSerializer
     KeyHistoryPointsResponse object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
   }
 
   void _deserializeProperties(
@@ -147,3 +136,4 @@ class _$KeyHistoryPointsResponseSerializer
     return result.build();
   }
 }
+

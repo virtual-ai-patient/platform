@@ -16,32 +16,31 @@ part 'case_response.g.dart';
 /// CaseResponse
 ///
 /// Properties:
-/// * [id]
-/// * [caseId]
-/// * [status]
-/// * [version]
-/// * [createdBy]
-/// * [title]
-/// * [language]
-/// * [difficulty]
-/// * [specialty]
-/// * [tags]
-/// * [age]
-/// * [sex]
-/// * [persona]
-/// * [tonePresets]
-/// * [chiefComplaint]
-/// * [historyOfPresentIllness]
-/// * [keyHistoryPoints]
-/// * [finalDiagnosis]
-/// * [differential]
-/// * [severityOrStage]
-/// * [investigations]
-/// * [management]
-/// * [scoring]
+/// * [id] 
+/// * [caseId] 
+/// * [status] 
+/// * [version] 
+/// * [createdBy] 
+/// * [title] 
+/// * [language] 
+/// * [difficulty] 
+/// * [specialty] 
+/// * [tags] 
+/// * [age] 
+/// * [sex] 
+/// * [persona] 
+/// * [tonePresets] 
+/// * [chiefComplaint] 
+/// * [historyOfPresentIllness] 
+/// * [keyHistoryPoints] 
+/// * [finalDiagnosis] 
+/// * [differential] 
+/// * [severityOrStage] 
+/// * [investigations] 
+/// * [management] 
+/// * [scoring] 
 @BuiltValue()
-abstract class CaseResponse
-    implements Built<CaseResponse, CaseResponseBuilder> {
+abstract class CaseResponse implements Built<CaseResponse, CaseResponseBuilder> {
   @BuiltValueField(wireName: r'id')
   String get id;
 
@@ -230,12 +229,10 @@ class _$CaseResponseSerializer implements PrimitiveSerializer<CaseResponse> {
       specifiedType: const FullType(BuiltList, [FullType(String)]),
     );
     yield r'severity_or_stage';
-    yield object.severityOrStage == null
-        ? null
-        : serializers.serialize(
-            object.severityOrStage,
-            specifiedType: const FullType.nullable(String),
-          );
+    yield object.severityOrStage == null ? null : serializers.serialize(
+      object.severityOrStage,
+      specifiedType: const FullType.nullable(String),
+    );
     yield r'investigations';
     yield serializers.serialize(
       object.investigations,
@@ -259,9 +256,7 @@ class _$CaseResponseSerializer implements PrimitiveSerializer<CaseResponse> {
     CaseResponse object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
   }
 
   void _deserializeProperties(
@@ -466,3 +461,4 @@ class _$CaseResponseSerializer implements PrimitiveSerializer<CaseResponse> {
     return result.build();
   }
 }
+

@@ -11,33 +11,26 @@ part 'start_session_request.g.dart';
 /// StartSessionRequest
 ///
 /// Properties:
-/// * [caseId]
+/// * [caseId] 
 @BuiltValue()
-abstract class StartSessionRequest
-    implements Built<StartSessionRequest, StartSessionRequestBuilder> {
+abstract class StartSessionRequest implements Built<StartSessionRequest, StartSessionRequestBuilder> {
   @BuiltValueField(wireName: r'case_id')
   String get caseId;
 
   StartSessionRequest._();
 
-  factory StartSessionRequest([void updates(StartSessionRequestBuilder b)]) =
-      _$StartSessionRequest;
+  factory StartSessionRequest([void updates(StartSessionRequestBuilder b)]) = _$StartSessionRequest;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(StartSessionRequestBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<StartSessionRequest> get serializer =>
-      _$StartSessionRequestSerializer();
+  static Serializer<StartSessionRequest> get serializer => _$StartSessionRequestSerializer();
 }
 
-class _$StartSessionRequestSerializer
-    implements PrimitiveSerializer<StartSessionRequest> {
+class _$StartSessionRequestSerializer implements PrimitiveSerializer<StartSessionRequest> {
   @override
-  final Iterable<Type> types = const [
-    StartSessionRequest,
-    _$StartSessionRequest
-  ];
+  final Iterable<Type> types = const [StartSessionRequest, _$StartSessionRequest];
 
   @override
   final String wireName = r'StartSessionRequest';
@@ -60,9 +53,7 @@ class _$StartSessionRequestSerializer
     StartSessionRequest object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
   }
 
   void _deserializeProperties(
@@ -112,3 +103,4 @@ class _$StartSessionRequestSerializer
     return result.build();
   }
 }
+

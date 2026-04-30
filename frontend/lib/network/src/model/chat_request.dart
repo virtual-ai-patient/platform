@@ -11,7 +11,7 @@ part 'chat_request.g.dart';
 /// ChatRequest
 ///
 /// Properties:
-/// * [message]
+/// * [message] 
 @BuiltValue()
 abstract class ChatRequest implements Built<ChatRequest, ChatRequestBuilder> {
   @BuiltValueField(wireName: r'message')
@@ -53,9 +53,7 @@ class _$ChatRequestSerializer implements PrimitiveSerializer<ChatRequest> {
     ChatRequest object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
   }
 
   void _deserializeProperties(
@@ -105,3 +103,4 @@ class _$ChatRequestSerializer implements PrimitiveSerializer<ChatRequest> {
     return result.build();
   }
 }
+

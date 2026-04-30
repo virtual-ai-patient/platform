@@ -16,28 +16,27 @@ part 'update_case_request.g.dart';
 /// UpdateCaseRequest
 ///
 /// Properties:
-/// * [title]
-/// * [language]
-/// * [difficulty]
-/// * [specialty]
-/// * [tags]
-/// * [age]
-/// * [sex]
-/// * [persona]
-/// * [tonePresets]
-/// * [chiefComplaint]
-/// * [historyOfPresentIllness]
-/// * [keyHistoryPoints]
-/// * [finalDiagnosis]
-/// * [differential]
-/// * [severityOrStage]
-/// * [investigations]
-/// * [management]
-/// * [scoring]
-/// * [status]
+/// * [title] 
+/// * [language] 
+/// * [difficulty] 
+/// * [specialty] 
+/// * [tags] 
+/// * [age] 
+/// * [sex] 
+/// * [persona] 
+/// * [tonePresets] 
+/// * [chiefComplaint] 
+/// * [historyOfPresentIllness] 
+/// * [keyHistoryPoints] 
+/// * [finalDiagnosis] 
+/// * [differential] 
+/// * [severityOrStage] 
+/// * [investigations] 
+/// * [management] 
+/// * [scoring] 
+/// * [status] 
 @BuiltValue()
-abstract class UpdateCaseRequest
-    implements Built<UpdateCaseRequest, UpdateCaseRequestBuilder> {
+abstract class UpdateCaseRequest implements Built<UpdateCaseRequest, UpdateCaseRequestBuilder> {
   @BuiltValueField(wireName: r'title')
   String? get title;
 
@@ -101,19 +100,16 @@ abstract class UpdateCaseRequest
 
   UpdateCaseRequest._();
 
-  factory UpdateCaseRequest([void updates(UpdateCaseRequestBuilder b)]) =
-      _$UpdateCaseRequest;
+  factory UpdateCaseRequest([void updates(UpdateCaseRequestBuilder b)]) = _$UpdateCaseRequest;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(UpdateCaseRequestBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<UpdateCaseRequest> get serializer =>
-      _$UpdateCaseRequestSerializer();
+  static Serializer<UpdateCaseRequest> get serializer => _$UpdateCaseRequestSerializer();
 }
 
-class _$UpdateCaseRequestSerializer
-    implements PrimitiveSerializer<UpdateCaseRequest> {
+class _$UpdateCaseRequestSerializer implements PrimitiveSerializer<UpdateCaseRequest> {
   @override
   final Iterable<Type> types = const [UpdateCaseRequest, _$UpdateCaseRequest];
 
@@ -266,9 +262,7 @@ class _$UpdateCaseRequestSerializer
     UpdateCaseRequest object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
   }
 
   void _deserializeProperties(
@@ -294,8 +288,7 @@ class _$UpdateCaseRequestSerializer
         case r'language':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType:
-                const FullType.nullable(UpdateCaseRequestLanguageEnum),
+            specifiedType: const FullType.nullable(UpdateCaseRequestLanguageEnum),
           ) as UpdateCaseRequestLanguageEnum?;
           if (valueDes == null) continue;
           result.language = valueDes;
@@ -303,8 +296,7 @@ class _$UpdateCaseRequestSerializer
         case r'difficulty':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType:
-                const FullType.nullable(UpdateCaseRequestDifficultyEnum),
+            specifiedType: const FullType.nullable(UpdateCaseRequestDifficultyEnum),
           ) as UpdateCaseRequestDifficultyEnum?;
           if (valueDes == null) continue;
           result.difficulty = valueDes;
@@ -320,8 +312,7 @@ class _$UpdateCaseRequestSerializer
         case r'tags':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType:
-                const FullType.nullable(BuiltList, [FullType(String)]),
+            specifiedType: const FullType.nullable(BuiltList, [FullType(String)]),
           ) as BuiltList<String>?;
           if (valueDes == null) continue;
           result.tags.replace(valueDes);
@@ -353,8 +344,7 @@ class _$UpdateCaseRequestSerializer
         case r'tone_presets':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType:
-                const FullType.nullable(BuiltList, [FullType(String)]),
+            specifiedType: const FullType.nullable(BuiltList, [FullType(String)]),
           ) as BuiltList<String>?;
           if (valueDes == null) continue;
           result.tonePresets.replace(valueDes);
@@ -394,8 +384,7 @@ class _$UpdateCaseRequestSerializer
         case r'differential':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType:
-                const FullType.nullable(BuiltList, [FullType(String)]),
+            specifiedType: const FullType.nullable(BuiltList, [FullType(String)]),
           ) as BuiltList<String>?;
           if (valueDes == null) continue;
           result.differential.replace(valueDes);
@@ -470,82 +459,66 @@ class _$UpdateCaseRequestSerializer
 }
 
 class UpdateCaseRequestLanguageEnum extends EnumClass {
+
   @BuiltValueEnumConst(wireName: r'en')
-  static const UpdateCaseRequestLanguageEnum en =
-      _$updateCaseRequestLanguageEnum_en;
+  static const UpdateCaseRequestLanguageEnum en = _$updateCaseRequestLanguageEnum_en;
 
-  static Serializer<UpdateCaseRequestLanguageEnum> get serializer =>
-      _$updateCaseRequestLanguageEnumSerializer;
+  static Serializer<UpdateCaseRequestLanguageEnum> get serializer => _$updateCaseRequestLanguageEnumSerializer;
 
-  const UpdateCaseRequestLanguageEnum._(String name) : super(name);
+  const UpdateCaseRequestLanguageEnum._(String name): super(name);
 
-  static BuiltSet<UpdateCaseRequestLanguageEnum> get values =>
-      _$updateCaseRequestLanguageEnumValues;
-  static UpdateCaseRequestLanguageEnum valueOf(String name) =>
-      _$updateCaseRequestLanguageEnumValueOf(name);
+  static BuiltSet<UpdateCaseRequestLanguageEnum> get values => _$updateCaseRequestLanguageEnumValues;
+  static UpdateCaseRequestLanguageEnum valueOf(String name) => _$updateCaseRequestLanguageEnumValueOf(name);
 }
 
 class UpdateCaseRequestDifficultyEnum extends EnumClass {
+
   @BuiltValueEnumConst(wireName: r'easy')
-  static const UpdateCaseRequestDifficultyEnum easy =
-      _$updateCaseRequestDifficultyEnum_easy;
+  static const UpdateCaseRequestDifficultyEnum easy = _$updateCaseRequestDifficultyEnum_easy;
   @BuiltValueEnumConst(wireName: r'medium')
-  static const UpdateCaseRequestDifficultyEnum medium =
-      _$updateCaseRequestDifficultyEnum_medium;
+  static const UpdateCaseRequestDifficultyEnum medium = _$updateCaseRequestDifficultyEnum_medium;
   @BuiltValueEnumConst(wireName: r'hard')
-  static const UpdateCaseRequestDifficultyEnum hard =
-      _$updateCaseRequestDifficultyEnum_hard;
+  static const UpdateCaseRequestDifficultyEnum hard = _$updateCaseRequestDifficultyEnum_hard;
 
-  static Serializer<UpdateCaseRequestDifficultyEnum> get serializer =>
-      _$updateCaseRequestDifficultyEnumSerializer;
+  static Serializer<UpdateCaseRequestDifficultyEnum> get serializer => _$updateCaseRequestDifficultyEnumSerializer;
 
-  const UpdateCaseRequestDifficultyEnum._(String name) : super(name);
+  const UpdateCaseRequestDifficultyEnum._(String name): super(name);
 
-  static BuiltSet<UpdateCaseRequestDifficultyEnum> get values =>
-      _$updateCaseRequestDifficultyEnumValues;
-  static UpdateCaseRequestDifficultyEnum valueOf(String name) =>
-      _$updateCaseRequestDifficultyEnumValueOf(name);
+  static BuiltSet<UpdateCaseRequestDifficultyEnum> get values => _$updateCaseRequestDifficultyEnumValues;
+  static UpdateCaseRequestDifficultyEnum valueOf(String name) => _$updateCaseRequestDifficultyEnumValueOf(name);
 }
 
 class UpdateCaseRequestSexEnum extends EnumClass {
+
   @BuiltValueEnumConst(wireName: r'female')
-  static const UpdateCaseRequestSexEnum female =
-      _$updateCaseRequestSexEnum_female;
+  static const UpdateCaseRequestSexEnum female = _$updateCaseRequestSexEnum_female;
   @BuiltValueEnumConst(wireName: r'male')
   static const UpdateCaseRequestSexEnum male = _$updateCaseRequestSexEnum_male;
   @BuiltValueEnumConst(wireName: r'other')
-  static const UpdateCaseRequestSexEnum other =
-      _$updateCaseRequestSexEnum_other;
+  static const UpdateCaseRequestSexEnum other = _$updateCaseRequestSexEnum_other;
 
-  static Serializer<UpdateCaseRequestSexEnum> get serializer =>
-      _$updateCaseRequestSexEnumSerializer;
+  static Serializer<UpdateCaseRequestSexEnum> get serializer => _$updateCaseRequestSexEnumSerializer;
 
-  const UpdateCaseRequestSexEnum._(String name) : super(name);
+  const UpdateCaseRequestSexEnum._(String name): super(name);
 
-  static BuiltSet<UpdateCaseRequestSexEnum> get values =>
-      _$updateCaseRequestSexEnumValues;
-  static UpdateCaseRequestSexEnum valueOf(String name) =>
-      _$updateCaseRequestSexEnumValueOf(name);
+  static BuiltSet<UpdateCaseRequestSexEnum> get values => _$updateCaseRequestSexEnumValues;
+  static UpdateCaseRequestSexEnum valueOf(String name) => _$updateCaseRequestSexEnumValueOf(name);
 }
 
 class UpdateCaseRequestStatusEnum extends EnumClass {
+
   @BuiltValueEnumConst(wireName: r'draft')
-  static const UpdateCaseRequestStatusEnum draft =
-      _$updateCaseRequestStatusEnum_draft;
+  static const UpdateCaseRequestStatusEnum draft = _$updateCaseRequestStatusEnum_draft;
   @BuiltValueEnumConst(wireName: r'review')
-  static const UpdateCaseRequestStatusEnum review =
-      _$updateCaseRequestStatusEnum_review;
+  static const UpdateCaseRequestStatusEnum review = _$updateCaseRequestStatusEnum_review;
   @BuiltValueEnumConst(wireName: r'published')
-  static const UpdateCaseRequestStatusEnum published =
-      _$updateCaseRequestStatusEnum_published;
+  static const UpdateCaseRequestStatusEnum published = _$updateCaseRequestStatusEnum_published;
 
-  static Serializer<UpdateCaseRequestStatusEnum> get serializer =>
-      _$updateCaseRequestStatusEnumSerializer;
+  static Serializer<UpdateCaseRequestStatusEnum> get serializer => _$updateCaseRequestStatusEnumSerializer;
 
-  const UpdateCaseRequestStatusEnum._(String name) : super(name);
+  const UpdateCaseRequestStatusEnum._(String name): super(name);
 
-  static BuiltSet<UpdateCaseRequestStatusEnum> get values =>
-      _$updateCaseRequestStatusEnumValues;
-  static UpdateCaseRequestStatusEnum valueOf(String name) =>
-      _$updateCaseRequestStatusEnumValueOf(name);
+  static BuiltSet<UpdateCaseRequestStatusEnum> get values => _$updateCaseRequestStatusEnumValues;
+  static UpdateCaseRequestStatusEnum valueOf(String name) => _$updateCaseRequestStatusEnumValueOf(name);
 }
+
