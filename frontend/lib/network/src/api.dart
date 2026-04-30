@@ -9,6 +9,7 @@ import 'package:frontend/network/src/auth/api_key_auth.dart';
 import 'package:frontend/network/src/auth/basic_auth.dart';
 import 'package:frontend/network/src/auth/bearer_auth.dart';
 import 'package:frontend/network/src/auth/oauth.dart';
+import 'package:frontend/network/src/api/admin_api.dart';
 import 'package:frontend/network/src/api/auth_api.dart';
 import 'package:frontend/network/src/api/cases_api.dart';
 import 'package:frontend/network/src/api/sessions_api.dart';
@@ -76,6 +77,12 @@ class Openapi {
               as ApiKeyAuthInterceptor)
           .apiKeys[name] = apiKey;
     }
+  }
+
+  /// Get AdminApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  AdminApi getAdminApi() {
+    return AdminApi(dio, serializers);
   }
 
   /// Get AuthApi instance, base route and serializer can be overridden by a given but be careful,

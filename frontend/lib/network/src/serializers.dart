@@ -16,6 +16,7 @@ import 'package:frontend/network/src/model/date.dart';
 
 import 'package:frontend/network/src/model/acceptable_answer_request.dart';
 import 'package:frontend/network/src/model/acceptable_answer_response.dart';
+import 'package:frontend/network/src/model/action_log_entry.dart';
 import 'package:frontend/network/src/model/available_test_item.dart';
 import 'package:frontend/network/src/model/available_tests_response.dart';
 import 'package:frontend/network/src/model/case_response.dart';
@@ -41,7 +42,10 @@ import 'package:frontend/network/src/model/password_reset_request.dart';
 import 'package:frontend/network/src/model/refresh_request.dart';
 import 'package:frontend/network/src/model/scoring_request.dart';
 import 'package:frontend/network/src/model/scoring_response.dart';
+import 'package:frontend/network/src/model/session_detail_response.dart';
+import 'package:frontend/network/src/model/session_list_response.dart';
 import 'package:frontend/network/src/model/session_response.dart';
+import 'package:frontend/network/src/model/session_summary.dart';
 import 'package:frontend/network/src/model/signup_request.dart';
 import 'package:frontend/network/src/model/start_session_request.dart';
 import 'package:frontend/network/src/model/test_result_response.dart';
@@ -55,6 +59,7 @@ part 'serializers.g.dart';
 @SerializersFor([
   AcceptableAnswerRequest,
   AcceptableAnswerResponse,
+  ActionLogEntry,
   AvailableTestItem,
   AvailableTestsResponse,
   CaseResponse,
@@ -80,7 +85,10 @@ part 'serializers.g.dart';
   RefreshRequest,
   ScoringRequest,
   ScoringResponse,
+  SessionDetailResponse,
+  SessionListResponse,
   SessionResponse,
+  SessionSummary,
   SignupRequest,
   StartSessionRequest,
   TestResultResponse,
