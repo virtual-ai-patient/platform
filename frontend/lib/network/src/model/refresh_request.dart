@@ -11,24 +11,28 @@ part 'refresh_request.g.dart';
 /// RefreshRequest
 ///
 /// Properties:
-/// * [refreshToken] 
+/// * [refreshToken]
 @BuiltValue()
-abstract class RefreshRequest implements Built<RefreshRequest, RefreshRequestBuilder> {
+abstract class RefreshRequest
+    implements Built<RefreshRequest, RefreshRequestBuilder> {
   @BuiltValueField(wireName: r'refresh_token')
   String get refreshToken;
 
   RefreshRequest._();
 
-  factory RefreshRequest([void updates(RefreshRequestBuilder b)]) = _$RefreshRequest;
+  factory RefreshRequest([void updates(RefreshRequestBuilder b)]) =
+      _$RefreshRequest;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(RefreshRequestBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<RefreshRequest> get serializer => _$RefreshRequestSerializer();
+  static Serializer<RefreshRequest> get serializer =>
+      _$RefreshRequestSerializer();
 }
 
-class _$RefreshRequestSerializer implements PrimitiveSerializer<RefreshRequest> {
+class _$RefreshRequestSerializer
+    implements PrimitiveSerializer<RefreshRequest> {
   @override
   final Iterable<Type> types = const [RefreshRequest, _$RefreshRequest];
 
@@ -53,7 +57,9 @@ class _$RefreshRequestSerializer implements PrimitiveSerializer<RefreshRequest> 
     RefreshRequest object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+    return _serializeProperties(serializers, object,
+            specifiedType: specifiedType)
+        .toList();
   }
 
   void _deserializeProperties(
@@ -103,4 +109,3 @@ class _$RefreshRequestSerializer implements PrimitiveSerializer<RefreshRequest> 
     return result.build();
   }
 }
-

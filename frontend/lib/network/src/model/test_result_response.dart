@@ -11,14 +11,15 @@ part 'test_result_response.g.dart';
 /// TestResultResponse
 ///
 /// Properties:
-/// * [testName] 
-/// * [resultType] 
-/// * [value] 
-/// * [unit] 
-/// * [referenceRange] 
-/// * [isNormalDefault] 
+/// * [testName]
+/// * [resultType]
+/// * [value]
+/// * [unit]
+/// * [referenceRange]
+/// * [isNormalDefault]
 @BuiltValue()
-abstract class TestResultResponse implements Built<TestResultResponse, TestResultResponseBuilder> {
+abstract class TestResultResponse
+    implements Built<TestResultResponse, TestResultResponseBuilder> {
   @BuiltValueField(wireName: r'test_name')
   String get testName;
 
@@ -39,16 +40,19 @@ abstract class TestResultResponse implements Built<TestResultResponse, TestResul
 
   TestResultResponse._();
 
-  factory TestResultResponse([void updates(TestResultResponseBuilder b)]) = _$TestResultResponse;
+  factory TestResultResponse([void updates(TestResultResponseBuilder b)]) =
+      _$TestResultResponse;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(TestResultResponseBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<TestResultResponse> get serializer => _$TestResultResponseSerializer();
+  static Serializer<TestResultResponse> get serializer =>
+      _$TestResultResponseSerializer();
 }
 
-class _$TestResultResponseSerializer implements PrimitiveSerializer<TestResultResponse> {
+class _$TestResultResponseSerializer
+    implements PrimitiveSerializer<TestResultResponse> {
   @override
   final Iterable<Type> types = const [TestResultResponse, _$TestResultResponse];
 
@@ -76,15 +80,19 @@ class _$TestResultResponseSerializer implements PrimitiveSerializer<TestResultRe
       specifiedType: const FullType(String),
     );
     yield r'unit';
-    yield object.unit == null ? null : serializers.serialize(
-      object.unit,
-      specifiedType: const FullType.nullable(String),
-    );
+    yield object.unit == null
+        ? null
+        : serializers.serialize(
+            object.unit,
+            specifiedType: const FullType.nullable(String),
+          );
     yield r'reference_range';
-    yield object.referenceRange == null ? null : serializers.serialize(
-      object.referenceRange,
-      specifiedType: const FullType.nullable(String),
-    );
+    yield object.referenceRange == null
+        ? null
+        : serializers.serialize(
+            object.referenceRange,
+            specifiedType: const FullType.nullable(String),
+          );
     yield r'is_normal_default';
     yield serializers.serialize(
       object.isNormalDefault,
@@ -98,7 +106,9 @@ class _$TestResultResponseSerializer implements PrimitiveSerializer<TestResultRe
     TestResultResponse object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+    return _serializeProperties(serializers, object,
+            specifiedType: specifiedType)
+        .toList();
   }
 
   void _deserializeProperties(
@@ -185,4 +195,3 @@ class _$TestResultResponseSerializer implements PrimitiveSerializer<TestResultRe
     return result.build();
   }
 }
-

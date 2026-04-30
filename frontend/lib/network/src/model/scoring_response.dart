@@ -13,14 +13,15 @@ part 'scoring_response.g.dart';
 /// ScoringResponse
 ///
 /// Properties:
-/// * [weightDiagnosis] 
-/// * [weightDiagnostics] 
-/// * [weightTreatment] 
-/// * [weightSafety] 
-/// * [acceptableAnswers] 
-/// * [criticalSafetyErrors] 
+/// * [weightDiagnosis]
+/// * [weightDiagnostics]
+/// * [weightTreatment]
+/// * [weightSafety]
+/// * [acceptableAnswers]
+/// * [criticalSafetyErrors]
 @BuiltValue()
-abstract class ScoringResponse implements Built<ScoringResponse, ScoringResponseBuilder> {
+abstract class ScoringResponse
+    implements Built<ScoringResponse, ScoringResponseBuilder> {
   @BuiltValueField(wireName: r'weight_diagnosis')
   num get weightDiagnosis;
 
@@ -41,16 +42,19 @@ abstract class ScoringResponse implements Built<ScoringResponse, ScoringResponse
 
   ScoringResponse._();
 
-  factory ScoringResponse([void updates(ScoringResponseBuilder b)]) = _$ScoringResponse;
+  factory ScoringResponse([void updates(ScoringResponseBuilder b)]) =
+      _$ScoringResponse;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(ScoringResponseBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<ScoringResponse> get serializer => _$ScoringResponseSerializer();
+  static Serializer<ScoringResponse> get serializer =>
+      _$ScoringResponseSerializer();
 }
 
-class _$ScoringResponseSerializer implements PrimitiveSerializer<ScoringResponse> {
+class _$ScoringResponseSerializer
+    implements PrimitiveSerializer<ScoringResponse> {
   @override
   final Iterable<Type> types = const [ScoringResponse, _$ScoringResponse];
 
@@ -85,7 +89,8 @@ class _$ScoringResponseSerializer implements PrimitiveSerializer<ScoringResponse
     yield r'acceptable_answers';
     yield serializers.serialize(
       object.acceptableAnswers,
-      specifiedType: const FullType(BuiltList, [FullType(AcceptableAnswerResponse)]),
+      specifiedType:
+          const FullType(BuiltList, [FullType(AcceptableAnswerResponse)]),
     );
     yield r'critical_safety_errors';
     yield serializers.serialize(
@@ -100,7 +105,9 @@ class _$ScoringResponseSerializer implements PrimitiveSerializer<ScoringResponse
     ScoringResponse object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+    return _serializeProperties(serializers, object,
+            specifiedType: specifiedType)
+        .toList();
   }
 
   void _deserializeProperties(
@@ -146,7 +153,8 @@ class _$ScoringResponseSerializer implements PrimitiveSerializer<ScoringResponse
         case r'acceptable_answers':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(BuiltList, [FullType(AcceptableAnswerResponse)]),
+            specifiedType:
+                const FullType(BuiltList, [FullType(AcceptableAnswerResponse)]),
           ) as BuiltList<AcceptableAnswerResponse>;
           result.acceptableAnswers.replace(valueDes);
           break;
@@ -185,4 +193,3 @@ class _$ScoringResponseSerializer implements PrimitiveSerializer<ScoringResponse
     return result.build();
   }
 }
-

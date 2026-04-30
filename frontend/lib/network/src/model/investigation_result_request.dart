@@ -12,13 +12,15 @@ part 'investigation_result_request.g.dart';
 /// InvestigationResultRequest
 ///
 /// Properties:
-/// * [testName] 
-/// * [resultType] 
-/// * [value] 
-/// * [unit] 
-/// * [referenceRange] 
+/// * [testName]
+/// * [resultType]
+/// * [value]
+/// * [unit]
+/// * [referenceRange]
 @BuiltValue()
-abstract class InvestigationResultRequest implements Built<InvestigationResultRequest, InvestigationResultRequestBuilder> {
+abstract class InvestigationResultRequest
+    implements
+        Built<InvestigationResultRequest, InvestigationResultRequestBuilder> {
   @BuiltValueField(wireName: r'test_name')
   String get testName;
 
@@ -37,18 +39,25 @@ abstract class InvestigationResultRequest implements Built<InvestigationResultRe
 
   InvestigationResultRequest._();
 
-  factory InvestigationResultRequest([void updates(InvestigationResultRequestBuilder b)]) = _$InvestigationResultRequest;
+  factory InvestigationResultRequest(
+          [void updates(InvestigationResultRequestBuilder b)]) =
+      _$InvestigationResultRequest;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(InvestigationResultRequestBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<InvestigationResultRequest> get serializer => _$InvestigationResultRequestSerializer();
+  static Serializer<InvestigationResultRequest> get serializer =>
+      _$InvestigationResultRequestSerializer();
 }
 
-class _$InvestigationResultRequestSerializer implements PrimitiveSerializer<InvestigationResultRequest> {
+class _$InvestigationResultRequestSerializer
+    implements PrimitiveSerializer<InvestigationResultRequest> {
   @override
-  final Iterable<Type> types = const [InvestigationResultRequest, _$InvestigationResultRequest];
+  final Iterable<Type> types = const [
+    InvestigationResultRequest,
+    _$InvestigationResultRequest
+  ];
 
   @override
   final String wireName = r'InvestigationResultRequest';
@@ -95,7 +104,9 @@ class _$InvestigationResultRequestSerializer implements PrimitiveSerializer<Inve
     InvestigationResultRequest object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+    return _serializeProperties(serializers, object,
+            specifiedType: specifiedType)
+        .toList();
   }
 
   void _deserializeProperties(
@@ -120,7 +131,8 @@ class _$InvestigationResultRequestSerializer implements PrimitiveSerializer<Inve
         case r'result_type':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(InvestigationResultRequestResultTypeEnum),
+            specifiedType:
+                const FullType(InvestigationResultRequestResultTypeEnum),
           ) as InvestigationResultRequestResultTypeEnum;
           result.resultType = valueDes;
           break;
@@ -177,17 +189,20 @@ class _$InvestigationResultRequestSerializer implements PrimitiveSerializer<Inve
 }
 
 class InvestigationResultRequestResultTypeEnum extends EnumClass {
-
   @BuiltValueEnumConst(wireName: r'text_report')
-  static const InvestigationResultRequestResultTypeEnum textReport = _$investigationResultRequestResultTypeEnum_textReport;
+  static const InvestigationResultRequestResultTypeEnum textReport =
+      _$investigationResultRequestResultTypeEnum_textReport;
   @BuiltValueEnumConst(wireName: r'lab_value')
-  static const InvestigationResultRequestResultTypeEnum labValue = _$investigationResultRequestResultTypeEnum_labValue;
+  static const InvestigationResultRequestResultTypeEnum labValue =
+      _$investigationResultRequestResultTypeEnum_labValue;
 
-  static Serializer<InvestigationResultRequestResultTypeEnum> get serializer => _$investigationResultRequestResultTypeEnumSerializer;
+  static Serializer<InvestigationResultRequestResultTypeEnum> get serializer =>
+      _$investigationResultRequestResultTypeEnumSerializer;
 
-  const InvestigationResultRequestResultTypeEnum._(String name): super(name);
+  const InvestigationResultRequestResultTypeEnum._(String name) : super(name);
 
-  static BuiltSet<InvestigationResultRequestResultTypeEnum> get values => _$investigationResultRequestResultTypeEnumValues;
-  static InvestigationResultRequestResultTypeEnum valueOf(String name) => _$investigationResultRequestResultTypeEnumValueOf(name);
+  static BuiltSet<InvestigationResultRequestResultTypeEnum> get values =>
+      _$investigationResultRequestResultTypeEnumValues;
+  static InvestigationResultRequestResultTypeEnum valueOf(String name) =>
+      _$investigationResultRequestResultTypeEnumValueOf(name);
 }
-

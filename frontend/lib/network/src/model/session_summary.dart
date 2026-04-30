@@ -11,13 +11,14 @@ part 'session_summary.g.dart';
 /// SessionSummary
 ///
 /// Properties:
-/// * [sessionId] 
-/// * [studentUsername] 
-/// * [caseId] 
-/// * [caseTitle] 
-/// * [createdAt] 
+/// * [sessionId]
+/// * [studentUsername]
+/// * [caseId]
+/// * [caseTitle]
+/// * [createdAt]
 @BuiltValue()
-abstract class SessionSummary implements Built<SessionSummary, SessionSummaryBuilder> {
+abstract class SessionSummary
+    implements Built<SessionSummary, SessionSummaryBuilder> {
   @BuiltValueField(wireName: r'session_id')
   String get sessionId;
 
@@ -35,16 +36,19 @@ abstract class SessionSummary implements Built<SessionSummary, SessionSummaryBui
 
   SessionSummary._();
 
-  factory SessionSummary([void updates(SessionSummaryBuilder b)]) = _$SessionSummary;
+  factory SessionSummary([void updates(SessionSummaryBuilder b)]) =
+      _$SessionSummary;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(SessionSummaryBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<SessionSummary> get serializer => _$SessionSummarySerializer();
+  static Serializer<SessionSummary> get serializer =>
+      _$SessionSummarySerializer();
 }
 
-class _$SessionSummarySerializer implements PrimitiveSerializer<SessionSummary> {
+class _$SessionSummarySerializer
+    implements PrimitiveSerializer<SessionSummary> {
   @override
   final Iterable<Type> types = const [SessionSummary, _$SessionSummary];
 
@@ -89,7 +93,9 @@ class _$SessionSummarySerializer implements PrimitiveSerializer<SessionSummary> 
     SessionSummary object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+    return _serializeProperties(serializers, object,
+            specifiedType: specifiedType)
+        .toList();
   }
 
   void _deserializeProperties(
@@ -167,4 +173,3 @@ class _$SessionSummarySerializer implements PrimitiveSerializer<SessionSummary> 
     return result.build();
   }
 }
-

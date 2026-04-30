@@ -11,11 +11,12 @@ part 'action_log_entry.g.dart';
 /// ActionLogEntry
 ///
 /// Properties:
-/// * [role] 
-/// * [content] 
-/// * [createdAt] 
+/// * [role]
+/// * [content]
+/// * [createdAt]
 @BuiltValue()
-abstract class ActionLogEntry implements Built<ActionLogEntry, ActionLogEntryBuilder> {
+abstract class ActionLogEntry
+    implements Built<ActionLogEntry, ActionLogEntryBuilder> {
   @BuiltValueField(wireName: r'role')
   String get role;
 
@@ -27,16 +28,19 @@ abstract class ActionLogEntry implements Built<ActionLogEntry, ActionLogEntryBui
 
   ActionLogEntry._();
 
-  factory ActionLogEntry([void updates(ActionLogEntryBuilder b)]) = _$ActionLogEntry;
+  factory ActionLogEntry([void updates(ActionLogEntryBuilder b)]) =
+      _$ActionLogEntry;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(ActionLogEntryBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<ActionLogEntry> get serializer => _$ActionLogEntrySerializer();
+  static Serializer<ActionLogEntry> get serializer =>
+      _$ActionLogEntrySerializer();
 }
 
-class _$ActionLogEntrySerializer implements PrimitiveSerializer<ActionLogEntry> {
+class _$ActionLogEntrySerializer
+    implements PrimitiveSerializer<ActionLogEntry> {
   @override
   final Iterable<Type> types = const [ActionLogEntry, _$ActionLogEntry];
 
@@ -71,7 +75,9 @@ class _$ActionLogEntrySerializer implements PrimitiveSerializer<ActionLogEntry> 
     ActionLogEntry object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+    return _serializeProperties(serializers, object,
+            specifiedType: specifiedType)
+        .toList();
   }
 
   void _deserializeProperties(
@@ -135,4 +141,3 @@ class _$ActionLogEntrySerializer implements PrimitiveSerializer<ActionLogEntry> 
     return result.build();
   }
 }
-

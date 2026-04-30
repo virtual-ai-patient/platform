@@ -16,28 +16,29 @@ part 'create_case_request.g.dart';
 /// CreateCaseRequest
 ///
 /// Properties:
-/// * [caseId] 
-/// * [title] 
-/// * [language] 
-/// * [difficulty] 
-/// * [specialty] 
-/// * [tags] 
-/// * [age] 
-/// * [sex] 
-/// * [persona] 
-/// * [tonePresets] 
-/// * [chiefComplaint] 
-/// * [historyOfPresentIllness] 
-/// * [keyHistoryPoints] 
-/// * [finalDiagnosis] 
-/// * [differential] 
-/// * [severityOrStage] 
-/// * [investigations] 
-/// * [management] 
-/// * [scoring] 
-/// * [status] 
+/// * [caseId]
+/// * [title]
+/// * [language]
+/// * [difficulty]
+/// * [specialty]
+/// * [tags]
+/// * [age]
+/// * [sex]
+/// * [persona]
+/// * [tonePresets]
+/// * [chiefComplaint]
+/// * [historyOfPresentIllness]
+/// * [keyHistoryPoints]
+/// * [finalDiagnosis]
+/// * [differential]
+/// * [severityOrStage]
+/// * [investigations]
+/// * [management]
+/// * [scoring]
+/// * [status]
 @BuiltValue()
-abstract class CreateCaseRequest implements Built<CreateCaseRequest, CreateCaseRequestBuilder> {
+abstract class CreateCaseRequest
+    implements Built<CreateCaseRequest, CreateCaseRequestBuilder> {
   @BuiltValueField(wireName: r'case_id')
   String get caseId;
 
@@ -104,20 +105,23 @@ abstract class CreateCaseRequest implements Built<CreateCaseRequest, CreateCaseR
 
   CreateCaseRequest._();
 
-  factory CreateCaseRequest([void updates(CreateCaseRequestBuilder b)]) = _$CreateCaseRequest;
+  factory CreateCaseRequest([void updates(CreateCaseRequestBuilder b)]) =
+      _$CreateCaseRequest;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(CreateCaseRequestBuilder b) => b
-      ..tags = ListBuilder()
-      ..tonePresets = ListBuilder()
-      ..differential = ListBuilder()
-      ..status = CreateCaseRequestStatusEnum.valueOf('draft');
+    ..tags = ListBuilder()
+    ..tonePresets = ListBuilder()
+    ..differential = ListBuilder()
+    ..status = CreateCaseRequestStatusEnum.valueOf('draft');
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<CreateCaseRequest> get serializer => _$CreateCaseRequestSerializer();
+  static Serializer<CreateCaseRequest> get serializer =>
+      _$CreateCaseRequestSerializer();
 }
 
-class _$CreateCaseRequestSerializer implements PrimitiveSerializer<CreateCaseRequest> {
+class _$CreateCaseRequestSerializer
+    implements PrimitiveSerializer<CreateCaseRequest> {
   @override
   final Iterable<Type> types = const [CreateCaseRequest, _$CreateCaseRequest];
 
@@ -247,7 +251,9 @@ class _$CreateCaseRequestSerializer implements PrimitiveSerializer<CreateCaseReq
     CreateCaseRequest object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+    return _serializeProperties(serializers, object,
+            specifiedType: specifiedType)
+        .toList();
   }
 
   void _deserializeProperties(
@@ -433,66 +439,82 @@ class _$CreateCaseRequestSerializer implements PrimitiveSerializer<CreateCaseReq
 }
 
 class CreateCaseRequestLanguageEnum extends EnumClass {
-
   @BuiltValueEnumConst(wireName: r'en')
-  static const CreateCaseRequestLanguageEnum en = _$createCaseRequestLanguageEnum_en;
+  static const CreateCaseRequestLanguageEnum en =
+      _$createCaseRequestLanguageEnum_en;
 
-  static Serializer<CreateCaseRequestLanguageEnum> get serializer => _$createCaseRequestLanguageEnumSerializer;
+  static Serializer<CreateCaseRequestLanguageEnum> get serializer =>
+      _$createCaseRequestLanguageEnumSerializer;
 
-  const CreateCaseRequestLanguageEnum._(String name): super(name);
+  const CreateCaseRequestLanguageEnum._(String name) : super(name);
 
-  static BuiltSet<CreateCaseRequestLanguageEnum> get values => _$createCaseRequestLanguageEnumValues;
-  static CreateCaseRequestLanguageEnum valueOf(String name) => _$createCaseRequestLanguageEnumValueOf(name);
+  static BuiltSet<CreateCaseRequestLanguageEnum> get values =>
+      _$createCaseRequestLanguageEnumValues;
+  static CreateCaseRequestLanguageEnum valueOf(String name) =>
+      _$createCaseRequestLanguageEnumValueOf(name);
 }
 
 class CreateCaseRequestDifficultyEnum extends EnumClass {
-
   @BuiltValueEnumConst(wireName: r'easy')
-  static const CreateCaseRequestDifficultyEnum easy = _$createCaseRequestDifficultyEnum_easy;
+  static const CreateCaseRequestDifficultyEnum easy =
+      _$createCaseRequestDifficultyEnum_easy;
   @BuiltValueEnumConst(wireName: r'medium')
-  static const CreateCaseRequestDifficultyEnum medium = _$createCaseRequestDifficultyEnum_medium;
+  static const CreateCaseRequestDifficultyEnum medium =
+      _$createCaseRequestDifficultyEnum_medium;
   @BuiltValueEnumConst(wireName: r'hard')
-  static const CreateCaseRequestDifficultyEnum hard = _$createCaseRequestDifficultyEnum_hard;
+  static const CreateCaseRequestDifficultyEnum hard =
+      _$createCaseRequestDifficultyEnum_hard;
 
-  static Serializer<CreateCaseRequestDifficultyEnum> get serializer => _$createCaseRequestDifficultyEnumSerializer;
+  static Serializer<CreateCaseRequestDifficultyEnum> get serializer =>
+      _$createCaseRequestDifficultyEnumSerializer;
 
-  const CreateCaseRequestDifficultyEnum._(String name): super(name);
+  const CreateCaseRequestDifficultyEnum._(String name) : super(name);
 
-  static BuiltSet<CreateCaseRequestDifficultyEnum> get values => _$createCaseRequestDifficultyEnumValues;
-  static CreateCaseRequestDifficultyEnum valueOf(String name) => _$createCaseRequestDifficultyEnumValueOf(name);
+  static BuiltSet<CreateCaseRequestDifficultyEnum> get values =>
+      _$createCaseRequestDifficultyEnumValues;
+  static CreateCaseRequestDifficultyEnum valueOf(String name) =>
+      _$createCaseRequestDifficultyEnumValueOf(name);
 }
 
 class CreateCaseRequestSexEnum extends EnumClass {
-
   @BuiltValueEnumConst(wireName: r'female')
-  static const CreateCaseRequestSexEnum female = _$createCaseRequestSexEnum_female;
+  static const CreateCaseRequestSexEnum female =
+      _$createCaseRequestSexEnum_female;
   @BuiltValueEnumConst(wireName: r'male')
   static const CreateCaseRequestSexEnum male = _$createCaseRequestSexEnum_male;
   @BuiltValueEnumConst(wireName: r'other')
-  static const CreateCaseRequestSexEnum other = _$createCaseRequestSexEnum_other;
+  static const CreateCaseRequestSexEnum other =
+      _$createCaseRequestSexEnum_other;
 
-  static Serializer<CreateCaseRequestSexEnum> get serializer => _$createCaseRequestSexEnumSerializer;
+  static Serializer<CreateCaseRequestSexEnum> get serializer =>
+      _$createCaseRequestSexEnumSerializer;
 
-  const CreateCaseRequestSexEnum._(String name): super(name);
+  const CreateCaseRequestSexEnum._(String name) : super(name);
 
-  static BuiltSet<CreateCaseRequestSexEnum> get values => _$createCaseRequestSexEnumValues;
-  static CreateCaseRequestSexEnum valueOf(String name) => _$createCaseRequestSexEnumValueOf(name);
+  static BuiltSet<CreateCaseRequestSexEnum> get values =>
+      _$createCaseRequestSexEnumValues;
+  static CreateCaseRequestSexEnum valueOf(String name) =>
+      _$createCaseRequestSexEnumValueOf(name);
 }
 
 class CreateCaseRequestStatusEnum extends EnumClass {
-
   @BuiltValueEnumConst(wireName: r'draft')
-  static const CreateCaseRequestStatusEnum draft = _$createCaseRequestStatusEnum_draft;
+  static const CreateCaseRequestStatusEnum draft =
+      _$createCaseRequestStatusEnum_draft;
   @BuiltValueEnumConst(wireName: r'review')
-  static const CreateCaseRequestStatusEnum review = _$createCaseRequestStatusEnum_review;
+  static const CreateCaseRequestStatusEnum review =
+      _$createCaseRequestStatusEnum_review;
   @BuiltValueEnumConst(wireName: r'published')
-  static const CreateCaseRequestStatusEnum published = _$createCaseRequestStatusEnum_published;
+  static const CreateCaseRequestStatusEnum published =
+      _$createCaseRequestStatusEnum_published;
 
-  static Serializer<CreateCaseRequestStatusEnum> get serializer => _$createCaseRequestStatusEnumSerializer;
+  static Serializer<CreateCaseRequestStatusEnum> get serializer =>
+      _$createCaseRequestStatusEnumSerializer;
 
-  const CreateCaseRequestStatusEnum._(String name): super(name);
+  const CreateCaseRequestStatusEnum._(String name) : super(name);
 
-  static BuiltSet<CreateCaseRequestStatusEnum> get values => _$createCaseRequestStatusEnumValues;
-  static CreateCaseRequestStatusEnum valueOf(String name) => _$createCaseRequestStatusEnumValueOf(name);
+  static BuiltSet<CreateCaseRequestStatusEnum> get values =>
+      _$createCaseRequestStatusEnumValues;
+  static CreateCaseRequestStatusEnum valueOf(String name) =>
+      _$createCaseRequestStatusEnumValueOf(name);
 }
-

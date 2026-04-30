@@ -14,11 +14,12 @@ part 'investigations_request.g.dart';
 /// InvestigationsRequest
 ///
 /// Properties:
-/// * [catalogHints] 
-/// * [expected] 
-/// * [results] 
+/// * [catalogHints]
+/// * [expected]
+/// * [results]
 @BuiltValue()
-abstract class InvestigationsRequest implements Built<InvestigationsRequest, InvestigationsRequestBuilder> {
+abstract class InvestigationsRequest
+    implements Built<InvestigationsRequest, InvestigationsRequestBuilder> {
   @BuiltValueField(wireName: r'catalog_hints')
   BuiltList<String>? get catalogHints;
 
@@ -30,20 +31,26 @@ abstract class InvestigationsRequest implements Built<InvestigationsRequest, Inv
 
   InvestigationsRequest._();
 
-  factory InvestigationsRequest([void updates(InvestigationsRequestBuilder b)]) = _$InvestigationsRequest;
+  factory InvestigationsRequest(
+      [void updates(InvestigationsRequestBuilder b)]) = _$InvestigationsRequest;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(InvestigationsRequestBuilder b) => b
-      ..catalogHints = ListBuilder()
-      ..results = ListBuilder();
+    ..catalogHints = ListBuilder()
+    ..results = ListBuilder();
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<InvestigationsRequest> get serializer => _$InvestigationsRequestSerializer();
+  static Serializer<InvestigationsRequest> get serializer =>
+      _$InvestigationsRequestSerializer();
 }
 
-class _$InvestigationsRequestSerializer implements PrimitiveSerializer<InvestigationsRequest> {
+class _$InvestigationsRequestSerializer
+    implements PrimitiveSerializer<InvestigationsRequest> {
   @override
-  final Iterable<Type> types = const [InvestigationsRequest, _$InvestigationsRequest];
+  final Iterable<Type> types = const [
+    InvestigationsRequest,
+    _$InvestigationsRequest
+  ];
 
   @override
   final String wireName = r'InvestigationsRequest';
@@ -69,7 +76,8 @@ class _$InvestigationsRequestSerializer implements PrimitiveSerializer<Investiga
       yield r'results';
       yield serializers.serialize(
         object.results,
-        specifiedType: const FullType(BuiltList, [FullType(InvestigationResultRequest)]),
+        specifiedType:
+            const FullType(BuiltList, [FullType(InvestigationResultRequest)]),
       );
     }
   }
@@ -80,7 +88,9 @@ class _$InvestigationsRequestSerializer implements PrimitiveSerializer<Investiga
     InvestigationsRequest object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+    return _serializeProperties(serializers, object,
+            specifiedType: specifiedType)
+        .toList();
   }
 
   void _deserializeProperties(
@@ -112,7 +122,8 @@ class _$InvestigationsRequestSerializer implements PrimitiveSerializer<Investiga
         case r'results':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(BuiltList, [FullType(InvestigationResultRequest)]),
+            specifiedType: const FullType(
+                BuiltList, [FullType(InvestigationResultRequest)]),
           ) as BuiltList<InvestigationResultRequest>;
           result.results.replace(valueDes);
           break;
@@ -144,4 +155,3 @@ class _$InvestigationsRequestSerializer implements PrimitiveSerializer<Investiga
     return result.build();
   }
 }
-

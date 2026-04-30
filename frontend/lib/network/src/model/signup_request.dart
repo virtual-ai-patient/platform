@@ -11,11 +11,12 @@ part 'signup_request.g.dart';
 /// SignupRequest
 ///
 /// Properties:
-/// * [username] 
-/// * [email] 
-/// * [password] 
+/// * [username]
+/// * [email]
+/// * [password]
 @BuiltValue()
-abstract class SignupRequest implements Built<SignupRequest, SignupRequestBuilder> {
+abstract class SignupRequest
+    implements Built<SignupRequest, SignupRequestBuilder> {
   @BuiltValueField(wireName: r'username')
   String get username;
 
@@ -27,13 +28,15 @@ abstract class SignupRequest implements Built<SignupRequest, SignupRequestBuilde
 
   SignupRequest._();
 
-  factory SignupRequest([void updates(SignupRequestBuilder b)]) = _$SignupRequest;
+  factory SignupRequest([void updates(SignupRequestBuilder b)]) =
+      _$SignupRequest;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(SignupRequestBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<SignupRequest> get serializer => _$SignupRequestSerializer();
+  static Serializer<SignupRequest> get serializer =>
+      _$SignupRequestSerializer();
 }
 
 class _$SignupRequestSerializer implements PrimitiveSerializer<SignupRequest> {
@@ -71,7 +74,9 @@ class _$SignupRequestSerializer implements PrimitiveSerializer<SignupRequest> {
     SignupRequest object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+    return _serializeProperties(serializers, object,
+            specifiedType: specifiedType)
+        .toList();
   }
 
   void _deserializeProperties(
@@ -135,4 +140,3 @@ class _$SignupRequestSerializer implements PrimitiveSerializer<SignupRequest> {
     return result.build();
   }
 }
-

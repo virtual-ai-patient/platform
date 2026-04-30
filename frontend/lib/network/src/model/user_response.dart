@@ -11,12 +11,13 @@ part 'user_response.g.dart';
 /// UserResponse
 ///
 /// Properties:
-/// * [id] 
-/// * [username] 
-/// * [email] 
-/// * [role] 
+/// * [id]
+/// * [username]
+/// * [email]
+/// * [role]
 @BuiltValue()
-abstract class UserResponse implements Built<UserResponse, UserResponseBuilder> {
+abstract class UserResponse
+    implements Built<UserResponse, UserResponseBuilder> {
   @BuiltValueField(wireName: r'id')
   String get id;
 
@@ -80,7 +81,9 @@ class _$UserResponseSerializer implements PrimitiveSerializer<UserResponse> {
     UserResponse object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+    return _serializeProperties(serializers, object,
+            specifiedType: specifiedType)
+        .toList();
   }
 
   void _deserializeProperties(
@@ -151,4 +154,3 @@ class _$UserResponseSerializer implements PrimitiveSerializer<UserResponse> {
     return result.build();
   }
 }
-

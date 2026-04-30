@@ -12,11 +12,12 @@ part 'key_history_points_request.g.dart';
 /// KeyHistoryPointsRequest
 ///
 /// Properties:
-/// * [mustAsk] 
-/// * [niceToAsk] 
-/// * [redFlags] 
+/// * [mustAsk]
+/// * [niceToAsk]
+/// * [redFlags]
 @BuiltValue()
-abstract class KeyHistoryPointsRequest implements Built<KeyHistoryPointsRequest, KeyHistoryPointsRequestBuilder> {
+abstract class KeyHistoryPointsRequest
+    implements Built<KeyHistoryPointsRequest, KeyHistoryPointsRequestBuilder> {
   @BuiltValueField(wireName: r'must_ask')
   BuiltList<String> get mustAsk;
 
@@ -28,18 +29,25 @@ abstract class KeyHistoryPointsRequest implements Built<KeyHistoryPointsRequest,
 
   KeyHistoryPointsRequest._();
 
-  factory KeyHistoryPointsRequest([void updates(KeyHistoryPointsRequestBuilder b)]) = _$KeyHistoryPointsRequest;
+  factory KeyHistoryPointsRequest(
+          [void updates(KeyHistoryPointsRequestBuilder b)]) =
+      _$KeyHistoryPointsRequest;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(KeyHistoryPointsRequestBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<KeyHistoryPointsRequest> get serializer => _$KeyHistoryPointsRequestSerializer();
+  static Serializer<KeyHistoryPointsRequest> get serializer =>
+      _$KeyHistoryPointsRequestSerializer();
 }
 
-class _$KeyHistoryPointsRequestSerializer implements PrimitiveSerializer<KeyHistoryPointsRequest> {
+class _$KeyHistoryPointsRequestSerializer
+    implements PrimitiveSerializer<KeyHistoryPointsRequest> {
   @override
-  final Iterable<Type> types = const [KeyHistoryPointsRequest, _$KeyHistoryPointsRequest];
+  final Iterable<Type> types = const [
+    KeyHistoryPointsRequest,
+    _$KeyHistoryPointsRequest
+  ];
 
   @override
   final String wireName = r'KeyHistoryPointsRequest';
@@ -72,7 +80,9 @@ class _$KeyHistoryPointsRequestSerializer implements PrimitiveSerializer<KeyHist
     KeyHistoryPointsRequest object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+    return _serializeProperties(serializers, object,
+            specifiedType: specifiedType)
+        .toList();
   }
 
   void _deserializeProperties(
@@ -136,4 +146,3 @@ class _$KeyHistoryPointsRequestSerializer implements PrimitiveSerializer<KeyHist
     return result.build();
   }
 }
-

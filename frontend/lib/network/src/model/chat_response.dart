@@ -11,10 +11,11 @@ part 'chat_response.g.dart';
 /// ChatResponse
 ///
 /// Properties:
-/// * [response] 
-/// * [loggedAt] 
+/// * [response]
+/// * [loggedAt]
 @BuiltValue()
-abstract class ChatResponse implements Built<ChatResponse, ChatResponseBuilder> {
+abstract class ChatResponse
+    implements Built<ChatResponse, ChatResponseBuilder> {
   @BuiltValueField(wireName: r'response')
   String get response;
 
@@ -62,7 +63,9 @@ class _$ChatResponseSerializer implements PrimitiveSerializer<ChatResponse> {
     ChatResponse object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+    return _serializeProperties(serializers, object,
+            specifiedType: specifiedType)
+        .toList();
   }
 
   void _deserializeProperties(
@@ -119,4 +122,3 @@ class _$ChatResponseSerializer implements PrimitiveSerializer<ChatResponse> {
     return result.build();
   }
 }
-

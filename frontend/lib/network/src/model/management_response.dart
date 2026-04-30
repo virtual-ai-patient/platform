@@ -12,12 +12,13 @@ part 'management_response.g.dart';
 /// ManagementResponse
 ///
 /// Properties:
-/// * [diagnosticPlan] 
-/// * [treatmentPlan] 
-/// * [contraindications] 
-/// * [followUp] 
+/// * [diagnosticPlan]
+/// * [treatmentPlan]
+/// * [contraindications]
+/// * [followUp]
 @BuiltValue()
-abstract class ManagementResponse implements Built<ManagementResponse, ManagementResponseBuilder> {
+abstract class ManagementResponse
+    implements Built<ManagementResponse, ManagementResponseBuilder> {
   @BuiltValueField(wireName: r'diagnostic_plan')
   BuiltList<String> get diagnosticPlan;
 
@@ -32,16 +33,19 @@ abstract class ManagementResponse implements Built<ManagementResponse, Managemen
 
   ManagementResponse._();
 
-  factory ManagementResponse([void updates(ManagementResponseBuilder b)]) = _$ManagementResponse;
+  factory ManagementResponse([void updates(ManagementResponseBuilder b)]) =
+      _$ManagementResponse;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(ManagementResponseBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<ManagementResponse> get serializer => _$ManagementResponseSerializer();
+  static Serializer<ManagementResponse> get serializer =>
+      _$ManagementResponseSerializer();
 }
 
-class _$ManagementResponseSerializer implements PrimitiveSerializer<ManagementResponse> {
+class _$ManagementResponseSerializer
+    implements PrimitiveSerializer<ManagementResponse> {
   @override
   final Iterable<Type> types = const [ManagementResponse, _$ManagementResponse];
 
@@ -81,7 +85,9 @@ class _$ManagementResponseSerializer implements PrimitiveSerializer<ManagementRe
     ManagementResponse object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+    return _serializeProperties(serializers, object,
+            specifiedType: specifiedType)
+        .toList();
   }
 
   void _deserializeProperties(
@@ -152,4 +158,3 @@ class _$ManagementResponseSerializer implements PrimitiveSerializer<ManagementRe
     return result.build();
   }
 }
-

@@ -11,10 +11,11 @@ part 'available_test_item.g.dart';
 /// AvailableTestItem
 ///
 /// Properties:
-/// * [testName] 
-/// * [category] 
+/// * [testName]
+/// * [category]
 @BuiltValue()
-abstract class AvailableTestItem implements Built<AvailableTestItem, AvailableTestItemBuilder> {
+abstract class AvailableTestItem
+    implements Built<AvailableTestItem, AvailableTestItemBuilder> {
   @BuiltValueField(wireName: r'test_name')
   String get testName;
 
@@ -23,16 +24,19 @@ abstract class AvailableTestItem implements Built<AvailableTestItem, AvailableTe
 
   AvailableTestItem._();
 
-  factory AvailableTestItem([void updates(AvailableTestItemBuilder b)]) = _$AvailableTestItem;
+  factory AvailableTestItem([void updates(AvailableTestItemBuilder b)]) =
+      _$AvailableTestItem;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(AvailableTestItemBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<AvailableTestItem> get serializer => _$AvailableTestItemSerializer();
+  static Serializer<AvailableTestItem> get serializer =>
+      _$AvailableTestItemSerializer();
 }
 
-class _$AvailableTestItemSerializer implements PrimitiveSerializer<AvailableTestItem> {
+class _$AvailableTestItemSerializer
+    implements PrimitiveSerializer<AvailableTestItem> {
   @override
   final Iterable<Type> types = const [AvailableTestItem, _$AvailableTestItem];
 
@@ -62,7 +66,9 @@ class _$AvailableTestItemSerializer implements PrimitiveSerializer<AvailableTest
     AvailableTestItem object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+    return _serializeProperties(serializers, object,
+            specifiedType: specifiedType)
+        .toList();
   }
 
   void _deserializeProperties(
@@ -119,4 +125,3 @@ class _$AvailableTestItemSerializer implements PrimitiveSerializer<AvailableTest
     return result.build();
   }
 }
-

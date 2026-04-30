@@ -13,26 +13,34 @@ part 'available_tests_response.g.dart';
 /// AvailableTestsResponse
 ///
 /// Properties:
-/// * [tests] 
+/// * [tests]
 @BuiltValue()
-abstract class AvailableTestsResponse implements Built<AvailableTestsResponse, AvailableTestsResponseBuilder> {
+abstract class AvailableTestsResponse
+    implements Built<AvailableTestsResponse, AvailableTestsResponseBuilder> {
   @BuiltValueField(wireName: r'tests')
   BuiltList<AvailableTestItem> get tests;
 
   AvailableTestsResponse._();
 
-  factory AvailableTestsResponse([void updates(AvailableTestsResponseBuilder b)]) = _$AvailableTestsResponse;
+  factory AvailableTestsResponse(
+          [void updates(AvailableTestsResponseBuilder b)]) =
+      _$AvailableTestsResponse;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(AvailableTestsResponseBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<AvailableTestsResponse> get serializer => _$AvailableTestsResponseSerializer();
+  static Serializer<AvailableTestsResponse> get serializer =>
+      _$AvailableTestsResponseSerializer();
 }
 
-class _$AvailableTestsResponseSerializer implements PrimitiveSerializer<AvailableTestsResponse> {
+class _$AvailableTestsResponseSerializer
+    implements PrimitiveSerializer<AvailableTestsResponse> {
   @override
-  final Iterable<Type> types = const [AvailableTestsResponse, _$AvailableTestsResponse];
+  final Iterable<Type> types = const [
+    AvailableTestsResponse,
+    _$AvailableTestsResponse
+  ];
 
   @override
   final String wireName = r'AvailableTestsResponse';
@@ -55,7 +63,9 @@ class _$AvailableTestsResponseSerializer implements PrimitiveSerializer<Availabl
     AvailableTestsResponse object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+    return _serializeProperties(serializers, object,
+            specifiedType: specifiedType)
+        .toList();
   }
 
   void _deserializeProperties(
@@ -73,7 +83,8 @@ class _$AvailableTestsResponseSerializer implements PrimitiveSerializer<Availabl
         case r'tests':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(BuiltList, [FullType(AvailableTestItem)]),
+            specifiedType:
+                const FullType(BuiltList, [FullType(AvailableTestItem)]),
           ) as BuiltList<AvailableTestItem>;
           result.tests.replace(valueDes);
           break;
@@ -105,4 +116,3 @@ class _$AvailableTestsResponseSerializer implements PrimitiveSerializer<Availabl
     return result.build();
   }
 }
-

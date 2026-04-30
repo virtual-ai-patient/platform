@@ -13,14 +13,15 @@ part 'session_detail_response.g.dart';
 /// SessionDetailResponse
 ///
 /// Properties:
-/// * [sessionId] 
-/// * [studentUsername] 
-/// * [caseId] 
-/// * [caseTitle] 
-/// * [createdAt] 
-/// * [actionLog] 
+/// * [sessionId]
+/// * [studentUsername]
+/// * [caseId]
+/// * [caseTitle]
+/// * [createdAt]
+/// * [actionLog]
 @BuiltValue()
-abstract class SessionDetailResponse implements Built<SessionDetailResponse, SessionDetailResponseBuilder> {
+abstract class SessionDetailResponse
+    implements Built<SessionDetailResponse, SessionDetailResponseBuilder> {
   @BuiltValueField(wireName: r'session_id')
   String get sessionId;
 
@@ -41,18 +42,24 @@ abstract class SessionDetailResponse implements Built<SessionDetailResponse, Ses
 
   SessionDetailResponse._();
 
-  factory SessionDetailResponse([void updates(SessionDetailResponseBuilder b)]) = _$SessionDetailResponse;
+  factory SessionDetailResponse(
+      [void updates(SessionDetailResponseBuilder b)]) = _$SessionDetailResponse;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(SessionDetailResponseBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<SessionDetailResponse> get serializer => _$SessionDetailResponseSerializer();
+  static Serializer<SessionDetailResponse> get serializer =>
+      _$SessionDetailResponseSerializer();
 }
 
-class _$SessionDetailResponseSerializer implements PrimitiveSerializer<SessionDetailResponse> {
+class _$SessionDetailResponseSerializer
+    implements PrimitiveSerializer<SessionDetailResponse> {
   @override
-  final Iterable<Type> types = const [SessionDetailResponse, _$SessionDetailResponse];
+  final Iterable<Type> types = const [
+    SessionDetailResponse,
+    _$SessionDetailResponse
+  ];
 
   @override
   final String wireName = r'SessionDetailResponse';
@@ -100,7 +107,9 @@ class _$SessionDetailResponseSerializer implements PrimitiveSerializer<SessionDe
     SessionDetailResponse object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+    return _serializeProperties(serializers, object,
+            specifiedType: specifiedType)
+        .toList();
   }
 
   void _deserializeProperties(
@@ -153,7 +162,8 @@ class _$SessionDetailResponseSerializer implements PrimitiveSerializer<SessionDe
         case r'action_log':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(BuiltList, [FullType(ActionLogEntry)]),
+            specifiedType:
+                const FullType(BuiltList, [FullType(ActionLogEntry)]),
           ) as BuiltList<ActionLogEntry>;
           result.actionLog.replace(valueDes);
           break;
@@ -185,4 +195,3 @@ class _$SessionDetailResponseSerializer implements PrimitiveSerializer<SessionDe
     return result.build();
   }
 }
-
