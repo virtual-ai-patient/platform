@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/common/theme/app_colors.dart';
+import 'package:frontend/common/widgets/app_logo_mark.dart';
 import 'package:frontend/domains/admin/admin_repository.dart';
 import 'package:frontend/domains/auth/auth_repository.dart';
 import 'package:frontend/network/openapi.dart' as generated;
@@ -10,10 +11,14 @@ class AdminSessionsDashboardScreen extends StatefulWidget {
     super.key,
     required this.session,
     required this.adminRepository,
+    required this.authRepository,
+    required this.buildLoginPage,
   });
 
   final AuthSession session;
   final AdminRepositoryContract adminRepository;
+  final AuthRepositoryContract authRepository;
+  final Widget Function() buildLoginPage;
 
   @override
   State<AdminSessionsDashboardScreen> createState() =>
@@ -47,6 +52,15 @@ class _AdminSessionsDashboardScreenState
     _studentCtrl.dispose();
     _caseCtrl.dispose();
     super.dispose();
+  }
+
+  Future<void> _signOut() async {
+    await widget.authRepository.logout();
+    if (!mounted) return;
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute<void>(builder: (_) => widget.buildLoginPage()),
+      (_) => false,
+    );
   }
 
   Future<void> _loadSessions() async {
@@ -125,7 +139,30 @@ class _AdminSessionsDashboardScreenState
     return Scaffold(
       backgroundColor: AppColors.canvasBackground,
       appBar: AppBar(
-        title: const Text('Student Dialogue & Action Trace'),
+        title: const AppLogoMark(
+          compact: true,
+          subtitle: 'Student Dialogue & Action Trace',
+        ),
+        automaticallyImplyLeading: true,
+        actions: [
+          IconButton(
+            tooltip: 'Refresh',
+            onPressed: _loading ? null : _loadSessions,
+            icon: const Icon(Icons.refresh_rounded),
+          ),
+          TextButton(
+            onPressed: _signOut,
+            child: Text(
+              'Sign out',
+              style: GoogleFonts.inter(
+                fontWeight: FontWeight.w600,
+                fontSize: 13,
+                color: AppColors.primaryBlue,
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+        ],
       ),
       body: Column(
         children: [
@@ -362,7 +399,7 @@ class _AdminSessionsDashboardScreenState
                   itemCount: timelineEntries.length,
                   itemBuilder: (context, index) {
                     final e = timelineEntries[index];
-                    final tag = _actionTag(e.content);
+                    final tag = _actionTag(e);
                     return Container(
                       margin: const EdgeInsets.only(bottom: 8),
                       padding: const EdgeInsets.all(10),
@@ -413,8 +450,10 @@ class _AdminSessionsDashboardScreenState
                             ],
                           ),
                           const SizedBox(height: 6),
-                          Text(e.content,
-                              style: GoogleFonts.inter(fontSize: 13)),
+                          Text(
+                            _displayContent(e),
+                            style: GoogleFonts.inter(fontSize: 13),
+                          ),
                         ],
                       ),
                     );
@@ -443,15 +482,28 @@ class _AdminSessionsDashboardScreenState
   }
 }
 
-({String label, Color color}) _actionTag(String content) {
-  final c = content.toLowerCase();
-  if (c.contains('harmful') ||
-      c.contains('unsafe') ||
-      c.contains('should_not')) {
-    return (label: 'Unnecessary/Harmful', color: AppColors.danger);
+({String label, Color color}) _actionTag(generated.ActionLogEntry entry) {
+  final role = entry.role.toLowerCase();
+  if (role == 'user') {
+    return (label: 'Student message', color: AppColors.primaryBlue);
   }
-  if (c.contains('correct') || c.contains('must_order')) {
-    return (label: 'Correct', color: AppColors.successTeal);
+  if (role == 'assistant') {
+    return (label: 'Patient reply', color: AppColors.successTeal);
+  }
+  if (role == 'system') {
+    if (entry.content.startsWith('TEST_ORDERED:')) {
+      return (label: 'Test ordered', color: AppColors.warningBorder);
+    }
+    return (label: 'System event', color: AppColors.secondaryText);
   }
   return (label: 'Action', color: AppColors.primaryBlue);
+}
+
+String _displayContent(generated.ActionLogEntry entry) {
+  if (entry.role.toLowerCase() == 'system' &&
+      entry.content.startsWith('TEST_ORDERED:')) {
+    final testId = entry.content.substring('TEST_ORDERED:'.length).trim();
+    return testId.isEmpty ? 'Test ordered' : 'Test ordered: $testId';
+  }
+  return entry.content;
 }

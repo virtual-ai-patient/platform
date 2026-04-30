@@ -183,6 +183,8 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
                       builder: (_) => AdminSessionsDashboardScreen(
                         session: widget.session,
                         adminRepository: widget.adminRepository!,
+                        authRepository: widget.authRepository,
+                        buildLoginPage: widget.buildLoginPage,
                       ),
                     ),
                   );

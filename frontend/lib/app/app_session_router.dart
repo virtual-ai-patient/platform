@@ -4,6 +4,7 @@ import 'package:frontend/domains/auth/auth_repository.dart';
 import 'package:frontend/domains/cases/case_repository.dart';
 import 'package:frontend/domains/sessions/session_repository.dart';
 import 'package:frontend/features/auth/presentation/login_screen.dart';
+import 'package:frontend/features/admin/presentation/admin_sessions_dashboard_screen.dart';
 import 'package:frontend/features/cases/presentation/case_library_screen.dart';
 
 /// Builds the post-login root widget (library vs admin) and a factory for the login page.
@@ -37,6 +38,14 @@ class AppSessionRouter {
           sessionRepository: sessionRepository,
           adminRepository: adminRepository,
         );
+    if (session.user.role == 'admin' && adminRepository != null) {
+      return AdminSessionsDashboardScreen(
+        session: session,
+        adminRepository: adminRepository,
+        authRepository: authRepository,
+        buildLoginPage: createLoginScreen,
+      );
+    }
     return CaseLibraryScreen(
       session: session,
       caseRepository: caseRepository,
