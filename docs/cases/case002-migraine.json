@@ -1,0 +1,129 @@
+{
+  "case_id": "CASE-002",
+  "metadata": {
+    "title": "Severe Headache – Migraine with Aura",
+    "language": "en",
+    "difficulty": "medium",
+    "specialty": "Neurology",
+    "tags": ["headache", "migraine", "aura"],
+    "version": "2.0"
+  },
+  "patient": {
+    "age": 34,
+    "sex": "female",
+    "persona": "Software developer, articulate, calm. Describes symptoms very precisely.",
+    "tone_presets": ["neutral"],
+    "anamnesis_vitae": {
+      "past_medical_history": ["Migraine with aura since age 18"],
+      "surgeries": [],
+      "medications": ["Ibuprofen PRN", "Sumatriptan PRN (not taken today)"],
+      "allergies": ["No known allergies"],
+      "lifestyle": {
+        "smoking": "Never",
+        "alcohol": "Socially, 1-2 drinks/week",
+        "occupation": "Software engineer"
+      },
+      "family_history": ["Mother had migraines"]
+    }
+  },
+  "presentation": {
+    "chief_complaint": "The worst headache of my life – came on suddenly about 2 hours ago.",
+    "hpi": {
+      "narrative": "Patient reports sudden onset of severe, throbbing headache that started while working at her computer. She first experienced visual aura – flickering lights and a blind spot in her left visual field – about 20 minutes before the headache. The pain is right-sided, throbbing, associated with nausea, photophobia, and phonophobia. No weakness or numbness.",
+      "facts": {
+        "onset": "sudden, 2 hours ago",
+        "duration": "continuous since onset",
+        "location": "right temporal/retro-orbital",
+        "radiation": "none",
+        "character": "throbbing",
+        "severity": "9/10",
+        "associated_symptoms": ["nausea", "photophobia", "phonophobia", "visual aura (preceding)"]
+      },
+      "negatives": ["no focal weakness", "no slurred speech", "no fever", "no head trauma"]
+    },
+    "key_history_points": {
+      "must_ask": ["aura symptoms", "family history of migraine", "prior similar episodes", "trigger"],
+      "nice_to_ask": ["menstrual cycle", "hydration", "sleep pattern"],
+      "red_flags": ["sudden onset worst headache of life"]
+    },
+    "physical_exam": {
+      "vitals": {
+        "blood_pressure": "118/72 mmHg",
+        "heart_rate": 78,
+        "respiratory_rate": 16,
+        "temperature": 36.8,
+        "spo2": 99
+      },
+      "findings": {
+        "general": "In distress, lying in dark room, eyes closed",
+        "cardiovascular": "Normal",
+        "respiratory": "Normal",
+        "abdominal": "Non-tender",
+        "neurological": "No focal deficits, normal cranial nerves, muscle strength, sensation. Mild photophobia."
+      }
+    }
+  },
+  "ground_truth": {
+    "preliminary_diagnosis": "Migraine with aura",
+    "final_diagnosis": "Migraine with typical aura",
+    "icd10_code": "G43.109",
+    "differential": [
+      { "name": "Migraine with aura", "likelihood": "high" },
+      { "name": "Subarachnoid hemorrhage", "likelihood": "low" },
+      { "name": "Cluster headache", "likelihood": "low" }
+    ],
+    "severity_or_stage": "Acute attack"
+  },
+  "investigations": {
+    "catalog": {
+      "CT Head (non-contrast)": { "availability": "delayed" },
+      "CBC": { "availability": "immediate" },
+      "ESR/CRP": { "availability": "delayed" }
+    },
+    "expected": {
+      "must_order": ["Thorough neurological exam"],
+      "optional": ["CT Head (if any red flag)", "CBC", "ESR"],
+      "should_not_order": ["Lumbar puncture"]
+    },
+    "results": {
+      "CT Head": {
+        "type": "text_report",
+        "value": "No intracranial hemorrhage, no mass effect, no acute findings"
+      },
+      "CBC": {
+        "type": "lab_value",
+        "value": "WBC 7.8, Hgb 13.5, Plt 280",
+        "unit": "x10^3/µL"
+      },
+      "ESR": {
+        "type": "lab_value",
+        "value": 12,
+        "unit": "mm/hr",
+        "reference_range": "0-20"
+      }
+    }
+  },
+  "management_gold": {
+    "diagnostic_plan": ["The diagnosis is clinical – typical migraine with aura, no further tests needed if exam normal"],
+    "treatment_plan": ["Triptan (e.g., sumatriptan 50-100mg PO) as soon as possible", "Anti-emetic (metoclopramide)", "Rest in dark quiet room", "Hydration"],
+    "contraindications": ["Triptan if history of stroke or coronary artery disease (not present)"],
+    "follow_up": ["Consider preventive therapy if >4 attacks/month", "Headache diary"]
+  },
+  "learning_objectives": [
+    "Distinguish migraine with aura from other headaches",
+    "Identify red flags for secondary causes",
+    "Appropriate treatment for acute migraine"
+  ],
+  "scoring": {
+    "weights": {
+      "diagnosis": 0.4,
+      "diagnostics": 0.2,
+      "treatment": 0.3,
+      "safety": 0.1
+    },
+    "acceptable_answers": {
+      "final_diagnosis": ["Migraine with aura", "Typical migraine"]
+    },
+    "critical_safety_errors": ["Ordering lumbar puncture without indication", "Prescribing opiates first-line"]
+  }
+}
