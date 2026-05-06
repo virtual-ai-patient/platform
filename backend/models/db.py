@@ -295,6 +295,7 @@ class CaseSession(Base):
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
     )
+    conclusions: Mapped[dict[str, Any] | None] = mapped_column(JSON, nullable=True)
 
 
 # ---------------------------------------------------------------------------

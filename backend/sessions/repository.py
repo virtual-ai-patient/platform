@@ -31,3 +31,25 @@ class SessionRepository:
             select(CaseSession).where(CaseSession.session_id == session_id)
         )
         return result.scalar_one_or_none()
+
+    async def update_conclusions(
+        self, session_id: str, conclusions: dict[str, Any]
+    ) -> CaseSession | None:
+        record = await self.get_by_session_id(session_id)
+        if record is None:
+            return None
+        record.conclusions = conclusions
+        await self._session.commit()
+        await self._session.refresh(record)
+        return record
+
+    async def update_status(
+        self, session_id: str, new_status: str
+    ) -> CaseSession | None:
+        record = await self.get_by_session_id(session_id)
+        if record is None:
+            return None
+        record.status = new_status
+        await self._session.commit()
+        await self._session.refresh(record)
+        return record
