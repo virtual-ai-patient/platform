@@ -5,7 +5,12 @@ from ai.provider import AIProvider
 from cases.repository import CaseRepository
 from cases.router import get_case_repo
 from dependencies import get_ai_provider, get_current_user, get_db
-from exceptions.auth_exceptions import ForbiddenError, NotFoundError
+from exceptions.auth_exceptions import (
+    BadRequestError,
+    ConflictError,
+    ForbiddenError,
+    NotFoundError,
+)
 from models.db import User
 from sessions import service
 from sessions.chat_repository import ActionLogRepository
@@ -13,8 +18,8 @@ from sessions.chat_request import ChatRequest
 from sessions.chat_response import ChatResponse
 from sessions.chat_service import chat
 from sessions.repository import SessionRepository
-from sessions.request import StartSessionRequest
-from sessions.response import SessionResponse
+from sessions.request import ConclusionsRequest, StartSessionRequest
+from sessions.response import ConclusionsResponse, SessionResponse
 
 router = APIRouter(prefix="/sessions", tags=["sessions"])
 
@@ -72,4 +77,59 @@ async def chat_with_patient(
     except ForbiddenError as exc:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN, detail=str(exc)
+        ) from exc
+
+
+@router.patch("/{session_id}/conclusions", response_model=ConclusionsResponse)
+async def update_conclusions(
+    session_id: str,
+    data: ConclusionsRequest,
+    current_user: User = Depends(get_current_user),
+    session_repo: SessionRepository = Depends(get_session_repo),
+    log_repo: ActionLogRepository = Depends(get_log_repo),
+) -> ConclusionsResponse:
+    try:
+        return await service.save_conclusions(
+            session_id, data, current_user, session_repo, log_repo
+        )
+    except NotFoundError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)
+        ) from exc
+    except ForbiddenError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail=str(exc)
+        ) from exc
+    except ConflictError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT, detail=str(exc)
+        ) from exc
+
+
+@router.post("/{session_id}/finish", response_model=ConclusionsResponse)
+async def finish_session(
+    session_id: str,
+    current_user: User = Depends(get_current_user),
+    session_repo: SessionRepository = Depends(get_session_repo),
+    log_repo: ActionLogRepository = Depends(get_log_repo),
+) -> ConclusionsResponse:
+    try:
+        return await service.finish_session(
+            session_id, current_user, session_repo, log_repo
+        )
+    except NotFoundError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)
+        ) from exc
+    except ForbiddenError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail=str(exc)
+        ) from exc
+    except ConflictError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT, detail=str(exc)
+        ) from exc
+    except BadRequestError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)
         ) from exc
