@@ -239,6 +239,29 @@ class _FakeSessionRepository implements SessionRepositoryContract {
         ..isNormalDefault = true,
     );
   }
+
+  @override
+  Future<generated.ConclusionsResponse> updateConclusions({
+    required String sessionId,
+    required generated.ConclusionsRequest request,
+  }) async {
+    return generated.ConclusionsResponse(
+      (b) => b
+        ..sessionId = sessionId
+        ..status = 'active',
+    );
+  }
+
+  @override
+  Future<generated.ConclusionsResponse> finishSession({
+    required String sessionId,
+  }) async {
+    return generated.ConclusionsResponse(
+      (b) => b
+        ..sessionId = sessionId
+        ..status = 'completed',
+    );
+  }
 }
 
 class _FakeCaseRepository implements CaseRepositoryContract {

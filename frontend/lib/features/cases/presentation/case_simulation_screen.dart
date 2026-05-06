@@ -8,6 +8,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:frontend/common/theme/app_colors.dart';
 import 'package:frontend/common/widgets/app_logo_mark.dart';
 import 'package:frontend/domains/sessions/session_repository.dart';
+import 'package:frontend/features/cases/presentation/simulation_conclusions_screen.dart';
 import 'package:frontend/network/openapi.dart' as generated;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -337,14 +338,39 @@ class _CaseSimulationScreenState extends State<CaseSimulationScreen>
     }
   }
 
+  void _openFinishCaseFlow() {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => SimulationConclusionsScreen(
+          caseItem: widget.caseItem,
+          sessionId: widget.sessionId,
+          sessionRepository: widget.sessionRepository,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final c = widget.caseItem;
     return Scaffold(
       backgroundColor: AppColors.canvasBackground,
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: _openFinishCaseFlow,
+        backgroundColor: AppColors.successTeal,
+        foregroundColor: Colors.white,
+        icon: const Icon(Icons.check_circle_outline_rounded),
+        label: Text(
+          'Finish case',
+          style: GoogleFonts.inter(fontWeight: FontWeight.w700),
+        ),
+      ),
       body: Column(
         children: [
-          _SimulationHeader(caseItem: c, sessionId: widget.sessionId),
+          _SimulationHeader(
+            caseItem: c,
+            sessionId: widget.sessionId,
+          ),
           Expanded(
             child: LayoutBuilder(
               builder: (context, constraints) {
@@ -594,20 +620,7 @@ class _SimulationHeader extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 12),
-            OutlinedButton.icon(
-              onPressed: () => Navigator.of(context).pop(),
-              style: OutlinedButton.styleFrom(
-                foregroundColor: AppColors.danger,
-                side: const BorderSide(color: Color(0xFFFECACA)),
-                backgroundColor: AppColors.dangerSoftBg,
-              ),
-              icon: const Icon(Icons.stop_rounded, size: 18),
-              label: Text(
-                'End Case',
-                style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w600, fontSize: 13),
-              ),
-            ),
+            const SizedBox.shrink(),
           ],
         ),
       ),

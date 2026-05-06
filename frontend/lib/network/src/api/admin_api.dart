@@ -155,6 +155,8 @@ class AdminApi {
       validateStatus: validateStatus,
     );
 
+    // Omit optional filters when unset — encodeQueryParameter(null) becomes ''
+    // and breaks FastAPI validation.
     final _queryParameters = <String, dynamic>{
       if (page != null)
         r'page': encodeQueryParameter(_serializers, page, const FullType(int)),

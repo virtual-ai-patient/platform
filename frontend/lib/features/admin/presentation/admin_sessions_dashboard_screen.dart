@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:frontend/common/theme/app_colors.dart';
 import 'package:frontend/common/widgets/app_logo_mark.dart';
@@ -345,6 +347,8 @@ class _AdminSessionsDashboardScreenState
         .where((e) => e.role == 'user' || e.role == 'assistant')
         .toList(growable: false);
     final timelineEntries = detail.actionLog.toList(growable: false);
+    final conclusions = _extractConclusionsFromLog(detail.actionLog);
+    final isFinished = _isFinished(detail.actionLog);
 
     return Row(
       children: [
@@ -393,6 +397,21 @@ class _AdminSessionsDashboardScreenState
           child: Column(
             children: [
               _paneHeader('Action Timeline'),
+              if (conclusions.isNotEmpty || isFinished)
+                Container(
+                  width: double.infinity,
+                  margin: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: AppColors.surfaceMuted,
+                    border: Border.all(color: AppColors.borderSubtle),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: _ConclusionsSummary(
+                    conclusions: conclusions,
+                    isFinished: isFinished,
+                  ),
+                ),
               Expanded(
                 child: ListView.builder(
                   padding: const EdgeInsets.all(12),
@@ -482,6 +501,91 @@ class _AdminSessionsDashboardScreenState
   }
 }
 
+class _ConclusionsSummary extends StatelessWidget {
+  const _ConclusionsSummary({
+    required this.conclusions,
+    required this.isFinished,
+  });
+
+  final Map<String, dynamic> conclusions;
+  final bool isFinished;
+
+  @override
+  Widget build(BuildContext context) {
+    final differential = _asList(conclusions['differential_diagnoses'])
+        .whereType<Map>()
+        .map((e) => Map<String, dynamic>.from(e))
+        .toList(growable: false)
+      ..sort((a, b) => ((a['rank'] as num?)?.toInt() ?? 999)
+          .compareTo((b['rank'] as num?)?.toInt() ?? 999));
+    final finalDx = (conclusions['final_diagnosis'] ?? '').toString().trim();
+    final treatment = _asMap(conclusions['treatment_plan']);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Text(
+              'Submitted conclusions',
+              style:
+                  GoogleFonts.inter(fontWeight: FontWeight.w700, fontSize: 12),
+            ),
+            const SizedBox(width: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+              decoration: BoxDecoration(
+                color: (isFinished
+                        ? AppColors.successTeal
+                        : AppColors.warningBorder)
+                    .withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(999),
+              ),
+              child: Text(
+                isFinished ? 'Session completed' : 'Draft',
+                style: GoogleFonts.inter(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w700,
+                  color: isFinished
+                      ? AppColors.successTeal
+                      : AppColors.primaryText,
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Text(
+          'Final diagnosis: ${finalDx.isEmpty ? '—' : finalDx}',
+          style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600),
+        ),
+        if (differential.isNotEmpty) ...[
+          const SizedBox(height: 6),
+          Text(
+            'Differential:',
+            style:
+                GoogleFonts.inter(fontSize: 11, color: AppColors.secondaryText),
+          ),
+          ...differential.take(3).map(
+                (d) => Text(
+                  '${(d['rank'] ?? '?')}. ${(d['condition'] ?? '').toString()}',
+                  style: GoogleFonts.inter(fontSize: 11),
+                ),
+              ),
+        ],
+        if (treatment.isNotEmpty) ...[
+          const SizedBox(height: 6),
+          Text(
+            'Treatment plan submitted',
+            style:
+                GoogleFonts.inter(fontSize: 11, color: AppColors.secondaryText),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
 ({String label, Color color}) _actionTag(generated.ActionLogEntry entry) {
   final role = entry.role.toLowerCase();
   if (role == 'user') {
@@ -506,4 +610,54 @@ String _displayContent(generated.ActionLogEntry entry) {
     return testId.isEmpty ? 'Test ordered' : 'Test ordered: $testId';
   }
   return entry.content;
+}
+
+Map<String, dynamic> _extractConclusionsFromLog(
+  Iterable<generated.ActionLogEntry> entries,
+) {
+  final result = <String, dynamic>{};
+  for (final entry in entries) {
+    if (entry.role.toLowerCase() != 'learner') continue;
+    final raw = entry.content.trim();
+    if (!raw.startsWith('{')) continue;
+    try {
+      final parsed = jsonDecode(raw);
+      if (parsed is! Map) continue;
+      final map = Map<String, dynamic>.from(parsed);
+      if (map['action'] == 'save_conclusions') {
+        final patch = _asMap(map['patch']);
+        result.addAll(patch);
+      }
+    } catch (_) {
+      // Ignore non-JSON learner events.
+    }
+  }
+  return result;
+}
+
+bool _isFinished(Iterable<generated.ActionLogEntry> entries) {
+  for (final entry in entries) {
+    if (entry.role.toLowerCase() != 'learner') continue;
+    final raw = entry.content.trim();
+    if (!raw.startsWith('{')) continue;
+    try {
+      final parsed = jsonDecode(raw);
+      if (parsed is! Map) continue;
+      if (parsed['action'] == 'finish_session') return true;
+    } catch (_) {
+      // Ignore malformed lines.
+    }
+  }
+  return false;
+}
+
+Map<String, dynamic> _asMap(dynamic value) {
+  if (value is Map<String, dynamic>) return value;
+  if (value is Map) return Map<String, dynamic>.from(value);
+  return {};
+}
+
+List<dynamic> _asList(dynamic value) {
+  if (value is List) return value;
+  return const [];
 }

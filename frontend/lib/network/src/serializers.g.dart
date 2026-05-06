@@ -15,11 +15,14 @@ Serializers _$serializers = (Serializers().toBuilder()
       ..add(CaseResponse.serializer)
       ..add(ChatRequest.serializer)
       ..add(ChatResponse.serializer)
+      ..add(ConclusionsRequest.serializer)
+      ..add(ConclusionsResponse.serializer)
       ..add(CreateCaseRequest.serializer)
       ..add(CreateCaseRequestDifficultyEnum.serializer)
       ..add(CreateCaseRequestLanguageEnum.serializer)
       ..add(CreateCaseRequestSexEnum.serializer)
       ..add(CreateCaseRequestStatusEnum.serializer)
+      ..add(DifferentialDiagnosisItem.serializer)
       ..add(ExpectedTestsRequest.serializer)
       ..add(ExpectedTestsResponse.serializer)
       ..add(HTTPValidationError.serializer)
@@ -33,6 +36,7 @@ Serializers _$serializers = (Serializers().toBuilder()
       ..add(LocationInner.serializer)
       ..add(ManagementRequest.serializer)
       ..add(ManagementResponse.serializer)
+      ..add(Medication.serializer)
       ..add(MessageResponse.serializer)
       ..add(OrderTestRequest.serializer)
       ..add(PasswordResetConfirm.serializer)
@@ -48,6 +52,7 @@ Serializers _$serializers = (Serializers().toBuilder()
       ..add(StartSessionRequest.serializer)
       ..add(TestResultResponse.serializer)
       ..add(TokenResponse.serializer)
+      ..add(TreatmentPlan.serializer)
       ..add(UpdateCaseRequest.serializer)
       ..add(UpdateCaseRequestDifficultyEnum.serializer)
       ..add(UpdateCaseRequestLanguageEnum.serializer)
@@ -76,8 +81,24 @@ Serializers _$serializers = (Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(AvailableTestItem)]),
           () => ListBuilder<AvailableTestItem>())
       ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(DifferentialDiagnosisItem)]),
+          () => ListBuilder<DifferentialDiagnosisItem>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(LocationInner)]),
           () => ListBuilder<LocationInner>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(Medication)]),
+          () => ListBuilder<Medication>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => ListBuilder<String>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => ListBuilder<String>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => ListBuilder<String>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(SessionSummary)]),
           () => ListBuilder<SessionSummary>())
@@ -184,7 +205,13 @@ Serializers _$serializers = (Serializers().toBuilder()
           () => ListBuilder<String>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ValidationError)]),
-          () => ListBuilder<ValidationError>()))
+          () => ListBuilder<ValidationError>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType.nullable(JsonObject)
+          ]),
+          () => MapBuilder<String, JsonObject?>()))
     .build();
 
 // ignore_for_file: deprecated_member_use_from_same_package,type=lint
