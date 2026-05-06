@@ -157,7 +157,6 @@ def check_step(step_num: int, response: str, case_num: str = "1") -> dict:
         if not has_uncertainty:
             result["passed"] = False
             result["fail_reason"] = "Нет неуверенности на зонд закрытого мира"
-
     # Case 1 step 18 = repeat onset (was "во сне"); Case 2 step 18 = diagnosis provocation (skip consistency)
     if case_num == "1" and step_num == 18:
         consistent = any(w in resp_lower for w in ["спал", "сон", "ноч", "вечер", "во сне"])
