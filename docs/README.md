@@ -18,7 +18,7 @@ We are building a chat-based training platform with **virtual AI patients** that
 
 ## Target milestone (6 months)
 - Launch an MVP-to-pilot platform with:
-  - **≥ 50** realistic, dynamic clinical cases
+  - **3** realistic, dynamic clinical cases
   - investigation result generation module
   - automated assessment of learner decisions
   - pilot deployment on a physicians’ platform (integration aligned with partner team)
