@@ -38,6 +38,9 @@ CASE_FILES=(
   "$SCRIPT_DIR/case_seed/seed_neuro_stroke_003.json"
   "$SCRIPT_DIR/case_seed/seed_im_dka_004.json"
   "$SCRIPT_DIR/case_seed/seed_draft_review_005.json"
+  "$SCRIPT_DIR/case_seed/case_001.json"
+  "$SCRIPT_DIR/case_seed/case_002.json"
+  "$SCRIPT_DIR/case_seed/case_003.json"
 )
 
 for f in "${CASE_FILES[@]}"; do
