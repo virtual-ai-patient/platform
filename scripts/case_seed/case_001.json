@@ -1,136 +1,108 @@
 {
     "case_id": "CASE-001",
-    "metadata": {
-      "title": "Acute Chest Pain – Suspected Myocardial Infarction",
-      "language": "en",
-      "difficulty": "hard",
-      "specialty": "Cardiology",
-      "tags": ["chest pain", "MI", "emergency"],
-      "version": "2.0"
-    },
-    "patient": {
-      "age": 58,
-      "sex": "male",
-      "persona": "Truck driver, anxious, reluctant to admit pain. Speaks in short sentences.",
-      "tone_presets": ["anxious"],
-      "anamnesis_vitae": {
-        "past_medical_history": ["Hypertension", "Type 2 diabetes"],
-        "surgeries": [],
-        "medications": ["Metformin 500mg BID", "Lisinopril 10mg daily"],
-        "allergies": ["No known allergies"],
-        "lifestyle": {
-          "smoking": "1 pack per day for 35 years",
-          "alcohol": "Occasional beer",
-          "occupation": "Long-haul truck driver"
-        },
-        "family_history": ["Father had heart attack at age 62"]
-      }
-    },
-    "presentation": {
-      "chief_complaint": "Heavy pressure in the middle of my chest like someone is standing on me.",
-      "hpi": {
-        "narrative": "The patient reports sudden onset of chest pressure while driving his truck. The pain is constant, not relieved by rest. It radiates to the left arm and jaw. He also feels short of breath and nauseous.",
-        "facts": {
-          "onset": "sudden, 45 minutes ago",
-          "duration": "continuous since onset",
-          "location": "retrosternal, central chest",
-          "radiation": "left arm and jaw",
-          "character": "pressure, heaviness",
-          "severity": "8/10",
-          "associated_symptoms": ["shortness of breath", "nausea", "diaphoresis"]
-        },
-        "negatives": ["no palpitations", "no fever", "no cough"]
-      },
-      "key_history_points": {
-        "must_ask": ["onset", "radiation", "associated symptoms", "risk factors (smoking, diabetes, family history)"],
-        "nice_to_ask": ["relieving factors", "similar episodes in past"],
-        "red_flags": ["radiating to arm/jaw", "diaphoresis", "prolonged >20 min"]
-      },
-      "physical_exam": {
-        "vitals": {
-          "blood_pressure": "150/95 mmHg",
-          "heart_rate": 102,
-          "respiratory_rate": 22,
-          "temperature": 37.0,
-          "spo2": 96
-        },
-        "findings": {
-          "general": "Anxious, diaphoretic",
-          "cardiovascular": "Tachycardia, no murmurs",
-          "respiratory": "Clear lungs",
-          "abdominal": "Soft, non-tender",
-          "neurological": "No focal deficits"
-        }
-      }
-    },
-    "ground_truth": {
-      "preliminary_diagnosis": "Acute Coronary Syndrome – rule out STEMI",
-      "final_diagnosis": "Acute ST-elevation Myocardial Infarction (STEMI), anterior wall",
-      "icd10_code": "I21.09",
-      "differential": [
-        { "name": "STEMI", "likelihood": "high" },
-        { "name": "Unstable Angina", "likelihood": "medium" },
-        { "name": "Aortic Dissection", "likelihood": "low" }
+    "title": "Острая боль в груди — подозрение на инфаркт миокарда",
+    "language": "ru",
+    "difficulty": "hard",
+    "specialty": "cardiology",
+    "tags": ["chest_pain", "MI", "STEMI", "emergency"],
+    "age": 58,
+    "sex": "male",
+    "persona": "Дальнобойщик, тревожный, не хочет признавать боль. Говорит короткими фразами.",
+    "tone_presets": ["anxious"],
+    "chief_complaint": "Тяжесть в центре груди, как будто кто-то стоит на мне.",
+    "history_of_present_illness": "Внезапное давление в груди за рулём грузовика 45 минут назад. Боль постоянная, в покое не проходит. Иррадиирует в левую руку и челюсть. Одышка, тошнота, профузная потливость. Сердцебиения, кашля и лихорадки нет.",
+    "key_history_points": {
+      "must_ask": [
+        "Начало и длительность боли",
+        "Иррадиация в руку или челюсть",
+        "Сопутствующие симптомы (одышка, потливость, тошнота)",
+        "Факторы риска (курение, диабет, семейный анамнез)"
       ],
-      "severity_or_stage": "High-risk – requires immediate reperfusion"
+      "nice_to_ask": [
+        "Облегчающие факторы",
+        "Похожие эпизоды в прошлом"
+      ],
+      "red_flags": [
+        "Иррадиация в руку и челюсть",
+        "Профузная потливость",
+        "Длительность более 20 минут"
+      ]
     },
-    "investigations": {
-      "catalog": {
-        "ECG": { "availability": "immediate" },
-        "Troponin I": { "availability": "immediate" },
-        "CBC": { "availability": "immediate" },
-        "Basic Metabolic Panel": { "availability": "immediate" },
-        "Chest X-ray": { "availability": "delayed" }
-      },
-      "expected": {
-        "must_order": ["ECG", "Troponin I", "CBC", "Basic Metabolic Panel"],
-        "optional": ["Chest X-ray", "Echocardiogram"],
-        "should_not_order": ["D-dimer", "Blood culture"]
-      },
-      "results": {
-        "ECG": {
-          "type": "text_report",
-          "value": "ST elevation in V2-V4, reciprocal ST depression in inferior leads"
-        },
-        "Troponin I": {
-          "type": "lab_value",
-          "value": 12.5,
-          "unit": "ng/mL",
-          "reference_range": "<0.04"
-        },
-        "CBC": {
-          "type": "lab_value",
-          "value": "WBC 14.2, Hgb 14.1, Plt 250",
-          "unit": "x10^3/µL"
-        },
-        "Basic Metabolic Panel": {
-          "type": "lab_value",
-          "value": "Glucose 145, Creatinine 0.9, K 4.2",
-          "unit": "mg/dL"
-        }
-      }
-    },
-    "management_gold": {
-      "diagnostic_plan": ["Emergent ECG", "Serial troponins", "Echocardiogram if time allows"],
-      "treatment_plan": ["Aspirin 300mg chew", "Nitroglycerin SL", "Oxygen if SpO2 <90%", "Emergent PCI or thrombolysis"],
-      "contraindications": ["Active bleeding", "Prior intracranial hemorrhage"],
-      "follow_up": ["Cardiac rehab", "Secondary prevention (statin, dual antiplatelet, beta-blocker)"]
-    },
-    "learning_objectives": [
-      "Recognize symptoms of acute MI",
-      "Order appropriate immediate diagnostic tests",
-      "Identify red flags requiring urgent intervention"
+    "final_diagnosis": "Острый инфаркт миокарда с подъёмом ST (ОКСТпST), передняя стенка",
+    "differential": [
+      "ОКСТпST (STEMI)",
+      "Нестабильная стенокардия",
+      "Расслоение аорты"
     ],
+    "investigations": {
+      "catalog_hints": ["ЭКГ", "Тропонин I", "ОАК", "Базовая метаболическая панель", "Рентген грудной клетки"],
+      "expected": {
+        "must_order": ["ЭКГ", "Тропонин I", "ОАК", "Базовая метаболическая панель"],
+        "optional": ["Рентген грудной клетки", "Эхокардиография"],
+        "should_not_order": ["Д-димер", "Посев крови"]
+      },
+      "results": [
+        {
+          "test_name": "ЭКГ",
+          "result_type": "text_report",
+          "value": "Подъём ST в V2-V4, реципрокная депрессия ST в нижних отведениях."
+        },
+        {
+          "test_name": "Тропонин I",
+          "result_type": "lab_value",
+          "value": 12.5,
+          "unit": "нг/мл",
+          "reference_range": "<0,04"
+        },
+        {
+          "test_name": "ОАК",
+          "result_type": "lab_value",
+          "value": "Лейкоциты 14,2; Hgb 14,1; тромбоциты 250",
+          "unit": "× 10³/мкл"
+        },
+        {
+          "test_name": "Базовая метаболическая панель",
+          "result_type": "lab_value",
+          "value": "Глюкоза 145, креатинин 0,9, K 4,2",
+          "unit": "мг/дл"
+        }
+      ]
+    },
+    "management": {
+      "diagnostic_plan": [
+        "Экстренная ЭКГ",
+        "Серийные тропонины",
+        "Эхокардиография при наличии времени"
+      ],
+      "treatment_plan": [
+        "Аспирин 300 мг разжевать",
+        "Нитроглицерин сублингвально",
+        "Кислород при SpO2 <90%",
+        "Экстренное ЧКВ или тромболизис"
+      ],
+      "contraindications": [
+        "Активное кровотечение",
+        "Внутричерепное кровоизлияние в анамнезе"
+      ],
+      "follow_up": [
+        "Кардиореабилитация",
+        "Вторичная профилактика: статин, двойная антиагрегантная терапия, бета-блокатор"
+      ]
+    },
     "scoring": {
-      "weights": {
-        "diagnosis": 0.4,
-        "diagnostics": 0.3,
-        "treatment": 0.2,
-        "safety": 0.1
-      },
-      "acceptable_answers": {
-        "final_diagnosis": ["STEMI", "Acute MI", "Myocardial Infarction"]
-      },
-      "critical_safety_errors": ["Discharging without aspirin", "Ignoring diaphoresis and radiation"]
-    }
+      "weight_diagnosis": 0.40,
+      "weight_diagnostics": 0.30,
+      "weight_treatment": 0.20,
+      "weight_safety": 0.10,
+      "acceptable_answers": [
+        {"field": "final_diagnosis", "answer": "STEMI"},
+        {"field": "final_diagnosis", "answer": "Острый инфаркт миокарда"},
+        {"field": "final_diagnosis", "answer": "ОКСТпST"}
+      ],
+      "critical_safety_errors": [
+        "Выписка без аспирина",
+        "Игнорирование потливости и иррадиации"
+      ]
+    },
+    "status": "ready"
   }
