@@ -1,7 +1,7 @@
 {
     "case_id": "CASE-001",
     "title": "Острая боль в груди — подозрение на инфаркт миокарда",
-    "language": "ru",
+    "language": "en",
     "difficulty": "hard",
     "specialty": "cardiology",
     "tags": ["chest_pain", "MI", "STEMI", "emergency"],
@@ -50,21 +50,19 @@
         {
           "test_name": "Тропонин I",
           "result_type": "lab_value",
-          "value": 12.5,
+          "value": "12.5",
           "unit": "нг/мл",
-          "reference_range": "<0,04"
+          "reference_range": "<0.04"
         },
         {
           "test_name": "ОАК",
-          "result_type": "lab_value",
-          "value": "Лейкоциты 14,2; Hgb 14,1; тромбоциты 250",
-          "unit": "× 10³/мкл"
+          "result_type": "text_report",
+          "value": "Лейкоциты 14,2 × 10³/мкл; Hgb 14,1 г/дл; тромбоциты 250 × 10³/мкл"
         },
         {
           "test_name": "Базовая метаболическая панель",
-          "result_type": "lab_value",
-          "value": "Глюкоза 145, креатинин 0,9, K 4,2",
-          "unit": "мг/дл"
+          "result_type": "text_report",
+          "value": "Глюкоза 145 мг/дл, креатинин 0,9 мг/дл, K 4,2 ммоль/л"
         }
       ]
     },
@@ -104,5 +102,5 @@
         "Игнорирование потливости и иррадиации"
       ]
     },
-    "status": "ready"
+    "status": "draft"
   }

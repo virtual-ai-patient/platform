@@ -1,7 +1,7 @@
 {
     "case_id": "CASE-002",
     "title": "Сильная головная боль — мигрень с аурой",
-    "language": "ru",
+    "language": "en",
     "difficulty": "medium",
     "specialty": "neurology",
     "tags": ["headache", "migraine", "aura"],
@@ -33,7 +33,7 @@
       "Кластерная головная боль"
     ],
     "investigations": {
-      "catalog_hints": ["КТ головы без контраста", "ОАК", "СОЭ/СРБ"],
+      "catalog_hints": ["КТ головы без контраста", "ОАК", "СОЭ"],
       "expected": {
         "must_order": ["Тщательный неврологический осмотр"],
         "optional": ["КТ головы (при наличии красных флагов)", "ОАК", "СОЭ"],
@@ -47,14 +47,13 @@
         },
         {
           "test_name": "ОАК",
-          "result_type": "lab_value",
-          "value": "Лейкоциты 7,8; Hgb 13,5; тромбоциты 280",
-          "unit": "× 10³/мкл"
+          "result_type": "text_report",
+          "value": "Лейкоциты 7,8 × 10³/мкл; Hgb 13,5 г/дл; тромбоциты 280 × 10³/мкл"
         },
         {
           "test_name": "СОЭ",
           "result_type": "lab_value",
-          "value": 12,
+          "value": "12",
           "unit": "мм/ч",
           "reference_range": "0-20"
         }
@@ -92,5 +91,5 @@
         "Назначение опиоидов первой линией"
       ]
     },
-    "status": "ready"
+    "status": "draft"
   }

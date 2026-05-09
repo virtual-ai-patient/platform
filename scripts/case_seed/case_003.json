@@ -1,7 +1,7 @@
 {
     "case_id": "CASE-003",
     "title": "Продуктивный кашель и лихорадка — внебольничная пневмония",
-    "language": "ru",
+    "language": "en",
     "difficulty": "easy",
     "specialty": "pulmonology",
     "tags": ["cough", "fever", "pneumonia", "elderly"],
@@ -50,14 +50,13 @@
         },
         {
           "test_name": "ОАК",
-          "result_type": "lab_value",
-          "value": "Лейкоциты 16,8; Hgb 13,0; тромбоциты 300",
-          "unit": "× 10³/мкл"
+          "result_type": "text_report",
+          "value": "Лейкоциты 16,8 × 10³/мкл; Hgb 13,0 г/дл; тромбоциты 300 × 10³/мкл"
         },
         {
           "test_name": "СРБ",
           "result_type": "lab_value",
-          "value": 95,
+          "value": "95",
           "unit": "мг/л",
           "reference_range": "<5"
         }
@@ -97,5 +96,5 @@
         "Игнорирование гипоксии"
       ]
     },
-    "status": "ready"
+    "status": "draft"
   }
