@@ -51,5 +51,8 @@ class EvaluationRepository:
         await self._session.commit()
         await self._session.refresh(record)
         loaded = await self.get_by_session_id(session_id)
-        assert loaded is not None
+        if loaded is None:
+            raise RuntimeError(
+                f"Evaluation for session '{session_id}' was not found after create"
+            )
         return loaded
