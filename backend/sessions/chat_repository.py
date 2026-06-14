@@ -32,3 +32,13 @@ class ActionLogRepository:
             )
         )
         return result.scalar_one_or_none()
+
+    async def get_ordered_tests(self, session_id: str) -> list[str]:
+        result = await self._session.execute(
+            select(ActionLog.content).where(
+                ActionLog.session_id == session_id,
+                ActionLog.role == "system",
+                ActionLog.content.like("TEST_ORDERED:%"),
+            )
+        )
+        return [content.split(":", 1)[1] for content in result.scalars().all()]

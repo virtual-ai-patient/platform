@@ -19,6 +19,7 @@ dependencies = [
     "greenlet>=3.3.2",
     "pre-commit>=4.5.1",
     "openai>=2.31.0",
+    "alembic>=1.14.0",
 ]
 
 [dependency-groups]

@@ -20,7 +20,7 @@ repos:
     hooks:
       - id: mypy
         name: mypy (strict)
-        entry: bash -c 'cd backend && uv run mypy --strict .'
+        entry: uv run --directory backend mypy --strict .
         language: system
         types: [python]
         files: ^backend/
@@ -28,7 +28,7 @@ repos:
 
       - id: pytest-cov
         name: pytest (coverage ≥ 80%)
-        entry: bash -c 'cd backend && uv run pytest -q'
+        entry: uv run --directory backend pytest -q
         language: system
         files: ^backend/.*\.py$
         pass_filenames: false
