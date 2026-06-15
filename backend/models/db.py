@@ -315,3 +315,55 @@ class ActionLog(Base):
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
     )
+
+
+# ---------------------------------------------------------------------------
+# Evaluation
+# ---------------------------------------------------------------------------
+
+
+class Evaluation(Base):
+    __tablename__ = "evaluations"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=_uuid)
+    session_id: Mapped[str] = mapped_column(
+        String,
+        ForeignKey("case_sessions.session_id"),
+        unique=True,
+        nullable=False,
+    )
+    case_version: Mapped[int] = mapped_column(Integer, nullable=False)
+    total_score: Mapped[float] = mapped_column(Float, nullable=False)
+    score_diagnosis: Mapped[float] = mapped_column(Float, nullable=False)
+    score_diagnostics: Mapped[float] = mapped_column(Float, nullable=False)
+    score_treatment: Mapped[float] = mapped_column(Float, nullable=False)
+    score_safety: Mapped[float] = mapped_column(Float, nullable=False)
+    reference_solution: Mapped[dict[str, Any]] = mapped_column(JSON, nullable=False)
+    scored_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
+    findings: Mapped[list["EvaluationFinding"]] = relationship(
+        "EvaluationFinding",
+        back_populates="evaluation",
+        cascade="all, delete-orphan",
+    )
+
+
+class EvaluationFinding(Base):
+    __tablename__ = "evaluation_findings"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=_uuid)
+    evaluation_id: Mapped[str] = mapped_column(
+        String, ForeignKey("evaluations.id"), nullable=False
+    )
+    category: Mapped[str] = mapped_column(String, nullable=False)
+    finding_type: Mapped[str] = mapped_column("type", String, nullable=False)
+    severity: Mapped[str] = mapped_column(String, nullable=False)
+    expected: Mapped[str] = mapped_column(Text, nullable=False)
+    actual: Mapped[str] = mapped_column(Text, nullable=False)
+    why_matters: Mapped[str] = mapped_column(Text, nullable=False)
+    how_to_correct: Mapped[str] = mapped_column(Text, nullable=False)
+    deduction_points: Mapped[float] = mapped_column(Float, nullable=False)
+    evaluation: Mapped[Evaluation] = relationship(
+        "Evaluation", back_populates="findings"
+    )

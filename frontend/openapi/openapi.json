@@ -440,6 +440,102 @@
         }
       }
     },
+    "/sessions/{session_id}/scores": {
+      "get": {
+        "tags": [
+          "sessions",
+          "evaluation"
+        ],
+        "summary": "Get Scores",
+        "operationId": "get_scores_sessions__session_id__scores_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScoresResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sessions/{session_id}/debrief": {
+      "get": {
+        "tags": [
+          "sessions",
+          "evaluation"
+        ],
+        "summary": "Get Debrief",
+        "operationId": "get_debrief_sessions__session_id__debrief_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DebriefResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/sessions/start": {
       "post": {
         "tags": [
@@ -1439,6 +1535,115 @@
         ],
         "title": "CreateCaseRequest"
       },
+      "DebriefResponse": {
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "title": "Session Id"
+          },
+          "case_version": {
+            "type": "integer",
+            "title": "Case Version"
+          },
+          "total_score": {
+            "type": "number",
+            "title": "Total Score"
+          },
+          "score_diagnosis": {
+            "type": "number",
+            "title": "Score Diagnosis"
+          },
+          "score_diagnostics": {
+            "type": "number",
+            "title": "Score Diagnostics"
+          },
+          "score_treatment": {
+            "type": "number",
+            "title": "Score Treatment"
+          },
+          "score_safety": {
+            "type": "number",
+            "title": "Score Safety"
+          },
+          "scored_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Scored At"
+          },
+          "findings": {
+            "items": {
+              "$ref": "#/components/schemas/EvaluationFindingResponse"
+            },
+            "type": "array",
+            "title": "Findings"
+          },
+          "reference_solution": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Reference Solution"
+          },
+          "conclusions": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Conclusions"
+          }
+        },
+        "type": "object",
+        "required": [
+          "session_id",
+          "case_version",
+          "total_score",
+          "score_diagnosis",
+          "score_diagnostics",
+          "score_treatment",
+          "score_safety",
+          "scored_at",
+          "findings",
+          "reference_solution",
+          "conclusions"
+        ],
+        "title": "DebriefResponse",
+        "examples": [
+          {
+            "case_version": 1,
+            "conclusions": {
+              "final_diagnosis": "STEMI",
+              "treatment_plan": {
+                "medications": []
+              }
+            },
+            "findings": [
+              {
+                "actual": "Test not ordered",
+                "category": "diagnostics",
+                "deduction_points": 25.0,
+                "expected": "Order ECG",
+                "how_to_correct": "Order ECG during the diagnostic workup.",
+                "severity": "major",
+                "type": "missing_must_order",
+                "why_matters": "Must-order tests are required to confirm or rule out key diagnoses."
+              }
+            ],
+            "reference_solution": {
+              "case_id": "CASE-001",
+              "final_diagnosis": "STEMI",
+              "management": {
+                "treatment_plan": [
+                  "Activate cath lab"
+                ]
+              },
+              "version": 1
+            },
+            "score_diagnosis": 100.0,
+            "score_diagnostics": 75.0,
+            "score_safety": 100.0,
+            "score_treatment": 80.0,
+            "scored_at": "2026-06-14T12:00:00Z",
+            "session_id": "550e8400-e29b-41d4-a716-446655440000",
+            "total_score": 82.5
+          }
+        ]
+      },
       "DifferentialDiagnosisItem": {
         "properties": {
           "rank": {
@@ -1457,6 +1662,54 @@
           "condition"
         ],
         "title": "DifferentialDiagnosisItem"
+      },
+      "EvaluationFindingResponse": {
+        "properties": {
+          "category": {
+            "type": "string",
+            "title": "Category"
+          },
+          "type": {
+            "type": "string",
+            "title": "Type"
+          },
+          "severity": {
+            "type": "string",
+            "title": "Severity"
+          },
+          "expected": {
+            "type": "string",
+            "title": "Expected"
+          },
+          "actual": {
+            "type": "string",
+            "title": "Actual"
+          },
+          "why_matters": {
+            "type": "string",
+            "title": "Why Matters"
+          },
+          "how_to_correct": {
+            "type": "string",
+            "title": "How To Correct"
+          },
+          "deduction_points": {
+            "type": "number",
+            "title": "Deduction Points"
+          }
+        },
+        "type": "object",
+        "required": [
+          "category",
+          "type",
+          "severity",
+          "expected",
+          "actual",
+          "why_matters",
+          "how_to_correct",
+          "deduction_points"
+        ],
+        "title": "EvaluationFindingResponse"
       },
       "ExpectedTestsRequest": {
         "properties": {
@@ -1924,6 +2177,67 @@
           "refresh_token"
         ],
         "title": "RefreshRequest"
+      },
+      "ScoresResponse": {
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "title": "Session Id"
+          },
+          "case_version": {
+            "type": "integer",
+            "title": "Case Version"
+          },
+          "total_score": {
+            "type": "number",
+            "title": "Total Score"
+          },
+          "score_diagnosis": {
+            "type": "number",
+            "title": "Score Diagnosis"
+          },
+          "score_diagnostics": {
+            "type": "number",
+            "title": "Score Diagnostics"
+          },
+          "score_treatment": {
+            "type": "number",
+            "title": "Score Treatment"
+          },
+          "score_safety": {
+            "type": "number",
+            "title": "Score Safety"
+          },
+          "scored_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Scored At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "session_id",
+          "case_version",
+          "total_score",
+          "score_diagnosis",
+          "score_diagnostics",
+          "score_treatment",
+          "score_safety",
+          "scored_at"
+        ],
+        "title": "ScoresResponse",
+        "examples": [
+          {
+            "case_version": 1,
+            "score_diagnosis": 100.0,
+            "score_diagnostics": 75.0,
+            "score_safety": 100.0,
+            "score_treatment": 80.0,
+            "scored_at": "2026-06-14T12:00:00Z",
+            "session_id": "550e8400-e29b-41d4-a716-446655440000",
+            "total_score": 82.5
+          }
+        ]
       },
       "ScoringRequest": {
         "properties": {

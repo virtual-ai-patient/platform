@@ -34,6 +34,11 @@ def resolved_ai_provider() -> str:
         return AI_PROVIDER
     return "mock" if USE_MOCK_AI else "openai"
 
+
+EVALUATION_AUTO_SCORE: bool = (
+    os.environ.get("EVALUATION_AUTO_SCORE", "true").lower() == "true"
+)
+
 ADMIN_USERNAME: str = os.environ.get("ADMIN_USERNAME", "admin")
 ADMIN_EMAIL: str = os.environ.get("ADMIN_EMAIL", "admin@example.com")
 ADMIN_PASSWORD: str = os.environ.get("ADMIN_PASSWORD", "changeme")

@@ -23,8 +23,11 @@ from sessions.diagnostics_service import get_available_tests, order_test
 from sessions.repository import SessionRepository
 from sessions.request import ConclusionsRequest, StartSessionRequest
 from sessions.response import ConclusionsResponse, SessionResponse
+from evaluation.router import router as evaluation_router
+from evaluation.repository import EvaluationRepository
 
 router = APIRouter(prefix="/sessions", tags=["sessions"])
+router.include_router(evaluation_router)
 
 
 def get_session_repo(db: AsyncSession = Depends(get_db)) -> SessionRepository:
@@ -33,6 +36,10 @@ def get_session_repo(db: AsyncSession = Depends(get_db)) -> SessionRepository:
 
 def get_log_repo(db: AsyncSession = Depends(get_db)) -> ActionLogRepository:
     return ActionLogRepository(db)
+
+
+def get_eval_repo(db: AsyncSession = Depends(get_db)) -> EvaluationRepository:
+    return EvaluationRepository(db)
 
 
 @router.post(
@@ -155,10 +162,11 @@ async def finish_session(
     current_user: User = Depends(get_current_user),
     session_repo: SessionRepository = Depends(get_session_repo),
     log_repo: ActionLogRepository = Depends(get_log_repo),
+    eval_repo: EvaluationRepository = Depends(get_eval_repo),
 ) -> ConclusionsResponse:
     try:
         return await service.finish_session(
-            session_id, current_user, session_repo, log_repo
+            session_id, current_user, session_repo, log_repo, eval_repo
         )
     except NotFoundError as exc:
         raise HTTPException(
