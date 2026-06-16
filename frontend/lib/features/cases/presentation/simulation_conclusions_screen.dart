@@ -1,9 +1,11 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/common/session_completion_prefs.dart';
 import 'package:frontend/common/theme/app_colors.dart';
+import 'package:frontend/domains/evaluation/evaluation_repository.dart';
 import 'package:frontend/domains/sessions/session_repository.dart';
-import 'package:frontend/features/cases/presentation/simulation_debrief_screen.dart';
+import 'package:frontend/features/evaluation/presentation/debrief_screen.dart';
 import 'package:frontend/network/openapi.dart' as generated;
 import 'package:google_fonts/google_fonts.dart';
 
@@ -14,11 +16,13 @@ class SimulationConclusionsScreen extends StatefulWidget {
     required this.caseItem,
     required this.sessionId,
     required this.sessionRepository,
+    required this.evaluationRepository,
   });
 
   final generated.CaseResponse caseItem;
   final String sessionId;
   final SessionRepositoryContract sessionRepository;
+  final EvaluationRepositoryContract evaluationRepository;
 
   @override
   State<SimulationConclusionsScreen> createState() =>
@@ -346,15 +350,21 @@ class _SimulationConclusionsScreenState
 
     setState(() => _busy = true);
     try {
-      final response = await widget.sessionRepository.finishSession(
+      await widget.sessionRepository.finishSession(
+        sessionId: widget.sessionId,
+      );
+      if (!mounted) return;
+      await SessionCompletionPrefs.rememberCompletedSession(
+        caseId: widget.caseItem.caseId,
         sessionId: widget.sessionId,
       );
       if (!mounted) return;
       await Navigator.of(context).pushReplacement(
         MaterialPageRoute<void>(
-          builder: (_) => SimulationDebriefScreen(
+          builder: (_) => DebriefScreen(
             caseItem: widget.caseItem,
-            conclusionsResponse: response,
+            sessionId: widget.sessionId,
+            evaluationRepository: widget.evaluationRepository,
           ),
         ),
       );
@@ -539,6 +549,7 @@ class _SimulationConclusionsScreenState
           child: ReorderableListView.builder(
             buildDefaultDragHandles: false,
             itemCount: _diffRows.length,
+            // ignore: deprecated_member_use
             onReorder: (oldIndex, newIndex) {
               setState(() {
                 if (newIndex > oldIndex) newIndex--;

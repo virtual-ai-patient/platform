@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/common/session_completion_prefs.dart';
 import 'package:frontend/common/theme/app_colors.dart';
 import 'package:frontend/common/widgets/app_library_top_bar.dart';
 import 'package:frontend/common/widgets/app_page_footer.dart';
 import 'package:frontend/domains/admin/admin_repository.dart';
 import 'package:frontend/domains/auth/auth_repository.dart';
 import 'package:frontend/domains/cases/case_repository.dart';
+import 'package:frontend/domains/evaluation/evaluation_repository.dart';
 import 'package:frontend/domains/sessions/session_repository.dart';
 import 'package:frontend/features/admin/presentation/admin_sessions_dashboard_screen.dart';
 import 'package:frontend/features/cases/presentation/case_briefing_screen.dart';
 import 'package:frontend/features/cases/presentation/educator_case_manage_panel.dart';
+import 'package:frontend/features/evaluation/presentation/debrief_screen.dart';
 import 'package:frontend/network/openapi.dart' as generated;
 import 'package:google_fonts/google_fonts.dart';
 
@@ -20,6 +23,7 @@ class CaseLibraryScreen extends StatefulWidget {
     required this.session,
     required this.caseRepository,
     required this.sessionRepository,
+    required this.evaluationRepository,
     required this.authRepository,
     required this.adminRepository,
     required this.buildLoginPage,
@@ -28,6 +32,7 @@ class CaseLibraryScreen extends StatefulWidget {
   final AuthSession session;
   final CaseRepositoryContract caseRepository;
   final SessionRepositoryContract sessionRepository;
+  final EvaluationRepositoryContract evaluationRepository;
   final AuthRepositoryContract authRepository;
   final AdminRepositoryContract? adminRepository;
   final Widget Function() buildLoginPage;
@@ -39,6 +44,7 @@ class CaseLibraryScreen extends StatefulWidget {
 class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
   final _searchController = TextEditingController();
   Future<List<generated.CaseResponse>>? _load;
+  Map<String, String> _completedSessionsByCaseId = {};
   final Set<String> _specialtyFilters = {};
   final Set<String> _difficultyFilters = {};
   final Set<String> _statusFilters = {};
@@ -63,6 +69,11 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
     _load = widget.caseRepository
         .listCases(status: _isCaseManager ? null : 'published');
     _searchController.addListener(() => setState(() {}));
+    SessionCompletionPrefs.loadAll().then((m) {
+      if (mounted) {
+        setState(() => _completedSessionsByCaseId = m);
+      }
+    });
   }
 
   @override
@@ -78,6 +89,10 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
       _page = 0;
     });
     await _load;
+    final prefs = await SessionCompletionPrefs.loadAll();
+    if (mounted) {
+      setState(() => _completedSessionsByCaseId = prefs);
+    }
   }
 
   Future<void> _signOut() async {
@@ -171,6 +186,20 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
                       builder: (_) => CaseBriefingScreen(
                         caseItem: c,
                         sessionRepository: widget.sessionRepository,
+                        evaluationRepository: widget.evaluationRepository,
+                      ),
+                    ),
+                  );
+                }
+
+                void openEvaluation(
+                    generated.CaseResponse c, String sessionId) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => DebriefScreen(
+                        caseItem: c,
+                        sessionId: sessionId,
+                        evaluationRepository: widget.evaluationRepository,
                       ),
                     ),
                   );
@@ -356,6 +385,10 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
                                           () => _gridView = !_gridView),
                                       onPage: (p) => setState(() => _page = p),
                                       onOpenCase: openBriefing,
+                                      completedSessionsByCaseId:
+                                          _completedSessionsByCaseId,
+                                      onOpenEvaluation:
+                                          isManageTab ? null : openEvaluation,
                                       isManageTab: isManageTab,
                                       manageEditMode: _manageEditMode,
                                       onManageEditModeChanged: (v) =>
@@ -404,6 +437,10 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
                                           () => _gridView = !_gridView),
                                       onPage: (p) => setState(() => _page = p),
                                       onOpenCase: openBriefing,
+                                      completedSessionsByCaseId:
+                                          _completedSessionsByCaseId,
+                                      onOpenEvaluation:
+                                          isManageTab ? null : openEvaluation,
                                       isManageTab: isManageTab,
                                       manageEditMode: _manageEditMode,
                                       onManageEditModeChanged: (v) =>
@@ -678,6 +715,8 @@ class _MainPane extends StatelessWidget {
     required this.onToggleView,
     required this.onPage,
     required this.onOpenCase,
+    required this.completedSessionsByCaseId,
+    this.onOpenEvaluation,
     this.isManageTab = false,
     this.manageEditMode = false,
     this.onManageEditModeChanged,
@@ -697,6 +736,9 @@ class _MainPane extends StatelessWidget {
   final VoidCallback onToggleView;
   final void Function(int) onPage;
   final void Function(generated.CaseResponse) onOpenCase;
+  final Map<String, String> completedSessionsByCaseId;
+  final void Function(generated.CaseResponse caseItem, String sessionId)?
+      onOpenEvaluation;
   final bool isManageTab;
   final bool manageEditMode;
   final ValueChanged<bool>? onManageEditModeChanged;
@@ -816,6 +858,17 @@ class _MainPane extends StatelessWidget {
                         child: _LibraryCaseCard(
                           caseItem: item,
                           onStart: () => onOpenCase(item),
+                          evaluationSessionId:
+                              completedSessionsByCaseId[item.caseId],
+                          onOpenEvaluation: onOpenEvaluation == null
+                              ? null
+                              : () {
+                                  final sid =
+                                      completedSessionsByCaseId[item.caseId];
+                                  if (sid != null) {
+                                    onOpenEvaluation!(item, sid);
+                                  }
+                                },
                           showManageActions: showCardActions,
                           actionBusy: managingCaseId == item.id,
                           onEdit: onEducatorEdit == null
@@ -841,6 +894,17 @@ class _MainPane extends StatelessWidget {
                       caseItem: item,
                       compact: true,
                       onStart: () => onOpenCase(item),
+                      evaluationSessionId:
+                          completedSessionsByCaseId[item.caseId],
+                      onOpenEvaluation: onOpenEvaluation == null
+                          ? null
+                          : () {
+                              final sid =
+                                  completedSessionsByCaseId[item.caseId];
+                              if (sid != null) {
+                                onOpenEvaluation!(item, sid);
+                              }
+                            },
                       showManageActions: showCardActions,
                       actionBusy: managingCaseId == item.id,
                       onEdit: onEducatorEdit == null
@@ -976,6 +1040,8 @@ class _LibraryCaseCard extends StatelessWidget {
     required this.caseItem,
     required this.onStart,
     this.compact = false,
+    this.evaluationSessionId,
+    this.onOpenEvaluation,
     this.showManageActions = false,
     this.actionBusy = false,
     this.onEdit,
@@ -985,6 +1051,8 @@ class _LibraryCaseCard extends StatelessWidget {
   final generated.CaseResponse caseItem;
   final VoidCallback onStart;
   final bool compact;
+  final String? evaluationSessionId;
+  final VoidCallback? onOpenEvaluation;
   final bool showManageActions;
   final bool actionBusy;
   final VoidCallback? onEdit;
@@ -1200,6 +1268,21 @@ class _LibraryCaseCard extends StatelessWidget {
                 ),
               ),
               const Spacer(),
+              if (!showManageActions &&
+                  evaluationSessionId != null &&
+                  onOpenEvaluation != null) ...[
+                TextButton(
+                  onPressed: actionBusy ? null : onOpenEvaluation,
+                  child: Text(
+                    'Evaluation',
+                    style: GoogleFonts.inter(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 13,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 4),
+              ],
               FilledButton(
                 onPressed: actionBusy ? null : onStart,
                 style: FilledButton.styleFrom(

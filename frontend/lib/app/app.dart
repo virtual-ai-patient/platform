@@ -4,6 +4,7 @@ import 'package:frontend/common/theme/app_theme.dart';
 import 'package:frontend/domains/admin/admin_repository.dart';
 import 'package:frontend/domains/auth/auth_repository.dart';
 import 'package:frontend/domains/cases/case_repository.dart';
+import 'package:frontend/domains/evaluation/evaluation_repository.dart';
 import 'package:frontend/domains/sessions/session_repository.dart';
 
 class VirtualAiPatientApp extends StatefulWidget {
@@ -18,6 +19,7 @@ class _VirtualAiPatientAppState extends State<VirtualAiPatientApp> {
   late final AdminRepository _adminRepository;
   late final CaseRepository _caseRepository;
   late final SessionRepository _sessionRepository;
+  late final EvaluationRepository _evaluationRepository;
   Widget? _home;
 
   @override
@@ -33,6 +35,8 @@ class _VirtualAiPatientAppState extends State<VirtualAiPatientApp> {
     _adminRepository = AdminRepository(openapi: _authRepository.openapiClient);
     _sessionRepository =
         SessionRepository(openapi: _authRepository.openapiClient);
+    _evaluationRepository =
+        EvaluationRepository(openapi: _authRepository.openapiClient);
     _bootstrap();
   }
 
@@ -47,6 +51,7 @@ class _VirtualAiPatientAppState extends State<VirtualAiPatientApp> {
               authRepository: _authRepository,
               caseRepository: _caseRepository,
               sessionRepository: _sessionRepository,
+              evaluationRepository: _evaluationRepository,
               adminRepository: _adminRepository,
             )
           : AppSessionRouter.homeForSession(
@@ -54,6 +59,7 @@ class _VirtualAiPatientAppState extends State<VirtualAiPatientApp> {
               authRepository: _authRepository,
               caseRepository: _caseRepository,
               sessionRepository: _sessionRepository,
+              evaluationRepository: _evaluationRepository,
               adminRepository: _adminRepository,
             );
     });

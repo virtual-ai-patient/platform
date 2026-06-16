@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/domains/admin/admin_repository.dart';
 import 'package:frontend/domains/auth/auth_repository.dart';
 import 'package:frontend/domains/cases/case_repository.dart';
+import 'package:frontend/domains/evaluation/evaluation_repository.dart';
 import 'package:frontend/domains/sessions/session_repository.dart';
 import 'package:frontend/features/auth/presentation/login_screen.dart';
 import 'package:frontend/features/admin/presentation/admin_sessions_dashboard_screen.dart';
@@ -15,12 +16,14 @@ class AppSessionRouter {
     required AuthRepositoryContract authRepository,
     required CaseRepositoryContract caseRepository,
     required SessionRepositoryContract sessionRepository,
+    required EvaluationRepositoryContract evaluationRepository,
     AdminRepositoryContract? adminRepository,
   }) {
     return LoginScreen(
       authRepository: authRepository,
       caseRepository: caseRepository,
       sessionRepository: sessionRepository,
+      evaluationRepository: evaluationRepository,
       adminRepository: adminRepository,
     );
   }
@@ -30,12 +33,14 @@ class AppSessionRouter {
     required AuthRepositoryContract authRepository,
     required CaseRepositoryContract caseRepository,
     required SessionRepositoryContract sessionRepository,
+    required EvaluationRepositoryContract evaluationRepository,
     AdminRepositoryContract? adminRepository,
   }) {
     LoginScreen createLoginScreen() => loginScreen(
           authRepository: authRepository,
           caseRepository: caseRepository,
           sessionRepository: sessionRepository,
+          evaluationRepository: evaluationRepository,
           adminRepository: adminRepository,
         );
     if (session.user.role == 'admin' && adminRepository != null) {
@@ -50,6 +55,7 @@ class AppSessionRouter {
       session: session,
       caseRepository: caseRepository,
       sessionRepository: sessionRepository,
+      evaluationRepository: evaluationRepository,
       authRepository: authRepository,
       adminRepository: adminRepository,
       buildLoginPage: createLoginScreen,
