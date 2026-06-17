@@ -25,7 +25,9 @@ import 'package:frontend/network/src/model/chat_response.dart';
 import 'package:frontend/network/src/model/conclusions_request.dart';
 import 'package:frontend/network/src/model/conclusions_response.dart';
 import 'package:frontend/network/src/model/create_case_request.dart';
+import 'package:frontend/network/src/model/debrief_response.dart';
 import 'package:frontend/network/src/model/differential_diagnosis_item.dart';
+import 'package:frontend/network/src/model/evaluation_finding_response.dart';
 import 'package:frontend/network/src/model/expected_tests_request.dart';
 import 'package:frontend/network/src/model/expected_tests_response.dart';
 import 'package:frontend/network/src/model/http_validation_error.dart';
@@ -44,6 +46,7 @@ import 'package:frontend/network/src/model/order_test_request.dart';
 import 'package:frontend/network/src/model/password_reset_confirm.dart';
 import 'package:frontend/network/src/model/password_reset_request.dart';
 import 'package:frontend/network/src/model/refresh_request.dart';
+import 'package:frontend/network/src/model/scores_response.dart';
 import 'package:frontend/network/src/model/scoring_request.dart';
 import 'package:frontend/network/src/model/scoring_response.dart';
 import 'package:frontend/network/src/model/session_detail_response.dart';
@@ -73,7 +76,9 @@ part 'serializers.g.dart';
   ConclusionsRequest,
   ConclusionsResponse,
   CreateCaseRequest,
+  DebriefResponse,
   DifferentialDiagnosisItem,
+  EvaluationFindingResponse,
   ExpectedTestsRequest,
   ExpectedTestsResponse,
   HTTPValidationError,
@@ -92,6 +97,7 @@ part 'serializers.g.dart';
   PasswordResetConfirm,
   PasswordResetRequest,
   RefreshRequest,
+  ScoresResponse,
   ScoringRequest,
   ScoringResponse,
   SessionDetailResponse,

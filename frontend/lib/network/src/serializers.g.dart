@@ -22,7 +22,9 @@ Serializers _$serializers = (Serializers().toBuilder()
       ..add(CreateCaseRequestLanguageEnum.serializer)
       ..add(CreateCaseRequestSexEnum.serializer)
       ..add(CreateCaseRequestStatusEnum.serializer)
+      ..add(DebriefResponse.serializer)
       ..add(DifferentialDiagnosisItem.serializer)
+      ..add(EvaluationFindingResponse.serializer)
       ..add(ExpectedTestsRequest.serializer)
       ..add(ExpectedTestsResponse.serializer)
       ..add(HTTPValidationError.serializer)
@@ -42,6 +44,7 @@ Serializers _$serializers = (Serializers().toBuilder()
       ..add(PasswordResetConfirm.serializer)
       ..add(PasswordResetRequest.serializer)
       ..add(RefreshRequest.serializer)
+      ..add(ScoresResponse.serializer)
       ..add(ScoringRequest.serializer)
       ..add(ScoringResponse.serializer)
       ..add(SessionDetailResponse.serializer)
@@ -84,6 +87,22 @@ Serializers _$serializers = (Serializers().toBuilder()
           const FullType(
               BuiltList, const [const FullType(DifferentialDiagnosisItem)]),
           () => ListBuilder<DifferentialDiagnosisItem>())
+      ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(EvaluationFindingResponse)]),
+          () => ListBuilder<EvaluationFindingResponse>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType.nullable(JsonObject)
+          ]),
+          () => MapBuilder<String, JsonObject?>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType.nullable(JsonObject)
+          ]),
+          () => MapBuilder<String, JsonObject?>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(LocationInner)]),
           () => ListBuilder<LocationInner>())
