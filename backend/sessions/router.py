@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ai.provider import AIProvider
@@ -19,7 +19,12 @@ from sessions.chat_response import ChatResponse
 from sessions.chat_service import chat
 from sessions.repository import SessionRepository
 from sessions.request import ConclusionsRequest, StartSessionRequest
-from sessions.response import ConclusionsResponse, SessionResponse
+from sessions.response import (
+    ActiveSessionItem,
+    ConclusionsResponse,
+    SessionResponse,
+    SessionStateResponse,
+)
 
 router = APIRouter(prefix="/sessions", tags=["sessions"])
 
@@ -32,6 +37,15 @@ def get_log_repo(db: AsyncSession = Depends(get_db)) -> ActionLogRepository:
     return ActionLogRepository(db)
 
 
+@router.get("/active", response_model=list[ActiveSessionItem])
+async def list_active_sessions(
+    current_user: User = Depends(get_current_user),
+    session_repo: SessionRepository = Depends(get_session_repo),
+    log_repo: ActionLogRepository = Depends(get_log_repo),
+) -> list[ActiveSessionItem]:
+    return await service.list_active_sessions(current_user.id, session_repo, log_repo)
+
+
 @router.post(
     "/start",
     response_model=SessionResponse,
@@ -39,13 +53,14 @@ def get_log_repo(db: AsyncSession = Depends(get_db)) -> ActionLogRepository:
 )
 async def start_session(
     data: StartSessionRequest,
+    force: bool = Query(False),
     current_user: User = Depends(get_current_user),
     case_repo: CaseRepository = Depends(get_case_repo),
     session_repo: SessionRepository = Depends(get_session_repo),
 ) -> SessionResponse:
     try:
         return await service.start_session(
-            data.case_id, current_user, case_repo, session_repo
+            data.case_id, current_user, case_repo, session_repo, force
         )
     except NotFoundError as exc:
         raise HTTPException(
@@ -54,6 +69,61 @@ async def start_session(
     except ForbiddenError as exc:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN, detail=str(exc)
+        ) from exc
+    except ConflictError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail={
+                "message": "Active session already exists for this case",
+                "existing_session_id": str(exc),
+            },
+        ) from exc
+
+
+@router.get("/{session_id}/state", response_model=SessionStateResponse)
+async def get_session_state(
+    session_id: str,
+    cursor: int = Query(0, ge=0),
+    current_user: User = Depends(get_current_user),
+    session_repo: SessionRepository = Depends(get_session_repo),
+    log_repo: ActionLogRepository = Depends(get_log_repo),
+) -> SessionStateResponse:
+    try:
+        return await service.get_session_state(
+            session_id, current_user, session_repo, log_repo, cursor
+        )
+    except NotFoundError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)
+        ) from exc
+    except ForbiddenError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail=str(exc)
+        ) from exc
+
+
+@router.post("/{session_id}/abandon", response_model=ConclusionsResponse)
+async def abandon_session(
+    session_id: str,
+    current_user: User = Depends(get_current_user),
+    session_repo: SessionRepository = Depends(get_session_repo),
+    log_repo: ActionLogRepository = Depends(get_log_repo),
+) -> ConclusionsResponse:
+    try:
+        return await service.abandon_session(
+            session_id, current_user, session_repo, log_repo
+        )
+    except NotFoundError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)
+        ) from exc
+    except ForbiddenError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail=str(exc)
+        ) from exc
+    except ConflictError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT, detail=str(exc)
         ) from exc
 
 

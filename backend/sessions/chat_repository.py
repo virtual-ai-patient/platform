@@ -1,4 +1,4 @@
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from models.db import ActionLog
@@ -22,3 +22,23 @@ class ActionLogRepository:
             .order_by(ActionLog.created_at)
         )
         return list(result.scalars().all())
+
+    async def get_history_page(
+        self, session_id: str, limit: int, offset: int
+    ) -> list[ActionLog]:
+        result = await self._session.execute(
+            select(ActionLog)
+            .where(ActionLog.session_id == session_id)
+            .order_by(ActionLog.created_at)
+            .limit(limit)
+            .offset(offset)
+        )
+        return list(result.scalars().all())
+
+    async def count_by_session(self, session_id: str) -> int:
+        result = await self._session.execute(
+            select(func.count())
+            .select_from(ActionLog)
+            .where(ActionLog.session_id == session_id)
+        )
+        return int(result.scalar_one())
