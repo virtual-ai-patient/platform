@@ -42,3 +42,23 @@ class ActionLogRepository:
             .where(ActionLog.session_id == session_id)
         )
         return int(result.scalar_one())
+
+    async def find_test_order(self, session_id: str, test_id: str) -> ActionLog | None:
+        result = await self._session.execute(
+            select(ActionLog).where(
+                ActionLog.session_id == session_id,
+                ActionLog.role == "system",
+                ActionLog.content == f"TEST_ORDERED:{test_id}",
+            )
+        )
+        return result.scalar_one_or_none()
+
+    async def get_ordered_tests(self, session_id: str) -> list[str]:
+        result = await self._session.execute(
+            select(ActionLog.content).where(
+                ActionLog.session_id == session_id,
+                ActionLog.role == "system",
+                ActionLog.content.like("TEST_ORDERED:%"),
+            )
+        )
+        return [content.split(":", 1)[1] for content in result.scalars().all()]

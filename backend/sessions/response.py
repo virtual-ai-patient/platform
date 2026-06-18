@@ -18,6 +18,7 @@ class ConclusionsResponse(BaseModel):
     conclusions: dict[str, Any] | None
 
 
+
 class ProgressSummary(BaseModel):
     turn_count: int
     has_conclusions: bool

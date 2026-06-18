@@ -49,17 +49,14 @@ services:
     build:
       context: frontend
       dockerfile: Dockerfile
+      args:
+        # Public API URL as seen from the user’s browser (not the Docker service name).
+        BACKEND_BASE_URL: ${BACKEND_BASE_URL:-http://localhost:8000}
     container_name: virtual-ai-patient-frontend
     depends_on:
       - backend
     ports:
       - "8080:80"
-    environment:
-      # For Flutter web, configure backend URL at build time if needed.
-      # Example:
-      #   flutter build web --dart-define=BACKEND_BASE_URL=http://localhost:8000
-      # This is handled in the Dockerfile build stage, not via runtime env.
-      BACKEND_BASE_URL: "http://backend:8000"
     restart: unless-stopped
 
   # bot:

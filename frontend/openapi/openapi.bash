@@ -53,6 +53,23 @@ _cases_query_new = """    // Omit optional query param when unset — encodeQuer
         r'status': encodeQueryParameter(_serializers, status, const FullType(String)),
     };"""
 
+_admin_query_old = """    final _queryParameters = <String, dynamic>{
+      if (page != null) r'page': encodeQueryParameter(_serializers, page, const FullType(int)),
+      if (pageSize != null) r'page_size': encodeQueryParameter(_serializers, pageSize, const FullType(int)),
+      r'student': encodeQueryParameter(_serializers, student, const FullType(String)),
+      r'case_id': encodeQueryParameter(_serializers, caseId, const FullType(String)),
+      r'on_date': encodeQueryParameter(_serializers, onDate, const FullType(Date)),
+    };"""
+_admin_query_new = """    // Omit optional filters when unset — encodeQueryParameter(null) becomes ''
+    // and breaks FastAPI validation.
+    final _queryParameters = <String, dynamic>{
+      if (page != null) r'page': encodeQueryParameter(_serializers, page, const FullType(int)),
+      if (pageSize != null) r'page_size': encodeQueryParameter(_serializers, pageSize, const FullType(int)),
+      if (student != null && student.isNotEmpty) r'student': encodeQueryParameter(_serializers, student, const FullType(String)),
+      if (caseId != null && caseId.isNotEmpty) r'case_id': encodeQueryParameter(_serializers, caseId, const FullType(String)),
+      if (onDate != null) r'on_date': encodeQueryParameter(_serializers, onDate, const FullType(Date)),
+    };"""
+
 for file in target.rglob("*.dart"):
     text = file.read_text()
     text = text.replace(
@@ -61,6 +78,8 @@ for file in target.rglob("*.dart"):
     )
     if file.name == "cases_api.dart":
         text = text.replace(_cases_query_old, _cases_query_new)
+    if file.name == "admin_api.dart":
+        text = text.replace(_admin_query_old, _admin_query_new)
     file.write_text(text)
 PY
 

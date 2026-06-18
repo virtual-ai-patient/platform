@@ -44,6 +44,7 @@ class AuthService:
 
     async def authenticate(self, username: str, password: str) -> User:
         user = await self._users.get_by_username(username)
+        logger.warning(user)
         if user is None or not verify_password(password, user.hashed_password):
             logger.warning("Failed login attempt for username: %s", username)
             raise AuthenticationError("Invalid username or password")

@@ -59,6 +59,7 @@ class SessionRepository:
             record.last_activity_at = datetime.now(timezone.utc)
             await self._session.commit()
 
+
     async def update_conclusions(
         self, session_id: str, conclusions: dict[str, Any]
     ) -> CaseSession | None:

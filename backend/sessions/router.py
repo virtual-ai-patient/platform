@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ai.provider import AIProvider
+from core.provider import AIProvider
 from cases.repository import CaseRepository
 from cases.router import get_case_repo
 from dependencies import get_ai_provider, get_current_user, get_db
@@ -17,6 +17,9 @@ from sessions.chat_repository import ActionLogRepository
 from sessions.chat_request import ChatRequest
 from sessions.chat_response import ChatResponse
 from sessions.chat_service import chat
+from sessions.diagnostics_request import OrderTestRequest
+from sessions.diagnostics_response import AvailableTestsResponse, TestResultResponse
+from sessions.diagnostics_service import get_available_tests, order_test
 from sessions.repository import SessionRepository
 from sessions.request import ConclusionsRequest, StartSessionRequest
 from sessions.response import (
@@ -25,8 +28,11 @@ from sessions.response import (
     SessionResponse,
     SessionStateResponse,
 )
+from evaluation.router import router as evaluation_router
+from evaluation.repository import EvaluationRepository
 
 router = APIRouter(prefix="/sessions", tags=["sessions"])
+router.include_router(evaluation_router)
 
 
 def get_session_repo(db: AsyncSession = Depends(get_db)) -> SessionRepository:
@@ -35,6 +41,10 @@ def get_session_repo(db: AsyncSession = Depends(get_db)) -> SessionRepository:
 
 def get_log_repo(db: AsyncSession = Depends(get_db)) -> ActionLogRepository:
     return ActionLogRepository(db)
+
+
+def get_eval_repo(db: AsyncSession = Depends(get_db)) -> EvaluationRepository:
+    return EvaluationRepository(db)
 
 
 @router.get("/active", response_model=list[ActiveSessionItem])
@@ -127,6 +137,46 @@ async def abandon_session(
         ) from exc
 
 
+@router.get("/{session_id}/available-tests", response_model=AvailableTestsResponse)
+async def available_tests(
+    session_id: str,
+    current_user: User = Depends(get_current_user),
+    session_repo: SessionRepository = Depends(get_session_repo),
+) -> AvailableTestsResponse:
+    try:
+        return await get_available_tests(session_id, current_user, session_repo)
+    except NotFoundError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)
+        ) from exc
+    except ForbiddenError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail=str(exc)
+        ) from exc
+
+
+@router.post("/{session_id}/order-test", response_model=TestResultResponse)
+async def order_test_endpoint(
+    session_id: str,
+    data: OrderTestRequest,
+    current_user: User = Depends(get_current_user),
+    session_repo: SessionRepository = Depends(get_session_repo),
+    log_repo: ActionLogRepository = Depends(get_log_repo),
+) -> TestResultResponse:
+    try:
+        return await order_test(
+            session_id, data.test_id, current_user, session_repo, log_repo
+        )
+    except NotFoundError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)
+        ) from exc
+    except ForbiddenError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail=str(exc)
+        ) from exc
+
+
 @router.post("/{session_id}/chat", response_model=ChatResponse)
 async def chat_with_patient(
     session_id: str,
@@ -182,10 +232,11 @@ async def finish_session(
     current_user: User = Depends(get_current_user),
     session_repo: SessionRepository = Depends(get_session_repo),
     log_repo: ActionLogRepository = Depends(get_log_repo),
+    eval_repo: EvaluationRepository = Depends(get_eval_repo),
 ) -> ConclusionsResponse:
     try:
         return await service.finish_session(
-            session_id, current_user, session_repo, log_repo
+            session_id, current_user, session_repo, log_repo, eval_repo
         )
     except NotFoundError as exc:
         raise HTTPException(

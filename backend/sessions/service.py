@@ -1,7 +1,11 @@
 import json
+import logging
 
+from config import EVALUATION_AUTO_SCORE
 from cases.repository import CaseRepository
 from cases.service import _to_response
+from evaluation.repository import EvaluationRepository
+from evaluation.service import score_session as run_score_session
 from exceptions.auth_exceptions import (
     BadRequestError,
     ConflictError,
@@ -22,6 +26,7 @@ from sessions.response import (
 )
 
 _HISTORY_PAGE_SIZE = 50
+logger = logging.getLogger(__name__)
 
 
 async def start_session(
@@ -104,6 +109,8 @@ async def get_session_state(
         cursor + _HISTORY_PAGE_SIZE if len(page) == _HISTORY_PAGE_SIZE else None
     )
 
+    ordered_tests = await log_repo.get_ordered_tests(session_id)
+
     return SessionStateResponse(
         session_id=session_id,
         status=session.status,
@@ -115,7 +122,7 @@ async def get_session_state(
             for log in page
         ],
         next_cursor=next_cursor,
-        ordered_tests=[],
+        ordered_tests=ordered_tests,
         conclusions=session.conclusions,
     )
 
@@ -194,6 +201,7 @@ async def finish_session(
     current_user: User,
     session_repo: SessionRepository,
     log_repo: ActionLogRepository,
+    eval_repo: EvaluationRepository | None = None,
 ) -> ConclusionsResponse:
     session = await session_repo.get_by_session_id(session_id)
     if session is None:
@@ -215,6 +223,12 @@ async def finish_session(
         role="learner",
         content=json.dumps({"action": "finish_session"}),
     )
+
+    if EVALUATION_AUTO_SCORE and eval_repo is not None:
+        try:
+            await run_score_session(session_id, session_repo, log_repo, eval_repo)
+        except Exception:
+            logger.exception("Auto-scoring failed for session %s", session_id)
 
     return ConclusionsResponse(
         session_id=session_id,

@@ -69,3 +69,4 @@ yarn-error.log*
 # Cursor / editor-specific indices
 .cursorignore
 .cursorindexingignore
+.claude/

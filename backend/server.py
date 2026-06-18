@@ -19,6 +19,7 @@ from config import (
 )
 from models.database import Base
 from repositories.user_repository import UserRepository
+from admin.router import router as admin_router
 from cases.router import router as cases_router
 from routers import login, refresh, reset_password, signup, verify
 from sessions.router import router as sessions_router
@@ -60,9 +61,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
         else:
             logger.info("Educator user already exists, skipping seed")
 
-        if not await repo.exists_by_username_or_email(
-            LEARNER_USERNAME, LEARNER_EMAIL
-        ):
+        if not await repo.exists_by_username_or_email(LEARNER_USERNAME, LEARNER_EMAIL):
             await repo.create(
                 LEARNER_USERNAME,
                 LEARNER_EMAIL,
@@ -93,3 +92,4 @@ app.include_router(verify.router, prefix="/auth", tags=["auth"])
 app.include_router(reset_password.router, prefix="/auth", tags=["auth"])
 app.include_router(cases_router)
 app.include_router(sessions_router)
+app.include_router(admin_router)

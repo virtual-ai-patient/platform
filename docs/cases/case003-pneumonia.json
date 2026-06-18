@@ -1,0 +1,131 @@
+{
+  "case_id": "CASE-003",
+  "metadata": {
+    "title": "Productive Cough and Fever – Community-Acquired Pneumonia",
+    "language": "en",
+    "difficulty": "easy",
+    "specialty": "Pulmonology / Primary Care",
+    "tags": ["cough", "fever", "pneumonia", "elderly"],
+    "version": "2.0"
+  },
+  "patient": {
+    "age": 72,
+    "sex": "female",
+    "persona": "Retired teacher, worried but cooperative. Speaks clearly, tends to mention small details.",
+    "tone_presets": ["anxious"],
+    "anamnesis_vitae": {
+      "past_medical_history": ["Hypertension", "Osteoarthritis"],
+      "surgeries": ["Left knee replacement 2019"],
+      "medications": ["Lisinopril 10mg daily", "Acetaminophen PRN"],
+      "allergies": ["Sulfa drugs (rash)"],
+      "lifestyle": {
+        "smoking": "Quit 10 years ago, 30 pack-year history",
+        "alcohol": "None",
+        "occupation": "Retired teacher"
+      },
+      "family_history": ["No significant history"]
+    }
+  },
+  "presentation": {
+    "chief_complaint": "I've been coughing for 5 days, and yesterday I started feeling feverish and very weak.",
+    "hpi": {
+      "narrative": "The patient reports a dry cough that started 5 days ago. Yesterday the cough became productive with thick yellowish sputum. She also developed fever (38.5°C measured at home), chills, and significant fatigue. No chest pain, but mild shortness of breath on walking to the bathroom. She received flu shot 3 months ago but never had pneumonia vaccine.",
+      "facts": {
+        "onset": "cough started 5 days ago, fever 1 day ago",
+        "duration": "5 days",
+        "location": "chest (lungs)",
+        "radiation": "none",
+        "character": "dry → productive (yellowish)",
+        "severity": "moderate",
+        "associated_symptoms": ["fever", "chills", "fatigue", "mild dyspnea on exertion"]
+      },
+      "negatives": ["hemoptysis (no)", "chest pain (no)", "recent travel (no)"]
+    },
+    "key_history_points": {
+      "must_ask": ["duration of cough", "sputum color", "fever", "vaccination status", "functional status change"],
+      "nice_to_ask": ["contact with sick persons", "recent hospitalization"],
+      "red_flags": ["hypoxia", "confusion", "tachypnea >30"]
+    },
+    "physical_exam": {
+      "vitals": {
+        "blood_pressure": "130/80 mmHg",
+        "heart_rate": 98,
+        "respiratory_rate": 24,
+        "temperature": 38.5,
+        "spo2": 93
+      },
+      "findings": {
+        "general": "Appears tired, coughing occasionally",
+        "cardiovascular": "Regular rate and rhythm",
+        "respiratory": "Crackles in right lower lobe, no wheezes",
+        "abdominal": "Soft, non-tender",
+        "neurological": "Alert and oriented, no focal signs"
+      }
+    }
+  },
+  "ground_truth": {
+    "preliminary_diagnosis": "Community-acquired pneumonia (typical pathogen)",
+    "final_diagnosis": "Right lower lobe pneumonia",
+    "icd10_code": "J15.9",
+    "differential": [
+      { "name": "Bacterial pneumonia", "likelihood": "high" },
+      { "name": "Viral pneumonia / COVID-19", "likelihood": "medium" },
+      { "name": "Acute bronchitis", "likelihood": "low" }
+    ],
+    "severity_or_stage": "Moderate – outpatient management possible"
+  },
+  "investigations": {
+    "catalog": {
+      "Chest X-ray": { "availability": "immediate" },
+      "CBC": { "availability": "immediate" },
+      "CRP": { "availability": "immediate" },
+      "Sputum culture": { "availability": "delayed" },
+      "Blood culture": { "availability": "delayed" }
+    },
+    "expected": {
+      "must_order": ["Chest X-ray", "CBC", "CRP"],
+      "optional": ["Sputum culture", "Blood culture", "Pneumococcal urinary antigen"],
+      "should_not_order": ["CT chest without specific indication"]
+    },
+    "results": {
+      "Chest X-ray": {
+        "type": "text_report",
+        "value": "Right lower lobe consolidation"
+      },
+      "CBC": {
+        "type": "lab_value",
+        "value": "WBC 16.8, Hgb 13.0, Plt 300",
+        "unit": "x10^3/µL"
+      },
+      "CRP": {
+        "type": "lab_value",
+        "value": 95,
+        "unit": "mg/L",
+        "reference_range": "<5"
+      }
+    }
+  },
+  "management_gold": {
+    "diagnostic_plan": ["Chest X-ray", "CBC", "CRP", "Assess severity (CRB-65 score)"],
+    "treatment_plan": ["Antibiotics: Amoxicillin-clavulanate 875/125 mg BID x 7 days (since beta-lactam allergy only to sulfa)", "Or doxycycline 100 mg BID x 7 days if needed", "Monitor oxygen saturation, consider home O2 if <92%"],
+    "contraindications": ["Do not use sulfa drugs (allergy)", "Avoid fluoroquinolones unless severe penicillin allergy"],
+    "follow_up": ["Re-check in 48-72 hours", "Consider follow-up chest X-ray at 6 weeks (older adults)"]
+  },
+  "learning_objectives": [
+    "Recognize typical pneumonia presentation in elderly",
+    "Order appropriate initial diagnostic tests",
+    "Select antibiotic considering allergies and guidelines"
+  ],
+  "scoring": {
+    "weights": {
+      "diagnosis": 0.3,
+      "diagnostics": 0.2,
+      "treatment": 0.4,
+      "safety": 0.1
+    },
+    "acceptable_answers": {
+      "final_diagnosis": ["Pneumonia", "Community-acquired pneumonia", "CAP"]
+    },
+    "critical_safety_errors": ["Prescribing sulfa drug (allergy)", "Ignoring hypoxia"]
+  }
+}

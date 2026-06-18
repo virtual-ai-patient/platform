@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/common/theme/app_colors.dart';
+import 'package:frontend/domains/evaluation/evaluation_repository.dart';
 import 'package:frontend/domains/sessions/session_repository.dart';
 import 'package:frontend/features/cases/presentation/case_simulation_screen.dart';
 import 'package:frontend/network/openapi.dart' as generated;
@@ -10,10 +11,12 @@ class CaseBriefingScreen extends StatefulWidget {
     super.key,
     required this.caseItem,
     required this.sessionRepository,
+    required this.evaluationRepository,
   });
 
   final generated.CaseResponse caseItem;
   final SessionRepositoryContract sessionRepository;
+  final EvaluationRepositoryContract evaluationRepository;
 
   @override
   State<CaseBriefingScreen> createState() => _CaseBriefingScreenState();
@@ -35,6 +38,7 @@ class _CaseBriefingScreenState extends State<CaseBriefingScreen> {
             caseItem: widget.caseItem,
             sessionId: res.sessionId,
             sessionRepository: widget.sessionRepository,
+            evaluationRepository: widget.evaluationRepository,
           ),
         ),
       );
