@@ -76,5 +76,6 @@ async def order_test(
     already_logged = await log_repo.find_test_order(session_id, test_id)
     if not already_logged:
         await log_repo.create(session_id, "system", f"TEST_ORDERED:{test_id}")
+        await session_repo.touch(session_id)
 
     return response

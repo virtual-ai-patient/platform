@@ -41,5 +41,6 @@ async def chat(
     )
     await log_repo.create(session_id, "user", message)
     assistant_log = await log_repo.create(session_id, "assistant", turn.text)
+    await session_repo.touch(session_id)
 
     return ChatResponse(response=turn.text, logged_at=assistant_log.created_at)

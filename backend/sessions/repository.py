@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from typing import Any
 
 from sqlalchemy import select
@@ -31,6 +32,33 @@ class SessionRepository:
             select(CaseSession).where(CaseSession.session_id == session_id)
         )
         return result.scalar_one_or_none()
+
+    async def list_active_by_user(self, user_id: str) -> list[CaseSession]:
+        result = await self._session.execute(
+            select(CaseSession)
+            .where(CaseSession.user_id == user_id, CaseSession.status == "active")
+            .order_by(CaseSession.last_activity_at.desc())
+        )
+        return list(result.scalars().all())
+
+    async def get_active_by_user_and_case(
+        self, user_id: str, clinical_case_id: str
+    ) -> CaseSession | None:
+        result = await self._session.execute(
+            select(CaseSession).where(
+                CaseSession.user_id == user_id,
+                CaseSession.clinical_case_id == clinical_case_id,
+                CaseSession.status == "active",
+            )
+        )
+        return result.scalar_one_or_none()
+
+    async def touch(self, session_id: str) -> None:
+        record = await self.get_by_session_id(session_id)
+        if record is not None:
+            record.last_activity_at = datetime.now(timezone.utc)
+            await self._session.commit()
+
 
     async def update_conclusions(
         self, session_id: str, conclusions: dict[str, Any]
