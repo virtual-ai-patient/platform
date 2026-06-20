@@ -33,7 +33,8 @@ class FakeSessionRepository implements SessionRepositoryContract {
   }
 
   @override
-  Future<g.ConclusionsResponse> abandonSession({required String sessionId}) async {
+  Future<g.ConclusionsResponse> abandonSession(
+      {required String sessionId}) async {
     onAbandon?.call(sessionId);
     return g.ConclusionsResponse(
       (b) => b
@@ -43,7 +44,8 @@ class FakeSessionRepository implements SessionRepositoryContract {
   }
 
   @override
-  Future<g.SessionStateResponse> fetchFullState({required String sessionId}) async {
+  Future<g.SessionStateResponse> fetchFullState(
+      {required String sessionId}) async {
     throw UnimplementedError();
   }
 
@@ -97,7 +99,8 @@ class FakeSessionRepository implements SessionRepositoryContract {
       throw UnimplementedError();
 
   @override
-  Future<g.ConclusionsResponse> finishSession({required String sessionId}) async =>
+  Future<g.ConclusionsResponse> finishSession(
+          {required String sessionId}) async =>
       throw UnimplementedError();
 }
 
