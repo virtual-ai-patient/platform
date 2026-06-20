@@ -10,9 +10,11 @@ Serializers _$serializers = (Serializers().toBuilder()
       ..add(AcceptableAnswerRequest.serializer)
       ..add(AcceptableAnswerResponse.serializer)
       ..add(ActionLogEntry.serializer)
+      ..add(ActiveSessionItem.serializer)
       ..add(AvailableTestItem.serializer)
       ..add(AvailableTestsResponse.serializer)
       ..add(CaseResponse.serializer)
+      ..add(ChatMessage.serializer)
       ..add(ChatRequest.serializer)
       ..add(ChatResponse.serializer)
       ..add(ConclusionsRequest.serializer)
@@ -43,6 +45,7 @@ Serializers _$serializers = (Serializers().toBuilder()
       ..add(OrderTestRequest.serializer)
       ..add(PasswordResetConfirm.serializer)
       ..add(PasswordResetRequest.serializer)
+      ..add(ProgressSummary.serializer)
       ..add(RefreshRequest.serializer)
       ..add(ScoresResponse.serializer)
       ..add(ScoringRequest.serializer)
@@ -50,6 +53,7 @@ Serializers _$serializers = (Serializers().toBuilder()
       ..add(SessionDetailResponse.serializer)
       ..add(SessionListResponse.serializer)
       ..add(SessionResponse.serializer)
+      ..add(SessionStateResponse.serializer)
       ..add(SessionSummary.serializer)
       ..add(SignupRequest.serializer)
       ..add(StartSessionRequest.serializer)
@@ -225,6 +229,24 @@ Serializers _$serializers = (Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ValidationError)]),
           () => ListBuilder<ValidationError>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType.nullable(JsonObject)
+          ]),
+          () => MapBuilder<String, JsonObject?>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType.nullable(JsonObject)
+          ]),
+          () => MapBuilder<String, JsonObject?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(ChatMessage)]),
+          () => ListBuilder<ChatMessage>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => ListBuilder<String>())
       ..addBuilderFactory(
           const FullType(BuiltMap, const [
             const FullType(String),

@@ -1,0 +1,100 @@
+{
+  "session_id": "sess-resume-001",
+  "status": "active",
+  "created_at": "2026-06-01T10:00:00Z",
+  "last_activity_at": "2026-06-01T10:30:00Z",
+  "case_snapshot": {
+    "id": "uuid-1",
+    "case_id": "CASE-001",
+    "status": "published",
+    "version": 1,
+    "created_by": "educator",
+    "title": "Persistent case",
+    "language": "en",
+    "difficulty": "easy",
+    "specialty": "Cardiology",
+    "tags": ["tag1"],
+    "age": 45,
+    "sex": "male",
+    "persona": "Test persona",
+    "tone_presets": ["calm"],
+    "chief_complaint": "Chest pain",
+    "history_of_present_illness": "Patient reports...",
+    "key_history_points": {
+      "must_ask": ["q1"],
+      "nice_to_ask": ["q2"],
+      "red_flags": ["rf1"]
+    },
+    "final_diagnosis": "STEMI",
+    "differential": ["ACS"],
+    "investigations": {
+      "catalog_hints": ["ECG"],
+      "expected": {
+        "must_order": ["ECG"],
+        "optional": [],
+        "should_not_order": []
+      },
+      "results": [
+        {
+          "test_name": "ECG",
+          "result_type": "text_report",
+          "value": "ST elevation",
+          "unit": null,
+          "reference_range": null
+        }
+      ]
+    },
+    "management": {
+      "diagnostic_plan": ["ECG"],
+      "treatment_plan": ["Aspirin"],
+      "contraindications": [],
+      "follow_up": ["Cardiology"]
+    },
+    "scoring": {
+      "weight_diagnosis": 0.3,
+      "weight_diagnostics": 0.3,
+      "weight_treatment": 0.2,
+      "weight_safety": 0.2,
+      "acceptable_answers": [],
+      "critical_safety_errors": []
+    }
+  },
+  "chat_history": [
+    {
+      "role": "user",
+      "content": "Hello, how are you?",
+      "logged_at": "2026-06-01T10:05:00Z"
+    },
+    {
+      "role": "assistant",
+      "content": "Not great, doctor.",
+      "logged_at": "2026-06-01T10:05:01Z"
+    },
+    {
+      "role": "system",
+      "content": "TEST_ORDERED:ECG",
+      "logged_at": "2026-06-01T10:10:00Z"
+    },
+    {
+      "role": "learner",
+      "content": "{\"action\":\"save_conclusions\"}",
+      "logged_at": "2026-06-01T10:15:00Z"
+    }
+  ],
+  "next_cursor": null,
+  "ordered_tests": ["ECG"],
+  "conclusions": {
+    "final_diagnosis": "STEMI",
+    "differential_diagnoses": [
+      {"rank": 1, "condition": "ACS"}
+    ],
+    "treatment_plan": {
+      "medications": [
+        {"name": "Aspirin", "dose": "325 mg", "route": "PO"}
+      ],
+      "non_pharmacological": [],
+      "referrals": [],
+      "follow_up": []
+    }
+  }
+}

@@ -3,30 +3,32 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:frontend/network/src/model/progress_summary.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
-part 'session_response.g.dart';
+part 'active_session_item.g.dart';
 
-/// SessionResponse
+/// ActiveSessionItem
 ///
 /// Properties:
 /// * [sessionId]
 /// * [caseId]
-/// * [status]
+/// * [caseTitle]
 /// * [createdAt]
 /// * [lastActivityAt]
+/// * [progressSummary]
 @BuiltValue()
-abstract class SessionResponse
-    implements Built<SessionResponse, SessionResponseBuilder> {
+abstract class ActiveSessionItem
+    implements Built<ActiveSessionItem, ActiveSessionItemBuilder> {
   @BuiltValueField(wireName: r'session_id')
   String get sessionId;
 
   @BuiltValueField(wireName: r'case_id')
   String get caseId;
 
-  @BuiltValueField(wireName: r'status')
-  String get status;
+  @BuiltValueField(wireName: r'case_title')
+  String get caseTitle;
 
   @BuiltValueField(wireName: r'created_at')
   DateTime get createdAt;
@@ -34,30 +36,33 @@ abstract class SessionResponse
   @BuiltValueField(wireName: r'last_activity_at')
   DateTime get lastActivityAt;
 
-  SessionResponse._();
+  @BuiltValueField(wireName: r'progress_summary')
+  ProgressSummary get progressSummary;
 
-  factory SessionResponse([void updates(SessionResponseBuilder b)]) =
-      _$SessionResponse;
+  ActiveSessionItem._();
+
+  factory ActiveSessionItem([void updates(ActiveSessionItemBuilder b)]) =
+      _$ActiveSessionItem;
 
   @BuiltValueHook(initializeBuilder: true)
-  static void _defaults(SessionResponseBuilder b) => b;
+  static void _defaults(ActiveSessionItemBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<SessionResponse> get serializer =>
-      _$SessionResponseSerializer();
+  static Serializer<ActiveSessionItem> get serializer =>
+      _$ActiveSessionItemSerializer();
 }
 
-class _$SessionResponseSerializer
-    implements PrimitiveSerializer<SessionResponse> {
+class _$ActiveSessionItemSerializer
+    implements PrimitiveSerializer<ActiveSessionItem> {
   @override
-  final Iterable<Type> types = const [SessionResponse, _$SessionResponse];
+  final Iterable<Type> types = const [ActiveSessionItem, _$ActiveSessionItem];
 
   @override
-  final String wireName = r'SessionResponse';
+  final String wireName = r'ActiveSessionItem';
 
   Iterable<Object?> _serializeProperties(
     Serializers serializers,
-    SessionResponse object, {
+    ActiveSessionItem object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
     yield r'session_id';
@@ -70,9 +75,9 @@ class _$SessionResponseSerializer
       object.caseId,
       specifiedType: const FullType(String),
     );
-    yield r'status';
+    yield r'case_title';
     yield serializers.serialize(
-      object.status,
+      object.caseTitle,
       specifiedType: const FullType(String),
     );
     yield r'created_at';
@@ -85,12 +90,17 @@ class _$SessionResponseSerializer
       object.lastActivityAt,
       specifiedType: const FullType(DateTime),
     );
+    yield r'progress_summary';
+    yield serializers.serialize(
+      object.progressSummary,
+      specifiedType: const FullType(ProgressSummary),
+    );
   }
 
   @override
   Object serialize(
     Serializers serializers,
-    SessionResponse object, {
+    ActiveSessionItem object, {
     FullType specifiedType = FullType.unspecified,
   }) {
     return _serializeProperties(serializers, object,
@@ -103,7 +113,7 @@ class _$SessionResponseSerializer
     Object serialized, {
     FullType specifiedType = FullType.unspecified,
     required List<Object?> serializedList,
-    required SessionResponseBuilder result,
+    required ActiveSessionItemBuilder result,
     required List<Object?> unhandled,
   }) {
     for (var i = 0; i < serializedList.length; i += 2) {
@@ -124,12 +134,12 @@ class _$SessionResponseSerializer
           ) as String;
           result.caseId = valueDes;
           break;
-        case r'status':
+        case r'case_title':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(String),
           ) as String;
-          result.status = valueDes;
+          result.caseTitle = valueDes;
           break;
         case r'created_at':
           final valueDes = serializers.deserialize(
@@ -145,6 +155,13 @@ class _$SessionResponseSerializer
           ) as DateTime;
           result.lastActivityAt = valueDes;
           break;
+        case r'progress_summary':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(ProgressSummary),
+          ) as ProgressSummary;
+          result.progressSummary.replace(valueDes);
+          break;
         default:
           unhandled.add(key);
           unhandled.add(value);
@@ -154,12 +171,12 @@ class _$SessionResponseSerializer
   }
 
   @override
-  SessionResponse deserialize(
+  ActiveSessionItem deserialize(
     Serializers serializers,
     Object serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = SessionResponseBuilder();
+    final result = ActiveSessionItemBuilder();
     final serializedList = (serialized as Iterable<Object?>).toList();
     final unhandled = <Object?>[];
     _deserializeProperties(

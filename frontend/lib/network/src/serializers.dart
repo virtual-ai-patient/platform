@@ -17,9 +17,11 @@ import 'package:frontend/network/src/model/date.dart';
 import 'package:frontend/network/src/model/acceptable_answer_request.dart';
 import 'package:frontend/network/src/model/acceptable_answer_response.dart';
 import 'package:frontend/network/src/model/action_log_entry.dart';
+import 'package:frontend/network/src/model/active_session_item.dart';
 import 'package:frontend/network/src/model/available_test_item.dart';
 import 'package:frontend/network/src/model/available_tests_response.dart';
 import 'package:frontend/network/src/model/case_response.dart';
+import 'package:frontend/network/src/model/chat_message.dart';
 import 'package:frontend/network/src/model/chat_request.dart';
 import 'package:frontend/network/src/model/chat_response.dart';
 import 'package:frontend/network/src/model/conclusions_request.dart';
@@ -45,6 +47,7 @@ import 'package:frontend/network/src/model/message_response.dart';
 import 'package:frontend/network/src/model/order_test_request.dart';
 import 'package:frontend/network/src/model/password_reset_confirm.dart';
 import 'package:frontend/network/src/model/password_reset_request.dart';
+import 'package:frontend/network/src/model/progress_summary.dart';
 import 'package:frontend/network/src/model/refresh_request.dart';
 import 'package:frontend/network/src/model/scores_response.dart';
 import 'package:frontend/network/src/model/scoring_request.dart';
@@ -52,6 +55,7 @@ import 'package:frontend/network/src/model/scoring_response.dart';
 import 'package:frontend/network/src/model/session_detail_response.dart';
 import 'package:frontend/network/src/model/session_list_response.dart';
 import 'package:frontend/network/src/model/session_response.dart';
+import 'package:frontend/network/src/model/session_state_response.dart';
 import 'package:frontend/network/src/model/session_summary.dart';
 import 'package:frontend/network/src/model/signup_request.dart';
 import 'package:frontend/network/src/model/start_session_request.dart';
@@ -68,9 +72,11 @@ part 'serializers.g.dart';
   AcceptableAnswerRequest,
   AcceptableAnswerResponse,
   ActionLogEntry,
+  ActiveSessionItem,
   AvailableTestItem,
   AvailableTestsResponse,
   CaseResponse,
+  ChatMessage,
   ChatRequest,
   ChatResponse,
   ConclusionsRequest,
@@ -96,6 +102,7 @@ part 'serializers.g.dart';
   OrderTestRequest,
   PasswordResetConfirm,
   PasswordResetRequest,
+  ProgressSummary,
   RefreshRequest,
   ScoresResponse,
   ScoringRequest,
@@ -103,6 +110,7 @@ part 'serializers.g.dart';
   SessionDetailResponse,
   SessionListResponse,
   SessionResponse,
+  SessionStateResponse,
   SessionSummary,
   SignupRequest,
   StartSessionRequest,
@@ -114,6 +122,10 @@ part 'serializers.g.dart';
   ValidationError,
 ])
 Serializers serializers = (_$serializers.toBuilder()
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(ActiveSessionItem)]),
+        () => ListBuilder<ActiveSessionItem>(),
+      )
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(CaseResponse)]),
         () => ListBuilder<CaseResponse>(),

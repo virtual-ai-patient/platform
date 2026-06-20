@@ -1,8 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/common/theme/app_colors.dart';
 import 'package:frontend/domains/evaluation/evaluation_repository.dart';
 import 'package:frontend/domains/sessions/session_repository.dart';
+import 'package:frontend/domains/sessions/session_start_conflict.dart';
 import 'package:frontend/features/cases/presentation/case_simulation_screen.dart';
+import 'package:frontend/features/sessions/presentation/duplicate_start_dialog.dart';
 import 'package:frontend/network/openapi.dart' as generated;
 import 'package:google_fonts/google_fonts.dart';
 
@@ -39,6 +42,26 @@ class _CaseBriefingScreenState extends State<CaseBriefingScreen> {
             sessionId: res.sessionId,
             sessionRepository: widget.sessionRepository,
             evaluationRepository: widget.evaluationRepository,
+          ),
+        ),
+      );
+    } on DioException catch (e) {
+      if (!mounted) return;
+      final conflict = parseSessionStartConflict(e);
+      if (conflict != null) {
+        await showDuplicateStartDialog(
+          context: context,
+          caseItem: widget.caseItem,
+          conflict: conflict,
+          sessionRepository: widget.sessionRepository,
+          evaluationRepository: widget.evaluationRepository,
+        );
+        return;
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Could not start session. The server may be unreachable.',
           ),
         ),
       );

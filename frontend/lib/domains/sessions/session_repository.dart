@@ -1,7 +1,22 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:frontend/network/openapi.dart' as generated;
 
 abstract class SessionRepositoryContract {
-  Future<generated.SessionResponse> startSession({required String caseId});
+  Future<generated.SessionResponse> startSession({
+    required String caseId,
+    bool force = false,
+  });
+  Future<List<generated.ActiveSessionItem>> listActive();
+  Future<generated.SessionStateResponse> getState({
+    required String sessionId,
+    int cursor = 0,
+  });
+  Future<generated.SessionStateResponse> fetchFullState({
+    required String sessionId,
+  });
+  Future<generated.ConclusionsResponse> abandonSession({
+    required String sessionId,
+  });
   Future<generated.ChatResponse> sendMessage({
     required String sessionId,
     required String message,
@@ -29,11 +44,62 @@ class SessionRepository implements SessionRepositoryContract {
   final generated.SessionsApi _api;
 
   @override
-  Future<generated.SessionResponse> startSession(
-      {required String caseId}) async {
+  Future<generated.SessionResponse> startSession({
+    required String caseId,
+    bool force = false,
+  }) async {
     final body = generated.StartSessionRequest((b) => b..caseId = caseId);
-    final response =
-        await _api.startSessionSessionsStartPost(startSessionRequest: body);
+    final response = await _api.startSessionSessionsStartPost(
+      startSessionRequest: body,
+      force: force ? true : false,
+    );
+    return response.data!;
+  }
+
+  @override
+  Future<List<generated.ActiveSessionItem>> listActive() async {
+    final response = await _api.listActiveSessionsSessionsActiveGet();
+    return response.data?.toList(growable: false) ?? const [];
+  }
+
+  @override
+  Future<generated.SessionStateResponse> getState({
+    required String sessionId,
+    int cursor = 0,
+  }) async {
+    final response = await _api.getSessionStateSessionsSessionIdStateGet(
+      sessionId: sessionId,
+      cursor: cursor,
+    );
+    return response.data!;
+  }
+
+  @override
+  Future<generated.SessionStateResponse> fetchFullState({
+    required String sessionId,
+  }) async {
+    var cursor = 0;
+    final chatHistory = <generated.ChatMessage>[];
+    late generated.SessionStateResponse lastPage;
+    while (true) {
+      final page = await getState(sessionId: sessionId, cursor: cursor);
+      lastPage = page;
+      chatHistory.addAll(page.chatHistory);
+      final next = page.nextCursor;
+      if (next == null) break;
+      cursor = next;
+    }
+    return lastPage.rebuild((b) => b
+      ..chatHistory.replace(BuiltList<generated.ChatMessage>(chatHistory))
+      ..nextCursor = null);
+  }
+
+  @override
+  Future<generated.ConclusionsResponse> abandonSession({
+    required String sessionId,
+  }) async {
+    final response = await _api.abandonSessionSessionsSessionIdAbandonPost(
+        sessionId: sessionId);
     return response.data!;
   }
 
