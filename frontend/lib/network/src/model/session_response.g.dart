@@ -15,6 +15,8 @@ class _$SessionResponse extends SessionResponse {
   final String status;
   @override
   final DateTime createdAt;
+  @override
+  final DateTime lastActivityAt;
 
   factory _$SessionResponse([void Function(SessionResponseBuilder)? updates]) =>
       (SessionResponseBuilder()..update(updates))._build();
@@ -23,7 +25,8 @@ class _$SessionResponse extends SessionResponse {
       {required this.sessionId,
       required this.caseId,
       required this.status,
-      required this.createdAt})
+      required this.createdAt,
+      required this.lastActivityAt})
       : super._();
   @override
   SessionResponse rebuild(void Function(SessionResponseBuilder) updates) =>
@@ -39,7 +42,8 @@ class _$SessionResponse extends SessionResponse {
         sessionId == other.sessionId &&
         caseId == other.caseId &&
         status == other.status &&
-        createdAt == other.createdAt;
+        createdAt == other.createdAt &&
+        lastActivityAt == other.lastActivityAt;
   }
 
   @override
@@ -49,6 +53,7 @@ class _$SessionResponse extends SessionResponse {
     _$hash = $jc(_$hash, caseId.hashCode);
     _$hash = $jc(_$hash, status.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jc(_$hash, lastActivityAt.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -59,7 +64,8 @@ class _$SessionResponse extends SessionResponse {
           ..add('sessionId', sessionId)
           ..add('caseId', caseId)
           ..add('status', status)
-          ..add('createdAt', createdAt))
+          ..add('createdAt', createdAt)
+          ..add('lastActivityAt', lastActivityAt))
         .toString();
   }
 }
@@ -84,6 +90,11 @@ class SessionResponseBuilder
   DateTime? get createdAt => _$this._createdAt;
   set createdAt(DateTime? createdAt) => _$this._createdAt = createdAt;
 
+  DateTime? _lastActivityAt;
+  DateTime? get lastActivityAt => _$this._lastActivityAt;
+  set lastActivityAt(DateTime? lastActivityAt) =>
+      _$this._lastActivityAt = lastActivityAt;
+
   SessionResponseBuilder() {
     SessionResponse._defaults(this);
   }
@@ -95,6 +106,7 @@ class SessionResponseBuilder
       _caseId = $v.caseId;
       _status = $v.status;
       _createdAt = $v.createdAt;
+      _lastActivityAt = $v.lastActivityAt;
       _$v = null;
     }
     return this;
@@ -124,6 +136,8 @@ class SessionResponseBuilder
               status, r'SessionResponse', 'status'),
           createdAt: BuiltValueNullFieldError.checkNotNull(
               createdAt, r'SessionResponse', 'createdAt'),
+          lastActivityAt: BuiltValueNullFieldError.checkNotNull(
+              lastActivityAt, r'SessionResponse', 'lastActivityAt'),
         );
     replace(_$result);
     return _$result;

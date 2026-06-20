@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/json_object.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_chat_core/flutter_chat_core.dart';
@@ -8,6 +10,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:frontend/common/theme/app_colors.dart';
 import 'package:frontend/common/widgets/app_logo_mark.dart';
 import 'package:frontend/domains/evaluation/evaluation_repository.dart';
+import 'package:frontend/domains/sessions/session_hydration.dart';
 import 'package:frontend/domains/sessions/session_repository.dart';
 import 'package:frontend/features/cases/presentation/simulation_conclusions_screen.dart';
 import 'package:frontend/network/openapi.dart' as generated;
@@ -21,12 +24,14 @@ class CaseSimulationScreen extends StatefulWidget {
     required this.sessionId,
     required this.sessionRepository,
     required this.evaluationRepository,
+    this.initialHydration,
   });
 
   final generated.CaseResponse caseItem;
   final String sessionId;
   final SessionRepositoryContract sessionRepository;
   final EvaluationRepositoryContract evaluationRepository;
+  final SimulationHydration? initialHydration;
 
   @override
   State<CaseSimulationScreen> createState() => _CaseSimulationScreenState();
@@ -53,14 +58,35 @@ class _CaseSimulationScreenState extends State<CaseSimulationScreen>
   final List<generated.TestResultResponse> _completedResults =
       <generated.TestResultResponse>[];
   String _testsQuery = '';
+  BuiltMap<String, JsonObject?>? _savedConclusions;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
     _chatController = InMemoryChatController();
-    _restorePersistedMessages();
+    final hydration = widget.initialHydration;
+    if (hydration != null) {
+      _savedConclusions = hydration.conclusions;
+      _completedResults.addAll(hydration.completedTests);
+      if (hydration.completedTests.isNotEmpty) {
+        _lastTestResult = hydration.completedTests.first;
+      }
+      _applyHydratedChat(hydration);
+    } else {
+      _restorePersistedMessages();
+    }
     _loadAvailableTests();
+  }
+
+  Future<void> _applyHydratedChat(SimulationHydration hydration) async {
+    if (hydration.chatMessages.isNotEmpty) {
+      await _chatController.setMessages(hydration.chatMessages);
+    }
+    await persistChatMessagesToPrefs(
+      sessionId: widget.sessionId,
+      messages: _chatController.messages,
+    );
   }
 
   @override
@@ -349,6 +375,7 @@ class _CaseSimulationScreenState extends State<CaseSimulationScreen>
           sessionId: widget.sessionId,
           sessionRepository: widget.sessionRepository,
           evaluationRepository: widget.evaluationRepository,
+          initialConclusions: _savedConclusions,
         ),
       ),
     );

@@ -172,13 +172,41 @@ class _FakeEvaluationRepository implements EvaluationRepositoryContract {
 
 class _FakeSessionRepository implements SessionRepositoryContract {
   @override
-  Future<generated.SessionResponse> startSession(
-      {required String caseId}) async {
+  Future<generated.SessionResponse> startSession({
+    required String caseId,
+    bool force = false,
+  }) async {
     return generated.SessionResponse((b) => b
       ..sessionId = 'test-session-1'
       ..caseId = caseId
       ..status = 'active'
-      ..createdAt = DateTime.utc(2026));
+      ..createdAt = DateTime.utc(2026)
+      ..lastActivityAt = DateTime.utc(2026));
+  }
+
+  @override
+  Future<List<generated.ActiveSessionItem>> listActive() async => [];
+
+  @override
+  Future<generated.SessionStateResponse> getState({
+    required String sessionId,
+    int cursor = 0,
+  }) async {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<generated.SessionStateResponse> fetchFullState({
+    required String sessionId,
+  }) async {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<generated.ConclusionsResponse> abandonSession({
+    required String sessionId,
+  }) async {
+    throw UnimplementedError();
   }
 
   @override

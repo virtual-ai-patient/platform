@@ -12,6 +12,7 @@ import 'package:frontend/features/admin/presentation/admin_sessions_dashboard_sc
 import 'package:frontend/features/cases/presentation/case_briefing_screen.dart';
 import 'package:frontend/features/cases/presentation/educator_case_manage_panel.dart';
 import 'package:frontend/features/evaluation/presentation/debrief_screen.dart';
+import 'package:frontend/features/sessions/presentation/unfinished_sessions_sheet.dart';
 import 'package:frontend/network/openapi.dart' as generated;
 import 'package:google_fonts/google_fonts.dart';
 
@@ -56,6 +57,7 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
   bool _manageEditMode = false;
   String? _managingCaseId;
   bool _creatingCase = false;
+  bool _unfinishedSheetShown = false;
 
   bool get _isCaseManager =>
       widget.session.user.role == 'educator' ||
@@ -74,6 +76,18 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
         setState(() => _completedSessionsByCaseId = m);
       }
     });
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _maybeShowUnfinishedSessions());
+  }
+
+  Future<void> _maybeShowUnfinishedSessions() async {
+    if (_unfinishedSheetShown || !mounted) return;
+    _unfinishedSheetShown = true;
+    await showUnfinishedSessionsSheet(
+      context: context,
+      sessionRepository: widget.sessionRepository,
+      evaluationRepository: widget.evaluationRepository,
+    );
   }
 
   @override

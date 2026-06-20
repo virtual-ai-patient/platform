@@ -6,83 +6,61 @@
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
-part 'session_response.g.dart';
+part 'chat_message.g.dart';
 
-/// SessionResponse
+/// ChatMessage
 ///
 /// Properties:
-/// * [sessionId]
-/// * [caseId]
-/// * [status]
-/// * [createdAt]
-/// * [lastActivityAt]
+/// * [role]
+/// * [content]
+/// * [loggedAt]
 @BuiltValue()
-abstract class SessionResponse
-    implements Built<SessionResponse, SessionResponseBuilder> {
-  @BuiltValueField(wireName: r'session_id')
-  String get sessionId;
+abstract class ChatMessage implements Built<ChatMessage, ChatMessageBuilder> {
+  @BuiltValueField(wireName: r'role')
+  String get role;
 
-  @BuiltValueField(wireName: r'case_id')
-  String get caseId;
+  @BuiltValueField(wireName: r'content')
+  String get content;
 
-  @BuiltValueField(wireName: r'status')
-  String get status;
+  @BuiltValueField(wireName: r'logged_at')
+  DateTime get loggedAt;
 
-  @BuiltValueField(wireName: r'created_at')
-  DateTime get createdAt;
+  ChatMessage._();
 
-  @BuiltValueField(wireName: r'last_activity_at')
-  DateTime get lastActivityAt;
-
-  SessionResponse._();
-
-  factory SessionResponse([void updates(SessionResponseBuilder b)]) =
-      _$SessionResponse;
+  factory ChatMessage([void updates(ChatMessageBuilder b)]) = _$ChatMessage;
 
   @BuiltValueHook(initializeBuilder: true)
-  static void _defaults(SessionResponseBuilder b) => b;
+  static void _defaults(ChatMessageBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<SessionResponse> get serializer =>
-      _$SessionResponseSerializer();
+  static Serializer<ChatMessage> get serializer => _$ChatMessageSerializer();
 }
 
-class _$SessionResponseSerializer
-    implements PrimitiveSerializer<SessionResponse> {
+class _$ChatMessageSerializer implements PrimitiveSerializer<ChatMessage> {
   @override
-  final Iterable<Type> types = const [SessionResponse, _$SessionResponse];
+  final Iterable<Type> types = const [ChatMessage, _$ChatMessage];
 
   @override
-  final String wireName = r'SessionResponse';
+  final String wireName = r'ChatMessage';
 
   Iterable<Object?> _serializeProperties(
     Serializers serializers,
-    SessionResponse object, {
+    ChatMessage object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
-    yield r'session_id';
+    yield r'role';
     yield serializers.serialize(
-      object.sessionId,
+      object.role,
       specifiedType: const FullType(String),
     );
-    yield r'case_id';
+    yield r'content';
     yield serializers.serialize(
-      object.caseId,
+      object.content,
       specifiedType: const FullType(String),
     );
-    yield r'status';
+    yield r'logged_at';
     yield serializers.serialize(
-      object.status,
-      specifiedType: const FullType(String),
-    );
-    yield r'created_at';
-    yield serializers.serialize(
-      object.createdAt,
-      specifiedType: const FullType(DateTime),
-    );
-    yield r'last_activity_at';
-    yield serializers.serialize(
-      object.lastActivityAt,
+      object.loggedAt,
       specifiedType: const FullType(DateTime),
     );
   }
@@ -90,7 +68,7 @@ class _$SessionResponseSerializer
   @override
   Object serialize(
     Serializers serializers,
-    SessionResponse object, {
+    ChatMessage object, {
     FullType specifiedType = FullType.unspecified,
   }) {
     return _serializeProperties(serializers, object,
@@ -103,47 +81,33 @@ class _$SessionResponseSerializer
     Object serialized, {
     FullType specifiedType = FullType.unspecified,
     required List<Object?> serializedList,
-    required SessionResponseBuilder result,
+    required ChatMessageBuilder result,
     required List<Object?> unhandled,
   }) {
     for (var i = 0; i < serializedList.length; i += 2) {
       final key = serializedList[i] as String;
       final value = serializedList[i + 1];
       switch (key) {
-        case r'session_id':
+        case r'role':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(String),
           ) as String;
-          result.sessionId = valueDes;
+          result.role = valueDes;
           break;
-        case r'case_id':
+        case r'content':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(String),
           ) as String;
-          result.caseId = valueDes;
+          result.content = valueDes;
           break;
-        case r'status':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.status = valueDes;
-          break;
-        case r'created_at':
+        case r'logged_at':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(DateTime),
           ) as DateTime;
-          result.createdAt = valueDes;
-          break;
-        case r'last_activity_at':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(DateTime),
-          ) as DateTime;
-          result.lastActivityAt = valueDes;
+          result.loggedAt = valueDes;
           break;
         default:
           unhandled.add(key);
@@ -154,12 +118,12 @@ class _$SessionResponseSerializer
   }
 
   @override
-  SessionResponse deserialize(
+  ChatMessage deserialize(
     Serializers serializers,
     Object serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = SessionResponseBuilder();
+    final result = ChatMessageBuilder();
     final serializedList = (serialized as Iterable<Object?>).toList();
     final unhandled = <Object?>[];
     _deserializeProperties(

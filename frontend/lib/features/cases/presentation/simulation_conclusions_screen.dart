@@ -1,4 +1,5 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:built_value/json_object.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/common/session_completion_prefs.dart';
@@ -17,12 +18,14 @@ class SimulationConclusionsScreen extends StatefulWidget {
     required this.sessionId,
     required this.sessionRepository,
     required this.evaluationRepository,
+    this.initialConclusions,
   });
 
   final generated.CaseResponse caseItem;
   final String sessionId;
   final SessionRepositoryContract sessionRepository;
   final EvaluationRepositoryContract evaluationRepository;
+  final BuiltMap<String, JsonObject?>? initialConclusions;
 
   @override
   State<SimulationConclusionsScreen> createState() =>
@@ -65,6 +68,78 @@ class _SimulationConclusionsScreenState
   final List<TextEditingController> _nonPharmCtrls = [TextEditingController()];
   final List<TextEditingController> _referralCtrls = [TextEditingController()];
   final List<TextEditingController> _followUpCtrls = [TextEditingController()];
+
+  @override
+  void initState() {
+    super.initState();
+    _applyInitialConclusions();
+  }
+
+  void _applyInitialConclusions() {
+    final raw = widget.initialConclusions;
+    if (raw == null || raw.isEmpty) return;
+    final map = <String, dynamic>{};
+    for (final e in raw.entries) {
+      map[e.key] = e.value?.value;
+    }
+
+    final differential = map['differential_diagnoses'];
+    if (differential is List && differential.isNotEmpty) {
+      for (final d in _diffRows) {
+        d.dispose();
+      }
+      _diffRows.clear();
+      for (final item in differential) {
+        if (item is! Map) continue;
+        final row = _DiffRow();
+        row.controller.text = (item['condition'] ?? '').toString();
+        _diffRows.add(row);
+      }
+      if (_diffRows.isEmpty) _diffRows.add(_DiffRow());
+    }
+
+    final finalDx = (map['final_diagnosis'] ?? '').toString();
+    if (finalDx.isNotEmpty) {
+      _finalDiagnosisCtrl.text = finalDx;
+    }
+
+    final treatment = map['treatment_plan'];
+    if (treatment is Map) {
+      final meds = treatment['medications'];
+      if (meds is List && meds.isNotEmpty) {
+        for (final m in _medRows) {
+          m.dispose();
+        }
+        _medRows.clear();
+        for (final med in meds) {
+          if (med is! Map) continue;
+          final row = _MedRow();
+          row.name.text = (med['name'] ?? '').toString();
+          row.dose.text = (med['dose'] ?? '').toString();
+          row.route.text = (med['route'] ?? '').toString();
+          _medRows.add(row);
+        }
+        if (_medRows.isEmpty) _medRows.add(_MedRow());
+      }
+      _replaceStringCtrls(_nonPharmCtrls, treatment['non_pharmacological']);
+      _replaceStringCtrls(_referralCtrls, treatment['referrals']);
+      _replaceStringCtrls(_followUpCtrls, treatment['follow_up']);
+    }
+  }
+
+  void _replaceStringCtrls(List<TextEditingController> ctrls, dynamic raw) {
+    if (raw is! List || raw.isEmpty) return;
+    for (final c in ctrls) {
+      c.dispose();
+    }
+    ctrls.clear();
+    for (final v in raw) {
+      final t = v.toString();
+      if (t.isEmpty) continue;
+      ctrls.add(TextEditingController(text: t));
+    }
+    if (ctrls.isEmpty) ctrls.add(TextEditingController());
+  }
 
   @override
   void dispose() {
