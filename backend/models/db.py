@@ -370,3 +370,47 @@ class EvaluationFinding(Base):
     evaluation: Mapped[Evaluation] = relationship(
         "Evaluation", back_populates="findings"
     )
+
+
+# ---------------------------------------------------------------------------
+# Communication Evaluation
+# ---------------------------------------------------------------------------
+
+
+class CommunicationEvaluation(Base):
+    __tablename__ = "communication_evaluations"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=_uuid)
+    session_id: Mapped[str] = mapped_column(
+        String,
+        ForeignKey("case_sessions.session_id"),
+        unique=True,
+        nullable=False,
+    )
+    model: Mapped[str] = mapped_column(String, nullable=False)
+    prompt_version: Mapped[str] = mapped_column(String, nullable=False)
+    total_score: Mapped[float] = mapped_column(Float, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
+    criteria: Mapped[list["CommunicationCriterion"]] = relationship(
+        "CommunicationCriterion",
+        back_populates="evaluation",
+        cascade="all, delete-orphan",
+    )
+
+
+class CommunicationCriterion(Base):
+    __tablename__ = "communication_criteria"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=_uuid)
+    evaluation_id: Mapped[str] = mapped_column(
+        String, ForeignKey("communication_evaluations.id"), nullable=False
+    )
+    criterion: Mapped[str] = mapped_column(String, nullable=False)
+    score: Mapped[int] = mapped_column(Integer, nullable=False)
+    rationale: Mapped[str] = mapped_column(Text, nullable=False)
+    quote: Mapped[str] = mapped_column(Text, nullable=False)
+    evaluation: Mapped[CommunicationEvaluation] = relationship(
+        "CommunicationEvaluation", back_populates="criteria"
+    )

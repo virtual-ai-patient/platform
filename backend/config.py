@@ -39,6 +39,13 @@ EVALUATION_AUTO_SCORE: bool = (
     os.environ.get("EVALUATION_AUTO_SCORE", "true").lower() == "true"
 )
 
+COMMUNICATION_EVAL_PROMPT_VERSION: str = os.environ.get(
+    "COMMUNICATION_EVAL_PROMPT_VERSION", "v1"
+)
+COMMUNICATION_EVAL_MODEL: str = (
+    os.environ.get("COMMUNICATION_EVAL_MODEL") or OPENAI_MODEL
+)
+
 ADMIN_USERNAME: str = os.environ.get("ADMIN_USERNAME", "admin")
 ADMIN_EMAIL: str = os.environ.get("ADMIN_EMAIL", "admin@example.com")
 ADMIN_PASSWORD: str = os.environ.get("ADMIN_PASSWORD", "changeme")
