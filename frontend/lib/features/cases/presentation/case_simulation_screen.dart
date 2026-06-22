@@ -9,6 +9,7 @@ import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:frontend/common/theme/app_colors.dart';
 import 'package:frontend/common/widgets/app_logo_mark.dart';
+import 'package:frontend/domains/evaluation/communication_repository.dart';
 import 'package:frontend/domains/evaluation/evaluation_repository.dart';
 import 'package:frontend/domains/sessions/session_hydration.dart';
 import 'package:frontend/domains/sessions/session_repository.dart';
@@ -24,6 +25,7 @@ class CaseSimulationScreen extends StatefulWidget {
     required this.sessionId,
     required this.sessionRepository,
     required this.evaluationRepository,
+    required this.communicationRepository,
     this.initialHydration,
   });
 
@@ -31,6 +33,7 @@ class CaseSimulationScreen extends StatefulWidget {
   final String sessionId;
   final SessionRepositoryContract sessionRepository;
   final EvaluationRepositoryContract evaluationRepository;
+  final CommunicationRepositoryContract communicationRepository;
   final SimulationHydration? initialHydration;
 
   @override
@@ -375,6 +378,7 @@ class _CaseSimulationScreenState extends State<CaseSimulationScreen>
           sessionId: widget.sessionId,
           sessionRepository: widget.sessionRepository,
           evaluationRepository: widget.evaluationRepository,
+          communicationRepository: widget.communicationRepository,
           initialConclusions: _savedConclusions,
         ),
       ),

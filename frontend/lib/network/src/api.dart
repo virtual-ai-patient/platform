@@ -12,6 +12,7 @@ import 'package:frontend/network/src/auth/oauth.dart';
 import 'package:frontend/network/src/api/admin_api.dart';
 import 'package:frontend/network/src/api/auth_api.dart';
 import 'package:frontend/network/src/api/cases_api.dart';
+import 'package:frontend/network/src/api/communication_evaluation_api.dart';
 import 'package:frontend/network/src/api/evaluation_api.dart';
 import 'package:frontend/network/src/api/sessions_api.dart';
 
@@ -151,6 +152,12 @@ class Openapi {
   /// by doing that all interceptors will not be executed
   CasesApi getCasesApi() {
     return CasesApi(dio, serializers);
+  }
+
+  /// Get CommunicationEvaluationApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  CommunicationEvaluationApi getCommunicationEvaluationApi() {
+    return CommunicationEvaluationApi(dio, serializers);
   }
 
   /// Get EvaluationApi instance, base route and serializer can be overridden by a given but be careful,

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/common/theme/app_colors.dart';
+import 'package:frontend/domains/evaluation/communication_repository.dart';
 import 'package:frontend/domains/evaluation/evaluation_repository.dart';
 import 'package:frontend/domains/sessions/session_repository.dart';
 import 'package:frontend/features/sessions/presentation/resume_session_flow.dart';
@@ -14,6 +15,7 @@ Future<void> showUnfinishedSessionsSheet({
   required BuildContext context,
   required SessionRepositoryContract sessionRepository,
   required EvaluationRepositoryContract evaluationRepository,
+  required CommunicationRepositoryContract communicationRepository,
 }) async {
   final maxHeight = MediaQuery.sizeOf(context).height * 0.62;
   await showModalBottomSheet<void>(
@@ -25,6 +27,7 @@ Future<void> showUnfinishedSessionsSheet({
     builder: (ctx) => _UnfinishedSessionsBody(
       sessionRepository: sessionRepository,
       evaluationRepository: evaluationRepository,
+      communicationRepository: communicationRepository,
     ),
   );
 }
@@ -33,10 +36,12 @@ class _UnfinishedSessionsBody extends StatefulWidget {
   const _UnfinishedSessionsBody({
     required this.sessionRepository,
     required this.evaluationRepository,
+    required this.communicationRepository,
   });
 
   final SessionRepositoryContract sessionRepository;
   final EvaluationRepositoryContract evaluationRepository;
+  final CommunicationRepositoryContract communicationRepository;
 
   @override
   State<_UnfinishedSessionsBody> createState() =>
@@ -104,6 +109,7 @@ class _UnfinishedSessionsBodyState extends State<_UnfinishedSessionsBody> {
       sessionId: item.sessionId,
       sessionRepository: widget.sessionRepository,
       evaluationRepository: widget.evaluationRepository,
+      communicationRepository: widget.communicationRepository,
     );
     if (mounted) {
       setState(() => _busySessionIds.remove(item.sessionId));

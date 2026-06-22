@@ -7,6 +7,7 @@ import 'package:frontend/domains/sessions/session_start_conflict.dart';
 import 'package:frontend/network/openapi.dart' as g;
 
 import '../../support/fake_case_response.dart';
+import '../../support/fake_communication_repository.dart';
 import '../../support/fake_session_repository.dart';
 
 void main() {
@@ -23,6 +24,7 @@ void main() {
                     context: context,
                     sessionRepository: FakeSessionRepository(),
                     evaluationRepository: FakeEvaluationRepository(),
+                    communicationRepository: FakeCommunicationRepository(),
                   ),
                   child: const Text('Open'),
                 ),
@@ -53,6 +55,7 @@ void main() {
                       activeItems: [fakeActiveSessionItem(sessionId: 's-1')],
                     ),
                     evaluationRepository: FakeEvaluationRepository(),
+                    communicationRepository: FakeCommunicationRepository(),
                   ),
                   child: const Text('Open'),
                 ),
@@ -87,6 +90,7 @@ void main() {
                       activeItems: [fakeActiveSessionItem(sessionId: 's-1')],
                     ),
                     evaluationRepository: FakeEvaluationRepository(),
+                    communicationRepository: FakeCommunicationRepository(),
                   ),
                   child: const Text('Open'),
                 ),
@@ -122,6 +126,7 @@ void main() {
                       onAbandon: (id) => abandoned = id,
                     ),
                     evaluationRepository: FakeEvaluationRepository(),
+                    communicationRepository: FakeCommunicationRepository(),
                   ),
                   child: const Text('Open'),
                 ),
@@ -164,6 +169,7 @@ void main() {
                       ),
                     ),
                     evaluationRepository: FakeEvaluationRepository(),
+                    communicationRepository: FakeCommunicationRepository(),
                   ),
                   child: const Text('Open'),
                 ),
@@ -195,6 +201,7 @@ void main() {
                     ),
                     sessionRepository: FakeSessionRepository(),
                     evaluationRepository: FakeEvaluationRepository(),
+                    communicationRepository: FakeCommunicationRepository(),
                   ),
                   child: const Text('Open'),
                 ),
@@ -240,6 +247,7 @@ void main() {
                       },
                     ),
                     evaluationRepository: FakeEvaluationRepository(),
+                    communicationRepository: FakeCommunicationRepository(),
                   ),
                   child: const Text('Open'),
                 ),

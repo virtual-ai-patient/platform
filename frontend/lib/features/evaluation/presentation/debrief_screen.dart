@@ -3,7 +3,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/common/theme/app_colors.dart';
 import 'package:frontend/common/widgets/structured_conclusions_summary.dart';
+import 'package:frontend/domains/evaluation/communication_repository.dart';
 import 'package:frontend/domains/evaluation/evaluation_repository.dart';
+import 'package:frontend/features/evaluation/presentation/communication_panel.dart';
 import 'package:frontend/network/openapi.dart' as generated;
 import 'package:google_fonts/google_fonts.dart';
 
@@ -14,11 +16,13 @@ class DebriefScreen extends StatefulWidget {
     required this.caseItem,
     required this.sessionId,
     required this.evaluationRepository,
+    required this.communicationRepository,
   });
 
   final generated.CaseResponse caseItem;
   final String sessionId;
   final EvaluationRepositoryContract evaluationRepository;
+  final CommunicationRepositoryContract communicationRepository;
 
   @override
   State<DebriefScreen> createState() => _DebriefScreenState();
@@ -26,7 +30,9 @@ class DebriefScreen extends StatefulWidget {
 
 enum _LoadState { loading, success, forbidden, notFound, conflict, unknown }
 
-class _DebriefScreenState extends State<DebriefScreen> {
+class _DebriefScreenState extends State<DebriefScreen>
+    with SingleTickerProviderStateMixin {
+  late final TabController _tabController;
   _LoadState _state = _LoadState.loading;
   generated.DebriefResponse? _debrief;
   String? _errorDetail;
@@ -34,7 +40,14 @@ class _DebriefScreenState extends State<DebriefScreen> {
   @override
   void initState() {
     super.initState();
+    _tabController = TabController(length: 2, vsync: this);
     _load();
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   Future<void> _load() async {
@@ -111,13 +124,36 @@ class _DebriefScreenState extends State<DebriefScreen> {
           'Evaluation',
           style: GoogleFonts.inter(fontWeight: FontWeight.w700, fontSize: 18),
         ),
+        bottom: _state == _LoadState.success
+            ? TabBar(
+                controller: _tabController,
+                labelStyle: GoogleFonts.inter(fontWeight: FontWeight.w600),
+                unselectedLabelStyle: GoogleFonts.inter(),
+                indicatorColor: AppColors.primaryBlue,
+                labelColor: AppColors.primaryBlue,
+                unselectedLabelColor: AppColors.secondaryText,
+                tabs: const [
+                  Tab(text: 'Clinical'),
+                  Tab(text: 'Communication'),
+                ],
+              )
+            : null,
       ),
       body: switch (_state) {
         _LoadState.loading => _LoadingBody(),
-        _LoadState.success => _SuccessBody(
-            caseItem: widget.caseItem,
-            sessionId: widget.sessionId,
-            debrief: _debrief!,
+        _LoadState.success => TabBarView(
+            controller: _tabController,
+            children: [
+              _SuccessBody(
+                caseItem: widget.caseItem,
+                sessionId: widget.sessionId,
+                debrief: _debrief!,
+              ),
+              CommunicationPanel(
+                sessionId: widget.sessionId,
+                communicationRepository: widget.communicationRepository,
+              ),
+            ],
           ),
         _LoadState.forbidden => _ErrorPanel(
             title: 'Access denied',

@@ -10,6 +10,7 @@ import 'package:frontend/features/evaluation/presentation/debrief_screen.dart';
 import 'package:frontend/network/openapi.dart' as g;
 
 import '../../support/fake_case_response.dart';
+import '../../support/fake_communication_repository.dart';
 
 g.DebriefResponse _minimalDebrief({
   BuiltList<g.EvaluationFindingResponse>? findings,
@@ -70,6 +71,7 @@ void main() {
           caseItem: fakeCaseResponse(),
           sessionId: 'ses-1',
           evaluationRepository: repo,
+          communicationRepository: FakeCommunicationRepository(),
         ),
       ),
     );
@@ -79,6 +81,8 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.textContaining('Total: 88'), findsOneWidget);
     expect(find.text('Scores'), findsOneWidget);
+    expect(find.text('Clinical'), findsOneWidget);
+    expect(find.text('Communication'), findsOneWidget);
   });
 
   testWidgets('success with empty findings', (WidgetTester tester) async {
@@ -88,6 +92,7 @@ void main() {
           caseItem: fakeCaseResponse(),
           sessionId: 'ses-1',
           evaluationRepository: _FakeEval(debrief: _minimalDebrief()),
+          communicationRepository: FakeCommunicationRepository(),
         ),
       ),
     );
@@ -115,6 +120,7 @@ void main() {
               type: DioExceptionType.badResponse,
             ),
           ),
+          communicationRepository: FakeCommunicationRepository(),
         ),
       ),
     );
@@ -139,6 +145,7 @@ void main() {
               type: DioExceptionType.badResponse,
             ),
           ),
+          communicationRepository: FakeCommunicationRepository(),
         ),
       ),
     );
@@ -163,6 +170,7 @@ void main() {
               type: DioExceptionType.badResponse,
             ),
           ),
+          communicationRepository: FakeCommunicationRepository(),
         ),
       ),
     );
@@ -187,6 +195,7 @@ void main() {
               type: DioExceptionType.badResponse,
             ),
           ),
+          communicationRepository: FakeCommunicationRepository(),
         ),
       ),
     );

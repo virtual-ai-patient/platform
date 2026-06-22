@@ -17,6 +17,8 @@ Serializers _$serializers = (Serializers().toBuilder()
       ..add(ChatMessage.serializer)
       ..add(ChatRequest.serializer)
       ..add(ChatResponse.serializer)
+      ..add(CommunicationCriterionResponse.serializer)
+      ..add(CommunicationEvaluationResponse.serializer)
       ..add(ConclusionsRequest.serializer)
       ..add(ConclusionsResponse.serializer)
       ..add(CreateCaseRequest.serializer)
@@ -87,6 +89,10 @@ Serializers _$serializers = (Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(AvailableTestItem)]),
           () => ListBuilder<AvailableTestItem>())
+      ..addBuilderFactory(
+          const FullType(BuiltList,
+              const [const FullType(CommunicationCriterionResponse)]),
+          () => ListBuilder<CommunicationCriterionResponse>())
       ..addBuilderFactory(
           const FullType(
               BuiltList, const [const FullType(DifferentialDiagnosisItem)]),

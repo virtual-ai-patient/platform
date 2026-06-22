@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/domains/admin/admin_repository.dart';
 import 'package:frontend/domains/auth/auth_repository.dart';
 import 'package:frontend/domains/cases/case_repository.dart';
+import 'package:frontend/domains/evaluation/communication_repository.dart';
 import 'package:frontend/domains/evaluation/evaluation_repository.dart';
 import 'package:frontend/domains/sessions/session_repository.dart';
 import 'package:frontend/features/auth/presentation/login_screen.dart';
@@ -17,6 +18,7 @@ class AppSessionRouter {
     required CaseRepositoryContract caseRepository,
     required SessionRepositoryContract sessionRepository,
     required EvaluationRepositoryContract evaluationRepository,
+    required CommunicationRepositoryContract communicationRepository,
     AdminRepositoryContract? adminRepository,
   }) {
     return LoginScreen(
@@ -24,6 +26,7 @@ class AppSessionRouter {
       caseRepository: caseRepository,
       sessionRepository: sessionRepository,
       evaluationRepository: evaluationRepository,
+      communicationRepository: communicationRepository,
       adminRepository: adminRepository,
     );
   }
@@ -34,6 +37,7 @@ class AppSessionRouter {
     required CaseRepositoryContract caseRepository,
     required SessionRepositoryContract sessionRepository,
     required EvaluationRepositoryContract evaluationRepository,
+    required CommunicationRepositoryContract communicationRepository,
     AdminRepositoryContract? adminRepository,
   }) {
     LoginScreen createLoginScreen() => loginScreen(
@@ -41,6 +45,7 @@ class AppSessionRouter {
           caseRepository: caseRepository,
           sessionRepository: sessionRepository,
           evaluationRepository: evaluationRepository,
+          communicationRepository: communicationRepository,
           adminRepository: adminRepository,
         );
     if (session.user.role == 'admin' && adminRepository != null) {
@@ -56,6 +61,7 @@ class AppSessionRouter {
       caseRepository: caseRepository,
       sessionRepository: sessionRepository,
       evaluationRepository: evaluationRepository,
+      communicationRepository: communicationRepository,
       authRepository: authRepository,
       adminRepository: adminRepository,
       buildLoginPage: createLoginScreen,

@@ -24,6 +24,8 @@ import 'package:frontend/network/src/model/case_response.dart';
 import 'package:frontend/network/src/model/chat_message.dart';
 import 'package:frontend/network/src/model/chat_request.dart';
 import 'package:frontend/network/src/model/chat_response.dart';
+import 'package:frontend/network/src/model/communication_criterion_response.dart';
+import 'package:frontend/network/src/model/communication_evaluation_response.dart';
 import 'package:frontend/network/src/model/conclusions_request.dart';
 import 'package:frontend/network/src/model/conclusions_response.dart';
 import 'package:frontend/network/src/model/create_case_request.dart';
@@ -79,6 +81,8 @@ part 'serializers.g.dart';
   ChatMessage,
   ChatRequest,
   ChatResponse,
+  CommunicationCriterionResponse,
+  CommunicationEvaluationResponse,
   ConclusionsRequest,
   ConclusionsResponse,
   CreateCaseRequest,

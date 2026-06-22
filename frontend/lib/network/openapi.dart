@@ -13,6 +13,7 @@ export 'package:frontend/network/src/model/date.dart';
 export 'package:frontend/network/src/api/admin_api.dart';
 export 'package:frontend/network/src/api/auth_api.dart';
 export 'package:frontend/network/src/api/cases_api.dart';
+export 'package:frontend/network/src/api/communication_evaluation_api.dart';
 export 'package:frontend/network/src/api/evaluation_api.dart';
 export 'package:frontend/network/src/api/sessions_api.dart';
 
@@ -26,6 +27,8 @@ export 'package:frontend/network/src/model/case_response.dart';
 export 'package:frontend/network/src/model/chat_message.dart';
 export 'package:frontend/network/src/model/chat_request.dart';
 export 'package:frontend/network/src/model/chat_response.dart';
+export 'package:frontend/network/src/model/communication_criterion_response.dart';
+export 'package:frontend/network/src/model/communication_evaluation_response.dart';
 export 'package:frontend/network/src/model/conclusions_request.dart';
 export 'package:frontend/network/src/model/conclusions_response.dart';
 export 'package:frontend/network/src/model/create_case_request.dart';

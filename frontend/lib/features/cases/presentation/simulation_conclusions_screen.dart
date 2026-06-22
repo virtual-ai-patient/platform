@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/common/session_completion_prefs.dart';
 import 'package:frontend/common/theme/app_colors.dart';
+import 'package:frontend/domains/evaluation/communication_repository.dart';
 import 'package:frontend/domains/evaluation/evaluation_repository.dart';
 import 'package:frontend/domains/sessions/session_repository.dart';
 import 'package:frontend/features/evaluation/presentation/debrief_screen.dart';
@@ -18,6 +19,7 @@ class SimulationConclusionsScreen extends StatefulWidget {
     required this.sessionId,
     required this.sessionRepository,
     required this.evaluationRepository,
+    required this.communicationRepository,
     this.initialConclusions,
   });
 
@@ -25,6 +27,7 @@ class SimulationConclusionsScreen extends StatefulWidget {
   final String sessionId;
   final SessionRepositoryContract sessionRepository;
   final EvaluationRepositoryContract evaluationRepository;
+  final CommunicationRepositoryContract communicationRepository;
   final BuiltMap<String, JsonObject?>? initialConclusions;
 
   @override
@@ -440,6 +443,7 @@ class _SimulationConclusionsScreenState
             caseItem: widget.caseItem,
             sessionId: widget.sessionId,
             evaluationRepository: widget.evaluationRepository,
+            communicationRepository: widget.communicationRepository,
           ),
         ),
       );

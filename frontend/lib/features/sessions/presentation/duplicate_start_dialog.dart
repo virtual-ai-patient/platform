@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/common/theme/app_colors.dart';
+import 'package:frontend/domains/evaluation/communication_repository.dart';
 import 'package:frontend/domains/evaluation/evaluation_repository.dart';
 import 'package:frontend/domains/sessions/session_repository.dart';
 import 'package:frontend/domains/sessions/session_start_conflict.dart';
@@ -16,6 +17,7 @@ Future<void> showDuplicateStartDialog({
   required SessionStartConflict conflict,
   required SessionRepositoryContract sessionRepository,
   required EvaluationRepositoryContract evaluationRepository,
+  required CommunicationRepositoryContract communicationRepository,
 }) async {
   await showDialog<void>(
     context: context,
@@ -24,6 +26,7 @@ Future<void> showDuplicateStartDialog({
       conflict: conflict,
       sessionRepository: sessionRepository,
       evaluationRepository: evaluationRepository,
+      communicationRepository: communicationRepository,
     ),
   );
 }
@@ -34,12 +37,14 @@ class _DuplicateStartDialog extends StatefulWidget {
     required this.conflict,
     required this.sessionRepository,
     required this.evaluationRepository,
+    required this.communicationRepository,
   });
 
   final generated.CaseResponse caseItem;
   final SessionStartConflict conflict;
   final SessionRepositoryContract sessionRepository;
   final EvaluationRepositoryContract evaluationRepository;
+  final CommunicationRepositoryContract communicationRepository;
 
   @override
   State<_DuplicateStartDialog> createState() => _DuplicateStartDialogState();
@@ -62,6 +67,7 @@ class _DuplicateStartDialogState extends State<_DuplicateStartDialog> {
       sessionId: widget.conflict.existingSessionId,
       sessionRepository: widget.sessionRepository,
       evaluationRepository: widget.evaluationRepository,
+      communicationRepository: widget.communicationRepository,
     );
   }
 
@@ -84,6 +90,7 @@ class _DuplicateStartDialogState extends State<_DuplicateStartDialog> {
             sessionId: res.sessionId,
             sessionRepository: widget.sessionRepository,
             evaluationRepository: widget.evaluationRepository,
+            communicationRepository: widget.communicationRepository,
           ),
         ),
       );
