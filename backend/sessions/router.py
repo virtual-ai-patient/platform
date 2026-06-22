@@ -30,9 +30,11 @@ from sessions.response import (
 )
 from evaluation.router import router as evaluation_router
 from evaluation.repository import EvaluationRepository
+from communication_eval.router import router as communication_eval_router
 
 router = APIRouter(prefix="/sessions", tags=["sessions"])
 router.include_router(evaluation_router)
+router.include_router(communication_eval_router)
 
 
 def get_session_repo(db: AsyncSession = Depends(get_db)) -> SessionRepository:

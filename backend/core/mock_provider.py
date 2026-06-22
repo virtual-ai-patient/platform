@@ -1,5 +1,6 @@
 """Deterministic mock for CI — exercises injection / tone / memory paths."""
 
+import json
 import re
 
 _INJECTION = (
@@ -14,6 +15,44 @@ _INJECTION = (
 _DEFAULT = "I don't know, doc — it just hurts something awful."
 _REFUSAL = (
     "I'm the patient; I don't know about that stuff. Can we talk about my symptoms?"
+)
+
+_JUDGE_MARKER = "COMMUNICATION_JUDGE_V1"
+_MOCK_JUDGE_RESPONSE = json.dumps(
+    {
+        "criteria": [
+            {
+                "criterion": "open_ended_questions",
+                "score": 4,
+                "rationale": "Used open-ended questions to explore symptoms.",
+                "quote": "Can you tell me more about the pain?",
+            },
+            {
+                "criterion": "empathy",
+                "score": 4,
+                "rationale": "Acknowledged patient concern.",
+                "quote": "I understand this is worrying for you.",
+            },
+            {
+                "criterion": "structured_history",
+                "score": 3,
+                "rationale": "Partially structured the history.",
+                "quote": "When did the pain start?",
+            },
+            {
+                "criterion": "closing_the_loop",
+                "score": 3,
+                "rationale": "Some summarising but incomplete.",
+                "quote": "So the pain started this morning.",
+            },
+            {
+                "criterion": "no_leading_questions",
+                "score": 5,
+                "rationale": "Avoided leading questions.",
+                "quote": "Where does it hurt?",
+            },
+        ]
+    }
 )
 
 
@@ -32,19 +71,30 @@ def _system_raw(messages: list[dict[str, str]]) -> str:
 
 
 def _all_user_texts(messages: list[dict[str, str]]) -> str:
-    return " ".join(
-        m.get("content") or "" for m in messages if m.get("role") == "user"
-    )
+    return " ".join(m.get("content") or "" for m in messages if m.get("role") == "user")
 
 
 class MockProvider:
-    async def complete(self, messages: list[dict[str, str]]) -> str:
+    @property
+    def model_name(self) -> str:
+        return "mock"
+
+    async def complete(
+        self,
+        messages: list[dict[str, str]],
+        *,
+        temperature: float | None = None,
+        json_mode: bool = False,
+    ) -> str:
+        raw = _system_raw(messages)
+        if _JUDGE_MARKER in raw:
+            return _MOCK_JUDGE_RESPONSE
+
         last = _last_user(messages)
         for needle in _INJECTION:
             if needle in last:
                 return _REFUSAL
 
-        raw = _system_raw(messages)
         all_u = _all_user_texts(messages)
         tid_m = re.search(r"SESSION_TONE_ID:\s*(\S+)", raw, flags=re.IGNORECASE)
         tone_id = (tid_m.group(1) if tid_m else "").lower().replace(" ", "_")

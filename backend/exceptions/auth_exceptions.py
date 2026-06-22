@@ -16,3 +16,7 @@ class NotFoundError(Exception):
 
 class ForbiddenError(Exception):
     pass
+
+
+class JudgeError(Exception):
+    pass

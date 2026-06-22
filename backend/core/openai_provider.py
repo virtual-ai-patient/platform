@@ -1,3 +1,5 @@
+from typing import Any, cast
+
 import openai
 
 
@@ -21,11 +23,47 @@ class OpenAIProvider:
         self._model = model
         self._max_tokens = max_tokens
 
-    async def complete(self, messages: list[dict[str, str]]) -> str:
-        response = await self._client.chat.completions.create(
-            model=self._model,
-            messages=messages,  # type: ignore[arg-type]
-            max_tokens=self._max_tokens,
-        )
+    @property
+    def model_name(self) -> str:
+        return self._model
+
+    async def complete(
+        self,
+        messages: list[dict[str, str]],
+        *,
+        temperature: float | None = None,
+        json_mode: bool = False,
+    ) -> str:
+        typed_messages = cast(Any, messages)
+        json_format = cast(Any, {"type": "json_object"})
+
+        if temperature is not None and json_mode:
+            response = await self._client.chat.completions.create(
+                model=self._model,
+                messages=typed_messages,
+                max_tokens=self._max_tokens,
+                temperature=temperature,
+                response_format=json_format,
+            )
+        elif temperature is not None:
+            response = await self._client.chat.completions.create(
+                model=self._model,
+                messages=typed_messages,
+                max_tokens=self._max_tokens,
+                temperature=temperature,
+            )
+        elif json_mode:
+            response = await self._client.chat.completions.create(
+                model=self._model,
+                messages=typed_messages,
+                max_tokens=self._max_tokens,
+                response_format=json_format,
+            )
+        else:
+            response = await self._client.chat.completions.create(
+                model=self._model,
+                messages=typed_messages,
+                max_tokens=self._max_tokens,
+            )
         content = response.choices[0].message.content
         return content or ""

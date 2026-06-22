@@ -37,6 +37,14 @@ def get_auth_service(
 
 
 def get_ai_provider() -> AIProvider:
+    return _build_openai_provider(config.OPENAI_MODEL)
+
+
+def get_judge_provider() -> AIProvider:
+    return _build_openai_provider(config.COMMUNICATION_EVAL_MODEL)
+
+
+def _build_openai_provider(model: str) -> AIProvider:
     name = config.resolved_ai_provider()
     if name == "mock":
         return MockProvider()
@@ -47,7 +55,7 @@ def get_ai_provider() -> AIProvider:
         extra["X-Title"] = config.OPENROUTER_APP_NAME.strip()
     return OpenAIProvider(
         api_key=config.OPENAI_API_KEY,
-        model=config.OPENAI_MODEL,
+        model=model,
         base_url=config.OPENAI_BASE_URL,
         default_headers=extra or None,
         max_tokens=config.OPENAI_MAX_TOKENS,
