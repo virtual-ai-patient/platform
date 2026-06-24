@@ -397,20 +397,24 @@ class _ScoreHero extends StatelessWidget {
                       color: _ringColor,
                     ),
                   ),
-                  RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
                       children: [
-                        TextSpan(
-                          text: totalScore.toStringAsFixed(0),
+                        Text(
+                          totalScore.toStringAsFixed(0),
+                          key: const Key('communication_total_score'),
                           style: GoogleFonts.inter(
                             fontWeight: FontWeight.w800,
                             fontSize: 24,
                             color: _ringColor,
                           ),
                         ),
-                        TextSpan(
-                          text: ' /100',
+                        Text(
+                          ' /100',
                           style: GoogleFonts.inter(
                             fontWeight: FontWeight.w500,
                             fontSize: 13,

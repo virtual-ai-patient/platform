@@ -31,6 +31,7 @@ void main() {
     gate.complete();
     await tester.pumpAndSettle();
     expect(find.text('76'), findsOneWidget);
+    expect(find.textContaining('/100'), findsOneWidget);
   });
 
   testWidgets('success shows all criteria with quote', (tester) async {
@@ -49,6 +50,7 @@ void main() {
 
     expect(find.text('Communication coaching'), findsOneWidget);
     expect(find.text('76'), findsOneWidget);
+    expect(find.textContaining('/100'), findsOneWidget);
     expect(find.text('Open-ended questions'), findsOneWidget);
     expect(find.text('Empathy'), findsOneWidget);
     expect(find.text('Can you tell me more about that?'), findsWidgets);
@@ -87,6 +89,7 @@ void main() {
 
     expect(repo.triggerCallCount, 1);
     expect(find.text('76'), findsOneWidget);
+    expect(find.textContaining('/100'), findsOneWidget);
   });
 
   testWidgets('shows 403 access denied', (tester) async {
@@ -159,5 +162,6 @@ void main() {
     await tester.pumpAndSettle();
     expect(repo.triggerCallCount, 2);
     expect(find.text('76'), findsOneWidget);
+    expect(find.textContaining('/100'), findsOneWidget);
   });
 }
