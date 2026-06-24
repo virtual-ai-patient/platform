@@ -1,3 +1,11 @@
+---
+layout: default
+title: Sprint 10 Transcription
+section: sprints
+parent: Sprint 10 Overview
+---
+
+# Meeting Transcription
 
 Говорящий 2
 (0:01) Ну, не все всегда проходят. (0:04) Ну окей, да, мы можем начать. (0:07) Мы за неделю сделали персистентную сессию.
