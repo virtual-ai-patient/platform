@@ -381,36 +381,44 @@ class _ScoreHero extends StatelessWidget {
         child: Row(
           children: [
             SizedBox(
-              width: 88,
-              height: 88,
+              width: 104,
+              height: 104,
               child: Stack(
                 alignment: Alignment.center,
+                clipBehavior: Clip.none,
                 children: [
-                  CircularProgressIndicator(
-                    value: progress,
-                    strokeWidth: 8,
-                    backgroundColor: AppColors.surfaceMuted,
-                    color: _ringColor,
+                  SizedBox(
+                    width: 104,
+                    height: 104,
+                    child: CircularProgressIndicator(
+                      value: progress,
+                      strokeWidth: 7,
+                      backgroundColor: AppColors.surfaceMuted,
+                      color: _ringColor,
+                    ),
                   ),
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        totalScore.toStringAsFixed(0),
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w800,
-                          fontSize: 22,
-                          color: _ringColor,
+                  RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: totalScore.toStringAsFixed(0),
+                          style: GoogleFonts.inter(
+                            fontWeight: FontWeight.w800,
+                            fontSize: 24,
+                            color: _ringColor,
+                          ),
                         ),
-                      ),
-                      Text(
-                        '/ 100',
-                        style: GoogleFonts.inter(
-                          fontSize: 11,
-                          color: AppColors.secondaryText,
+                        TextSpan(
+                          text: ' /100',
+                          style: GoogleFonts.inter(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 13,
+                            color: AppColors.secondaryText,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
