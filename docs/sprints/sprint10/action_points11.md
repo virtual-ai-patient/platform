@@ -1,17 +1,17 @@
 ---
 layout: default
-title: Sprint 10 Action Points
+title: Sprint 11 Action Points
 section: sprints
-parent: Sprint 10 Overview
+parent: Sprint 11 Overview
 ---
 
-# Sprint 10 AP
+# Sprint 11 AP
 
 ## Action Points
 
 ### Action Points
 
-| # | Task | Owner | Due Date | Status |
+|  | Task | Owner | Due Date | Status |
 |:---|:---|:---|:---|:---|
 | **AP-01** | Finalize communication evaluation backend: complete the integration so that LLM can assess doctor-patient dialogue based on criteria (empathy, leading questions, structured history, etc.). | Ilnar, Aizat | June 29 | 🔄 In progress |
 | **AP-02** | Coordinate expert meeting: confirm meeting format (online), time, and logistics with Alexander. | Alina | June 24 | 🔄 In progress |
