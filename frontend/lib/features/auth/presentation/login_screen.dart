@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/domains/admin/admin_repository.dart';
 import 'package:frontend/domains/auth/auth_repository.dart';
 import 'package:frontend/domains/cases/case_repository.dart';
+import 'package:frontend/domains/evaluation/communication_repository.dart';
 import 'package:frontend/domains/evaluation/evaluation_repository.dart';
 import 'package:frontend/domains/sessions/session_repository.dart';
 import 'package:frontend/features/auth/presentation/dialogs/reset_password_dialog.dart';
@@ -21,6 +22,7 @@ class LoginScreen extends StatefulWidget {
     required this.caseRepository,
     required this.sessionRepository,
     required this.evaluationRepository,
+    required this.communicationRepository,
     this.adminRepository,
   });
 
@@ -28,6 +30,7 @@ class LoginScreen extends StatefulWidget {
   final CaseRepositoryContract caseRepository;
   final SessionRepositoryContract sessionRepository;
   final EvaluationRepositoryContract evaluationRepository;
+  final CommunicationRepositoryContract communicationRepository;
   final AdminRepositoryContract? adminRepository;
 
   @override
@@ -59,6 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
         caseRepository: widget.caseRepository,
         sessionRepository: widget.sessionRepository,
         evaluationRepository: widget.evaluationRepository,
+        communicationRepository: widget.communicationRepository,
         adminRepository: widget.adminRepository,
       );
       Navigator.of(context).pushReplacement(

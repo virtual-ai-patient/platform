@@ -11,6 +11,7 @@ import 'package:frontend/features/cases/presentation/case_simulation_screen.dart
 import 'package:frontend/network/openapi.dart' as generated;
 
 import 'support/fake_case_response.dart';
+import 'support/fake_communication_repository.dart';
 
 void main() {
   testWidgets('CaseSimulationScreen renders with chat UI',
@@ -23,6 +24,7 @@ void main() {
           sessionId: 'test-session-abc123',
           sessionRepository: _FakeSessionRepository(),
           evaluationRepository: _FakeEvaluationRepository(),
+          communicationRepository: FakeCommunicationRepository(),
         ),
       ),
     );
@@ -40,6 +42,7 @@ void main() {
           caseRepository: _FakeCaseRepository(),
           sessionRepository: _FakeSessionRepository(),
           evaluationRepository: _FakeEvaluationRepository(),
+          communicationRepository: FakeCommunicationRepository(),
         ),
       ),
     );
@@ -60,6 +63,7 @@ void main() {
           caseRepository: _FakeCaseRepository(),
           sessionRepository: _FakeSessionRepository(),
           evaluationRepository: _FakeEvaluationRepository(),
+          communicationRepository: FakeCommunicationRepository(),
         ),
       ),
     );
@@ -82,6 +86,7 @@ void main() {
           caseRepository: _FakeCaseRepository(),
           sessionRepository: _FakeSessionRepository(),
           evaluationRepository: _FakeEvaluationRepository(),
+          communicationRepository: FakeCommunicationRepository(),
         ),
       ),
     );
@@ -114,6 +119,7 @@ void main() {
           caseRepository: _FakeCaseRepository(),
           sessionRepository: _FakeSessionRepository(),
           evaluationRepository: _FakeEvaluationRepository(),
+          communicationRepository: FakeCommunicationRepository(),
         ),
       ),
     );
@@ -143,6 +149,7 @@ void main() {
           caseRepository: _FakeCaseRepository(),
           sessionRepository: _FakeSessionRepository(),
           evaluationRepository: _FakeEvaluationRepository(),
+          communicationRepository: FakeCommunicationRepository(),
         ),
       ),
     );

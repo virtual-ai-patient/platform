@@ -1,6 +1,6 @@
 """Add communication_evaluations and communication_criteria tables.
 
-Revision ID: 003_add_communication_evaluations
+Revision ID: 003_communication_eval
 Revises: 002_add_last_activity_at
 Create Date: 2026-06-19
 
@@ -11,7 +11,7 @@ from typing import Sequence, Union
 import sqlalchemy as sa
 from alembic import op
 
-revision: str = "003_add_communication_evaluations"
+revision: str = "003_communication_eval"
 down_revision: Union[str, Sequence[str], None] = "002_add_last_activity_at"
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
