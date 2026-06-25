@@ -1,8 +1,8 @@
 ---
 layout: default
-title: Sprint 10 Transcription
+title: Sprint 11 Transcription
 section: sprints
-parent: Sprint 10 Overview
+parent: Sprint 11 Overview
 ---
 
 # Meeting Transcription
