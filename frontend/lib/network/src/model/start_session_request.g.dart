@@ -10,15 +10,15 @@ class _$StartSessionRequest extends StartSessionRequest {
   @override
   final String caseId;
 
-  factory _$StartSessionRequest(
-          [void Function(StartSessionRequestBuilder)? updates]) =>
-      (StartSessionRequestBuilder()..update(updates))._build();
+  factory _$StartSessionRequest([
+    void Function(StartSessionRequestBuilder)? updates,
+  ]) => (StartSessionRequestBuilder()..update(updates))._build();
 
   _$StartSessionRequest._({required this.caseId}) : super._();
   @override
   StartSessionRequest rebuild(
-          void Function(StartSessionRequestBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(StartSessionRequestBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   StartSessionRequestBuilder toBuilder() =>
@@ -40,9 +40,9 @@ class _$StartSessionRequest extends StartSessionRequest {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'StartSessionRequest')
-          ..add('caseId', caseId))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'StartSessionRequest',
+    )..add('caseId', caseId)).toString();
   }
 }
 
@@ -81,10 +81,14 @@ class StartSessionRequestBuilder
   StartSessionRequest build() => _build();
 
   _$StartSessionRequest _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$StartSessionRequest._(
           caseId: BuiltValueNullFieldError.checkNotNull(
-              caseId, r'StartSessionRequest', 'caseId'),
+            caseId,
+            r'StartSessionRequest',
+            'caseId',
+          ),
         );
     replace(_$result);
     return _$result;

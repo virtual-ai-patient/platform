@@ -12,16 +12,16 @@ class _$AcceptableAnswerResponse extends AcceptableAnswerResponse {
   @override
   final String answer;
 
-  factory _$AcceptableAnswerResponse(
-          [void Function(AcceptableAnswerResponseBuilder)? updates]) =>
-      (AcceptableAnswerResponseBuilder()..update(updates))._build();
+  factory _$AcceptableAnswerResponse([
+    void Function(AcceptableAnswerResponseBuilder)? updates,
+  ]) => (AcceptableAnswerResponseBuilder()..update(updates))._build();
 
   _$AcceptableAnswerResponse._({required this.field, required this.answer})
-      : super._();
+    : super._();
   @override
   AcceptableAnswerResponse rebuild(
-          void Function(AcceptableAnswerResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(AcceptableAnswerResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   AcceptableAnswerResponseBuilder toBuilder() =>
@@ -94,12 +94,19 @@ class AcceptableAnswerResponseBuilder
   AcceptableAnswerResponse build() => _build();
 
   _$AcceptableAnswerResponse _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$AcceptableAnswerResponse._(
           field: BuiltValueNullFieldError.checkNotNull(
-              field, r'AcceptableAnswerResponse', 'field'),
+            field,
+            r'AcceptableAnswerResponse',
+            'field',
+          ),
           answer: BuiltValueNullFieldError.checkNotNull(
-              answer, r'AcceptableAnswerResponse', 'answer'),
+            answer,
+            r'AcceptableAnswerResponse',
+            'answer',
+          ),
         );
     replace(_$result);
     return _$result;

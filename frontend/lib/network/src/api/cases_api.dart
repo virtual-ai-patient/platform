@@ -48,15 +48,10 @@ class CasesApi {
     final _path = r'/cases';
     final _options = Options(
       method: r'POST',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
+      headers: <String, dynamic>{...?headers},
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
-          {
-            'type': 'oauth2',
-            'name': 'OAuth2PasswordBearer',
-          },
+          {'type': 'oauth2', 'name': 'OAuth2PasswordBearer'},
         ],
         ...?extra,
       },
@@ -68,14 +63,13 @@ class CasesApi {
 
     try {
       const _type = FullType(CreateCaseRequest);
-      _bodyData =
-          _serializers.serialize(createCaseRequest, specifiedType: _type);
+      _bodyData = _serializers.serialize(
+        createCaseRequest,
+        specifiedType: _type,
+      );
     } catch (error, stackTrace) {
       throw DioException(
-        requestOptions: _options.compose(
-          _dio.options,
-          _path,
-        ),
+        requestOptions: _options.compose(_dio.options, _path),
         type: DioExceptionType.unknown,
         error: error,
         stackTrace: stackTrace,
@@ -98,9 +92,10 @@ class CasesApi {
       _responseData = rawResponse == null
           ? null
           : _serializers.deserialize(
-              rawResponse,
-              specifiedType: const FullType(CaseResponse),
-            ) as CaseResponse;
+                  rawResponse,
+                  specifiedType: const FullType(CaseResponse),
+                )
+                as CaseResponse;
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
@@ -147,20 +142,17 @@ class CasesApi {
     ProgressCallback? onReceiveProgress,
   }) async {
     final _path = r'/cases/{id}'.replaceAll(
-        '{' r'id' '}',
-        encodeQueryParameter(_serializers, id, const FullType(String))
-            .toString());
+      '{'
+      r'id'
+      '}',
+      encodeQueryParameter(_serializers, id, const FullType(String)).toString(),
+    );
     final _options = Options(
       method: r'DELETE',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
+      headers: <String, dynamic>{...?headers},
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
-          {
-            'type': 'oauth2',
-            'name': 'OAuth2PasswordBearer',
-          },
+          {'type': 'oauth2', 'name': 'OAuth2PasswordBearer'},
         ],
         ...?extra,
       },
@@ -204,15 +196,10 @@ class CasesApi {
     final _path = r'/cases';
     final _options = Options(
       method: r'GET',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
+      headers: <String, dynamic>{...?headers},
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
-          {
-            'type': 'oauth2',
-            'name': 'OAuth2PasswordBearer',
-          },
+          {'type': 'oauth2', 'name': 'OAuth2PasswordBearer'},
         ],
         ...?extra,
       },
@@ -223,8 +210,11 @@ class CasesApi {
     // breaks FastAPI (GET /cases?status= → 422).
     final _queryParameters = <String, dynamic>{
       if (status != null && status.isNotEmpty)
-        r'status':
-            encodeQueryParameter(_serializers, status, const FullType(String)),
+        r'status': encodeQueryParameter(
+          _serializers,
+          status,
+          const FullType(String),
+        ),
     };
 
     final _response = await _dio.request<Object>(
@@ -243,10 +233,12 @@ class CasesApi {
       _responseData = rawResponse == null
           ? null
           : _serializers.deserialize(
-              rawResponse,
-              specifiedType:
-                  const FullType(BuiltList, [FullType(CaseResponse)]),
-            ) as BuiltList<CaseResponse>;
+                  rawResponse,
+                  specifiedType: const FullType(BuiltList, [
+                    FullType(CaseResponse),
+                  ]),
+                )
+                as BuiltList<CaseResponse>;
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
@@ -295,20 +287,17 @@ class CasesApi {
     ProgressCallback? onReceiveProgress,
   }) async {
     final _path = r'/cases/{id}'.replaceAll(
-        '{' r'id' '}',
-        encodeQueryParameter(_serializers, id, const FullType(String))
-            .toString());
+      '{'
+      r'id'
+      '}',
+      encodeQueryParameter(_serializers, id, const FullType(String)).toString(),
+    );
     final _options = Options(
       method: r'PUT',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
+      headers: <String, dynamic>{...?headers},
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
-          {
-            'type': 'oauth2',
-            'name': 'OAuth2PasswordBearer',
-          },
+          {'type': 'oauth2', 'name': 'OAuth2PasswordBearer'},
         ],
         ...?extra,
       },
@@ -320,14 +309,13 @@ class CasesApi {
 
     try {
       const _type = FullType(UpdateCaseRequest);
-      _bodyData =
-          _serializers.serialize(updateCaseRequest, specifiedType: _type);
+      _bodyData = _serializers.serialize(
+        updateCaseRequest,
+        specifiedType: _type,
+      );
     } catch (error, stackTrace) {
       throw DioException(
-        requestOptions: _options.compose(
-          _dio.options,
-          _path,
-        ),
+        requestOptions: _options.compose(_dio.options, _path),
         type: DioExceptionType.unknown,
         error: error,
         stackTrace: stackTrace,
@@ -350,9 +338,10 @@ class CasesApi {
       _responseData = rawResponse == null
           ? null
           : _serializers.deserialize(
-              rawResponse,
-              specifiedType: const FullType(CaseResponse),
-            ) as CaseResponse;
+                  rawResponse,
+                  specifiedType: const FullType(CaseResponse),
+                )
+                as CaseResponse;
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,

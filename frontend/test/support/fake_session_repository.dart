@@ -33,8 +33,15 @@ class FakeSessionRepository implements SessionRepositoryContract {
   }
 
   @override
-  Future<g.ConclusionsResponse> abandonSession(
-      {required String sessionId}) async {
+  Future<List<g.SessionResponse>> listCompleted() async {
+    if (listError != null) throw listError!;
+    return const [];
+  }
+
+  @override
+  Future<g.ConclusionsResponse> abandonSession({
+    required String sessionId,
+  }) async {
     onAbandon?.call(sessionId);
     return g.ConclusionsResponse(
       (b) => b
@@ -44,8 +51,9 @@ class FakeSessionRepository implements SessionRepositoryContract {
   }
 
   @override
-  Future<g.SessionStateResponse> fetchFullState(
-      {required String sessionId}) async {
+  Future<g.SessionStateResponse> fetchFullState({
+    required String sessionId,
+  }) async {
     throw UnimplementedError();
   }
 
@@ -63,59 +71,59 @@ class FakeSessionRepository implements SessionRepositoryContract {
     bool force = false,
   }) async {
     if (force && onStartForce != null) return onStartForce!();
-    return g.SessionResponse((b) => b
-      ..sessionId = 'new-session'
-      ..caseId = caseId
-      ..status = 'active'
-      ..createdAt = DateTime.utc(2026)
-      ..lastActivityAt = DateTime.utc(2026));
+    return g.SessionResponse(
+      (b) => b
+        ..sessionId = 'new-session'
+        ..caseId = caseId
+        ..status = 'active'
+        ..createdAt = DateTime.utc(2026)
+        ..lastActivityAt = DateTime.utc(2026),
+    );
   }
 
   @override
   Future<g.ChatResponse> sendMessage({
     required String sessionId,
     required String message,
-  }) async =>
-      throw UnimplementedError();
+  }) async => throw UnimplementedError();
 
   @override
   Future<g.AvailableTestsResponse> getAvailableTests({
     required String sessionId,
-  }) async =>
-      throw UnimplementedError();
+  }) async => throw UnimplementedError();
 
   @override
   Future<g.TestResultResponse> orderTest({
     required String sessionId,
     required String testId,
-  }) async =>
-      throw UnimplementedError();
+  }) async => throw UnimplementedError();
 
   @override
   Future<g.ConclusionsResponse> updateConclusions({
     required String sessionId,
     required g.ConclusionsRequest request,
-  }) async =>
-      throw UnimplementedError();
+  }) async => throw UnimplementedError();
 
   @override
-  Future<g.ConclusionsResponse> finishSession(
-          {required String sessionId}) async =>
-      throw UnimplementedError();
+  Future<g.ConclusionsResponse> finishSession({
+    required String sessionId,
+  }) async => throw UnimplementedError();
 }
 
 g.ActiveSessionItem fakeActiveSessionItem({required String sessionId}) {
-  return g.ActiveSessionItem((b) => b
-    ..sessionId = sessionId
-    ..caseId = 'CASE-001'
-    ..caseTitle = 'Test Case'
-    ..createdAt = DateTime.utc(2026, 6, 1)
-    ..lastActivityAt = DateTime.utc(2026, 6, 1, 12)
-    ..progressSummary.replace(
-      g.ProgressSummary(
-        (p) => p
-          ..turnCount = 4
-          ..hasConclusions = true,
+  return g.ActiveSessionItem(
+    (b) => b
+      ..sessionId = sessionId
+      ..caseId = 'CASE-001'
+      ..caseTitle = 'Test Case'
+      ..createdAt = DateTime.utc(2026, 6, 1)
+      ..lastActivityAt = DateTime.utc(2026, 6, 1, 12)
+      ..progressSummary.replace(
+        g.ProgressSummary(
+          (p) => p
+            ..turnCount = 4
+            ..hasConclusions = true,
+        ),
       ),
-    ));
+  );
 }

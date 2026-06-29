@@ -1,10 +1,9 @@
 /// Human-readable labels for communication rubric criterion keys from the API.
 String communicationCriterionLabel(String criterionKey) {
   return _labels[criterionKey] ??
-      criterionKey.replaceAll('_', ' ').replaceFirstMapped(
-            RegExp(r'^\w'),
-            (m) => m.group(0)!.toUpperCase(),
-          );
+      criterionKey
+          .replaceAll('_', ' ')
+          .replaceFirstMapped(RegExp(r'^\w'), (m) => m.group(0)!.toUpperCase());
 }
 
 const Map<String, String> _labels = {

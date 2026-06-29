@@ -2,10 +2,7 @@ import 'package:frontend/network/openapi.dart' as generated;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthSession {
-  const AuthSession({
-    required this.user,
-    required this.tokens,
-  });
+  const AuthSession({required this.user, required this.tokens});
 
   final generated.UserResponse user;
   final generated.TokenResponse tokens;
@@ -121,8 +118,9 @@ class AuthRepository implements AuthRepositoryContract {
         ..email = email
         ..password = password,
     );
-    final response =
-        await _authApi.signupAuthSignupPost(signupRequest: request);
+    final response = await _authApi.signupAuthSignupPost(
+      signupRequest: request,
+    );
     final user = response.data;
     if (user == null) {
       throw StateError('Signup returned empty user response');
@@ -138,8 +136,9 @@ class AuthRepository implements AuthRepositoryContract {
     final request = generated.RefreshRequest(
       (b) => b..refreshToken = refreshToken,
     );
-    final response =
-        await _authApi.refreshAuthRefreshPost(refreshRequest: request);
+    final response = await _authApi.refreshAuthRefreshPost(
+      refreshRequest: request,
+    );
     final refreshed = response.data;
     if (refreshed == null) {
       throw StateError('Refresh returned empty token response');
@@ -165,10 +164,10 @@ class AuthRepository implements AuthRepositoryContract {
   @override
   Future<String> requestPasswordReset({required String email}) async {
     final request = generated.PasswordResetRequest((b) => b..email = email);
-    final response =
-        await _authApi.resetPasswordRequestAuthResetPasswordRequestPost(
-      passwordResetRequest: request,
-    );
+    final response = await _authApi
+        .resetPasswordRequestAuthResetPasswordRequestPost(
+          passwordResetRequest: request,
+        );
     final message = response.data?.message;
     if (message == null) {
       throw StateError('Reset request returned empty message');
@@ -185,10 +184,10 @@ class AuthRepository implements AuthRepositoryContract {
         ..token = token
         ..newPassword = newPassword,
     );
-    final response =
-        await _authApi.resetPasswordConfirmAuthResetPasswordConfirmPost(
-      passwordResetConfirm: request,
-    );
+    final response = await _authApi
+        .resetPasswordConfirmAuthResetPasswordConfirmPost(
+          passwordResetConfirm: request,
+        );
     final message = response.data?.message;
     if (message == null) {
       throw StateError('Reset confirm returned empty message');

@@ -660,6 +660,36 @@
         ]
       }
     },
+    "/sessions/completed": {
+      "get": {
+        "tags": [
+          "sessions"
+        ],
+        "summary": "List Completed Sessions",
+        "operationId": "list_completed_sessions_sessions_completed_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/SessionResponse"
+                  },
+                  "type": "array",
+                  "title": "Response List Completed Sessions Sessions Completed Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
     "/sessions/start": {
       "post": {
         "tags": [

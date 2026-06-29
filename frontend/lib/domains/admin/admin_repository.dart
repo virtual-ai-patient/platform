@@ -16,7 +16,7 @@ abstract class AdminRepositoryContract {
 
 class AdminRepository implements AdminRepositoryContract {
   AdminRepository({required generated.Openapi openapi})
-      : _api = openapi.getAdminApi();
+    : _api = openapi.getAdminApi();
 
   final generated.AdminApi _api;
 

@@ -25,9 +25,9 @@ abstract class DifferentialDiagnosisItem
 
   DifferentialDiagnosisItem._();
 
-  factory DifferentialDiagnosisItem(
-          [void updates(DifferentialDiagnosisItemBuilder b)]) =
-      _$DifferentialDiagnosisItem;
+  factory DifferentialDiagnosisItem([
+    void updates(DifferentialDiagnosisItemBuilder b),
+  ]) = _$DifferentialDiagnosisItem;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(DifferentialDiagnosisItemBuilder b) => b;
@@ -42,7 +42,7 @@ class _$DifferentialDiagnosisItemSerializer
   @override
   final Iterable<Type> types = const [
     DifferentialDiagnosisItem,
-    _$DifferentialDiagnosisItem
+    _$DifferentialDiagnosisItem,
   ];
 
   @override
@@ -71,9 +71,11 @@ class _$DifferentialDiagnosisItemSerializer
     DifferentialDiagnosisItem object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(
+      serializers,
+      object,
+      specifiedType: specifiedType,
+    ).toList();
   }
 
   void _deserializeProperties(
@@ -89,17 +91,18 @@ class _$DifferentialDiagnosisItemSerializer
       final value = serializedList[i + 1];
       switch (key) {
         case r'rank':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          ) as int;
+          final valueDes =
+              serializers.deserialize(value, specifiedType: const FullType(int))
+                  as int;
           result.rank = valueDes;
           break;
         case r'condition':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           result.condition = valueDes;
           break;
         default:

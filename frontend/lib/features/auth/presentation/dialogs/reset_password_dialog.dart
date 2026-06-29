@@ -44,8 +44,9 @@ Future<void> showResetPasswordDialog({
             ),
             actions: [
               TextButton(
-                onPressed:
-                    submitting ? null : () => Navigator.of(context).pop(),
+                onPressed: submitting
+                    ? null
+                    : () => Navigator.of(context).pop(),
                 child: const Text('Cancel'),
               ),
               ElevatedButton(
@@ -57,10 +58,10 @@ Future<void> showResetPasswordDialog({
                           localError = null;
                         });
                         try {
-                          final message =
-                              await authRepository.requestPasswordReset(
-                            email: resetEmail.text.trim(),
-                          );
+                          final message = await authRepository
+                              .requestPasswordReset(
+                                email: resetEmail.text.trim(),
+                              );
                           if (!context.mounted) {
                             return;
                           }

@@ -92,9 +92,7 @@ class AppLibraryTopBar extends StatelessWidget implements PreferredSizeWidget {
                   flex: 0,
                   fit: FlexFit.loose,
                   child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      maxWidth: narrow ? 120 : 220,
-                    ),
+                    constraints: BoxConstraints(maxWidth: narrow ? 120 : 220),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisSize: MainAxisSize.min,

@@ -46,7 +46,7 @@ class _$ConclusionsResponseSerializer
   @override
   final Iterable<Type> types = const [
     ConclusionsResponse,
-    _$ConclusionsResponse
+    _$ConclusionsResponse,
   ];
 
   @override
@@ -72,8 +72,10 @@ class _$ConclusionsResponseSerializer
         ? null
         : serializers.serialize(
             object.conclusions,
-            specifiedType: const FullType.nullable(
-                BuiltMap, [FullType(String), FullType.nullable(JsonObject)]),
+            specifiedType: const FullType.nullable(BuiltMap, [
+              FullType(String),
+              FullType.nullable(JsonObject),
+            ]),
           );
   }
 
@@ -83,9 +85,11 @@ class _$ConclusionsResponseSerializer
     ConclusionsResponse object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(
+      serializers,
+      object,
+      specifiedType: specifiedType,
+    ).toList();
   }
 
   void _deserializeProperties(
@@ -101,25 +105,33 @@ class _$ConclusionsResponseSerializer
       final value = serializedList[i + 1];
       switch (key) {
         case r'session_id':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           result.sessionId = valueDes;
           break;
         case r'status':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           result.status = valueDes;
           break;
         case r'conclusions':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType.nullable(
-                BuiltMap, [FullType(String), FullType.nullable(JsonObject)]),
-          ) as BuiltMap<String, JsonObject?>?;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType.nullable(BuiltMap, [
+                      FullType(String),
+                      FullType.nullable(JsonObject),
+                    ]),
+                  )
+                  as BuiltMap<String, JsonObject?>?;
           if (valueDes == null) continue;
           result.conclusions.replace(valueDes);
           break;

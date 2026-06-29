@@ -2,10 +2,7 @@ import 'package:dio/dio.dart';
 
 /// Parsed 409 from POST /sessions/start when an active session already exists.
 class SessionStartConflict {
-  const SessionStartConflict({
-    required this.existingSessionId,
-    this.message,
-  });
+  const SessionStartConflict({required this.existingSessionId, this.message});
 
   final String existingSessionId;
   final String? message;

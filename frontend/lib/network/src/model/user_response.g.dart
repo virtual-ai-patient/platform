@@ -19,12 +19,12 @@ class _$UserResponse extends UserResponse {
   factory _$UserResponse([void Function(UserResponseBuilder)? updates]) =>
       (UserResponseBuilder()..update(updates))._build();
 
-  _$UserResponse._(
-      {required this.id,
-      required this.username,
-      required this.email,
-      required this.role})
-      : super._();
+  _$UserResponse._({
+    required this.id,
+    required this.username,
+    required this.email,
+    required this.role,
+  }) : super._();
   @override
   UserResponse rebuild(void Function(UserResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -114,15 +114,25 @@ class UserResponseBuilder
   UserResponse build() => _build();
 
   _$UserResponse _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$UserResponse._(
           id: BuiltValueNullFieldError.checkNotNull(id, r'UserResponse', 'id'),
           username: BuiltValueNullFieldError.checkNotNull(
-              username, r'UserResponse', 'username'),
+            username,
+            r'UserResponse',
+            'username',
+          ),
           email: BuiltValueNullFieldError.checkNotNull(
-              email, r'UserResponse', 'email'),
+            email,
+            r'UserResponse',
+            'email',
+          ),
           role: BuiltValueNullFieldError.checkNotNull(
-              role, r'UserResponse', 'role'),
+            role,
+            r'UserResponse',
+            'role',
+          ),
         );
     replace(_$result);
     return _$result;

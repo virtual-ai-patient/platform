@@ -158,11 +158,13 @@ void main() {
                     context: context,
                     sessionRepository: FakeSessionRepository(
                       listError: DioException(
-                        requestOptions:
-                            RequestOptions(path: '/sessions/active'),
+                        requestOptions: RequestOptions(
+                          path: '/sessions/active',
+                        ),
                         response: Response<void>(
-                          requestOptions:
-                              RequestOptions(path: '/sessions/active'),
+                          requestOptions: RequestOptions(
+                            path: '/sessions/active',
+                          ),
                           statusCode: 403,
                         ),
                         type: DioExceptionType.badResponse,
@@ -218,8 +220,9 @@ void main() {
     expect(find.text('Start fresh'), findsOneWidget);
   });
 
-  testWidgets('duplicate start dialog start fresh calls force start',
-      (tester) async {
+  testWidgets('duplicate start dialog start fresh calls force start', (
+    tester,
+  ) async {
     var forceCalled = false;
     await tester.pumpWidget(
       MaterialApp(
@@ -238,12 +241,14 @@ void main() {
                     sessionRepository: FakeSessionRepository(
                       onStartForce: () async {
                         forceCalled = true;
-                        return g.SessionResponse((b) => b
-                          ..sessionId = 'fresh-1'
-                          ..caseId = 'CASE-001'
-                          ..status = 'active'
-                          ..createdAt = DateTime.utc(2026)
-                          ..lastActivityAt = DateTime.utc(2026));
+                        return g.SessionResponse(
+                          (b) => b
+                            ..sessionId = 'fresh-1'
+                            ..caseId = 'CASE-001'
+                            ..status = 'active'
+                            ..createdAt = DateTime.utc(2026)
+                            ..lastActivityAt = DateTime.utc(2026),
+                        );
                       },
                     ),
                     evaluationRepository: FakeEvaluationRepository(),

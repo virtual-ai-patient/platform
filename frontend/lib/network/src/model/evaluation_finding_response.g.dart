@@ -24,24 +24,24 @@ class _$EvaluationFindingResponse extends EvaluationFindingResponse {
   @override
   final num deductionPoints;
 
-  factory _$EvaluationFindingResponse(
-          [void Function(EvaluationFindingResponseBuilder)? updates]) =>
-      (EvaluationFindingResponseBuilder()..update(updates))._build();
+  factory _$EvaluationFindingResponse([
+    void Function(EvaluationFindingResponseBuilder)? updates,
+  ]) => (EvaluationFindingResponseBuilder()..update(updates))._build();
 
-  _$EvaluationFindingResponse._(
-      {required this.category,
-      required this.type,
-      required this.severity,
-      required this.expected,
-      required this.actual,
-      required this.whyMatters,
-      required this.howToCorrect,
-      required this.deductionPoints})
-      : super._();
+  _$EvaluationFindingResponse._({
+    required this.category,
+    required this.type,
+    required this.severity,
+    required this.expected,
+    required this.actual,
+    required this.whyMatters,
+    required this.howToCorrect,
+    required this.deductionPoints,
+  }) : super._();
   @override
   EvaluationFindingResponse rebuild(
-          void Function(EvaluationFindingResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(EvaluationFindingResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   EvaluationFindingResponseBuilder toBuilder() =>
@@ -163,24 +163,49 @@ class EvaluationFindingResponseBuilder
   EvaluationFindingResponse build() => _build();
 
   _$EvaluationFindingResponse _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$EvaluationFindingResponse._(
           category: BuiltValueNullFieldError.checkNotNull(
-              category, r'EvaluationFindingResponse', 'category'),
+            category,
+            r'EvaluationFindingResponse',
+            'category',
+          ),
           type: BuiltValueNullFieldError.checkNotNull(
-              type, r'EvaluationFindingResponse', 'type'),
+            type,
+            r'EvaluationFindingResponse',
+            'type',
+          ),
           severity: BuiltValueNullFieldError.checkNotNull(
-              severity, r'EvaluationFindingResponse', 'severity'),
+            severity,
+            r'EvaluationFindingResponse',
+            'severity',
+          ),
           expected: BuiltValueNullFieldError.checkNotNull(
-              expected, r'EvaluationFindingResponse', 'expected'),
+            expected,
+            r'EvaluationFindingResponse',
+            'expected',
+          ),
           actual: BuiltValueNullFieldError.checkNotNull(
-              actual, r'EvaluationFindingResponse', 'actual'),
+            actual,
+            r'EvaluationFindingResponse',
+            'actual',
+          ),
           whyMatters: BuiltValueNullFieldError.checkNotNull(
-              whyMatters, r'EvaluationFindingResponse', 'whyMatters'),
+            whyMatters,
+            r'EvaluationFindingResponse',
+            'whyMatters',
+          ),
           howToCorrect: BuiltValueNullFieldError.checkNotNull(
-              howToCorrect, r'EvaluationFindingResponse', 'howToCorrect'),
+            howToCorrect,
+            r'EvaluationFindingResponse',
+            'howToCorrect',
+          ),
           deductionPoints: BuiltValueNullFieldError.checkNotNull(
-              deductionPoints, r'EvaluationFindingResponse', 'deductionPoints'),
+            deductionPoints,
+            r'EvaluationFindingResponse',
+            'deductionPoints',
+          ),
         );
     replace(_$result);
     return _$result;

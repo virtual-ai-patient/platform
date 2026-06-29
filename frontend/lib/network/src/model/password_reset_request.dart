@@ -36,7 +36,7 @@ class _$PasswordResetRequestSerializer
   @override
   final Iterable<Type> types = const [
     PasswordResetRequest,
-    _$PasswordResetRequest
+    _$PasswordResetRequest,
   ];
 
   @override
@@ -60,9 +60,11 @@ class _$PasswordResetRequestSerializer
     PasswordResetRequest object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(
+      serializers,
+      object,
+      specifiedType: specifiedType,
+    ).toList();
   }
 
   void _deserializeProperties(
@@ -78,10 +80,12 @@ class _$PasswordResetRequestSerializer
       final value = serializedList[i + 1];
       switch (key) {
         case r'email':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           result.email = valueDes;
           break;
         default:

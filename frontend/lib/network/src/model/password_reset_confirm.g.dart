@@ -12,16 +12,16 @@ class _$PasswordResetConfirm extends PasswordResetConfirm {
   @override
   final String newPassword;
 
-  factory _$PasswordResetConfirm(
-          [void Function(PasswordResetConfirmBuilder)? updates]) =>
-      (PasswordResetConfirmBuilder()..update(updates))._build();
+  factory _$PasswordResetConfirm([
+    void Function(PasswordResetConfirmBuilder)? updates,
+  ]) => (PasswordResetConfirmBuilder()..update(updates))._build();
 
   _$PasswordResetConfirm._({required this.token, required this.newPassword})
-      : super._();
+    : super._();
   @override
   PasswordResetConfirm rebuild(
-          void Function(PasswordResetConfirmBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(PasswordResetConfirmBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   PasswordResetConfirmBuilder toBuilder() =>
@@ -93,12 +93,19 @@ class PasswordResetConfirmBuilder
   PasswordResetConfirm build() => _build();
 
   _$PasswordResetConfirm _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$PasswordResetConfirm._(
           token: BuiltValueNullFieldError.checkNotNull(
-              token, r'PasswordResetConfirm', 'token'),
+            token,
+            r'PasswordResetConfirm',
+            'token',
+          ),
           newPassword: BuiltValueNullFieldError.checkNotNull(
-              newPassword, r'PasswordResetConfirm', 'newPassword'),
+            newPassword,
+            r'PasswordResetConfirm',
+            'newPassword',
+          ),
         );
     replace(_$result);
     return _$result;

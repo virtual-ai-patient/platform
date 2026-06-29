@@ -150,8 +150,9 @@ Future<void> runEducatorCreateCaseFlow(
       title: result.title,
       specialty: result.specialty,
       difficulty: result.difficulty,
-      chiefComplaint:
-          result.chiefComplaint.isEmpty ? result.title : result.chiefComplaint,
+      chiefComplaint: result.chiefComplaint.isEmpty
+          ? result.title
+          : result.chiefComplaint,
       finalDiagnosis: result.finalDiagnosis.trim(),
     );
     await caseRepository.createCase(request);
@@ -163,9 +164,9 @@ Future<void> runEducatorCreateCaseFlow(
     }
   } catch (e) {
     if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Could not create case: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Could not create case: $e')));
     }
   } finally {
     onWorking?.call(false);
@@ -216,9 +217,9 @@ Future<void> runEducatorEditCaseFlow(
     }
   } catch (e) {
     if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Could not update case: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Could not update case: $e')));
     }
   } finally {
     onWorking?.call(false);
@@ -269,15 +270,15 @@ Future<void> runEducatorDeleteCaseFlow(
     await caseRepository.deleteCase(id: c.id);
     await onRefresh();
     if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Deleted “${c.title}”')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Deleted “${c.title}”')));
     }
   } catch (e) {
     if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Could not delete case: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Could not delete case: $e')));
     }
   } finally {
     onWorking?.call(false);
@@ -341,8 +342,9 @@ class _NewCaseDialogState extends State<_NewCaseDialog> {
   void _submit() {
     final dxErr = validateFinalDiagnosisClient(_finalDx.text);
     if (dxErr != null) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(dxErr)));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(dxErr)));
       return;
     }
     Navigator.of(context).pop(
@@ -379,9 +381,7 @@ class _NewCaseDialogState extends State<_NewCaseDialog> {
             const SizedBox(height: 12),
             TextField(
               controller: _title,
-              decoration: const InputDecoration(
-                labelText: 'Title',
-              ),
+              decoration: const InputDecoration(labelText: 'Title'),
             ),
             const SizedBox(height: 12),
             TextField(
@@ -393,9 +393,7 @@ class _NewCaseDialogState extends State<_NewCaseDialog> {
             const SizedBox(height: 12),
             TextField(
               controller: _chief,
-              decoration: const InputDecoration(
-                labelText: 'Chief complaint',
-              ),
+              decoration: const InputDecoration(labelText: 'Chief complaint'),
             ),
             const SizedBox(height: 12),
             TextField(
@@ -445,10 +443,7 @@ class _NewCaseDialogState extends State<_NewCaseDialog> {
           onPressed: () => Navigator.of(context).pop(),
           child: const Text('Cancel'),
         ),
-        FilledButton(
-          onPressed: _submit,
-          child: const Text('Create'),
-        ),
+        FilledButton(onPressed: _submit, child: const Text('Create')),
       ],
     );
   }
@@ -542,8 +537,9 @@ class _EditCaseDialogState extends State<_EditCaseDialog> {
     }
     final dxErr = validateFinalDiagnosisClient(_dx.text);
     if (dxErr != null) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(dxErr)));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(dxErr)));
       return;
     }
     setState(() => _ageError = null);
@@ -617,12 +613,7 @@ class _EditCaseDialogState extends State<_EditCaseDialog> {
                 isExpanded: true,
                 value: _sex,
                 items: generated.UpdateCaseRequestSexEnum.values
-                    .map(
-                      (v) => DropdownMenuItem(
-                        value: v,
-                        child: Text(v.name),
-                      ),
-                    )
+                    .map((v) => DropdownMenuItem(value: v, child: Text(v.name)))
                     .toList(),
                 onChanged: (v) {
                   if (v != null) {
@@ -644,12 +635,7 @@ class _EditCaseDialogState extends State<_EditCaseDialog> {
                 isExpanded: true,
                 value: _difficulty,
                 items: generated.UpdateCaseRequestDifficultyEnum.values
-                    .map(
-                      (v) => DropdownMenuItem(
-                        value: v,
-                        child: Text(v.name),
-                      ),
-                    )
+                    .map((v) => DropdownMenuItem(value: v, child: Text(v.name)))
                     .toList(),
                 onChanged: (v) {
                   if (v != null) {
@@ -795,13 +781,15 @@ generated.CreateCaseRequest _createCaseRequestFromForm({
     b.investigations.expected.optional.add('Additional test if indicated');
     b.investigations.expected.shouldNotOrder.add('Low-value test');
     b.investigations.results.add(
-      generated.InvestigationResultRequest((r) => r
-        ..testName = 'Example investigation'
-        ..resultType =
-            generated.InvestigationResultRequestResultTypeEnum.textReport
-        ..value = 'Placeholder result — replace in full case definition.'
-        ..unit = null
-        ..referenceRange = null),
+      generated.InvestigationResultRequest(
+        (r) => r
+          ..testName = 'Example investigation'
+          ..resultType =
+              generated.InvestigationResultRequestResultTypeEnum.textReport
+          ..value = 'Placeholder result — replace in full case definition.'
+          ..unit = null
+          ..referenceRange = null,
+      ),
     );
 
     b.management.diagnosticPlan.add('Diagnostic step 1');
@@ -814,9 +802,11 @@ generated.CreateCaseRequest _createCaseRequestFromForm({
     b.scoring.weightTreatment = 0.30;
     b.scoring.weightSafety = 0.10;
     b.scoring.acceptableAnswers.add(
-      generated.AcceptableAnswerRequest((a) => a
-        ..field = 'final_diagnosis'
-        ..answer = finalDiagnosis),
+      generated.AcceptableAnswerRequest(
+        (a) => a
+          ..field = 'final_diagnosis'
+          ..answer = finalDiagnosis,
+      ),
     );
     b.scoring.criticalSafetyErrors.add('Unsafe management pattern to avoid');
   });

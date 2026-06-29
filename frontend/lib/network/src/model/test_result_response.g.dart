@@ -20,22 +20,22 @@ class _$TestResultResponse extends TestResultResponse {
   @override
   final bool isNormalDefault;
 
-  factory _$TestResultResponse(
-          [void Function(TestResultResponseBuilder)? updates]) =>
-      (TestResultResponseBuilder()..update(updates))._build();
+  factory _$TestResultResponse([
+    void Function(TestResultResponseBuilder)? updates,
+  ]) => (TestResultResponseBuilder()..update(updates))._build();
 
-  _$TestResultResponse._(
-      {required this.testName,
-      required this.resultType,
-      required this.value,
-      this.unit,
-      this.referenceRange,
-      required this.isNormalDefault})
-      : super._();
+  _$TestResultResponse._({
+    required this.testName,
+    required this.resultType,
+    required this.value,
+    this.unit,
+    this.referenceRange,
+    required this.isNormalDefault,
+  }) : super._();
   @override
   TestResultResponse rebuild(
-          void Function(TestResultResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(TestResultResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   TestResultResponseBuilder toBuilder() =>
@@ -141,18 +141,31 @@ class TestResultResponseBuilder
   TestResultResponse build() => _build();
 
   _$TestResultResponse _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$TestResultResponse._(
           testName: BuiltValueNullFieldError.checkNotNull(
-              testName, r'TestResultResponse', 'testName'),
+            testName,
+            r'TestResultResponse',
+            'testName',
+          ),
           resultType: BuiltValueNullFieldError.checkNotNull(
-              resultType, r'TestResultResponse', 'resultType'),
+            resultType,
+            r'TestResultResponse',
+            'resultType',
+          ),
           value: BuiltValueNullFieldError.checkNotNull(
-              value, r'TestResultResponse', 'value'),
+            value,
+            r'TestResultResponse',
+            'value',
+          ),
           unit: unit,
           referenceRange: referenceRange,
           isNormalDefault: BuiltValueNullFieldError.checkNotNull(
-              isNormalDefault, r'TestResultResponse', 'isNormalDefault'),
+            isNormalDefault,
+            r'TestResultResponse',
+            'isNormalDefault',
+          ),
         );
     replace(_$result);
     return _$result;

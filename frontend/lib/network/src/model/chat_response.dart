@@ -63,9 +63,11 @@ class _$ChatResponseSerializer implements PrimitiveSerializer<ChatResponse> {
     ChatResponse object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(
+      serializers,
+      object,
+      specifiedType: specifiedType,
+    ).toList();
   }
 
   void _deserializeProperties(
@@ -81,17 +83,21 @@ class _$ChatResponseSerializer implements PrimitiveSerializer<ChatResponse> {
       final value = serializedList[i + 1];
       switch (key) {
         case r'response':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           result.response = valueDes;
           break;
         case r'logged_at':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(DateTime),
-          ) as DateTime;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(DateTime),
+                  )
+                  as DateTime;
           result.loggedAt = valueDes;
           break;
         default:

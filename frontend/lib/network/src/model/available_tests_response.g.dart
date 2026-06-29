@@ -10,15 +10,15 @@ class _$AvailableTestsResponse extends AvailableTestsResponse {
   @override
   final BuiltList<AvailableTestItem> tests;
 
-  factory _$AvailableTestsResponse(
-          [void Function(AvailableTestsResponseBuilder)? updates]) =>
-      (AvailableTestsResponseBuilder()..update(updates))._build();
+  factory _$AvailableTestsResponse([
+    void Function(AvailableTestsResponseBuilder)? updates,
+  ]) => (AvailableTestsResponseBuilder()..update(updates))._build();
 
   _$AvailableTestsResponse._({required this.tests}) : super._();
   @override
   AvailableTestsResponse rebuild(
-          void Function(AvailableTestsResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(AvailableTestsResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   AvailableTestsResponseBuilder toBuilder() =>
@@ -40,9 +40,9 @@ class _$AvailableTestsResponse extends AvailableTestsResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'AvailableTestsResponse')
-          ..add('tests', tests))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'AvailableTestsResponse',
+    )..add('tests', tests)).toString();
   }
 }
 
@@ -84,10 +84,7 @@ class AvailableTestsResponseBuilder
   _$AvailableTestsResponse _build() {
     _$AvailableTestsResponse _$result;
     try {
-      _$result = _$v ??
-          _$AvailableTestsResponse._(
-            tests: tests.build(),
-          );
+      _$result = _$v ?? _$AvailableTestsResponse._(tests: tests.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -95,7 +92,10 @@ class AvailableTestsResponseBuilder
         tests.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'AvailableTestsResponse', _$failedField, e.toString());
+          r'AvailableTestsResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

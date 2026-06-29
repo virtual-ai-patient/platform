@@ -6,259 +6,325 @@ part of 'serializers.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializers _$serializers = (Serializers().toBuilder()
-      ..add(AcceptableAnswerRequest.serializer)
-      ..add(AcceptableAnswerResponse.serializer)
-      ..add(ActionLogEntry.serializer)
-      ..add(ActiveSessionItem.serializer)
-      ..add(AvailableTestItem.serializer)
-      ..add(AvailableTestsResponse.serializer)
-      ..add(CaseResponse.serializer)
-      ..add(ChatMessage.serializer)
-      ..add(ChatRequest.serializer)
-      ..add(ChatResponse.serializer)
-      ..add(CommunicationCriterionResponse.serializer)
-      ..add(CommunicationEvaluationResponse.serializer)
-      ..add(ConclusionsRequest.serializer)
-      ..add(ConclusionsResponse.serializer)
-      ..add(CreateCaseRequest.serializer)
-      ..add(CreateCaseRequestDifficultyEnum.serializer)
-      ..add(CreateCaseRequestLanguageEnum.serializer)
-      ..add(CreateCaseRequestSexEnum.serializer)
-      ..add(CreateCaseRequestStatusEnum.serializer)
-      ..add(DebriefResponse.serializer)
-      ..add(DifferentialDiagnosisItem.serializer)
-      ..add(EvaluationFindingResponse.serializer)
-      ..add(ExpectedTestsRequest.serializer)
-      ..add(ExpectedTestsResponse.serializer)
-      ..add(HTTPValidationError.serializer)
-      ..add(InvestigationResultRequest.serializer)
-      ..add(InvestigationResultRequestResultTypeEnum.serializer)
-      ..add(InvestigationResultResponse.serializer)
-      ..add(InvestigationsRequest.serializer)
-      ..add(InvestigationsResponse.serializer)
-      ..add(KeyHistoryPointsRequest.serializer)
-      ..add(KeyHistoryPointsResponse.serializer)
-      ..add(LocationInner.serializer)
-      ..add(ManagementRequest.serializer)
-      ..add(ManagementResponse.serializer)
-      ..add(Medication.serializer)
-      ..add(MessageResponse.serializer)
-      ..add(OrderTestRequest.serializer)
-      ..add(PasswordResetConfirm.serializer)
-      ..add(PasswordResetRequest.serializer)
-      ..add(ProgressSummary.serializer)
-      ..add(RefreshRequest.serializer)
-      ..add(ScoresResponse.serializer)
-      ..add(ScoringRequest.serializer)
-      ..add(ScoringResponse.serializer)
-      ..add(SessionDetailResponse.serializer)
-      ..add(SessionListResponse.serializer)
-      ..add(SessionResponse.serializer)
-      ..add(SessionStateResponse.serializer)
-      ..add(SessionSummary.serializer)
-      ..add(SignupRequest.serializer)
-      ..add(StartSessionRequest.serializer)
-      ..add(TestResultResponse.serializer)
-      ..add(TokenResponse.serializer)
-      ..add(TreatmentPlan.serializer)
-      ..add(UpdateCaseRequest.serializer)
-      ..add(UpdateCaseRequestDifficultyEnum.serializer)
-      ..add(UpdateCaseRequestLanguageEnum.serializer)
-      ..add(UpdateCaseRequestSexEnum.serializer)
-      ..add(UpdateCaseRequestStatusEnum.serializer)
-      ..add(UserResponse.serializer)
-      ..add(ValidationError.serializer)
-      ..addBuilderFactory(
-          const FullType(
-              BuiltList, const [const FullType(AcceptableAnswerRequest)]),
-          () => ListBuilder<AcceptableAnswerRequest>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(
-              BuiltList, const [const FullType(AcceptableAnswerResponse)]),
-          () => ListBuilder<AcceptableAnswerResponse>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(ActionLogEntry)]),
-          () => ListBuilder<ActionLogEntry>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(AvailableTestItem)]),
-          () => ListBuilder<AvailableTestItem>())
-      ..addBuilderFactory(
-          const FullType(BuiltList,
-              const [const FullType(CommunicationCriterionResponse)]),
-          () => ListBuilder<CommunicationCriterionResponse>())
-      ..addBuilderFactory(
-          const FullType(
-              BuiltList, const [const FullType(DifferentialDiagnosisItem)]),
-          () => ListBuilder<DifferentialDiagnosisItem>())
-      ..addBuilderFactory(
-          const FullType(
-              BuiltList, const [const FullType(EvaluationFindingResponse)]),
-          () => ListBuilder<EvaluationFindingResponse>())
-      ..addBuilderFactory(
-          const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType.nullable(JsonObject)
-          ]),
-          () => MapBuilder<String, JsonObject?>())
-      ..addBuilderFactory(
-          const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType.nullable(JsonObject)
-          ]),
-          () => MapBuilder<String, JsonObject?>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(LocationInner)]),
-          () => ListBuilder<LocationInner>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(Medication)]),
-          () => ListBuilder<Medication>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(SessionSummary)]),
-          () => ListBuilder<SessionSummary>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(
-              BuiltList, const [const FullType(InvestigationResultRequest)]),
-          () => ListBuilder<InvestigationResultRequest>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(
-              BuiltList, const [const FullType(InvestigationResultResponse)]),
-          () => ListBuilder<InvestigationResultResponse>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(ValidationError)]),
-          () => ListBuilder<ValidationError>())
-      ..addBuilderFactory(
-          const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType.nullable(JsonObject)
-          ]),
-          () => MapBuilder<String, JsonObject?>())
-      ..addBuilderFactory(
-          const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType.nullable(JsonObject)
-          ]),
-          () => MapBuilder<String, JsonObject?>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(ChatMessage)]),
-          () => ListBuilder<ChatMessage>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType.nullable(JsonObject)
-          ]),
-          () => MapBuilder<String, JsonObject?>()))
-    .build();
+Serializers _$serializers =
+    (Serializers().toBuilder()
+          ..add(AcceptableAnswerRequest.serializer)
+          ..add(AcceptableAnswerResponse.serializer)
+          ..add(ActionLogEntry.serializer)
+          ..add(ActiveSessionItem.serializer)
+          ..add(AvailableTestItem.serializer)
+          ..add(AvailableTestsResponse.serializer)
+          ..add(CaseResponse.serializer)
+          ..add(ChatMessage.serializer)
+          ..add(ChatRequest.serializer)
+          ..add(ChatResponse.serializer)
+          ..add(CommunicationCriterionResponse.serializer)
+          ..add(CommunicationEvaluationResponse.serializer)
+          ..add(ConclusionsRequest.serializer)
+          ..add(ConclusionsResponse.serializer)
+          ..add(CreateCaseRequest.serializer)
+          ..add(CreateCaseRequestDifficultyEnum.serializer)
+          ..add(CreateCaseRequestLanguageEnum.serializer)
+          ..add(CreateCaseRequestSexEnum.serializer)
+          ..add(CreateCaseRequestStatusEnum.serializer)
+          ..add(DebriefResponse.serializer)
+          ..add(DifferentialDiagnosisItem.serializer)
+          ..add(EvaluationFindingResponse.serializer)
+          ..add(ExpectedTestsRequest.serializer)
+          ..add(ExpectedTestsResponse.serializer)
+          ..add(HTTPValidationError.serializer)
+          ..add(InvestigationResultRequest.serializer)
+          ..add(InvestigationResultRequestResultTypeEnum.serializer)
+          ..add(InvestigationResultResponse.serializer)
+          ..add(InvestigationsRequest.serializer)
+          ..add(InvestigationsResponse.serializer)
+          ..add(KeyHistoryPointsRequest.serializer)
+          ..add(KeyHistoryPointsResponse.serializer)
+          ..add(LocationInner.serializer)
+          ..add(ManagementRequest.serializer)
+          ..add(ManagementResponse.serializer)
+          ..add(Medication.serializer)
+          ..add(MessageResponse.serializer)
+          ..add(OrderTestRequest.serializer)
+          ..add(PasswordResetConfirm.serializer)
+          ..add(PasswordResetRequest.serializer)
+          ..add(ProgressSummary.serializer)
+          ..add(RefreshRequest.serializer)
+          ..add(ScoresResponse.serializer)
+          ..add(ScoringRequest.serializer)
+          ..add(ScoringResponse.serializer)
+          ..add(SessionDetailResponse.serializer)
+          ..add(SessionListResponse.serializer)
+          ..add(SessionResponse.serializer)
+          ..add(SessionStateResponse.serializer)
+          ..add(SessionSummary.serializer)
+          ..add(SignupRequest.serializer)
+          ..add(StartSessionRequest.serializer)
+          ..add(TestResultResponse.serializer)
+          ..add(TokenResponse.serializer)
+          ..add(TreatmentPlan.serializer)
+          ..add(UpdateCaseRequest.serializer)
+          ..add(UpdateCaseRequestDifficultyEnum.serializer)
+          ..add(UpdateCaseRequestLanguageEnum.serializer)
+          ..add(UpdateCaseRequestSexEnum.serializer)
+          ..add(UpdateCaseRequestStatusEnum.serializer)
+          ..add(UserResponse.serializer)
+          ..add(ValidationError.serializer)
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(AcceptableAnswerRequest),
+            ]),
+            () => ListBuilder<AcceptableAnswerRequest>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(AcceptableAnswerResponse),
+            ]),
+            () => ListBuilder<AcceptableAnswerResponse>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(ActionLogEntry)]),
+            () => ListBuilder<ActionLogEntry>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(AvailableTestItem),
+            ]),
+            () => ListBuilder<AvailableTestItem>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(CommunicationCriterionResponse),
+            ]),
+            () => ListBuilder<CommunicationCriterionResponse>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(DifferentialDiagnosisItem),
+            ]),
+            () => ListBuilder<DifferentialDiagnosisItem>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(EvaluationFindingResponse),
+            ]),
+            () => ListBuilder<EvaluationFindingResponse>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltMap, const [
+              const FullType(String),
+              const FullType.nullable(JsonObject),
+            ]),
+            () => MapBuilder<String, JsonObject?>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltMap, const [
+              const FullType(String),
+              const FullType.nullable(JsonObject),
+            ]),
+            () => MapBuilder<String, JsonObject?>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(LocationInner)]),
+            () => ListBuilder<LocationInner>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(Medication)]),
+            () => ListBuilder<Medication>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(SessionSummary)]),
+            () => ListBuilder<SessionSummary>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(InvestigationResultRequest),
+            ]),
+            () => ListBuilder<InvestigationResultRequest>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(InvestigationResultResponse),
+            ]),
+            () => ListBuilder<InvestigationResultResponse>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(ValidationError)]),
+            () => ListBuilder<ValidationError>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltMap, const [
+              const FullType(String),
+              const FullType.nullable(JsonObject),
+            ]),
+            () => MapBuilder<String, JsonObject?>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltMap, const [
+              const FullType(String),
+              const FullType.nullable(JsonObject),
+            ]),
+            () => MapBuilder<String, JsonObject?>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(ChatMessage)]),
+            () => ListBuilder<ChatMessage>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltMap, const [
+              const FullType(String),
+              const FullType.nullable(JsonObject),
+            ]),
+            () => MapBuilder<String, JsonObject?>(),
+          ))
+        .build();
 
 // ignore_for_file: deprecated_member_use_from_same_package,type=lint

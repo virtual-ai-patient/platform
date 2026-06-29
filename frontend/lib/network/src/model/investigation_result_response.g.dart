@@ -18,21 +18,21 @@ class _$InvestigationResultResponse extends InvestigationResultResponse {
   @override
   final String? referenceRange;
 
-  factory _$InvestigationResultResponse(
-          [void Function(InvestigationResultResponseBuilder)? updates]) =>
-      (InvestigationResultResponseBuilder()..update(updates))._build();
+  factory _$InvestigationResultResponse([
+    void Function(InvestigationResultResponseBuilder)? updates,
+  ]) => (InvestigationResultResponseBuilder()..update(updates))._build();
 
-  _$InvestigationResultResponse._(
-      {required this.testName,
-      required this.resultType,
-      required this.value,
-      this.unit,
-      this.referenceRange})
-      : super._();
+  _$InvestigationResultResponse._({
+    required this.testName,
+    required this.resultType,
+    required this.value,
+    this.unit,
+    this.referenceRange,
+  }) : super._();
   @override
   InvestigationResultResponse rebuild(
-          void Function(InvestigationResultResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(InvestigationResultResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   InvestigationResultResponseBuilder toBuilder() =>
@@ -75,8 +75,10 @@ class _$InvestigationResultResponse extends InvestigationResultResponse {
 
 class InvestigationResultResponseBuilder
     implements
-        Builder<InvestigationResultResponse,
-            InvestigationResultResponseBuilder> {
+        Builder<
+          InvestigationResultResponse,
+          InvestigationResultResponseBuilder
+        > {
   _$InvestigationResultResponse? _$v;
 
   String? _testName;
@@ -131,14 +133,24 @@ class InvestigationResultResponseBuilder
   InvestigationResultResponse build() => _build();
 
   _$InvestigationResultResponse _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$InvestigationResultResponse._(
           testName: BuiltValueNullFieldError.checkNotNull(
-              testName, r'InvestigationResultResponse', 'testName'),
+            testName,
+            r'InvestigationResultResponse',
+            'testName',
+          ),
           resultType: BuiltValueNullFieldError.checkNotNull(
-              resultType, r'InvestigationResultResponse', 'resultType'),
+            resultType,
+            r'InvestigationResultResponse',
+            'resultType',
+          ),
           value: BuiltValueNullFieldError.checkNotNull(
-              value, r'InvestigationResultResponse', 'value'),
+            value,
+            r'InvestigationResultResponse',
+            'value',
+          ),
           unit: unit,
           referenceRange: referenceRange,
         );

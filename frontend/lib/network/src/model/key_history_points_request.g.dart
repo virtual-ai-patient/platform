@@ -14,17 +14,19 @@ class _$KeyHistoryPointsRequest extends KeyHistoryPointsRequest {
   @override
   final BuiltList<String> redFlags;
 
-  factory _$KeyHistoryPointsRequest(
-          [void Function(KeyHistoryPointsRequestBuilder)? updates]) =>
-      (KeyHistoryPointsRequestBuilder()..update(updates))._build();
+  factory _$KeyHistoryPointsRequest([
+    void Function(KeyHistoryPointsRequestBuilder)? updates,
+  ]) => (KeyHistoryPointsRequestBuilder()..update(updates))._build();
 
-  _$KeyHistoryPointsRequest._(
-      {required this.mustAsk, required this.niceToAsk, required this.redFlags})
-      : super._();
+  _$KeyHistoryPointsRequest._({
+    required this.mustAsk,
+    required this.niceToAsk,
+    required this.redFlags,
+  }) : super._();
   @override
   KeyHistoryPointsRequest rebuild(
-          void Function(KeyHistoryPointsRequestBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(KeyHistoryPointsRequestBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   KeyHistoryPointsRequestBuilder toBuilder() =>
@@ -110,7 +112,8 @@ class KeyHistoryPointsRequestBuilder
   _$KeyHistoryPointsRequest _build() {
     _$KeyHistoryPointsRequest _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$KeyHistoryPointsRequest._(
             mustAsk: mustAsk.build(),
             niceToAsk: niceToAsk.build(),
@@ -127,7 +130,10 @@ class KeyHistoryPointsRequestBuilder
         redFlags.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'KeyHistoryPointsRequest', _$failedField, e.toString());
+          r'KeyHistoryPointsRequest',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

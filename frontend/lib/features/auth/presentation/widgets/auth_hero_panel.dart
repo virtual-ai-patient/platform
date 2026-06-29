@@ -39,7 +39,8 @@ class AuthHeroPanel extends StatelessWidget {
           ),
           const SizedBox(height: 26),
           const _HeroBullet(
-              text: 'Practice diagnostic reasoning with realistic cases'),
+            text: 'Practice diagnostic reasoning with realistic cases',
+          ),
           const _HeroBullet(text: 'Receive deterministic, objective feedback'),
           const _HeroBullet(text: 'Train without patient-risk constraints'),
         ],

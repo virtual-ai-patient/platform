@@ -14,19 +14,19 @@ class _$InvestigationsResponse extends InvestigationsResponse {
   @override
   final BuiltList<InvestigationResultResponse> results;
 
-  factory _$InvestigationsResponse(
-          [void Function(InvestigationsResponseBuilder)? updates]) =>
-      (InvestigationsResponseBuilder()..update(updates))._build();
+  factory _$InvestigationsResponse([
+    void Function(InvestigationsResponseBuilder)? updates,
+  ]) => (InvestigationsResponseBuilder()..update(updates))._build();
 
-  _$InvestigationsResponse._(
-      {required this.catalogHints,
-      required this.expected,
-      required this.results})
-      : super._();
+  _$InvestigationsResponse._({
+    required this.catalogHints,
+    required this.expected,
+    required this.results,
+  }) : super._();
   @override
   InvestigationsResponse rebuild(
-          void Function(InvestigationsResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(InvestigationsResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   InvestigationsResponseBuilder toBuilder() =>
@@ -114,7 +114,8 @@ class InvestigationsResponseBuilder
   _$InvestigationsResponse _build() {
     _$InvestigationsResponse _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$InvestigationsResponse._(
             catalogHints: catalogHints.build(),
             expected: expected.build(),
@@ -131,7 +132,10 @@ class InvestigationsResponseBuilder
         results.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'InvestigationsResponse', _$failedField, e.toString());
+          r'InvestigationsResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

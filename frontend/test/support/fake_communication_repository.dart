@@ -44,25 +44,31 @@ class FakeCommunicationRepository implements CommunicationRepositoryContract {
 g.CommunicationEvaluationResponse fakeCommunicationEvaluation({
   required String sessionId,
 }) {
-  return g.CommunicationEvaluationResponse((b) => b
-    ..sessionId = sessionId
-    ..model = 'mock'
-    ..promptVersion = 'v1'
-    ..totalScore = 76
-    ..createdAt = DateTime.utc(2026, 6, 19, 12)
-    ..criteria.replace(BuiltList<g.CommunicationCriterionResponse>([
-      _criterion('open_ended_questions', 4),
-      _criterion('empathy', 4),
-      _criterion('structured_history', 3),
-      _criterion('closing_the_loop', 4),
-      _criterion('no_leading_questions', 3),
-    ])));
+  return g.CommunicationEvaluationResponse(
+    (b) => b
+      ..sessionId = sessionId
+      ..model = 'mock'
+      ..promptVersion = 'v1'
+      ..totalScore = 76
+      ..createdAt = DateTime.utc(2026, 6, 19, 12)
+      ..criteria.replace(
+        BuiltList<g.CommunicationCriterionResponse>([
+          _criterion('open_ended_questions', 4),
+          _criterion('empathy', 4),
+          _criterion('structured_history', 3),
+          _criterion('closing_the_loop', 4),
+          _criterion('no_leading_questions', 3),
+        ]),
+      ),
+  );
 }
 
 g.CommunicationCriterionResponse _criterion(String key, int score) {
-  return g.CommunicationCriterionResponse((b) => b
-    ..criterion = key
-    ..score = score
-    ..rationale = 'Feedback for $key.'
-    ..quote = 'Can you tell me more about that?');
+  return g.CommunicationCriterionResponse(
+    (b) => b
+      ..criterion = key
+      ..score = score
+      ..rationale = 'Feedback for $key.'
+      ..quote = 'Can you tell me more about that?',
+  );
 }

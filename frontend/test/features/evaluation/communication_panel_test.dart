@@ -9,9 +9,7 @@ import '../../support/fake_communication_repository.dart';
 void main() {
   testWidgets('shows analyzing skeleton while loading', (tester) async {
     final gate = Completer<void>();
-    final repo = FakeCommunicationRepository(
-      onGet: () => gate.future,
-    );
+    final repo = FakeCommunicationRepository(onGet: () => gate.future);
 
     await tester.pumpWidget(
       MaterialApp(

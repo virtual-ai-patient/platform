@@ -48,7 +48,7 @@ class SessionsApi {
   /// Returns a [Future] containing a [Response] with a [ConclusionsResponse] as data
   /// Throws [DioException] if API call or serialization fails
   Future<Response<ConclusionsResponse>>
-      abandonSessionSessionsSessionIdAbandonPost({
+  abandonSessionSessionsSessionIdAbandonPost({
     required String sessionId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -58,20 +58,21 @@ class SessionsApi {
     ProgressCallback? onReceiveProgress,
   }) async {
     final _path = r'/sessions/{session_id}/abandon'.replaceAll(
-        '{' r'session_id' '}',
-        encodeQueryParameter(_serializers, sessionId, const FullType(String))
-            .toString());
+      '{'
+      r'session_id'
+      '}',
+      encodeQueryParameter(
+        _serializers,
+        sessionId,
+        const FullType(String),
+      ).toString(),
+    );
     final _options = Options(
       method: r'POST',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
+      headers: <String, dynamic>{...?headers},
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
-          {
-            'type': 'oauth2',
-            'name': 'OAuth2PasswordBearer',
-          },
+          {'type': 'oauth2', 'name': 'OAuth2PasswordBearer'},
         ],
         ...?extra,
       },
@@ -93,9 +94,10 @@ class SessionsApi {
       _responseData = rawResponse == null
           ? null
           : _serializers.deserialize(
-              rawResponse,
-              specifiedType: const FullType(ConclusionsResponse),
-            ) as ConclusionsResponse;
+                  rawResponse,
+                  specifiedType: const FullType(ConclusionsResponse),
+                )
+                as ConclusionsResponse;
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
@@ -133,7 +135,7 @@ class SessionsApi {
   /// Returns a [Future] containing a [Response] with a [AvailableTestsResponse] as data
   /// Throws [DioException] if API call or serialization fails
   Future<Response<AvailableTestsResponse>>
-      availableTestsSessionsSessionIdAvailableTestsGet({
+  availableTestsSessionsSessionIdAvailableTestsGet({
     required String sessionId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -143,20 +145,21 @@ class SessionsApi {
     ProgressCallback? onReceiveProgress,
   }) async {
     final _path = r'/sessions/{session_id}/available-tests'.replaceAll(
-        '{' r'session_id' '}',
-        encodeQueryParameter(_serializers, sessionId, const FullType(String))
-            .toString());
+      '{'
+      r'session_id'
+      '}',
+      encodeQueryParameter(
+        _serializers,
+        sessionId,
+        const FullType(String),
+      ).toString(),
+    );
     final _options = Options(
       method: r'GET',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
+      headers: <String, dynamic>{...?headers},
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
-          {
-            'type': 'oauth2',
-            'name': 'OAuth2PasswordBearer',
-          },
+          {'type': 'oauth2', 'name': 'OAuth2PasswordBearer'},
         ],
         ...?extra,
       },
@@ -178,9 +181,10 @@ class SessionsApi {
       _responseData = rawResponse == null
           ? null
           : _serializers.deserialize(
-              rawResponse,
-              specifiedType: const FullType(AvailableTestsResponse),
-            ) as AvailableTestsResponse;
+                  rawResponse,
+                  specifiedType: const FullType(AvailableTestsResponse),
+                )
+                as AvailableTestsResponse;
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
@@ -229,20 +233,21 @@ class SessionsApi {
     ProgressCallback? onReceiveProgress,
   }) async {
     final _path = r'/sessions/{session_id}/chat'.replaceAll(
-        '{' r'session_id' '}',
-        encodeQueryParameter(_serializers, sessionId, const FullType(String))
-            .toString());
+      '{'
+      r'session_id'
+      '}',
+      encodeQueryParameter(
+        _serializers,
+        sessionId,
+        const FullType(String),
+      ).toString(),
+    );
     final _options = Options(
       method: r'POST',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
+      headers: <String, dynamic>{...?headers},
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
-          {
-            'type': 'oauth2',
-            'name': 'OAuth2PasswordBearer',
-          },
+          {'type': 'oauth2', 'name': 'OAuth2PasswordBearer'},
         ],
         ...?extra,
       },
@@ -257,10 +262,7 @@ class SessionsApi {
       _bodyData = _serializers.serialize(chatRequest, specifiedType: _type);
     } catch (error, stackTrace) {
       throw DioException(
-        requestOptions: _options.compose(
-          _dio.options,
-          _path,
-        ),
+        requestOptions: _options.compose(_dio.options, _path),
         type: DioExceptionType.unknown,
         error: error,
         stackTrace: stackTrace,
@@ -283,9 +285,10 @@ class SessionsApi {
       _responseData = rawResponse == null
           ? null
           : _serializers.deserialize(
-              rawResponse,
-              specifiedType: const FullType(ChatResponse),
-            ) as ChatResponse;
+                  rawResponse,
+                  specifiedType: const FullType(ChatResponse),
+                )
+                as ChatResponse;
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
@@ -323,7 +326,7 @@ class SessionsApi {
   /// Returns a [Future] containing a [Response] with a [ConclusionsResponse] as data
   /// Throws [DioException] if API call or serialization fails
   Future<Response<ConclusionsResponse>>
-      finishSessionSessionsSessionIdFinishPost({
+  finishSessionSessionsSessionIdFinishPost({
     required String sessionId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -333,20 +336,21 @@ class SessionsApi {
     ProgressCallback? onReceiveProgress,
   }) async {
     final _path = r'/sessions/{session_id}/finish'.replaceAll(
-        '{' r'session_id' '}',
-        encodeQueryParameter(_serializers, sessionId, const FullType(String))
-            .toString());
+      '{'
+      r'session_id'
+      '}',
+      encodeQueryParameter(
+        _serializers,
+        sessionId,
+        const FullType(String),
+      ).toString(),
+    );
     final _options = Options(
       method: r'POST',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
+      headers: <String, dynamic>{...?headers},
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
-          {
-            'type': 'oauth2',
-            'name': 'OAuth2PasswordBearer',
-          },
+          {'type': 'oauth2', 'name': 'OAuth2PasswordBearer'},
         ],
         ...?extra,
       },
@@ -368,9 +372,10 @@ class SessionsApi {
       _responseData = rawResponse == null
           ? null
           : _serializers.deserialize(
-              rawResponse,
-              specifiedType: const FullType(ConclusionsResponse),
-            ) as ConclusionsResponse;
+                  rawResponse,
+                  specifiedType: const FullType(ConclusionsResponse),
+                )
+                as ConclusionsResponse;
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
@@ -408,7 +413,7 @@ class SessionsApi {
   /// Returns a [Future] containing a [Response] with a [CommunicationEvaluationResponse] as data
   /// Throws [DioException] if API call or serialization fails
   Future<Response<CommunicationEvaluationResponse>>
-      getCommunicationEvaluationSessionsSessionIdCommunicationEvaluationGet({
+  getCommunicationEvaluationSessionsSessionIdCommunicationEvaluationGet({
     required String sessionId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -418,20 +423,21 @@ class SessionsApi {
     ProgressCallback? onReceiveProgress,
   }) async {
     final _path = r'/sessions/{session_id}/communication-evaluation'.replaceAll(
-        '{' r'session_id' '}',
-        encodeQueryParameter(_serializers, sessionId, const FullType(String))
-            .toString());
+      '{'
+      r'session_id'
+      '}',
+      encodeQueryParameter(
+        _serializers,
+        sessionId,
+        const FullType(String),
+      ).toString(),
+    );
     final _options = Options(
       method: r'GET',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
+      headers: <String, dynamic>{...?headers},
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
-          {
-            'type': 'oauth2',
-            'name': 'OAuth2PasswordBearer',
-          },
+          {'type': 'oauth2', 'name': 'OAuth2PasswordBearer'},
         ],
         ...?extra,
       },
@@ -453,9 +459,12 @@ class SessionsApi {
       _responseData = rawResponse == null
           ? null
           : _serializers.deserialize(
-              rawResponse,
-              specifiedType: const FullType(CommunicationEvaluationResponse),
-            ) as CommunicationEvaluationResponse;
+                  rawResponse,
+                  specifiedType: const FullType(
+                    CommunicationEvaluationResponse,
+                  ),
+                )
+                as CommunicationEvaluationResponse;
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
@@ -502,20 +511,21 @@ class SessionsApi {
     ProgressCallback? onReceiveProgress,
   }) async {
     final _path = r'/sessions/{session_id}/debrief'.replaceAll(
-        '{' r'session_id' '}',
-        encodeQueryParameter(_serializers, sessionId, const FullType(String))
-            .toString());
+      '{'
+      r'session_id'
+      '}',
+      encodeQueryParameter(
+        _serializers,
+        sessionId,
+        const FullType(String),
+      ).toString(),
+    );
     final _options = Options(
       method: r'GET',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
+      headers: <String, dynamic>{...?headers},
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
-          {
-            'type': 'oauth2',
-            'name': 'OAuth2PasswordBearer',
-          },
+          {'type': 'oauth2', 'name': 'OAuth2PasswordBearer'},
         ],
         ...?extra,
       },
@@ -537,9 +547,10 @@ class SessionsApi {
       _responseData = rawResponse == null
           ? null
           : _serializers.deserialize(
-              rawResponse,
-              specifiedType: const FullType(DebriefResponse),
-            ) as DebriefResponse;
+                  rawResponse,
+                  specifiedType: const FullType(DebriefResponse),
+                )
+                as DebriefResponse;
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
@@ -586,20 +597,21 @@ class SessionsApi {
     ProgressCallback? onReceiveProgress,
   }) async {
     final _path = r'/sessions/{session_id}/scores'.replaceAll(
-        '{' r'session_id' '}',
-        encodeQueryParameter(_serializers, sessionId, const FullType(String))
-            .toString());
+      '{'
+      r'session_id'
+      '}',
+      encodeQueryParameter(
+        _serializers,
+        sessionId,
+        const FullType(String),
+      ).toString(),
+    );
     final _options = Options(
       method: r'GET',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
+      headers: <String, dynamic>{...?headers},
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
-          {
-            'type': 'oauth2',
-            'name': 'OAuth2PasswordBearer',
-          },
+          {'type': 'oauth2', 'name': 'OAuth2PasswordBearer'},
         ],
         ...?extra,
       },
@@ -621,9 +633,10 @@ class SessionsApi {
       _responseData = rawResponse == null
           ? null
           : _serializers.deserialize(
-              rawResponse,
-              specifiedType: const FullType(ScoresResponse),
-            ) as ScoresResponse;
+                  rawResponse,
+                  specifiedType: const FullType(ScoresResponse),
+                )
+                as ScoresResponse;
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
@@ -662,7 +675,7 @@ class SessionsApi {
   /// Returns a [Future] containing a [Response] with a [SessionStateResponse] as data
   /// Throws [DioException] if API call or serialization fails
   Future<Response<SessionStateResponse>>
-      getSessionStateSessionsSessionIdStateGet({
+  getSessionStateSessionsSessionIdStateGet({
     required String sessionId,
     int? cursor = 0,
     CancelToken? cancelToken,
@@ -673,20 +686,21 @@ class SessionsApi {
     ProgressCallback? onReceiveProgress,
   }) async {
     final _path = r'/sessions/{session_id}/state'.replaceAll(
-        '{' r'session_id' '}',
-        encodeQueryParameter(_serializers, sessionId, const FullType(String))
-            .toString());
+      '{'
+      r'session_id'
+      '}',
+      encodeQueryParameter(
+        _serializers,
+        sessionId,
+        const FullType(String),
+      ).toString(),
+    );
     final _options = Options(
       method: r'GET',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
+      headers: <String, dynamic>{...?headers},
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
-          {
-            'type': 'oauth2',
-            'name': 'OAuth2PasswordBearer',
-          },
+          {'type': 'oauth2', 'name': 'OAuth2PasswordBearer'},
         ],
         ...?extra,
       },
@@ -695,8 +709,11 @@ class SessionsApi {
 
     final _queryParameters = <String, dynamic>{
       if (cursor != null)
-        r'cursor':
-            encodeQueryParameter(_serializers, cursor, const FullType(int)),
+        r'cursor': encodeQueryParameter(
+          _serializers,
+          cursor,
+          const FullType(int),
+        ),
     };
 
     final _response = await _dio.request<Object>(
@@ -715,9 +732,10 @@ class SessionsApi {
       _responseData = rawResponse == null
           ? null
           : _serializers.deserialize(
-              rawResponse,
-              specifiedType: const FullType(SessionStateResponse),
-            ) as SessionStateResponse;
+                  rawResponse,
+                  specifiedType: const FullType(SessionStateResponse),
+                )
+                as SessionStateResponse;
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
@@ -754,7 +772,7 @@ class SessionsApi {
   /// Returns a [Future] containing a [Response] with a [BuiltList<ActiveSessionItem>] as data
   /// Throws [DioException] if API call or serialization fails
   Future<Response<BuiltList<ActiveSessionItem>>>
-      listActiveSessionsSessionsActiveGet({
+  listActiveSessionsSessionsActiveGet({
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -765,15 +783,10 @@ class SessionsApi {
     final _path = r'/sessions/active';
     final _options = Options(
       method: r'GET',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
+      headers: <String, dynamic>{...?headers},
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
-          {
-            'type': 'oauth2',
-            'name': 'OAuth2PasswordBearer',
-          },
+          {'type': 'oauth2', 'name': 'OAuth2PasswordBearer'},
         ],
         ...?extra,
       },
@@ -795,10 +808,12 @@ class SessionsApi {
       _responseData = rawResponse == null
           ? null
           : _serializers.deserialize(
-              rawResponse,
-              specifiedType:
-                  const FullType(BuiltList, [FullType(ActiveSessionItem)]),
-            ) as BuiltList<ActiveSessionItem>;
+                  rawResponse,
+                  specifiedType: const FullType(BuiltList, [
+                    FullType(ActiveSessionItem),
+                  ]),
+                )
+                as BuiltList<ActiveSessionItem>;
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
@@ -810,6 +825,84 @@ class SessionsApi {
     }
 
     return Response<BuiltList<ActiveSessionItem>>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// List Completed Sessions
+  ///
+  ///
+  /// Parameters:
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [BuiltList<SessionResponse>] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<BuiltList<SessionResponse>>>
+  listCompletedSessionsSessionsCompletedGet({
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/sessions/completed';
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{...?headers},
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {'type': 'oauth2', 'name': 'OAuth2PasswordBearer'},
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    BuiltList<SessionResponse>? _responseData;
+
+    try {
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null
+          ? null
+          : _serializers.deserialize(
+                  rawResponse,
+                  specifiedType: const FullType(BuiltList, [
+                    FullType(SessionResponse),
+                  ]),
+                )
+                as BuiltList<SessionResponse>;
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<BuiltList<SessionResponse>>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -837,7 +930,7 @@ class SessionsApi {
   /// Returns a [Future] containing a [Response] with a [TestResultResponse] as data
   /// Throws [DioException] if API call or serialization fails
   Future<Response<TestResultResponse>>
-      orderTestEndpointSessionsSessionIdOrderTestPost({
+  orderTestEndpointSessionsSessionIdOrderTestPost({
     required String sessionId,
     required OrderTestRequest orderTestRequest,
     CancelToken? cancelToken,
@@ -848,20 +941,21 @@ class SessionsApi {
     ProgressCallback? onReceiveProgress,
   }) async {
     final _path = r'/sessions/{session_id}/order-test'.replaceAll(
-        '{' r'session_id' '}',
-        encodeQueryParameter(_serializers, sessionId, const FullType(String))
-            .toString());
+      '{'
+      r'session_id'
+      '}',
+      encodeQueryParameter(
+        _serializers,
+        sessionId,
+        const FullType(String),
+      ).toString(),
+    );
     final _options = Options(
       method: r'POST',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
+      headers: <String, dynamic>{...?headers},
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
-          {
-            'type': 'oauth2',
-            'name': 'OAuth2PasswordBearer',
-          },
+          {'type': 'oauth2', 'name': 'OAuth2PasswordBearer'},
         ],
         ...?extra,
       },
@@ -873,14 +967,13 @@ class SessionsApi {
 
     try {
       const _type = FullType(OrderTestRequest);
-      _bodyData =
-          _serializers.serialize(orderTestRequest, specifiedType: _type);
+      _bodyData = _serializers.serialize(
+        orderTestRequest,
+        specifiedType: _type,
+      );
     } catch (error, stackTrace) {
       throw DioException(
-        requestOptions: _options.compose(
-          _dio.options,
-          _path,
-        ),
+        requestOptions: _options.compose(_dio.options, _path),
         type: DioExceptionType.unknown,
         error: error,
         stackTrace: stackTrace,
@@ -903,9 +996,10 @@ class SessionsApi {
       _responseData = rawResponse == null
           ? null
           : _serializers.deserialize(
-              rawResponse,
-              specifiedType: const FullType(TestResultResponse),
-            ) as TestResultResponse;
+                  rawResponse,
+                  specifiedType: const FullType(TestResultResponse),
+                )
+                as TestResultResponse;
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
@@ -956,15 +1050,10 @@ class SessionsApi {
     final _path = r'/sessions/start';
     final _options = Options(
       method: r'POST',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
+      headers: <String, dynamic>{...?headers},
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
-          {
-            'type': 'oauth2',
-            'name': 'OAuth2PasswordBearer',
-          },
+          {'type': 'oauth2', 'name': 'OAuth2PasswordBearer'},
         ],
         ...?extra,
       },
@@ -974,16 +1063,21 @@ class SessionsApi {
 
     final _queryParameters = <String, dynamic>{
       if (force != null)
-        r'force':
-            encodeQueryParameter(_serializers, force, const FullType(bool)),
+        r'force': encodeQueryParameter(
+          _serializers,
+          force,
+          const FullType(bool),
+        ),
     };
 
     dynamic _bodyData;
 
     try {
       const _type = FullType(StartSessionRequest);
-      _bodyData =
-          _serializers.serialize(startSessionRequest, specifiedType: _type);
+      _bodyData = _serializers.serialize(
+        startSessionRequest,
+        specifiedType: _type,
+      );
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _options.compose(
@@ -1014,9 +1108,10 @@ class SessionsApi {
       _responseData = rawResponse == null
           ? null
           : _serializers.deserialize(
-              rawResponse,
-              specifiedType: const FullType(SessionResponse),
-            ) as SessionResponse;
+                  rawResponse,
+                  specifiedType: const FullType(SessionResponse),
+                )
+                as SessionResponse;
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
@@ -1054,7 +1149,7 @@ class SessionsApi {
   /// Returns a [Future] containing a [Response] with a [CommunicationEvaluationResponse] as data
   /// Throws [DioException] if API call or serialization fails
   Future<Response<CommunicationEvaluationResponse>>
-      triggerCommunicationEvaluationSessionsSessionIdCommunicationEvaluationPost({
+  triggerCommunicationEvaluationSessionsSessionIdCommunicationEvaluationPost({
     required String sessionId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -1064,20 +1159,21 @@ class SessionsApi {
     ProgressCallback? onReceiveProgress,
   }) async {
     final _path = r'/sessions/{session_id}/communication-evaluation'.replaceAll(
-        '{' r'session_id' '}',
-        encodeQueryParameter(_serializers, sessionId, const FullType(String))
-            .toString());
+      '{'
+      r'session_id'
+      '}',
+      encodeQueryParameter(
+        _serializers,
+        sessionId,
+        const FullType(String),
+      ).toString(),
+    );
     final _options = Options(
       method: r'POST',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
+      headers: <String, dynamic>{...?headers},
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
-          {
-            'type': 'oauth2',
-            'name': 'OAuth2PasswordBearer',
-          },
+          {'type': 'oauth2', 'name': 'OAuth2PasswordBearer'},
         ],
         ...?extra,
       },
@@ -1099,9 +1195,12 @@ class SessionsApi {
       _responseData = rawResponse == null
           ? null
           : _serializers.deserialize(
-              rawResponse,
-              specifiedType: const FullType(CommunicationEvaluationResponse),
-            ) as CommunicationEvaluationResponse;
+                  rawResponse,
+                  specifiedType: const FullType(
+                    CommunicationEvaluationResponse,
+                  ),
+                )
+                as CommunicationEvaluationResponse;
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
@@ -1140,7 +1239,7 @@ class SessionsApi {
   /// Returns a [Future] containing a [Response] with a [ConclusionsResponse] as data
   /// Throws [DioException] if API call or serialization fails
   Future<Response<ConclusionsResponse>>
-      updateConclusionsSessionsSessionIdConclusionsPatch({
+  updateConclusionsSessionsSessionIdConclusionsPatch({
     required String sessionId,
     required ConclusionsRequest conclusionsRequest,
     CancelToken? cancelToken,
@@ -1151,20 +1250,21 @@ class SessionsApi {
     ProgressCallback? onReceiveProgress,
   }) async {
     final _path = r'/sessions/{session_id}/conclusions'.replaceAll(
-        '{' r'session_id' '}',
-        encodeQueryParameter(_serializers, sessionId, const FullType(String))
-            .toString());
+      '{'
+      r'session_id'
+      '}',
+      encodeQueryParameter(
+        _serializers,
+        sessionId,
+        const FullType(String),
+      ).toString(),
+    );
     final _options = Options(
       method: r'PATCH',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
+      headers: <String, dynamic>{...?headers},
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
-          {
-            'type': 'oauth2',
-            'name': 'OAuth2PasswordBearer',
-          },
+          {'type': 'oauth2', 'name': 'OAuth2PasswordBearer'},
         ],
         ...?extra,
       },
@@ -1176,14 +1276,13 @@ class SessionsApi {
 
     try {
       const _type = FullType(ConclusionsRequest);
-      _bodyData =
-          _serializers.serialize(conclusionsRequest, specifiedType: _type);
+      _bodyData = _serializers.serialize(
+        conclusionsRequest,
+        specifiedType: _type,
+      );
     } catch (error, stackTrace) {
       throw DioException(
-        requestOptions: _options.compose(
-          _dio.options,
-          _path,
-        ),
+        requestOptions: _options.compose(_dio.options, _path),
         type: DioExceptionType.unknown,
         error: error,
         stackTrace: stackTrace,
@@ -1206,9 +1305,10 @@ class SessionsApi {
       _responseData = rawResponse == null
           ? null
           : _serializers.deserialize(
-              rawResponse,
-              specifiedType: const FullType(ConclusionsResponse),
-            ) as ConclusionsResponse;
+                  rawResponse,
+                  specifiedType: const FullType(ConclusionsResponse),
+                )
+                as ConclusionsResponse;
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,

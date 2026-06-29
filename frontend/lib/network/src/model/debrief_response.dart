@@ -130,20 +130,25 @@ class _$DebriefResponseSerializer
     yield r'findings';
     yield serializers.serialize(
       object.findings,
-      specifiedType:
-          const FullType(BuiltList, [FullType(EvaluationFindingResponse)]),
+      specifiedType: const FullType(BuiltList, [
+        FullType(EvaluationFindingResponse),
+      ]),
     );
     yield r'reference_solution';
     yield serializers.serialize(
       object.referenceSolution,
-      specifiedType: const FullType(
-          BuiltMap, [FullType(String), FullType.nullable(JsonObject)]),
+      specifiedType: const FullType(BuiltMap, [
+        FullType(String),
+        FullType.nullable(JsonObject),
+      ]),
     );
     yield r'conclusions';
     yield serializers.serialize(
       object.conclusions,
-      specifiedType: const FullType(
-          BuiltMap, [FullType(String), FullType.nullable(JsonObject)]),
+      specifiedType: const FullType(BuiltMap, [
+        FullType(String),
+        FullType.nullable(JsonObject),
+      ]),
     );
   }
 
@@ -153,9 +158,11 @@ class _$DebriefResponseSerializer
     DebriefResponse object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(
+      serializers,
+      object,
+      specifiedType: specifiedType,
+    ).toList();
   }
 
   void _deserializeProperties(
@@ -171,83 +178,92 @@ class _$DebriefResponseSerializer
       final value = serializedList[i + 1];
       switch (key) {
         case r'session_id':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           result.sessionId = valueDes;
           break;
         case r'case_version':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          ) as int;
+          final valueDes =
+              serializers.deserialize(value, specifiedType: const FullType(int))
+                  as int;
           result.caseVersion = valueDes;
           break;
         case r'total_score':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(num),
-          ) as num;
+          final valueDes =
+              serializers.deserialize(value, specifiedType: const FullType(num))
+                  as num;
           result.totalScore = valueDes;
           break;
         case r'score_diagnosis':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(num),
-          ) as num;
+          final valueDes =
+              serializers.deserialize(value, specifiedType: const FullType(num))
+                  as num;
           result.scoreDiagnosis = valueDes;
           break;
         case r'score_diagnostics':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(num),
-          ) as num;
+          final valueDes =
+              serializers.deserialize(value, specifiedType: const FullType(num))
+                  as num;
           result.scoreDiagnostics = valueDes;
           break;
         case r'score_treatment':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(num),
-          ) as num;
+          final valueDes =
+              serializers.deserialize(value, specifiedType: const FullType(num))
+                  as num;
           result.scoreTreatment = valueDes;
           break;
         case r'score_safety':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(num),
-          ) as num;
+          final valueDes =
+              serializers.deserialize(value, specifiedType: const FullType(num))
+                  as num;
           result.scoreSafety = valueDes;
           break;
         case r'scored_at':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(DateTime),
-          ) as DateTime;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(DateTime),
+                  )
+                  as DateTime;
           result.scoredAt = valueDes;
           break;
         case r'findings':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(
-                BuiltList, [FullType(EvaluationFindingResponse)]),
-          ) as BuiltList<EvaluationFindingResponse>;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(BuiltList, [
+                      FullType(EvaluationFindingResponse),
+                    ]),
+                  )
+                  as BuiltList<EvaluationFindingResponse>;
           result.findings.replace(valueDes);
           break;
         case r'reference_solution':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(
-                BuiltMap, [FullType(String), FullType.nullable(JsonObject)]),
-          ) as BuiltMap<String, JsonObject?>;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(BuiltMap, [
+                      FullType(String),
+                      FullType.nullable(JsonObject),
+                    ]),
+                  )
+                  as BuiltMap<String, JsonObject?>;
           result.referenceSolution.replace(valueDes);
           break;
         case r'conclusions':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(
-                BuiltMap, [FullType(String), FullType.nullable(JsonObject)]),
-          ) as BuiltMap<String, JsonObject?>;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(BuiltMap, [
+                      FullType(String),
+                      FullType.nullable(JsonObject),
+                    ]),
+                  )
+                  as BuiltMap<String, JsonObject?>;
           result.conclusions.replace(valueDes);
           break;
         default:

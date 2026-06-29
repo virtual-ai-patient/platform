@@ -49,9 +49,9 @@ abstract class EvaluationFindingResponse
 
   EvaluationFindingResponse._();
 
-  factory EvaluationFindingResponse(
-          [void updates(EvaluationFindingResponseBuilder b)]) =
-      _$EvaluationFindingResponse;
+  factory EvaluationFindingResponse([
+    void updates(EvaluationFindingResponseBuilder b),
+  ]) = _$EvaluationFindingResponse;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(EvaluationFindingResponseBuilder b) => b;
@@ -66,7 +66,7 @@ class _$EvaluationFindingResponseSerializer
   @override
   final Iterable<Type> types = const [
     EvaluationFindingResponse,
-    _$EvaluationFindingResponse
+    _$EvaluationFindingResponse,
   ];
 
   @override
@@ -125,9 +125,11 @@ class _$EvaluationFindingResponseSerializer
     EvaluationFindingResponse object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(
+      serializers,
+      object,
+      specifiedType: specifiedType,
+    ).toList();
   }
 
   void _deserializeProperties(
@@ -143,59 +145,72 @@ class _$EvaluationFindingResponseSerializer
       final value = serializedList[i + 1];
       switch (key) {
         case r'category':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           result.category = valueDes;
           break;
         case r'type':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           result.type = valueDes;
           break;
         case r'severity':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           result.severity = valueDes;
           break;
         case r'expected':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           result.expected = valueDes;
           break;
         case r'actual':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           result.actual = valueDes;
           break;
         case r'why_matters':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           result.whyMatters = valueDes;
           break;
         case r'how_to_correct':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           result.howToCorrect = valueDes;
           break;
         case r'deduction_points':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(num),
-          ) as num;
+          final valueDes =
+              serializers.deserialize(value, specifiedType: const FullType(num))
+                  as num;
           result.deductionPoints = valueDes;
           break;
         default:

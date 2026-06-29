@@ -30,8 +30,11 @@ class AppPageFooter extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.info_outline,
-                  size: 16, color: AppColors.secondaryText),
+              Icon(
+                Icons.info_outline,
+                size: 16,
+                color: AppColors.secondaryText,
+              ),
               const SizedBox(width: 6),
               Flexible(
                 child: Text(

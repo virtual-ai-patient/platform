@@ -16,7 +16,7 @@ class _$ChatResponse extends ChatResponse {
       (ChatResponseBuilder()..update(updates))._build();
 
   _$ChatResponse._({required this.response, required this.loggedAt})
-      : super._();
+    : super._();
   @override
   ChatResponse rebuild(void Function(ChatResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -90,12 +90,19 @@ class ChatResponseBuilder
   ChatResponse build() => _build();
 
   _$ChatResponse _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$ChatResponse._(
           response: BuiltValueNullFieldError.checkNotNull(
-              response, r'ChatResponse', 'response'),
+            response,
+            r'ChatResponse',
+            'response',
+          ),
           loggedAt: BuiltValueNullFieldError.checkNotNull(
-              loggedAt, r'ChatResponse', 'loggedAt'),
+            loggedAt,
+            r'ChatResponse',
+            'loggedAt',
+          ),
         );
     replace(_$result);
     return _$result;

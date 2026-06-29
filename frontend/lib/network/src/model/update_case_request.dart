@@ -266,9 +266,11 @@ class _$UpdateCaseRequestSerializer
     UpdateCaseRequest object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(
+      serializers,
+      object,
+      specifiedType: specifiedType,
+    ).toList();
   }
 
   void _deserializeProperties(
@@ -284,159 +286,210 @@ class _$UpdateCaseRequestSerializer
       final value = serializedList[i + 1];
       switch (key) {
         case r'title':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType.nullable(String),
-          ) as String?;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType.nullable(String),
+                  )
+                  as String?;
           if (valueDes == null) continue;
           result.title = valueDes;
           break;
         case r'language':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType:
-                const FullType.nullable(UpdateCaseRequestLanguageEnum),
-          ) as UpdateCaseRequestLanguageEnum?;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType.nullable(
+                      UpdateCaseRequestLanguageEnum,
+                    ),
+                  )
+                  as UpdateCaseRequestLanguageEnum?;
           if (valueDes == null) continue;
           result.language = valueDes;
           break;
         case r'difficulty':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType:
-                const FullType.nullable(UpdateCaseRequestDifficultyEnum),
-          ) as UpdateCaseRequestDifficultyEnum?;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType.nullable(
+                      UpdateCaseRequestDifficultyEnum,
+                    ),
+                  )
+                  as UpdateCaseRequestDifficultyEnum?;
           if (valueDes == null) continue;
           result.difficulty = valueDes;
           break;
         case r'specialty':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType.nullable(String),
-          ) as String?;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType.nullable(String),
+                  )
+                  as String?;
           if (valueDes == null) continue;
           result.specialty = valueDes;
           break;
         case r'tags':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType:
-                const FullType.nullable(BuiltList, [FullType(String)]),
-          ) as BuiltList<String>?;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType.nullable(BuiltList, [
+                      FullType(String),
+                    ]),
+                  )
+                  as BuiltList<String>?;
           if (valueDes == null) continue;
           result.tags.replace(valueDes);
           break;
         case r'age':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType.nullable(int),
-          ) as int?;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType.nullable(int),
+                  )
+                  as int?;
           if (valueDes == null) continue;
           result.age = valueDes;
           break;
         case r'sex':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType.nullable(UpdateCaseRequestSexEnum),
-          ) as UpdateCaseRequestSexEnum?;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType.nullable(
+                      UpdateCaseRequestSexEnum,
+                    ),
+                  )
+                  as UpdateCaseRequestSexEnum?;
           if (valueDes == null) continue;
           result.sex = valueDes;
           break;
         case r'persona':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType.nullable(String),
-          ) as String?;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType.nullable(String),
+                  )
+                  as String?;
           if (valueDes == null) continue;
           result.persona = valueDes;
           break;
         case r'tone_presets':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType:
-                const FullType.nullable(BuiltList, [FullType(String)]),
-          ) as BuiltList<String>?;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType.nullable(BuiltList, [
+                      FullType(String),
+                    ]),
+                  )
+                  as BuiltList<String>?;
           if (valueDes == null) continue;
           result.tonePresets.replace(valueDes);
           break;
         case r'chief_complaint':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType.nullable(String),
-          ) as String?;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType.nullable(String),
+                  )
+                  as String?;
           if (valueDes == null) continue;
           result.chiefComplaint = valueDes;
           break;
         case r'history_of_present_illness':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType.nullable(String),
-          ) as String?;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType.nullable(String),
+                  )
+                  as String?;
           if (valueDes == null) continue;
           result.historyOfPresentIllness = valueDes;
           break;
         case r'key_history_points':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType.nullable(KeyHistoryPointsRequest),
-          ) as KeyHistoryPointsRequest?;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType.nullable(
+                      KeyHistoryPointsRequest,
+                    ),
+                  )
+                  as KeyHistoryPointsRequest?;
           if (valueDes == null) continue;
           result.keyHistoryPoints.replace(valueDes);
           break;
         case r'final_diagnosis':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType.nullable(String),
-          ) as String?;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType.nullable(String),
+                  )
+                  as String?;
           if (valueDes == null) continue;
           result.finalDiagnosis = valueDes;
           break;
         case r'differential':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType:
-                const FullType.nullable(BuiltList, [FullType(String)]),
-          ) as BuiltList<String>?;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType.nullable(BuiltList, [
+                      FullType(String),
+                    ]),
+                  )
+                  as BuiltList<String>?;
           if (valueDes == null) continue;
           result.differential.replace(valueDes);
           break;
         case r'severity_or_stage':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType.nullable(String),
-          ) as String?;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType.nullable(String),
+                  )
+                  as String?;
           if (valueDes == null) continue;
           result.severityOrStage = valueDes;
           break;
         case r'investigations':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType.nullable(InvestigationsRequest),
-          ) as InvestigationsRequest?;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType.nullable(
+                      InvestigationsRequest,
+                    ),
+                  )
+                  as InvestigationsRequest?;
           if (valueDes == null) continue;
           result.investigations.replace(valueDes);
           break;
         case r'management':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType.nullable(ManagementRequest),
-          ) as ManagementRequest?;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType.nullable(ManagementRequest),
+                  )
+                  as ManagementRequest?;
           if (valueDes == null) continue;
           result.management.replace(valueDes);
           break;
         case r'scoring':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType.nullable(ScoringRequest),
-          ) as ScoringRequest?;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType.nullable(ScoringRequest),
+                  )
+                  as ScoringRequest?;
           if (valueDes == null) continue;
           result.scoring.replace(valueDes);
           break;
         case r'status':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType.nullable(UpdateCaseRequestStatusEnum),
-          ) as UpdateCaseRequestStatusEnum?;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType.nullable(
+                      UpdateCaseRequestStatusEnum,
+                    ),
+                  )
+                  as UpdateCaseRequestStatusEnum?;
           if (valueDes == null) continue;
           result.status = valueDes;
           break;

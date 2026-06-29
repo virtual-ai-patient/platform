@@ -19,12 +19,12 @@ class _$TreatmentPlan extends TreatmentPlan {
   factory _$TreatmentPlan([void Function(TreatmentPlanBuilder)? updates]) =>
       (TreatmentPlanBuilder()..update(updates))._build();
 
-  _$TreatmentPlan._(
-      {this.medications,
-      this.nonPharmacological,
-      this.referrals,
-      this.followUp})
-      : super._();
+  _$TreatmentPlan._({
+    this.medications,
+    this.nonPharmacological,
+    this.referrals,
+    this.followUp,
+  }) : super._();
   @override
   TreatmentPlan rebuild(void Function(TreatmentPlanBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -123,7 +123,8 @@ class TreatmentPlanBuilder
   _$TreatmentPlan _build() {
     _$TreatmentPlan _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$TreatmentPlan._(
             medications: _medications?.build(),
             nonPharmacological: _nonPharmacological?.build(),
@@ -143,7 +144,10 @@ class TreatmentPlanBuilder
         _followUp?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'TreatmentPlan', _$failedField, e.toString());
+          r'TreatmentPlan',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

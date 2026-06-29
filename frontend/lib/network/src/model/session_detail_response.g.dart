@@ -20,22 +20,22 @@ class _$SessionDetailResponse extends SessionDetailResponse {
   @override
   final BuiltList<ActionLogEntry> actionLog;
 
-  factory _$SessionDetailResponse(
-          [void Function(SessionDetailResponseBuilder)? updates]) =>
-      (SessionDetailResponseBuilder()..update(updates))._build();
+  factory _$SessionDetailResponse([
+    void Function(SessionDetailResponseBuilder)? updates,
+  ]) => (SessionDetailResponseBuilder()..update(updates))._build();
 
-  _$SessionDetailResponse._(
-      {required this.sessionId,
-      required this.studentUsername,
-      required this.caseId,
-      required this.caseTitle,
-      required this.createdAt,
-      required this.actionLog})
-      : super._();
+  _$SessionDetailResponse._({
+    required this.sessionId,
+    required this.studentUsername,
+    required this.caseId,
+    required this.caseTitle,
+    required this.createdAt,
+    required this.actionLog,
+  }) : super._();
   @override
   SessionDetailResponse rebuild(
-          void Function(SessionDetailResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(SessionDetailResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   SessionDetailResponseBuilder toBuilder() =>
@@ -144,18 +144,34 @@ class SessionDetailResponseBuilder
   _$SessionDetailResponse _build() {
     _$SessionDetailResponse _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$SessionDetailResponse._(
             sessionId: BuiltValueNullFieldError.checkNotNull(
-                sessionId, r'SessionDetailResponse', 'sessionId'),
+              sessionId,
+              r'SessionDetailResponse',
+              'sessionId',
+            ),
             studentUsername: BuiltValueNullFieldError.checkNotNull(
-                studentUsername, r'SessionDetailResponse', 'studentUsername'),
+              studentUsername,
+              r'SessionDetailResponse',
+              'studentUsername',
+            ),
             caseId: BuiltValueNullFieldError.checkNotNull(
-                caseId, r'SessionDetailResponse', 'caseId'),
+              caseId,
+              r'SessionDetailResponse',
+              'caseId',
+            ),
             caseTitle: BuiltValueNullFieldError.checkNotNull(
-                caseTitle, r'SessionDetailResponse', 'caseTitle'),
+              caseTitle,
+              r'SessionDetailResponse',
+              'caseTitle',
+            ),
             createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, r'SessionDetailResponse', 'createdAt'),
+              createdAt,
+              r'SessionDetailResponse',
+              'createdAt',
+            ),
             actionLog: actionLog.build(),
           );
     } catch (_) {
@@ -165,7 +181,10 @@ class SessionDetailResponseBuilder
         actionLog.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'SessionDetailResponse', _$failedField, e.toString());
+          r'SessionDetailResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

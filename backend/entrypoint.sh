@@ -2,6 +2,8 @@
 set -e
 
 uv run python <<'PY'
+import subprocess
+
 from sqlalchemy import create_engine, inspect, text
 
 from config import DATABASE_URL
@@ -18,10 +20,8 @@ else:
         version = conn.execute(text("SELECT version_num FROM alembic_version")).scalar()
 
 if version is None and "case_sessions" in tables:
-    print("Legacy database detected; stamping alembic at 001_add_evaluations")
-    import subprocess
-
-    subprocess.check_call(["uv", "run", "alembic", "stamp", "001_add_evaluations"])
+    print("Legacy database detected; stamping alembic at 000_initial_schema")
+    subprocess.check_call(["uv", "run", "alembic", "stamp", "000_initial_schema"])
 PY
 
 uv run alembic upgrade head

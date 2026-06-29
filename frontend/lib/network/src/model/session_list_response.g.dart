@@ -16,20 +16,20 @@ class _$SessionListResponse extends SessionListResponse {
   @override
   final int pageSize;
 
-  factory _$SessionListResponse(
-          [void Function(SessionListResponseBuilder)? updates]) =>
-      (SessionListResponseBuilder()..update(updates))._build();
+  factory _$SessionListResponse([
+    void Function(SessionListResponseBuilder)? updates,
+  ]) => (SessionListResponseBuilder()..update(updates))._build();
 
-  _$SessionListResponse._(
-      {required this.sessions,
-      required this.total,
-      required this.page,
-      required this.pageSize})
-      : super._();
+  _$SessionListResponse._({
+    required this.sessions,
+    required this.total,
+    required this.page,
+    required this.pageSize,
+  }) : super._();
   @override
   SessionListResponse rebuild(
-          void Function(SessionListResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(SessionListResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   SessionListResponseBuilder toBuilder() =>
@@ -121,15 +121,25 @@ class SessionListResponseBuilder
   _$SessionListResponse _build() {
     _$SessionListResponse _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$SessionListResponse._(
             sessions: sessions.build(),
             total: BuiltValueNullFieldError.checkNotNull(
-                total, r'SessionListResponse', 'total'),
+              total,
+              r'SessionListResponse',
+              'total',
+            ),
             page: BuiltValueNullFieldError.checkNotNull(
-                page, r'SessionListResponse', 'page'),
+              page,
+              r'SessionListResponse',
+              'page',
+            ),
             pageSize: BuiltValueNullFieldError.checkNotNull(
-                pageSize, r'SessionListResponse', 'pageSize'),
+              pageSize,
+              r'SessionListResponse',
+              'pageSize',
+            ),
           );
     } catch (_) {
       late String _$failedField;
@@ -138,7 +148,10 @@ class SessionListResponseBuilder
         sessions.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'SessionListResponse', _$failedField, e.toString());
+          r'SessionListResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

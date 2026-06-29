@@ -50,9 +50,13 @@ class _$LocationInnerSerializer implements PrimitiveSerializer<LocationInner> {
     FullType specifiedType = FullType.unspecified,
   }) {
     final anyOf = object.anyOf;
-    return serializers.serialize(anyOf,
-        specifiedType: FullType(
-            AnyOf, anyOf.valueTypes.map((type) => FullType(type)).toList()))!;
+    return serializers.serialize(
+      anyOf,
+      specifiedType: FullType(
+        AnyOf,
+        anyOf.valueTypes.map((type) => FullType(type)).toList(),
+      ),
+    )!;
   }
 
   @override
@@ -63,13 +67,11 @@ class _$LocationInnerSerializer implements PrimitiveSerializer<LocationInner> {
   }) {
     final result = LocationInnerBuilder();
     Object? anyOfDataSrc;
-    final targetType = const FullType(AnyOf, [
-      FullType(String),
-      FullType(int),
-    ]);
+    final targetType = const FullType(AnyOf, [FullType(String), FullType(int)]);
     anyOfDataSrc = serialized;
-    result.anyOf = serializers.deserialize(anyOfDataSrc,
-        specifiedType: targetType) as AnyOf;
+    result.anyOf =
+        serializers.deserialize(anyOfDataSrc, specifiedType: targetType)
+            as AnyOf;
     return result.build();
   }
 }

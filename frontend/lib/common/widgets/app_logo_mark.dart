@@ -3,11 +3,7 @@ import 'package:frontend/common/theme/app_colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppLogoMark extends StatelessWidget {
-  const AppLogoMark({
-    super.key,
-    this.compact = false,
-    this.subtitle,
-  });
+  const AppLogoMark({super.key, this.compact = false, this.subtitle});
 
   final bool compact;
   final String? subtitle;
@@ -24,8 +20,11 @@ class AppLogoMark extends StatelessWidget {
             color: AppColors.brandTeal,
             borderRadius: BorderRadius.circular(8),
           ),
-          child:
-              const Icon(Icons.person_rounded, color: Colors.white, size: 22),
+          child: const Icon(
+            Icons.person_rounded,
+            color: Colors.white,
+            size: 22,
+          ),
         ),
         SizedBox(width: compact ? 10 : 12),
         Flexible(

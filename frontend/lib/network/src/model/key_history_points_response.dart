@@ -30,9 +30,9 @@ abstract class KeyHistoryPointsResponse
 
   KeyHistoryPointsResponse._();
 
-  factory KeyHistoryPointsResponse(
-          [void updates(KeyHistoryPointsResponseBuilder b)]) =
-      _$KeyHistoryPointsResponse;
+  factory KeyHistoryPointsResponse([
+    void updates(KeyHistoryPointsResponseBuilder b),
+  ]) = _$KeyHistoryPointsResponse;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(KeyHistoryPointsResponseBuilder b) => b;
@@ -47,7 +47,7 @@ class _$KeyHistoryPointsResponseSerializer
   @override
   final Iterable<Type> types = const [
     KeyHistoryPointsResponse,
-    _$KeyHistoryPointsResponse
+    _$KeyHistoryPointsResponse,
   ];
 
   @override
@@ -81,9 +81,11 @@ class _$KeyHistoryPointsResponseSerializer
     KeyHistoryPointsResponse object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(
+      serializers,
+      object,
+      specifiedType: specifiedType,
+    ).toList();
   }
 
   void _deserializeProperties(
@@ -99,24 +101,36 @@ class _$KeyHistoryPointsResponseSerializer
       final value = serializedList[i + 1];
       switch (key) {
         case r'must_ask':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(BuiltList, [FullType(String)]),
-          ) as BuiltList<String>;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(BuiltList, [
+                      FullType(String),
+                    ]),
+                  )
+                  as BuiltList<String>;
           result.mustAsk.replace(valueDes);
           break;
         case r'nice_to_ask':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(BuiltList, [FullType(String)]),
-          ) as BuiltList<String>;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(BuiltList, [
+                      FullType(String),
+                    ]),
+                  )
+                  as BuiltList<String>;
           result.niceToAsk.replace(valueDes);
           break;
         case r'red_flags':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(BuiltList, [FullType(String)]),
-          ) as BuiltList<String>;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(BuiltList, [
+                      FullType(String),
+                    ]),
+                  )
+                  as BuiltList<String>;
           result.redFlags.replace(valueDes);
           break;
         default:

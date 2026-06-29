@@ -57,31 +57,31 @@ class _$CaseResponse extends CaseResponse {
   factory _$CaseResponse([void Function(CaseResponseBuilder)? updates]) =>
       (CaseResponseBuilder()..update(updates))._build();
 
-  _$CaseResponse._(
-      {required this.id,
-      required this.caseId,
-      required this.status,
-      required this.version,
-      required this.createdBy,
-      required this.title,
-      required this.language,
-      required this.difficulty,
-      required this.specialty,
-      required this.tags,
-      required this.age,
-      required this.sex,
-      required this.persona,
-      required this.tonePresets,
-      required this.chiefComplaint,
-      required this.historyOfPresentIllness,
-      required this.keyHistoryPoints,
-      required this.finalDiagnosis,
-      required this.differential,
-      this.severityOrStage,
-      required this.investigations,
-      required this.management,
-      required this.scoring})
-      : super._();
+  _$CaseResponse._({
+    required this.id,
+    required this.caseId,
+    required this.status,
+    required this.version,
+    required this.createdBy,
+    required this.title,
+    required this.language,
+    required this.difficulty,
+    required this.specialty,
+    required this.tags,
+    required this.age,
+    required this.sex,
+    required this.persona,
+    required this.tonePresets,
+    required this.chiefComplaint,
+    required this.historyOfPresentIllness,
+    required this.keyHistoryPoints,
+    required this.finalDiagnosis,
+    required this.differential,
+    this.severityOrStage,
+    required this.investigations,
+    required this.management,
+    required this.scoring,
+  }) : super._();
   @override
   CaseResponse rebuild(void Function(CaseResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -340,43 +340,87 @@ class CaseResponseBuilder
   _$CaseResponse _build() {
     _$CaseResponse _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$CaseResponse._(
             id: BuiltValueNullFieldError.checkNotNull(
-                id, r'CaseResponse', 'id'),
+              id,
+              r'CaseResponse',
+              'id',
+            ),
             caseId: BuiltValueNullFieldError.checkNotNull(
-                caseId, r'CaseResponse', 'caseId'),
+              caseId,
+              r'CaseResponse',
+              'caseId',
+            ),
             status: BuiltValueNullFieldError.checkNotNull(
-                status, r'CaseResponse', 'status'),
+              status,
+              r'CaseResponse',
+              'status',
+            ),
             version: BuiltValueNullFieldError.checkNotNull(
-                version, r'CaseResponse', 'version'),
+              version,
+              r'CaseResponse',
+              'version',
+            ),
             createdBy: BuiltValueNullFieldError.checkNotNull(
-                createdBy, r'CaseResponse', 'createdBy'),
+              createdBy,
+              r'CaseResponse',
+              'createdBy',
+            ),
             title: BuiltValueNullFieldError.checkNotNull(
-                title, r'CaseResponse', 'title'),
+              title,
+              r'CaseResponse',
+              'title',
+            ),
             language: BuiltValueNullFieldError.checkNotNull(
-                language, r'CaseResponse', 'language'),
+              language,
+              r'CaseResponse',
+              'language',
+            ),
             difficulty: BuiltValueNullFieldError.checkNotNull(
-                difficulty, r'CaseResponse', 'difficulty'),
+              difficulty,
+              r'CaseResponse',
+              'difficulty',
+            ),
             specialty: BuiltValueNullFieldError.checkNotNull(
-                specialty, r'CaseResponse', 'specialty'),
+              specialty,
+              r'CaseResponse',
+              'specialty',
+            ),
             tags: tags.build(),
             age: BuiltValueNullFieldError.checkNotNull(
-                age, r'CaseResponse', 'age'),
+              age,
+              r'CaseResponse',
+              'age',
+            ),
             sex: BuiltValueNullFieldError.checkNotNull(
-                sex, r'CaseResponse', 'sex'),
+              sex,
+              r'CaseResponse',
+              'sex',
+            ),
             persona: BuiltValueNullFieldError.checkNotNull(
-                persona, r'CaseResponse', 'persona'),
+              persona,
+              r'CaseResponse',
+              'persona',
+            ),
             tonePresets: tonePresets.build(),
             chiefComplaint: BuiltValueNullFieldError.checkNotNull(
-                chiefComplaint, r'CaseResponse', 'chiefComplaint'),
+              chiefComplaint,
+              r'CaseResponse',
+              'chiefComplaint',
+            ),
             historyOfPresentIllness: BuiltValueNullFieldError.checkNotNull(
-                historyOfPresentIllness,
-                r'CaseResponse',
-                'historyOfPresentIllness'),
+              historyOfPresentIllness,
+              r'CaseResponse',
+              'historyOfPresentIllness',
+            ),
             keyHistoryPoints: keyHistoryPoints.build(),
             finalDiagnosis: BuiltValueNullFieldError.checkNotNull(
-                finalDiagnosis, r'CaseResponse', 'finalDiagnosis'),
+              finalDiagnosis,
+              r'CaseResponse',
+              'finalDiagnosis',
+            ),
             differential: differential.build(),
             severityOrStage: severityOrStage,
             investigations: investigations.build(),
@@ -406,7 +450,10 @@ class CaseResponseBuilder
         scoring.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'CaseResponse', _$failedField, e.toString());
+          r'CaseResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

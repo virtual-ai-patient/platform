@@ -41,13 +41,13 @@ class AppSessionRouter {
     AdminRepositoryContract? adminRepository,
   }) {
     LoginScreen createLoginScreen() => loginScreen(
-          authRepository: authRepository,
-          caseRepository: caseRepository,
-          sessionRepository: sessionRepository,
-          evaluationRepository: evaluationRepository,
-          communicationRepository: communicationRepository,
-          adminRepository: adminRepository,
-        );
+      authRepository: authRepository,
+      caseRepository: caseRepository,
+      sessionRepository: sessionRepository,
+      evaluationRepository: evaluationRepository,
+      communicationRepository: communicationRepository,
+      adminRepository: adminRepository,
+    );
     if (session.user.role == 'admin' && adminRepository != null) {
       return AdminSessionsDashboardScreen(
         session: session,

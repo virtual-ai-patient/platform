@@ -14,17 +14,19 @@ class _$ConclusionsResponse extends ConclusionsResponse {
   @override
   final BuiltMap<String, JsonObject?>? conclusions;
 
-  factory _$ConclusionsResponse(
-          [void Function(ConclusionsResponseBuilder)? updates]) =>
-      (ConclusionsResponseBuilder()..update(updates))._build();
+  factory _$ConclusionsResponse([
+    void Function(ConclusionsResponseBuilder)? updates,
+  ]) => (ConclusionsResponseBuilder()..update(updates))._build();
 
-  _$ConclusionsResponse._(
-      {required this.sessionId, required this.status, this.conclusions})
-      : super._();
+  _$ConclusionsResponse._({
+    required this.sessionId,
+    required this.status,
+    this.conclusions,
+  }) : super._();
   @override
   ConclusionsResponse rebuild(
-          void Function(ConclusionsResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(ConclusionsResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   ConclusionsResponseBuilder toBuilder() =>
@@ -108,12 +110,19 @@ class ConclusionsResponseBuilder
   _$ConclusionsResponse _build() {
     _$ConclusionsResponse _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$ConclusionsResponse._(
             sessionId: BuiltValueNullFieldError.checkNotNull(
-                sessionId, r'ConclusionsResponse', 'sessionId'),
+              sessionId,
+              r'ConclusionsResponse',
+              'sessionId',
+            ),
             status: BuiltValueNullFieldError.checkNotNull(
-                status, r'ConclusionsResponse', 'status'),
+              status,
+              r'ConclusionsResponse',
+              'status',
+            ),
             conclusions: _conclusions?.build(),
           );
     } catch (_) {
@@ -123,7 +132,10 @@ class ConclusionsResponseBuilder
         _conclusions?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'ConclusionsResponse', _$failedField, e.toString());
+          r'ConclusionsResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

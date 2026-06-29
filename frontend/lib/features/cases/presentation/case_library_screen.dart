@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/common/session_completion_prefs.dart';
+import 'package:frontend/app/app_route_observer.dart';
 import 'package:frontend/common/theme/app_colors.dart';
 import 'package:frontend/common/widgets/app_library_top_bar.dart';
 import 'package:frontend/common/widgets/app_page_footer.dart';
@@ -45,7 +45,7 @@ class CaseLibraryScreen extends StatefulWidget {
   State<CaseLibraryScreen> createState() => _CaseLibraryScreenState();
 }
 
-class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
+class _CaseLibraryScreenState extends State<CaseLibraryScreen> with RouteAware {
   final _searchController = TextEditingController();
   Future<List<generated.CaseResponse>>? _load;
   Map<String, String> _completedSessionsByCaseId = {};
@@ -71,16 +71,36 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
   @override
   void initState() {
     super.initState();
-    _load = widget.caseRepository
-        .listCases(status: _isCaseManager ? null : 'published');
+    _load = widget.caseRepository.listCases(
+      status: _isCaseManager ? null : 'published',
+    );
     _searchController.addListener(() => setState(() {}));
-    SessionCompletionPrefs.loadAll().then((m) {
-      if (mounted) {
-        setState(() => _completedSessionsByCaseId = m);
-      }
-    });
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => _maybeShowUnfinishedSessions());
+    _loadCompletedSessions();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => _maybeShowUnfinishedSessions(),
+    );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final route = ModalRoute.of(context);
+    if (route is PageRoute<void>) {
+      appRouteObserver.unsubscribe(this);
+      appRouteObserver.subscribe(this, route);
+    }
+  }
+
+  @override
+  void dispose() {
+    appRouteObserver.unsubscribe(this);
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didPopNext() {
+    _loadCompletedSessions();
   }
 
   Future<void> _maybeShowUnfinishedSessions() async {
@@ -92,24 +112,35 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
       evaluationRepository: widget.evaluationRepository,
       communicationRepository: widget.communicationRepository,
     );
-  }
-
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
+    if (mounted) await _loadCompletedSessions();
   }
 
   Future<void> _refresh() async {
     setState(() {
-      _load = widget.caseRepository
-          .listCases(status: _isCaseManager ? null : 'published');
+      _load = widget.caseRepository.listCases(
+        status: _isCaseManager ? null : 'published',
+      );
       _page = 0;
     });
     await _load;
-    final prefs = await SessionCompletionPrefs.loadAll();
-    if (mounted) {
-      setState(() => _completedSessionsByCaseId = prefs);
+    await _loadCompletedSessions();
+  }
+
+  /// Most recent completed session per case, from the server.
+  Future<void> _loadCompletedSessions() async {
+    try {
+      final completed = await widget.sessionRepository.listCompleted();
+      final byCaseId = <String, String>{};
+      for (final session in completed) {
+        byCaseId.putIfAbsent(session.caseId, () => session.sessionId);
+      }
+      if (mounted) {
+        setState(() => _completedSessionsByCaseId = byCaseId);
+      }
+    } catch (_) {
+      if (mounted) {
+        setState(() => _completedSessionsByCaseId = {});
+      }
     }
   }
 
@@ -199,30 +230,42 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
                     _isCaseManager && widget.adminRepository != null;
 
                 void openBriefing(generated.CaseResponse c) {
-                  Navigator.of(context).push(
-                    MaterialPageRoute<void>(
-                      builder: (_) => CaseBriefingScreen(
-                        caseItem: c,
-                        sessionRepository: widget.sessionRepository,
-                        evaluationRepository: widget.evaluationRepository,
-                        communicationRepository: widget.communicationRepository,
-                      ),
-                    ),
-                  );
+                  Navigator.of(context)
+                      .push(
+                        MaterialPageRoute<void>(
+                          builder: (_) => CaseBriefingScreen(
+                            caseItem: c,
+                            sessionRepository: widget.sessionRepository,
+                            evaluationRepository: widget.evaluationRepository,
+                            communicationRepository:
+                                widget.communicationRepository,
+                          ),
+                        ),
+                      )
+                      .then((_) {
+                        if (mounted) _loadCompletedSessions();
+                      });
                 }
 
                 void openEvaluation(
-                    generated.CaseResponse c, String sessionId) {
-                  Navigator.of(context).push(
-                    MaterialPageRoute<void>(
-                      builder: (_) => DebriefScreen(
-                        caseItem: c,
-                        sessionId: sessionId,
-                        evaluationRepository: widget.evaluationRepository,
-                        communicationRepository: widget.communicationRepository,
-                      ),
-                    ),
-                  );
+                  generated.CaseResponse c,
+                  String sessionId,
+                ) {
+                  Navigator.of(context)
+                      .push(
+                        MaterialPageRoute<void>(
+                          builder: (_) => DebriefScreen(
+                            caseItem: c,
+                            sessionId: sessionId,
+                            evaluationRepository: widget.evaluationRepository,
+                            communicationRepository:
+                                widget.communicationRepository,
+                          ),
+                        ),
+                      )
+                      .then((_) {
+                        if (mounted) _loadCompletedSessions();
+                      });
                 }
 
                 void openAdminTrace() {
@@ -243,15 +286,15 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
                     _isCaseManager && _mainTab == _LibraryMainTab.manage;
 
                 Future<void> educatorNewCase() => runEducatorCreateCaseFlow(
-                      context,
-                      caseRepository: widget.caseRepository,
-                      onRefresh: _refresh,
-                      onWorking: (w) {
-                        if (mounted) {
-                          setState(() => _creatingCase = w);
-                        }
-                      },
-                    );
+                  context,
+                  caseRepository: widget.caseRepository,
+                  onRefresh: _refresh,
+                  onWorking: (w) {
+                    if (mounted) {
+                      setState(() => _creatingCase = w);
+                    }
+                  },
+                );
 
                 Future<void> educatorEdit(generated.CaseResponse c) =>
                     runEducatorEditCaseFlow(
@@ -354,18 +397,24 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
                                   SliverToBoxAdapter(
                                     child: Padding(
                                       padding: const EdgeInsets.fromLTRB(
-                                          16, 16, 16, 0),
+                                        16,
+                                        16,
+                                        16,
+                                        0,
+                                      ),
                                       child: TextField(
                                         controller: _searchController,
                                         decoration: InputDecoration(
                                           hintText: 'Search cases…',
-                                          prefixIcon:
-                                              const Icon(Icons.search_rounded),
+                                          prefixIcon: const Icon(
+                                            Icons.search_rounded,
+                                          ),
                                           filled: true,
                                           fillColor: AppColors.surfaceMuted,
                                           border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(999),
+                                            borderRadius: BorderRadius.circular(
+                                              999,
+                                            ),
                                             borderSide: BorderSide.none,
                                           ),
                                         ),
@@ -402,13 +451,15 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
                                       onSort: (i) =>
                                           setState(() => _sortIndex = i),
                                       onToggleView: () => setState(
-                                          () => _gridView = !_gridView),
+                                        () => _gridView = !_gridView,
+                                      ),
                                       onPage: (p) => setState(() => _page = p),
                                       onOpenCase: openBriefing,
                                       completedSessionsByCaseId:
                                           _completedSessionsByCaseId,
-                                      onOpenEvaluation:
-                                          isManageTab ? null : openEvaluation,
+                                      onOpenEvaluation: isManageTab
+                                          ? null
+                                          : openEvaluation,
                                       isManageTab: isManageTab,
                                       manageEditMode: _manageEditMode,
                                       onManageEditModeChanged: (v) =>
@@ -435,7 +486,11 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
                                   width: 260,
                                   child: SingleChildScrollView(
                                     padding: const EdgeInsets.fromLTRB(
-                                        20, 20, 12, 20),
+                                      20,
+                                      20,
+                                      12,
+                                      20,
+                                    ),
                                     child: filterPane,
                                   ),
                                 ),
@@ -444,7 +499,11 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
                                     physics:
                                         const AlwaysScrollableScrollPhysics(),
                                     padding: const EdgeInsets.fromLTRB(
-                                        12, 20, 20, 20),
+                                      12,
+                                      20,
+                                      20,
+                                      20,
+                                    ),
                                     child: _MainPane(
                                       filtered: filtered,
                                       gridView: _gridView,
@@ -454,13 +513,15 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
                                       onSort: (i) =>
                                           setState(() => _sortIndex = i),
                                       onToggleView: () => setState(
-                                          () => _gridView = !_gridView),
+                                        () => _gridView = !_gridView,
+                                      ),
                                       onPage: (p) => setState(() => _page = p),
                                       onOpenCase: openBriefing,
                                       completedSessionsByCaseId:
                                           _completedSessionsByCaseId,
-                                      onOpenEvaluation:
-                                          isManageTab ? null : openEvaluation,
+                                      onOpenEvaluation: isManageTab
+                                          ? null
+                                          : openEvaluation,
                                       isManageTab: isManageTab,
                                       manageEditMode: _manageEditMode,
                                       onManageEditModeChanged: (v) =>
@@ -492,10 +553,7 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
 }
 
 class _CaseManagerTabBar extends StatelessWidget {
-  const _CaseManagerTabBar({
-    required this.selected,
-    required this.onSelect,
-  });
+  const _CaseManagerTabBar({required this.selected, required this.onSelect});
 
   final _LibraryMainTab selected;
   final ValueChanged<_LibraryMainTab> onSelect;
@@ -508,9 +566,7 @@ class _CaseManagerTabBar extends StatelessWidget {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
         decoration: const BoxDecoration(
-          border: Border(
-            bottom: BorderSide(color: AppColors.borderSubtle),
-          ),
+          border: Border(bottom: BorderSide(color: AppColors.borderSubtle)),
         ),
         child: Row(
           children: [
@@ -645,7 +701,10 @@ class _FilterPane extends StatelessWidget {
             children: [
               _difficultyRow('easy', 'Beginner', AppColors.difficultyEasy),
               _difficultyRow(
-                  'medium', 'Intermediate', AppColors.difficultyMedium),
+                'medium',
+                'Intermediate',
+                AppColors.difficultyMedium,
+              ),
               _difficultyRow('hard', 'Advanced', AppColors.difficultyHard),
             ],
           ),
@@ -693,10 +752,7 @@ class _FilterPane extends StatelessWidget {
 }
 
 class _FilterSection extends StatelessWidget {
-  const _FilterSection({
-    required this.title,
-    required this.child,
-  });
+  const _FilterSection({required this.title, required this.child});
 
   final String title;
   final Widget child;
@@ -758,7 +814,7 @@ class _MainPane extends StatelessWidget {
   final void Function(generated.CaseResponse) onOpenCase;
   final Map<String, String> completedSessionsByCaseId;
   final void Function(generated.CaseResponse caseItem, String sessionId)?
-      onOpenEvaluation;
+  onOpenEvaluation;
   final bool isManageTab;
   final bool manageEditMode;
   final ValueChanged<bool>? onManageEditModeChanged;
@@ -807,10 +863,7 @@ class _MainPane extends StatelessWidget {
                 ],
               ),
             ),
-            _SortDropdown(
-              valueIndex: sortIndex,
-              onChanged: onSort,
-            ),
+            _SortDropdown(valueIndex: sortIndex, onChanged: onSort),
             const SizedBox(width: 12),
             ToggleButtons(
               isSelected: [gridView, !gridView],
@@ -952,10 +1005,7 @@ class _MainPane extends StatelessWidget {
 }
 
 class _SortDropdown extends StatelessWidget {
-  const _SortDropdown({
-    required this.valueIndex,
-    required this.onChanged,
-  });
+  const _SortDropdown({required this.valueIndex, required this.onChanged});
 
   final int valueIndex;
   final void Function(int) onChanged;
@@ -1107,8 +1157,9 @@ class _LibraryCaseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final summary = caseItem.chiefComplaint;
-    final short =
-        summary.length > 140 ? '${summary.substring(0, 140)}…' : summary;
+    final short = summary.length > 140
+        ? '${summary.substring(0, 140)}…'
+        : summary;
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -1149,11 +1200,14 @@ class _LibraryCaseCard extends StatelessWidget {
               ),
               if (showManageActions)
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
-                    color: _caseWorkflowStatusColor(caseItem.status)
-                        .withValues(alpha: 0.12),
+                    color: _caseWorkflowStatusColor(
+                      caseItem.status,
+                    ).withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(999),
                   ),
                   child: Text(
@@ -1175,8 +1229,10 @@ class _LibraryCaseCard extends StatelessWidget {
                     size: 22,
                   ),
                   padding: EdgeInsets.zero,
-                  constraints:
-                      const BoxConstraints(minWidth: 32, minHeight: 32),
+                  constraints: const BoxConstraints(
+                    minWidth: 32,
+                    minHeight: 32,
+                  ),
                 ),
             ],
           ),
@@ -1266,8 +1322,11 @@ class _LibraryCaseCard extends StatelessWidget {
           ],
           Row(
             children: [
-              Icon(Icons.schedule_rounded,
-                  size: 16, color: AppColors.tertiaryText),
+              Icon(
+                Icons.schedule_rounded,
+                size: 16,
+                color: AppColors.tertiaryText,
+              ),
               const SizedBox(width: 4),
               Text(
                 '~${(caseItem.age / 10).ceil() * 5} min',
@@ -1277,8 +1336,11 @@ class _LibraryCaseCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 16),
-              Icon(Icons.signal_cellular_alt_rounded,
-                  size: 16, color: _difficultyColor),
+              Icon(
+                Icons.signal_cellular_alt_rounded,
+                size: 16,
+                color: _difficultyColor,
+              ),
               const SizedBox(width: 4),
               Text(
                 _difficultyLabel,
@@ -1306,15 +1368,19 @@ class _LibraryCaseCard extends StatelessWidget {
               FilledButton(
                 onPressed: actionBusy ? null : onStart,
                 style: FilledButton.styleFrom(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 10,
+                  ),
                   minimumSize: Size.zero,
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
                 child: Text(
                   'Start Case',
                   style: GoogleFonts.inter(
-                      fontWeight: FontWeight.w600, fontSize: 13),
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
+                  ),
                 ),
               ),
             ],
@@ -1359,10 +1425,7 @@ class _ErrorBody extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 20),
-        FilledButton(
-          onPressed: onRetry,
-          child: const Text('Retry'),
-        ),
+        FilledButton(onPressed: onRetry, child: const Text('Retry')),
       ],
     );
   }

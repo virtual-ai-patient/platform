@@ -17,9 +17,11 @@ class _$ActionLogEntry extends ActionLogEntry {
   factory _$ActionLogEntry([void Function(ActionLogEntryBuilder)? updates]) =>
       (ActionLogEntryBuilder()..update(updates))._build();
 
-  _$ActionLogEntry._(
-      {required this.role, required this.content, required this.createdAt})
-      : super._();
+  _$ActionLogEntry._({
+    required this.role,
+    required this.content,
+    required this.createdAt,
+  }) : super._();
   @override
   ActionLogEntry rebuild(void Function(ActionLogEntryBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -101,14 +103,24 @@ class ActionLogEntryBuilder
   ActionLogEntry build() => _build();
 
   _$ActionLogEntry _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$ActionLogEntry._(
           role: BuiltValueNullFieldError.checkNotNull(
-              role, r'ActionLogEntry', 'role'),
+            role,
+            r'ActionLogEntry',
+            'role',
+          ),
           content: BuiltValueNullFieldError.checkNotNull(
-              content, r'ActionLogEntry', 'content'),
+            content,
+            r'ActionLogEntry',
+            'content',
+          ),
           createdAt: BuiltValueNullFieldError.checkNotNull(
-              createdAt, r'ActionLogEntry', 'createdAt'),
+            createdAt,
+            r'ActionLogEntry',
+            'createdAt',
+          ),
         );
     replace(_$result);
     return _$result;

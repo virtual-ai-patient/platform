@@ -53,9 +53,11 @@ class _$ChatRequestSerializer implements PrimitiveSerializer<ChatRequest> {
     ChatRequest object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(
+      serializers,
+      object,
+      specifiedType: specifiedType,
+    ).toList();
   }
 
   void _deserializeProperties(
@@ -71,10 +73,12 @@ class _$ChatRequestSerializer implements PrimitiveSerializer<ChatRequest> {
       final value = serializedList[i + 1];
       switch (key) {
         case r'message':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           result.message = valueDes;
           break;
         default:

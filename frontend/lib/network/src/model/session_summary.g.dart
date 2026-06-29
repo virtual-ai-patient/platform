@@ -21,13 +21,13 @@ class _$SessionSummary extends SessionSummary {
   factory _$SessionSummary([void Function(SessionSummaryBuilder)? updates]) =>
       (SessionSummaryBuilder()..update(updates))._build();
 
-  _$SessionSummary._(
-      {required this.sessionId,
-      required this.studentUsername,
-      required this.caseId,
-      required this.caseTitle,
-      required this.createdAt})
-      : super._();
+  _$SessionSummary._({
+    required this.sessionId,
+    required this.studentUsername,
+    required this.caseId,
+    required this.caseTitle,
+    required this.createdAt,
+  }) : super._();
   @override
   SessionSummary rebuild(void Function(SessionSummaryBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -126,18 +126,34 @@ class SessionSummaryBuilder
   SessionSummary build() => _build();
 
   _$SessionSummary _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$SessionSummary._(
           sessionId: BuiltValueNullFieldError.checkNotNull(
-              sessionId, r'SessionSummary', 'sessionId'),
+            sessionId,
+            r'SessionSummary',
+            'sessionId',
+          ),
           studentUsername: BuiltValueNullFieldError.checkNotNull(
-              studentUsername, r'SessionSummary', 'studentUsername'),
+            studentUsername,
+            r'SessionSummary',
+            'studentUsername',
+          ),
           caseId: BuiltValueNullFieldError.checkNotNull(
-              caseId, r'SessionSummary', 'caseId'),
+            caseId,
+            r'SessionSummary',
+            'caseId',
+          ),
           caseTitle: BuiltValueNullFieldError.checkNotNull(
-              caseTitle, r'SessionSummary', 'caseTitle'),
+            caseTitle,
+            r'SessionSummary',
+            'caseTitle',
+          ),
           createdAt: BuiltValueNullFieldError.checkNotNull(
-              createdAt, r'SessionSummary', 'createdAt'),
+            createdAt,
+            r'SessionSummary',
+            'createdAt',
+          ),
         );
     replace(_$result);
     return _$result;

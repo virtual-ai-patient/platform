@@ -14,19 +14,19 @@ class _$ExpectedTestsRequest extends ExpectedTestsRequest {
   @override
   final BuiltList<String> shouldNotOrder;
 
-  factory _$ExpectedTestsRequest(
-          [void Function(ExpectedTestsRequestBuilder)? updates]) =>
-      (ExpectedTestsRequestBuilder()..update(updates))._build();
+  factory _$ExpectedTestsRequest([
+    void Function(ExpectedTestsRequestBuilder)? updates,
+  ]) => (ExpectedTestsRequestBuilder()..update(updates))._build();
 
-  _$ExpectedTestsRequest._(
-      {required this.mustOrder,
-      required this.optional,
-      required this.shouldNotOrder})
-      : super._();
+  _$ExpectedTestsRequest._({
+    required this.mustOrder,
+    required this.optional,
+    required this.shouldNotOrder,
+  }) : super._();
   @override
   ExpectedTestsRequest rebuild(
-          void Function(ExpectedTestsRequestBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(ExpectedTestsRequestBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   ExpectedTestsRequestBuilder toBuilder() =>
@@ -113,7 +113,8 @@ class ExpectedTestsRequestBuilder
   _$ExpectedTestsRequest _build() {
     _$ExpectedTestsRequest _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$ExpectedTestsRequest._(
             mustOrder: mustOrder.build(),
             optional: optional.build(),
@@ -130,7 +131,10 @@ class ExpectedTestsRequestBuilder
         shouldNotOrder.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'ExpectedTestsRequest', _$failedField, e.toString());
+          r'ExpectedTestsRequest',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

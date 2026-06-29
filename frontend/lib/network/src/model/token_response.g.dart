@@ -17,9 +17,11 @@ class _$TokenResponse extends TokenResponse {
   factory _$TokenResponse([void Function(TokenResponseBuilder)? updates]) =>
       (TokenResponseBuilder()..update(updates))._build();
 
-  _$TokenResponse._(
-      {required this.accessToken, required this.refreshToken, this.tokenType})
-      : super._();
+  _$TokenResponse._({
+    required this.accessToken,
+    required this.refreshToken,
+    this.tokenType,
+  }) : super._();
   @override
   TokenResponse rebuild(void Function(TokenResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -101,12 +103,19 @@ class TokenResponseBuilder
   TokenResponse build() => _build();
 
   _$TokenResponse _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$TokenResponse._(
           accessToken: BuiltValueNullFieldError.checkNotNull(
-              accessToken, r'TokenResponse', 'accessToken'),
+            accessToken,
+            r'TokenResponse',
+            'accessToken',
+          ),
           refreshToken: BuiltValueNullFieldError.checkNotNull(
-              refreshToken, r'TokenResponse', 'refreshToken'),
+            refreshToken,
+            r'TokenResponse',
+            'refreshToken',
+          ),
           tokenType: tokenType,
         );
     replace(_$result);

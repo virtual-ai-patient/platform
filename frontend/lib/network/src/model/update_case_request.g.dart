@@ -10,7 +10,8 @@ const UpdateCaseRequestLanguageEnum _$updateCaseRequestLanguageEnum_en =
     const UpdateCaseRequestLanguageEnum._('en');
 
 UpdateCaseRequestLanguageEnum _$updateCaseRequestLanguageEnumValueOf(
-    String name) {
+  String name,
+) {
   switch (name) {
     case 'en':
       return _$updateCaseRequestLanguageEnum_en;
@@ -20,10 +21,9 @@ UpdateCaseRequestLanguageEnum _$updateCaseRequestLanguageEnumValueOf(
 }
 
 final BuiltSet<UpdateCaseRequestLanguageEnum>
-    _$updateCaseRequestLanguageEnumValues = BuiltSet<
-        UpdateCaseRequestLanguageEnum>(const <UpdateCaseRequestLanguageEnum>[
-  _$updateCaseRequestLanguageEnum_en,
-]);
+_$updateCaseRequestLanguageEnumValues = BuiltSet<UpdateCaseRequestLanguageEnum>(
+  const <UpdateCaseRequestLanguageEnum>[_$updateCaseRequestLanguageEnum_en],
+);
 
 const UpdateCaseRequestDifficultyEnum _$updateCaseRequestDifficultyEnum_easy =
     const UpdateCaseRequestDifficultyEnum._('easy');
@@ -33,7 +33,8 @@ const UpdateCaseRequestDifficultyEnum _$updateCaseRequestDifficultyEnum_hard =
     const UpdateCaseRequestDifficultyEnum._('hard');
 
 UpdateCaseRequestDifficultyEnum _$updateCaseRequestDifficultyEnumValueOf(
-    String name) {
+  String name,
+) {
   switch (name) {
     case 'easy':
       return _$updateCaseRequestDifficultyEnum_easy;
@@ -47,12 +48,14 @@ UpdateCaseRequestDifficultyEnum _$updateCaseRequestDifficultyEnumValueOf(
 }
 
 final BuiltSet<UpdateCaseRequestDifficultyEnum>
-    _$updateCaseRequestDifficultyEnumValues = BuiltSet<
-        UpdateCaseRequestDifficultyEnum>(const <UpdateCaseRequestDifficultyEnum>[
-  _$updateCaseRequestDifficultyEnum_easy,
-  _$updateCaseRequestDifficultyEnum_medium,
-  _$updateCaseRequestDifficultyEnum_hard,
-]);
+_$updateCaseRequestDifficultyEnumValues =
+    BuiltSet<UpdateCaseRequestDifficultyEnum>(
+      const <UpdateCaseRequestDifficultyEnum>[
+        _$updateCaseRequestDifficultyEnum_easy,
+        _$updateCaseRequestDifficultyEnum_medium,
+        _$updateCaseRequestDifficultyEnum_hard,
+      ],
+    );
 
 const UpdateCaseRequestSexEnum _$updateCaseRequestSexEnum_female =
     const UpdateCaseRequestSexEnum._('female');
@@ -76,10 +79,10 @@ UpdateCaseRequestSexEnum _$updateCaseRequestSexEnumValueOf(String name) {
 
 final BuiltSet<UpdateCaseRequestSexEnum> _$updateCaseRequestSexEnumValues =
     BuiltSet<UpdateCaseRequestSexEnum>(const <UpdateCaseRequestSexEnum>[
-  _$updateCaseRequestSexEnum_female,
-  _$updateCaseRequestSexEnum_male,
-  _$updateCaseRequestSexEnum_other,
-]);
+      _$updateCaseRequestSexEnum_female,
+      _$updateCaseRequestSexEnum_male,
+      _$updateCaseRequestSexEnum_other,
+    ]);
 
 const UpdateCaseRequestStatusEnum _$updateCaseRequestStatusEnum_draft =
     const UpdateCaseRequestStatusEnum._('draft');
@@ -102,30 +105,28 @@ UpdateCaseRequestStatusEnum _$updateCaseRequestStatusEnumValueOf(String name) {
 }
 
 final BuiltSet<UpdateCaseRequestStatusEnum>
-    _$updateCaseRequestStatusEnumValues =
+_$updateCaseRequestStatusEnumValues =
     BuiltSet<UpdateCaseRequestStatusEnum>(const <UpdateCaseRequestStatusEnum>[
-  _$updateCaseRequestStatusEnum_draft,
-  _$updateCaseRequestStatusEnum_review,
-  _$updateCaseRequestStatusEnum_published,
-]);
+      _$updateCaseRequestStatusEnum_draft,
+      _$updateCaseRequestStatusEnum_review,
+      _$updateCaseRequestStatusEnum_published,
+    ]);
 
 Serializer<UpdateCaseRequestLanguageEnum>
-    _$updateCaseRequestLanguageEnumSerializer =
+_$updateCaseRequestLanguageEnumSerializer =
     _$UpdateCaseRequestLanguageEnumSerializer();
 Serializer<UpdateCaseRequestDifficultyEnum>
-    _$updateCaseRequestDifficultyEnumSerializer =
+_$updateCaseRequestDifficultyEnumSerializer =
     _$UpdateCaseRequestDifficultyEnumSerializer();
 Serializer<UpdateCaseRequestSexEnum> _$updateCaseRequestSexEnumSerializer =
     _$UpdateCaseRequestSexEnumSerializer();
 Serializer<UpdateCaseRequestStatusEnum>
-    _$updateCaseRequestStatusEnumSerializer =
+_$updateCaseRequestStatusEnumSerializer =
     _$UpdateCaseRequestStatusEnumSerializer();
 
 class _$UpdateCaseRequestLanguageEnumSerializer
     implements PrimitiveSerializer<UpdateCaseRequestLanguageEnum> {
-  static const Map<String, Object> _toWire = const <String, Object>{
-    'en': 'en',
-  };
+  static const Map<String, Object> _toWire = const <String, Object>{'en': 'en'};
   static const Map<Object, String> _fromWire = const <Object, String>{
     'en': 'en',
   };
@@ -137,16 +138,19 @@ class _$UpdateCaseRequestLanguageEnumSerializer
 
   @override
   Object serialize(
-          Serializers serializers, UpdateCaseRequestLanguageEnum object,
-          {FullType specifiedType = FullType.unspecified}) =>
-      _toWire[object.name] ?? object.name;
+    Serializers serializers,
+    UpdateCaseRequestLanguageEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
 
   @override
   UpdateCaseRequestLanguageEnum deserialize(
-          Serializers serializers, Object serialized,
-          {FullType specifiedType = FullType.unspecified}) =>
-      UpdateCaseRequestLanguageEnum.valueOf(
-          _fromWire[serialized] ?? (serialized is String ? serialized : ''));
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => UpdateCaseRequestLanguageEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
 }
 
 class _$UpdateCaseRequestDifficultyEnumSerializer
@@ -169,16 +173,19 @@ class _$UpdateCaseRequestDifficultyEnumSerializer
 
   @override
   Object serialize(
-          Serializers serializers, UpdateCaseRequestDifficultyEnum object,
-          {FullType specifiedType = FullType.unspecified}) =>
-      _toWire[object.name] ?? object.name;
+    Serializers serializers,
+    UpdateCaseRequestDifficultyEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
 
   @override
   UpdateCaseRequestDifficultyEnum deserialize(
-          Serializers serializers, Object serialized,
-          {FullType specifiedType = FullType.unspecified}) =>
-      UpdateCaseRequestDifficultyEnum.valueOf(
-          _fromWire[serialized] ?? (serialized is String ? serialized : ''));
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => UpdateCaseRequestDifficultyEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
 }
 
 class _$UpdateCaseRequestSexEnumSerializer
@@ -200,16 +207,20 @@ class _$UpdateCaseRequestSexEnumSerializer
   final String wireName = 'UpdateCaseRequestSexEnum';
 
   @override
-  Object serialize(Serializers serializers, UpdateCaseRequestSexEnum object,
-          {FullType specifiedType = FullType.unspecified}) =>
-      _toWire[object.name] ?? object.name;
+  Object serialize(
+    Serializers serializers,
+    UpdateCaseRequestSexEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
 
   @override
   UpdateCaseRequestSexEnum deserialize(
-          Serializers serializers, Object serialized,
-          {FullType specifiedType = FullType.unspecified}) =>
-      UpdateCaseRequestSexEnum.valueOf(
-          _fromWire[serialized] ?? (serialized is String ? serialized : ''));
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => UpdateCaseRequestSexEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
 }
 
 class _$UpdateCaseRequestStatusEnumSerializer
@@ -231,16 +242,20 @@ class _$UpdateCaseRequestStatusEnumSerializer
   final String wireName = 'UpdateCaseRequestStatusEnum';
 
   @override
-  Object serialize(Serializers serializers, UpdateCaseRequestStatusEnum object,
-          {FullType specifiedType = FullType.unspecified}) =>
-      _toWire[object.name] ?? object.name;
+  Object serialize(
+    Serializers serializers,
+    UpdateCaseRequestStatusEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
 
   @override
   UpdateCaseRequestStatusEnum deserialize(
-          Serializers serializers, Object serialized,
-          {FullType specifiedType = FullType.unspecified}) =>
-      UpdateCaseRequestStatusEnum.valueOf(
-          _fromWire[serialized] ?? (serialized is String ? serialized : ''));
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => UpdateCaseRequestStatusEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
 }
 
 class _$UpdateCaseRequest extends UpdateCaseRequest {
@@ -283,31 +298,31 @@ class _$UpdateCaseRequest extends UpdateCaseRequest {
   @override
   final UpdateCaseRequestStatusEnum? status;
 
-  factory _$UpdateCaseRequest(
-          [void Function(UpdateCaseRequestBuilder)? updates]) =>
-      (UpdateCaseRequestBuilder()..update(updates))._build();
+  factory _$UpdateCaseRequest([
+    void Function(UpdateCaseRequestBuilder)? updates,
+  ]) => (UpdateCaseRequestBuilder()..update(updates))._build();
 
-  _$UpdateCaseRequest._(
-      {this.title,
-      this.language,
-      this.difficulty,
-      this.specialty,
-      this.tags,
-      this.age,
-      this.sex,
-      this.persona,
-      this.tonePresets,
-      this.chiefComplaint,
-      this.historyOfPresentIllness,
-      this.keyHistoryPoints,
-      this.finalDiagnosis,
-      this.differential,
-      this.severityOrStage,
-      this.investigations,
-      this.management,
-      this.scoring,
-      this.status})
-      : super._();
+  _$UpdateCaseRequest._({
+    this.title,
+    this.language,
+    this.difficulty,
+    this.specialty,
+    this.tags,
+    this.age,
+    this.sex,
+    this.persona,
+    this.tonePresets,
+    this.chiefComplaint,
+    this.historyOfPresentIllness,
+    this.keyHistoryPoints,
+    this.finalDiagnosis,
+    this.differential,
+    this.severityOrStage,
+    this.investigations,
+    this.management,
+    this.scoring,
+    this.status,
+  }) : super._();
   @override
   UpdateCaseRequest rebuild(void Function(UpdateCaseRequestBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -537,7 +552,8 @@ class UpdateCaseRequestBuilder
   _$UpdateCaseRequest _build() {
     _$UpdateCaseRequest _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$UpdateCaseRequest._(
             title: title,
             language: language,
@@ -582,7 +598,10 @@ class UpdateCaseRequestBuilder
         _scoring?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'UpdateCaseRequest', _$failedField, e.toString());
+          r'UpdateCaseRequest',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

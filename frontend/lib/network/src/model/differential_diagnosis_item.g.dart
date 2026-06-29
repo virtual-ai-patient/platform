@@ -12,16 +12,16 @@ class _$DifferentialDiagnosisItem extends DifferentialDiagnosisItem {
   @override
   final String condition;
 
-  factory _$DifferentialDiagnosisItem(
-          [void Function(DifferentialDiagnosisItemBuilder)? updates]) =>
-      (DifferentialDiagnosisItemBuilder()..update(updates))._build();
+  factory _$DifferentialDiagnosisItem([
+    void Function(DifferentialDiagnosisItemBuilder)? updates,
+  ]) => (DifferentialDiagnosisItemBuilder()..update(updates))._build();
 
   _$DifferentialDiagnosisItem._({required this.rank, required this.condition})
-      : super._();
+    : super._();
   @override
   DifferentialDiagnosisItem rebuild(
-          void Function(DifferentialDiagnosisItemBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(DifferentialDiagnosisItemBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   DifferentialDiagnosisItemBuilder toBuilder() =>
@@ -94,12 +94,19 @@ class DifferentialDiagnosisItemBuilder
   DifferentialDiagnosisItem build() => _build();
 
   _$DifferentialDiagnosisItem _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$DifferentialDiagnosisItem._(
           rank: BuiltValueNullFieldError.checkNotNull(
-              rank, r'DifferentialDiagnosisItem', 'rank'),
+            rank,
+            r'DifferentialDiagnosisItem',
+            'rank',
+          ),
           condition: BuiltValueNullFieldError.checkNotNull(
-              condition, r'DifferentialDiagnosisItem', 'condition'),
+            condition,
+            r'DifferentialDiagnosisItem',
+            'condition',
+          ),
         );
     replace(_$result);
     return _$result;

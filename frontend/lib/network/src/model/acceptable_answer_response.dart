@@ -25,9 +25,9 @@ abstract class AcceptableAnswerResponse
 
   AcceptableAnswerResponse._();
 
-  factory AcceptableAnswerResponse(
-          [void updates(AcceptableAnswerResponseBuilder b)]) =
-      _$AcceptableAnswerResponse;
+  factory AcceptableAnswerResponse([
+    void updates(AcceptableAnswerResponseBuilder b),
+  ]) = _$AcceptableAnswerResponse;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(AcceptableAnswerResponseBuilder b) => b;
@@ -42,7 +42,7 @@ class _$AcceptableAnswerResponseSerializer
   @override
   final Iterable<Type> types = const [
     AcceptableAnswerResponse,
-    _$AcceptableAnswerResponse
+    _$AcceptableAnswerResponse,
   ];
 
   @override
@@ -71,9 +71,11 @@ class _$AcceptableAnswerResponseSerializer
     AcceptableAnswerResponse object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(
+      serializers,
+      object,
+      specifiedType: specifiedType,
+    ).toList();
   }
 
   void _deserializeProperties(
@@ -89,17 +91,21 @@ class _$AcceptableAnswerResponseSerializer
       final value = serializedList[i + 1];
       switch (key) {
         case r'field':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           result.field = valueDes;
           break;
         case r'answer':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           result.answer = valueDes;
           break;
         default:

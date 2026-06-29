@@ -14,8 +14,9 @@ import 'support/fake_case_response.dart';
 import 'support/fake_communication_repository.dart';
 
 void main() {
-  testWidgets('CaseSimulationScreen renders with chat UI',
-      (WidgetTester tester) async {
+  testWidgets('CaseSimulationScreen renders with chat UI', (
+    WidgetTester tester,
+  ) async {
     await tester.pumpWidget(
       MaterialApp(
         theme: ThemeData(useMaterial3: false),
@@ -139,8 +140,9 @@ void main() {
     expect(find.text('Reset password'), findsOneWidget);
   });
 
-  testWidgets('navigates to case library on successful login',
-      (WidgetTester tester) async {
+  testWidgets('navigates to case library on successful login', (
+    WidgetTester tester,
+  ) async {
     await tester.pumpWidget(
       MaterialApp(
         theme: ThemeData(useMaterial3: false),
@@ -156,7 +158,9 @@ void main() {
 
     await tester.enterText(find.widgetWithText(TextField, 'Username'), 'admin');
     await tester.enterText(
-        find.widgetWithText(TextField, 'Password'), 'secret');
+      find.widgetWithText(TextField, 'Password'),
+      'secret',
+    );
     await tester.ensureVisible(find.text('Log in'));
     await tester.tap(find.text('Log in'));
     await tester.pumpAndSettle();
@@ -183,16 +187,21 @@ class _FakeSessionRepository implements SessionRepositoryContract {
     required String caseId,
     bool force = false,
   }) async {
-    return generated.SessionResponse((b) => b
-      ..sessionId = 'test-session-1'
-      ..caseId = caseId
-      ..status = 'active'
-      ..createdAt = DateTime.utc(2026)
-      ..lastActivityAt = DateTime.utc(2026));
+    return generated.SessionResponse(
+      (b) => b
+        ..sessionId = 'test-session-1'
+        ..caseId = caseId
+        ..status = 'active'
+        ..createdAt = DateTime.utc(2026)
+        ..lastActivityAt = DateTime.utc(2026),
+    );
   }
 
   @override
   Future<List<generated.ActiveSessionItem>> listActive() async => [];
+
+  @override
+  Future<List<generated.SessionResponse>> listCompleted() async => [];
 
   @override
   Future<generated.SessionStateResponse> getState({
@@ -221,9 +230,11 @@ class _FakeSessionRepository implements SessionRepositoryContract {
     required String sessionId,
     required String message,
   }) async {
-    return generated.ChatResponse((b) => b
-      ..response = 'Mock AI response'
-      ..loggedAt = DateTime.utc(2026));
+    return generated.ChatResponse(
+      (b) => b
+        ..response = 'Mock AI response'
+        ..loggedAt = DateTime.utc(2026),
+    );
   }
 
   @override

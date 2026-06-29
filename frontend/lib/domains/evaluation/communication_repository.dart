@@ -6,14 +6,12 @@ abstract class CommunicationRepositoryContract {
   });
 
   Future<generated.CommunicationEvaluationResponse>
-      triggerCommunicationEvaluation({
-    required String sessionId,
-  });
+  triggerCommunicationEvaluation({required String sessionId});
 }
 
 class CommunicationRepository implements CommunicationRepositoryContract {
   CommunicationRepository({required generated.Openapi openapi})
-      : _api = openapi.getCommunicationEvaluationApi();
+    : _api = openapi.getCommunicationEvaluationApi();
 
   final generated.CommunicationEvaluationApi _api;
 
@@ -23,20 +21,18 @@ class CommunicationRepository implements CommunicationRepositoryContract {
   }) async {
     final response = await _api
         .getCommunicationEvaluationSessionsSessionIdCommunicationEvaluationGet(
-      sessionId: sessionId,
-    );
+          sessionId: sessionId,
+        );
     return response.data!;
   }
 
   @override
   Future<generated.CommunicationEvaluationResponse>
-      triggerCommunicationEvaluation({
-    required String sessionId,
-  }) async {
+  triggerCommunicationEvaluation({required String sessionId}) async {
     final response = await _api
         .triggerCommunicationEvaluationSessionsSessionIdCommunicationEvaluationPost(
-      sessionId: sessionId,
-    );
+          sessionId: sessionId,
+        );
     return response.data!;
   }
 }

@@ -53,8 +53,9 @@ Future<void> showSignupDialog({
             ),
             actions: [
               TextButton(
-                onPressed:
-                    submitting ? null : () => Navigator.of(context).pop(),
+                onPressed: submitting
+                    ? null
+                    : () => Navigator.of(context).pop(),
                 child: const Text('Cancel'),
               ),
               ElevatedButton(

@@ -12,12 +12,12 @@ class _$AvailableTestItem extends AvailableTestItem {
   @override
   final String category;
 
-  factory _$AvailableTestItem(
-          [void Function(AvailableTestItemBuilder)? updates]) =>
-      (AvailableTestItemBuilder()..update(updates))._build();
+  factory _$AvailableTestItem([
+    void Function(AvailableTestItemBuilder)? updates,
+  ]) => (AvailableTestItemBuilder()..update(updates))._build();
 
   _$AvailableTestItem._({required this.testName, required this.category})
-      : super._();
+    : super._();
   @override
   AvailableTestItem rebuild(void Function(AvailableTestItemBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -92,12 +92,19 @@ class AvailableTestItemBuilder
   AvailableTestItem build() => _build();
 
   _$AvailableTestItem _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$AvailableTestItem._(
           testName: BuiltValueNullFieldError.checkNotNull(
-              testName, r'AvailableTestItem', 'testName'),
+            testName,
+            r'AvailableTestItem',
+            'testName',
+          ),
           category: BuiltValueNullFieldError.checkNotNull(
-              category, r'AvailableTestItem', 'category'),
+            category,
+            r'AvailableTestItem',
+            'category',
+          ),
         );
     replace(_$result);
     return _$result;

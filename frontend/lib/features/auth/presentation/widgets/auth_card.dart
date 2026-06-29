@@ -46,9 +46,9 @@ class AuthCard extends StatelessWidget {
           Text(
             'Welcome back',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.primaryText,
-                ),
+              fontWeight: FontWeight.w700,
+              color: AppColors.primaryText,
+            ),
           ),
           const SizedBox(height: 6),
           Text(

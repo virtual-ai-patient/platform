@@ -65,9 +65,9 @@ class _LoginScreenState extends State<LoginScreen> {
         communicationRepository: widget.communicationRepository,
         adminRepository: widget.adminRepository,
       );
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute<void>(builder: (_) => home),
-      );
+      Navigator.of(
+        context,
+      ).pushReplacement(MaterialPageRoute<void>(builder: (_) => home));
     } catch (e) {
       setState(() {
         _error = mapAuthError(e);
@@ -105,8 +105,9 @@ class _LoginScreenState extends State<LoginScreen> {
     if (!mounted) {
       return;
     }
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   @override

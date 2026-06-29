@@ -50,10 +50,8 @@ class _CommunicationPanelState extends State<CommunicationPanel> {
       _errorDetail = null;
     });
     try {
-      final result =
-          await widget.communicationRepository.getCommunicationEvaluation(
-        sessionId: widget.sessionId,
-      );
+      final result = await widget.communicationRepository
+          .getCommunicationEvaluation(sessionId: widget.sessionId);
       if (!mounted) return;
       setState(() {
         _evaluation = result;
@@ -149,47 +147,47 @@ class _CommunicationPanelState extends State<CommunicationPanel> {
   Widget build(BuildContext context) {
     return switch (_state) {
       _CommLoadState.loading || _CommLoadState.analyzing => _AnalyzingBody(
-          analyzing: _state == _CommLoadState.analyzing,
-        ),
+        analyzing: _state == _CommLoadState.analyzing,
+      ),
       _CommLoadState.success => _SuccessBody(evaluation: _evaluation!),
       _CommLoadState.notFound => _CommErrorPanel(
-          icon: Icons.search_off_rounded,
-          title: 'Session not found',
-          message: 'Communication scoring is not available for this session.',
-          detail: _errorDetail,
-          onRetry: _load,
-        ),
+        icon: Icons.search_off_rounded,
+        title: 'Session not found',
+        message: 'Communication scoring is not available for this session.',
+        detail: _errorDetail,
+        onRetry: _load,
+      ),
       _CommLoadState.forbidden => _CommErrorPanel(
-          icon: Icons.lock_outline_rounded,
-          title: 'Access denied',
-          message: "You don't have access to this communication evaluation.",
-          detail: _errorDetail,
-          onRetry: _load,
-        ),
+        icon: Icons.lock_outline_rounded,
+        title: 'Access denied',
+        message: "You don't have access to this communication evaluation.",
+        detail: _errorDetail,
+        onRetry: _load,
+      ),
       _CommLoadState.notFinished => _CommErrorPanel(
-          icon: Icons.hourglass_empty_rounded,
-          title: 'Case not finished',
-          message:
-              'Complete the case first, then return here for communication coaching.',
-          detail: _errorDetail,
-          onRetry: _load,
-        ),
+        icon: Icons.hourglass_empty_rounded,
+        title: 'Case not finished',
+        message:
+            'Complete the case first, then return here for communication coaching.',
+        detail: _errorDetail,
+        onRetry: _load,
+      ),
       _CommLoadState.judgeFailure => _CommErrorPanel(
-          icon: Icons.psychology_alt_outlined,
-          title: 'Communication coach unavailable',
-          message:
-              'The conversation coach could not analyze this session. Try again.',
-          detail: _errorDetail,
-          onRetry: _triggerJudge,
-          retryLabel: 'Retry analysis',
-        ),
+        icon: Icons.psychology_alt_outlined,
+        title: 'Communication coach unavailable',
+        message:
+            'The conversation coach could not analyze this session. Try again.',
+        detail: _errorDetail,
+        onRetry: _triggerJudge,
+        retryLabel: 'Retry analysis',
+      ),
       _CommLoadState.unknown => _CommErrorPanel(
-          icon: Icons.error_outline_rounded,
-          title: 'Something went wrong',
-          message: 'Could not load communication coaching.',
-          detail: _errorDetail,
-          onRetry: _load,
-        ),
+        icon: Icons.error_outline_rounded,
+        title: 'Something went wrong',
+        message: 'Could not load communication coaching.',
+        detail: _errorDetail,
+        onRetry: _load,
+      ),
     };
   }
 }
@@ -306,8 +304,9 @@ class _HeroHeader extends StatelessWidget {
           colors: [AppColors.heroTint, AppColors.heroTintEnd],
         ),
         borderRadius: BorderRadius.all(Radius.circular(12)),
-        border:
-            Border.fromBorderSide(BorderSide(color: AppColors.borderSubtle)),
+        border: Border.fromBorderSide(
+          BorderSide(color: AppColors.borderSubtle),
+        ),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -666,10 +665,7 @@ class _CommErrorPanel extends StatelessWidget {
                       ),
                     ],
                     const SizedBox(height: 20),
-                    FilledButton(
-                      onPressed: onRetry,
-                      child: Text(retryLabel),
-                    ),
+                    FilledButton(onPressed: onRetry, child: Text(retryLabel)),
                   ],
                 ),
               ),

@@ -8,13 +8,16 @@ import 'package:frontend/network/openapi.dart' as generated;
 
 void main() {
   test('hydrationFromSessionState maps chat, tests, conclusions', () {
-    final raw =
-        File('test/fixtures/session_state_sample.json').readAsStringSync();
+    final raw = File(
+      'test/fixtures/session_state_sample.json',
+    ).readAsStringSync();
     final json = jsonDecode(raw) as Map<String, dynamic>;
-    final state = generated.standardSerializers.deserialize(
-      json,
-      specifiedType: const FullType(generated.SessionStateResponse),
-    ) as generated.SessionStateResponse;
+    final state =
+        generated.standardSerializers.deserialize(
+              json,
+              specifiedType: const FullType(generated.SessionStateResponse),
+            )
+            as generated.SessionStateResponse;
 
     final hydration = hydrationFromSessionState(state);
 
@@ -26,9 +29,6 @@ void main() {
     expect(hydration.completedTests.first.testName, 'ECG');
     expect(hydration.completedTests.first.value, 'ST elevation');
     expect(hydration.conclusions, isNotNull);
-    expect(
-      hydration.conclusions!.containsKey('final_diagnosis'),
-      isTrue,
-    );
+    expect(hydration.conclusions!.containsKey('final_diagnosis'), isTrue);
   });
 }

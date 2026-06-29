@@ -18,7 +18,7 @@ class _$Medication extends Medication {
       (MedicationBuilder()..update(updates))._build();
 
   _$Medication._({required this.name, required this.dose, required this.route})
-      : super._();
+    : super._();
   @override
   Medication rebuild(void Function(MedicationBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -99,14 +99,24 @@ class MedicationBuilder implements Builder<Medication, MedicationBuilder> {
   Medication build() => _build();
 
   _$Medication _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$Medication._(
           name: BuiltValueNullFieldError.checkNotNull(
-              name, r'Medication', 'name'),
+            name,
+            r'Medication',
+            'name',
+          ),
           dose: BuiltValueNullFieldError.checkNotNull(
-              dose, r'Medication', 'dose'),
+            dose,
+            r'Medication',
+            'dose',
+          ),
           route: BuiltValueNullFieldError.checkNotNull(
-              route, r'Medication', 'route'),
+            route,
+            r'Medication',
+            'route',
+          ),
         );
     replace(_$result);
     return _$result;
