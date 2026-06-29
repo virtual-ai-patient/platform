@@ -92,8 +92,9 @@ class _$ScoringRequestSerializer
       yield r'acceptable_answers';
       yield serializers.serialize(
         object.acceptableAnswers,
-        specifiedType:
-            const FullType(BuiltList, [FullType(AcceptableAnswerRequest)]),
+        specifiedType: const FullType(BuiltList, [
+          FullType(AcceptableAnswerRequest),
+        ]),
       );
     }
     if (object.criticalSafetyErrors != null) {
@@ -111,9 +112,11 @@ class _$ScoringRequestSerializer
     ScoringRequest object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(
+      serializers,
+      object,
+      specifiedType: specifiedType,
+    ).toList();
   }
 
   void _deserializeProperties(
@@ -129,46 +132,49 @@ class _$ScoringRequestSerializer
       final value = serializedList[i + 1];
       switch (key) {
         case r'weight_diagnosis':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(num),
-          ) as num;
+          final valueDes =
+              serializers.deserialize(value, specifiedType: const FullType(num))
+                  as num;
           result.weightDiagnosis = valueDes;
           break;
         case r'weight_diagnostics':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(num),
-          ) as num;
+          final valueDes =
+              serializers.deserialize(value, specifiedType: const FullType(num))
+                  as num;
           result.weightDiagnostics = valueDes;
           break;
         case r'weight_treatment':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(num),
-          ) as num;
+          final valueDes =
+              serializers.deserialize(value, specifiedType: const FullType(num))
+                  as num;
           result.weightTreatment = valueDes;
           break;
         case r'weight_safety':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(num),
-          ) as num;
+          final valueDes =
+              serializers.deserialize(value, specifiedType: const FullType(num))
+                  as num;
           result.weightSafety = valueDes;
           break;
         case r'acceptable_answers':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType:
-                const FullType(BuiltList, [FullType(AcceptableAnswerRequest)]),
-          ) as BuiltList<AcceptableAnswerRequest>;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(BuiltList, [
+                      FullType(AcceptableAnswerRequest),
+                    ]),
+                  )
+                  as BuiltList<AcceptableAnswerRequest>;
           result.acceptableAnswers.replace(valueDes);
           break;
         case r'critical_safety_errors':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(BuiltList, [FullType(String)]),
-          ) as BuiltList<String>;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(BuiltList, [
+                      FullType(String),
+                    ]),
+                  )
+                  as BuiltList<String>;
           result.criticalSafetyErrors.replace(valueDes);
           break;
         default:

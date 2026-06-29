@@ -21,13 +21,13 @@ class _$SessionResponse extends SessionResponse {
   factory _$SessionResponse([void Function(SessionResponseBuilder)? updates]) =>
       (SessionResponseBuilder()..update(updates))._build();
 
-  _$SessionResponse._(
-      {required this.sessionId,
-      required this.caseId,
-      required this.status,
-      required this.createdAt,
-      required this.lastActivityAt})
-      : super._();
+  _$SessionResponse._({
+    required this.sessionId,
+    required this.caseId,
+    required this.status,
+    required this.createdAt,
+    required this.lastActivityAt,
+  }) : super._();
   @override
   SessionResponse rebuild(void Function(SessionResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -126,18 +126,34 @@ class SessionResponseBuilder
   SessionResponse build() => _build();
 
   _$SessionResponse _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$SessionResponse._(
           sessionId: BuiltValueNullFieldError.checkNotNull(
-              sessionId, r'SessionResponse', 'sessionId'),
+            sessionId,
+            r'SessionResponse',
+            'sessionId',
+          ),
           caseId: BuiltValueNullFieldError.checkNotNull(
-              caseId, r'SessionResponse', 'caseId'),
+            caseId,
+            r'SessionResponse',
+            'caseId',
+          ),
           status: BuiltValueNullFieldError.checkNotNull(
-              status, r'SessionResponse', 'status'),
+            status,
+            r'SessionResponse',
+            'status',
+          ),
           createdAt: BuiltValueNullFieldError.checkNotNull(
-              createdAt, r'SessionResponse', 'createdAt'),
+            createdAt,
+            r'SessionResponse',
+            'createdAt',
+          ),
           lastActivityAt: BuiltValueNullFieldError.checkNotNull(
-              lastActivityAt, r'SessionResponse', 'lastActivityAt'),
+            lastActivityAt,
+            r'SessionResponse',
+            'lastActivityAt',
+          ),
         );
     replace(_$result);
     return _$result;

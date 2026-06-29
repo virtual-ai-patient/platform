@@ -37,9 +37,9 @@ class _$MessageResponse extends MessageResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'MessageResponse')
-          ..add('message', message))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'MessageResponse',
+    )..add('message', message)).toString();
   }
 }
 
@@ -78,10 +78,14 @@ class MessageResponseBuilder
   MessageResponse build() => _build();
 
   _$MessageResponse _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$MessageResponse._(
           message: BuiltValueNullFieldError.checkNotNull(
-              message, r'MessageResponse', 'message'),
+            message,
+            r'MessageResponse',
+            'message',
+          ),
         );
     replace(_$result);
     return _$result;

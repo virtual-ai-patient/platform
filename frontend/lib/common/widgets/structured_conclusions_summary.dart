@@ -34,8 +34,9 @@ List<Widget> structuredConclusionsFromBuiltMap(
       style: GoogleFonts.inter(
         fontSize: 14,
         fontWeight: FontWeight.w600,
-        color:
-            finalDiagnosis.isEmpty ? AppColors.danger : AppColors.primaryText,
+        color: finalDiagnosis.isEmpty
+            ? AppColors.danger
+            : AppColors.primaryText,
       ),
     ),
     const SizedBox(height: 14),
@@ -47,12 +48,16 @@ List<Widget> structuredConclusionsFromBuiltMap(
 }
 
 List<Widget> _buildDifferentialItems(List<dynamic> differential) {
-  final normalized = differential
-      .whereType<Map>()
-      .map((e) => Map<String, dynamic>.from(e))
-      .toList(growable: false)
-    ..sort((a, b) => ((a['rank'] as num?)?.toInt() ?? 999)
-        .compareTo((b['rank'] as num?)?.toInt() ?? 999));
+  final normalized =
+      differential
+          .whereType<Map>()
+          .map((e) => Map<String, dynamic>.from(e))
+          .toList(growable: false)
+        ..sort(
+          (a, b) => ((a['rank'] as num?)?.toInt() ?? 999).compareTo(
+            (b['rank'] as num?)?.toInt() ?? 999,
+          ),
+        );
 
   return normalized
       .map(
@@ -97,32 +102,34 @@ List<Widget> _buildTreatmentPlan(Map<String, dynamic> treatment) {
     return [_muted('No treatment plan provided.')];
   }
   final meds = _asList(treatment['medications']);
-  final nonPharm = _asList(treatment['non_pharmacological'])
-      .map((e) => e.toString())
-      .toList(growable: false);
-  final referrals = _asList(treatment['referrals'])
-      .map((e) => e.toString())
-      .toList(growable: false);
-  final followUp = _asList(treatment['follow_up'])
-      .map((e) => e.toString())
-      .toList(growable: false);
+  final nonPharm = _asList(
+    treatment['non_pharmacological'],
+  ).map((e) => e.toString()).toList(growable: false);
+  final referrals = _asList(
+    treatment['referrals'],
+  ).map((e) => e.toString()).toList(growable: false);
+  final followUp = _asList(
+    treatment['follow_up'],
+  ).map((e) => e.toString()).toList(growable: false);
 
   final result = <Widget>[
     if (meds.isNotEmpty) ...[
-      Text('Medications',
-          style: GoogleFonts.inter(fontWeight: FontWeight.w700)),
+      Text(
+        'Medications',
+        style: GoogleFonts.inter(fontWeight: FontWeight.w700),
+      ),
       const SizedBox(height: 6),
       ...meds.whereType<Map>().map(
-            (m) => Padding(
-              padding: const EdgeInsets.only(bottom: 4),
-              child: Text(
-                '• ${(m['name'] ?? '').toString()}'
-                '${(m['dose'] ?? '').toString().isNotEmpty ? ' — ${m['dose']}' : ''}'
-                '${(m['route'] ?? '').toString().isNotEmpty ? ' (${m['route']})' : ''}',
-                style: GoogleFonts.inter(fontSize: 13),
-              ),
-            ),
+        (m) => Padding(
+          padding: const EdgeInsets.only(bottom: 4),
+          child: Text(
+            '• ${(m['name'] ?? '').toString()}'
+            '${(m['dose'] ?? '').toString().isNotEmpty ? ' — ${m['dose']}' : ''}'
+            '${(m['route'] ?? '').toString().isNotEmpty ? ' (${m['route']})' : ''}',
+            style: GoogleFonts.inter(fontSize: 13),
           ),
+        ),
+      ),
       const SizedBox(height: 10),
     ],
     ..._stringSection('Non-pharmacological', nonPharm),
@@ -151,16 +158,16 @@ List<Widget> _stringSection(String title, List<String> values) {
 }
 
 Widget _sectionTitle(String title) => Padding(
-      padding: const EdgeInsets.only(bottom: 6),
-      child: Text(
-        title,
-        style: GoogleFonts.inter(
-          fontWeight: FontWeight.w700,
-          fontSize: 13,
-          color: AppColors.secondaryText,
-        ),
-      ),
-    );
+  padding: const EdgeInsets.only(bottom: 6),
+  child: Text(
+    title,
+    style: GoogleFonts.inter(
+      fontWeight: FontWeight.w700,
+      fontSize: 13,
+      color: AppColors.secondaryText,
+    ),
+  ),
+);
 
 Widget _muted(String text) =>
     Text(text, style: GoogleFonts.inter(color: AppColors.secondaryText));

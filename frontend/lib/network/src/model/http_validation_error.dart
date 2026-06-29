@@ -38,7 +38,7 @@ class _$HTTPValidationErrorSerializer
   @override
   final Iterable<Type> types = const [
     HTTPValidationError,
-    _$HTTPValidationError
+    _$HTTPValidationError,
   ];
 
   @override
@@ -64,9 +64,11 @@ class _$HTTPValidationErrorSerializer
     HTTPValidationError object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(
+      serializers,
+      object,
+      specifiedType: specifiedType,
+    ).toList();
   }
 
   void _deserializeProperties(
@@ -82,11 +84,14 @@ class _$HTTPValidationErrorSerializer
       final value = serializedList[i + 1];
       switch (key) {
         case r'detail':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType:
-                const FullType(BuiltList, [FullType(ValidationError)]),
-          ) as BuiltList<ValidationError>;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(BuiltList, [
+                      FullType(ValidationError),
+                    ]),
+                  )
+                  as BuiltList<ValidationError>;
           result.detail.replace(valueDes);
           break;
         default:

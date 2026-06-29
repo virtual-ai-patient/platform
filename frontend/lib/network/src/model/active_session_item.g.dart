@@ -20,18 +20,18 @@ class _$ActiveSessionItem extends ActiveSessionItem {
   @override
   final ProgressSummary progressSummary;
 
-  factory _$ActiveSessionItem(
-          [void Function(ActiveSessionItemBuilder)? updates]) =>
-      (ActiveSessionItemBuilder()..update(updates))._build();
+  factory _$ActiveSessionItem([
+    void Function(ActiveSessionItemBuilder)? updates,
+  ]) => (ActiveSessionItemBuilder()..update(updates))._build();
 
-  _$ActiveSessionItem._(
-      {required this.sessionId,
-      required this.caseId,
-      required this.caseTitle,
-      required this.createdAt,
-      required this.lastActivityAt,
-      required this.progressSummary})
-      : super._();
+  _$ActiveSessionItem._({
+    required this.sessionId,
+    required this.caseId,
+    required this.caseTitle,
+    required this.createdAt,
+    required this.lastActivityAt,
+    required this.progressSummary,
+  }) : super._();
   @override
   ActiveSessionItem rebuild(void Function(ActiveSessionItemBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -143,18 +143,34 @@ class ActiveSessionItemBuilder
   _$ActiveSessionItem _build() {
     _$ActiveSessionItem _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$ActiveSessionItem._(
             sessionId: BuiltValueNullFieldError.checkNotNull(
-                sessionId, r'ActiveSessionItem', 'sessionId'),
+              sessionId,
+              r'ActiveSessionItem',
+              'sessionId',
+            ),
             caseId: BuiltValueNullFieldError.checkNotNull(
-                caseId, r'ActiveSessionItem', 'caseId'),
+              caseId,
+              r'ActiveSessionItem',
+              'caseId',
+            ),
             caseTitle: BuiltValueNullFieldError.checkNotNull(
-                caseTitle, r'ActiveSessionItem', 'caseTitle'),
+              caseTitle,
+              r'ActiveSessionItem',
+              'caseTitle',
+            ),
             createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, r'ActiveSessionItem', 'createdAt'),
+              createdAt,
+              r'ActiveSessionItem',
+              'createdAt',
+            ),
             lastActivityAt: BuiltValueNullFieldError.checkNotNull(
-                lastActivityAt, r'ActiveSessionItem', 'lastActivityAt'),
+              lastActivityAt,
+              r'ActiveSessionItem',
+              'lastActivityAt',
+            ),
             progressSummary: progressSummary.build(),
           );
     } catch (_) {
@@ -164,7 +180,10 @@ class ActiveSessionItemBuilder
         progressSummary.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'ActiveSessionItem', _$failedField, e.toString());
+          r'ActiveSessionItem',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

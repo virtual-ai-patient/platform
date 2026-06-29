@@ -14,17 +14,19 @@ class _$ConclusionsRequest extends ConclusionsRequest {
   @override
   final TreatmentPlan? treatmentPlan;
 
-  factory _$ConclusionsRequest(
-          [void Function(ConclusionsRequestBuilder)? updates]) =>
-      (ConclusionsRequestBuilder()..update(updates))._build();
+  factory _$ConclusionsRequest([
+    void Function(ConclusionsRequestBuilder)? updates,
+  ]) => (ConclusionsRequestBuilder()..update(updates))._build();
 
-  _$ConclusionsRequest._(
-      {this.differentialDiagnoses, this.finalDiagnosis, this.treatmentPlan})
-      : super._();
+  _$ConclusionsRequest._({
+    this.differentialDiagnoses,
+    this.finalDiagnosis,
+    this.treatmentPlan,
+  }) : super._();
   @override
   ConclusionsRequest rebuild(
-          void Function(ConclusionsRequestBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(ConclusionsRequestBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   ConclusionsRequestBuilder toBuilder() =>
@@ -68,8 +70,8 @@ class ConclusionsRequestBuilder
       _$this._differentialDiagnoses ??=
           ListBuilder<DifferentialDiagnosisItem>();
   set differentialDiagnoses(
-          ListBuilder<DifferentialDiagnosisItem>? differentialDiagnoses) =>
-      _$this._differentialDiagnoses = differentialDiagnoses;
+    ListBuilder<DifferentialDiagnosisItem>? differentialDiagnoses,
+  ) => _$this._differentialDiagnoses = differentialDiagnoses;
 
   String? _finalDiagnosis;
   String? get finalDiagnosis => _$this._finalDiagnosis;
@@ -113,7 +115,8 @@ class ConclusionsRequestBuilder
   _$ConclusionsRequest _build() {
     _$ConclusionsRequest _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$ConclusionsRequest._(
             differentialDiagnoses: _differentialDiagnoses?.build(),
             finalDiagnosis: finalDiagnosis,
@@ -129,7 +132,10 @@ class ConclusionsRequestBuilder
         _treatmentPlan?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'ConclusionsRequest', _$failedField, e.toString());
+          r'ConclusionsRequest',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

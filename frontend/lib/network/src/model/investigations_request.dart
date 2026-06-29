@@ -31,8 +31,9 @@ abstract class InvestigationsRequest
 
   InvestigationsRequest._();
 
-  factory InvestigationsRequest(
-      [void updates(InvestigationsRequestBuilder b)]) = _$InvestigationsRequest;
+  factory InvestigationsRequest([
+    void updates(InvestigationsRequestBuilder b),
+  ]) = _$InvestigationsRequest;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(InvestigationsRequestBuilder b) => b
@@ -49,7 +50,7 @@ class _$InvestigationsRequestSerializer
   @override
   final Iterable<Type> types = const [
     InvestigationsRequest,
-    _$InvestigationsRequest
+    _$InvestigationsRequest,
   ];
 
   @override
@@ -76,8 +77,9 @@ class _$InvestigationsRequestSerializer
       yield r'results';
       yield serializers.serialize(
         object.results,
-        specifiedType:
-            const FullType(BuiltList, [FullType(InvestigationResultRequest)]),
+        specifiedType: const FullType(BuiltList, [
+          FullType(InvestigationResultRequest),
+        ]),
       );
     }
   }
@@ -88,9 +90,11 @@ class _$InvestigationsRequestSerializer
     InvestigationsRequest object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(
+      serializers,
+      object,
+      specifiedType: specifiedType,
+    ).toList();
   }
 
   void _deserializeProperties(
@@ -106,25 +110,34 @@ class _$InvestigationsRequestSerializer
       final value = serializedList[i + 1];
       switch (key) {
         case r'catalog_hints':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(BuiltList, [FullType(String)]),
-          ) as BuiltList<String>;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(BuiltList, [
+                      FullType(String),
+                    ]),
+                  )
+                  as BuiltList<String>;
           result.catalogHints.replace(valueDes);
           break;
         case r'expected':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(ExpectedTestsRequest),
-          ) as ExpectedTestsRequest;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(ExpectedTestsRequest),
+                  )
+                  as ExpectedTestsRequest;
           result.expected.replace(valueDes);
           break;
         case r'results':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(
-                BuiltList, [FullType(InvestigationResultRequest)]),
-          ) as BuiltList<InvestigationResultRequest>;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(BuiltList, [
+                      FullType(InvestigationResultRequest),
+                    ]),
+                  )
+                  as BuiltList<InvestigationResultRequest>;
           result.results.replace(valueDes);
           break;
         default:

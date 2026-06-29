@@ -40,7 +40,7 @@ abstract class SessionRepositoryContract {
 
 class SessionRepository implements SessionRepositoryContract {
   SessionRepository({required generated.Openapi openapi})
-      : _api = openapi.getSessionsApi();
+    : _api = openapi.getSessionsApi();
 
   final generated.SessionsApi _api;
 
@@ -96,9 +96,11 @@ class SessionRepository implements SessionRepositoryContract {
       if (next == null) break;
       cursor = next;
     }
-    return lastPage.rebuild((b) => b
-      ..chatHistory.replace(BuiltList<generated.ChatMessage>(chatHistory))
-      ..nextCursor = null);
+    return lastPage.rebuild(
+      (b) => b
+        ..chatHistory.replace(BuiltList<generated.ChatMessage>(chatHistory))
+        ..nextCursor = null,
+    );
   }
 
   @override
@@ -106,7 +108,8 @@ class SessionRepository implements SessionRepositoryContract {
     required String sessionId,
   }) async {
     final response = await _api.abandonSessionSessionsSessionIdAbandonPost(
-        sessionId: sessionId);
+      sessionId: sessionId,
+    );
     return response.data!;
   }
 
@@ -127,10 +130,8 @@ class SessionRepository implements SessionRepositoryContract {
   Future<generated.AvailableTestsResponse> getAvailableTests({
     required String sessionId,
   }) async {
-    final response =
-        await _api.availableTestsSessionsSessionIdAvailableTestsGet(
-      sessionId: sessionId,
-    );
+    final response = await _api
+        .availableTestsSessionsSessionIdAvailableTestsGet(sessionId: sessionId);
     return response.data!;
   }
 
@@ -152,11 +153,11 @@ class SessionRepository implements SessionRepositoryContract {
     required String sessionId,
     required generated.ConclusionsRequest request,
   }) async {
-    final response =
-        await _api.updateConclusionsSessionsSessionIdConclusionsPatch(
-      sessionId: sessionId,
-      conclusionsRequest: request,
-    );
+    final response = await _api
+        .updateConclusionsSessionsSessionIdConclusionsPatch(
+          sessionId: sessionId,
+          conclusionsRequest: request,
+        );
     return response.data!;
   }
 

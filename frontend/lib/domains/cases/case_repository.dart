@@ -19,7 +19,7 @@ abstract class CaseRepositoryContract {
 
 class CaseRepository implements CaseRepositoryContract {
   CaseRepository({required generated.Openapi openapi})
-      : _api = openapi.getCasesApi();
+    : _api = openapi.getCasesApi();
 
   final generated.CasesApi _api;
 
@@ -33,9 +33,7 @@ class CaseRepository implements CaseRepositoryContract {
   Future<generated.CaseResponse> createCase(
     generated.CreateCaseRequest request,
   ) async {
-    final response = await _api.createCaseCasesPost(
-      createCaseRequest: request,
-    );
+    final response = await _api.createCaseCasesPost(createCaseRequest: request);
     final data = response.data;
     if (data == null) {
       throw StateError('Create case returned empty body');

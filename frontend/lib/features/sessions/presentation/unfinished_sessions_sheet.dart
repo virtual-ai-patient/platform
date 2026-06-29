@@ -178,59 +178,59 @@ class _UnfinishedSessionsBodyState extends State<_UnfinishedSessionsBody> {
         child: switch (_phase) {
           _SheetPhase.loading => _LoadingPanel(),
           _SheetPhase.forbidden => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: _ErrorPanel(
-                title: 'Access denied',
-                message: 'Could not load your unfinished sessions.',
-                detail: _errorDetail,
-                onRetry: _load,
-              ),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: _ErrorPanel(
+              title: 'Access denied',
+              message: 'Could not load your unfinished sessions.',
+              detail: _errorDetail,
+              onRetry: _load,
             ),
+          ),
           _SheetPhase.error => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: _ErrorPanel(
-                title: 'Could not load sessions',
-                message: 'Check your connection and try again.',
-                detail: _errorDetail,
-                onRetry: _load,
-              ),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: _ErrorPanel(
+              title: 'Could not load sessions',
+              message: 'Check your connection and try again.',
+              detail: _errorDetail,
+              onRetry: _load,
             ),
+          ),
           _SheetPhase.ready => Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _SheetHeader(count: _items.length),
-                Flexible(
-                  child: ListView.separated(
-                    padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
-                    itemCount: _items.length,
-                    separatorBuilder: (_, __) => const SizedBox(height: 12),
-                    itemBuilder: (context, index) {
-                      final item = _items[index];
-                      return _UnfinishedSessionCard(
-                        item: item,
-                        busy: _busySessionIds.contains(item.sessionId),
-                        onResume: () => _onResume(item),
-                        onAbandon: () => _onAbandon(item),
-                      );
-                    },
-                  ),
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _SheetHeader(count: _items.length),
+              Flexible(
+                child: ListView.separated(
+                  padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
+                  itemCount: _items.length,
+                  separatorBuilder: (_, __) => const SizedBox(height: 12),
+                  itemBuilder: (context, index) {
+                    final item = _items[index];
+                    return _UnfinishedSessionCard(
+                      item: item,
+                      busy: _busySessionIds.contains(item.sessionId),
+                      onResume: () => _onResume(item),
+                      onAbandon: () => _onAbandon(item),
+                    );
+                  },
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 4, 20, 8),
-                  child: TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: Text(
-                      'Browse cases instead',
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.secondaryText,
-                      ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 4, 20, 8),
+                child: TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(
+                    'Browse cases instead',
+                    style: GoogleFonts.inter(
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.secondaryText,
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
+          ),
         },
       ),
     );
@@ -253,9 +253,7 @@ class _SheetHeader extends StatelessWidget {
           end: Alignment.bottomRight,
           colors: [AppColors.heroTint, AppColors.heroTintEnd],
         ),
-        border: Border(
-          bottom: BorderSide(color: AppColors.borderSubtle),
-        ),
+        border: Border(bottom: BorderSide(color: AppColors.borderSubtle)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -496,8 +494,10 @@ class _UnfinishedSessionCard extends StatelessWidget {
                           else
                             FilledButton.icon(
                               onPressed: onResume,
-                              icon: const Icon(Icons.play_arrow_rounded,
-                                  size: 18),
+                              icon: const Icon(
+                                Icons.play_arrow_rounded,
+                                size: 18,
+                              ),
                               label: Text(
                                 'Resume',
                                 style: GoogleFonts.inter(
@@ -573,8 +573,9 @@ class _MetaChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final fg = emphasized ? AppColors.primaryBlue : AppColors.secondaryText;
-    final bg =
-        emphasized ? AppColors.primaryBlueLight : AppColors.chipBackground;
+    final bg = emphasized
+        ? AppColors.primaryBlueLight
+        : AppColors.chipBackground;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),

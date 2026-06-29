@@ -21,22 +21,22 @@ class _$CommunicationEvaluationResponse
   @override
   final BuiltList<CommunicationCriterionResponse> criteria;
 
-  factory _$CommunicationEvaluationResponse(
-          [void Function(CommunicationEvaluationResponseBuilder)? updates]) =>
-      (CommunicationEvaluationResponseBuilder()..update(updates))._build();
+  factory _$CommunicationEvaluationResponse([
+    void Function(CommunicationEvaluationResponseBuilder)? updates,
+  ]) => (CommunicationEvaluationResponseBuilder()..update(updates))._build();
 
-  _$CommunicationEvaluationResponse._(
-      {required this.sessionId,
-      required this.model,
-      required this.promptVersion,
-      required this.totalScore,
-      required this.createdAt,
-      required this.criteria})
-      : super._();
+  _$CommunicationEvaluationResponse._({
+    required this.sessionId,
+    required this.model,
+    required this.promptVersion,
+    required this.totalScore,
+    required this.createdAt,
+    required this.criteria,
+  }) : super._();
   @override
   CommunicationEvaluationResponse rebuild(
-          void Function(CommunicationEvaluationResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(CommunicationEvaluationResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   CommunicationEvaluationResponseBuilder toBuilder() =>
@@ -82,8 +82,10 @@ class _$CommunicationEvaluationResponse
 
 class CommunicationEvaluationResponseBuilder
     implements
-        Builder<CommunicationEvaluationResponse,
-            CommunicationEvaluationResponseBuilder> {
+        Builder<
+          CommunicationEvaluationResponse,
+          CommunicationEvaluationResponseBuilder
+        > {
   _$CommunicationEvaluationResponse? _$v;
 
   String? _sessionId;
@@ -147,18 +149,34 @@ class CommunicationEvaluationResponseBuilder
   _$CommunicationEvaluationResponse _build() {
     _$CommunicationEvaluationResponse _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$CommunicationEvaluationResponse._(
             sessionId: BuiltValueNullFieldError.checkNotNull(
-                sessionId, r'CommunicationEvaluationResponse', 'sessionId'),
+              sessionId,
+              r'CommunicationEvaluationResponse',
+              'sessionId',
+            ),
             model: BuiltValueNullFieldError.checkNotNull(
-                model, r'CommunicationEvaluationResponse', 'model'),
-            promptVersion: BuiltValueNullFieldError.checkNotNull(promptVersion,
-                r'CommunicationEvaluationResponse', 'promptVersion'),
+              model,
+              r'CommunicationEvaluationResponse',
+              'model',
+            ),
+            promptVersion: BuiltValueNullFieldError.checkNotNull(
+              promptVersion,
+              r'CommunicationEvaluationResponse',
+              'promptVersion',
+            ),
             totalScore: BuiltValueNullFieldError.checkNotNull(
-                totalScore, r'CommunicationEvaluationResponse', 'totalScore'),
+              totalScore,
+              r'CommunicationEvaluationResponse',
+              'totalScore',
+            ),
             createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, r'CommunicationEvaluationResponse', 'createdAt'),
+              createdAt,
+              r'CommunicationEvaluationResponse',
+              'createdAt',
+            ),
             criteria: criteria.build(),
           );
     } catch (_) {
@@ -168,7 +186,10 @@ class CommunicationEvaluationResponseBuilder
         criteria.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'CommunicationEvaluationResponse', _$failedField, e.toString());
+          r'CommunicationEvaluationResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

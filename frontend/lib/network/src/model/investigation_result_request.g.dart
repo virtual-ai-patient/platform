@@ -7,14 +7,14 @@ part of 'investigation_result_request.dart';
 // **************************************************************************
 
 const InvestigationResultRequestResultTypeEnum
-    _$investigationResultRequestResultTypeEnum_textReport =
+_$investigationResultRequestResultTypeEnum_textReport =
     const InvestigationResultRequestResultTypeEnum._('textReport');
 const InvestigationResultRequestResultTypeEnum
-    _$investigationResultRequestResultTypeEnum_labValue =
+_$investigationResultRequestResultTypeEnum_labValue =
     const InvestigationResultRequestResultTypeEnum._('labValue');
 
 InvestigationResultRequestResultTypeEnum
-    _$investigationResultRequestResultTypeEnumValueOf(String name) {
+_$investigationResultRequestResultTypeEnumValueOf(String name) {
   switch (name) {
     case 'textReport':
       return _$investigationResultRequestResultTypeEnum_textReport;
@@ -26,14 +26,16 @@ InvestigationResultRequestResultTypeEnum
 }
 
 final BuiltSet<InvestigationResultRequestResultTypeEnum>
-    _$investigationResultRequestResultTypeEnumValues = BuiltSet<
-        InvestigationResultRequestResultTypeEnum>(const <InvestigationResultRequestResultTypeEnum>[
-  _$investigationResultRequestResultTypeEnum_textReport,
-  _$investigationResultRequestResultTypeEnum_labValue,
-]);
+_$investigationResultRequestResultTypeEnumValues =
+    BuiltSet<InvestigationResultRequestResultTypeEnum>(
+      const <InvestigationResultRequestResultTypeEnum>[
+        _$investigationResultRequestResultTypeEnum_textReport,
+        _$investigationResultRequestResultTypeEnum_labValue,
+      ],
+    );
 
 Serializer<InvestigationResultRequestResultTypeEnum>
-    _$investigationResultRequestResultTypeEnumSerializer =
+_$investigationResultRequestResultTypeEnumSerializer =
     _$InvestigationResultRequestResultTypeEnumSerializer();
 
 class _$InvestigationResultRequestResultTypeEnumSerializer
@@ -49,23 +51,26 @@ class _$InvestigationResultRequestResultTypeEnumSerializer
 
   @override
   final Iterable<Type> types = const <Type>[
-    InvestigationResultRequestResultTypeEnum
+    InvestigationResultRequestResultTypeEnum,
   ];
   @override
   final String wireName = 'InvestigationResultRequestResultTypeEnum';
 
   @override
-  Object serialize(Serializers serializers,
-          InvestigationResultRequestResultTypeEnum object,
-          {FullType specifiedType = FullType.unspecified}) =>
-      _toWire[object.name] ?? object.name;
+  Object serialize(
+    Serializers serializers,
+    InvestigationResultRequestResultTypeEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
 
   @override
   InvestigationResultRequestResultTypeEnum deserialize(
-          Serializers serializers, Object serialized,
-          {FullType specifiedType = FullType.unspecified}) =>
-      InvestigationResultRequestResultTypeEnum.valueOf(
-          _fromWire[serialized] ?? (serialized is String ? serialized : ''));
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => InvestigationResultRequestResultTypeEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
 }
 
 class _$InvestigationResultRequest extends InvestigationResultRequest {
@@ -80,21 +85,21 @@ class _$InvestigationResultRequest extends InvestigationResultRequest {
   @override
   final String? referenceRange;
 
-  factory _$InvestigationResultRequest(
-          [void Function(InvestigationResultRequestBuilder)? updates]) =>
-      (InvestigationResultRequestBuilder()..update(updates))._build();
+  factory _$InvestigationResultRequest([
+    void Function(InvestigationResultRequestBuilder)? updates,
+  ]) => (InvestigationResultRequestBuilder()..update(updates))._build();
 
-  _$InvestigationResultRequest._(
-      {required this.testName,
-      required this.resultType,
-      required this.value,
-      this.unit,
-      this.referenceRange})
-      : super._();
+  _$InvestigationResultRequest._({
+    required this.testName,
+    required this.resultType,
+    required this.value,
+    this.unit,
+    this.referenceRange,
+  }) : super._();
   @override
   InvestigationResultRequest rebuild(
-          void Function(InvestigationResultRequestBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(InvestigationResultRequestBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   InvestigationResultRequestBuilder toBuilder() =>
@@ -194,14 +199,24 @@ class InvestigationResultRequestBuilder
   InvestigationResultRequest build() => _build();
 
   _$InvestigationResultRequest _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$InvestigationResultRequest._(
           testName: BuiltValueNullFieldError.checkNotNull(
-              testName, r'InvestigationResultRequest', 'testName'),
+            testName,
+            r'InvestigationResultRequest',
+            'testName',
+          ),
           resultType: BuiltValueNullFieldError.checkNotNull(
-              resultType, r'InvestigationResultRequest', 'resultType'),
+            resultType,
+            r'InvestigationResultRequest',
+            'resultType',
+          ),
           value: BuiltValueNullFieldError.checkNotNull(
-              value, r'InvestigationResultRequest', 'value'),
+            value,
+            r'InvestigationResultRequest',
+            'value',
+          ),
           unit: unit,
           referenceRange: referenceRange,
         );

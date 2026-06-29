@@ -26,25 +26,25 @@ class _$SessionStateResponse extends SessionStateResponse {
   @override
   final BuiltMap<String, JsonObject?>? conclusions;
 
-  factory _$SessionStateResponse(
-          [void Function(SessionStateResponseBuilder)? updates]) =>
-      (SessionStateResponseBuilder()..update(updates))._build();
+  factory _$SessionStateResponse([
+    void Function(SessionStateResponseBuilder)? updates,
+  ]) => (SessionStateResponseBuilder()..update(updates))._build();
 
-  _$SessionStateResponse._(
-      {required this.sessionId,
-      required this.status,
-      required this.createdAt,
-      required this.lastActivityAt,
-      required this.caseSnapshot,
-      required this.chatHistory,
-      this.nextCursor,
-      required this.orderedTests,
-      this.conclusions})
-      : super._();
+  _$SessionStateResponse._({
+    required this.sessionId,
+    required this.status,
+    required this.createdAt,
+    required this.lastActivityAt,
+    required this.caseSnapshot,
+    required this.chatHistory,
+    this.nextCursor,
+    required this.orderedTests,
+    this.conclusions,
+  }) : super._();
   @override
   SessionStateResponse rebuild(
-          void Function(SessionStateResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(SessionStateResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   SessionStateResponseBuilder toBuilder() =>
@@ -183,16 +183,29 @@ class SessionStateResponseBuilder
   _$SessionStateResponse _build() {
     _$SessionStateResponse _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$SessionStateResponse._(
             sessionId: BuiltValueNullFieldError.checkNotNull(
-                sessionId, r'SessionStateResponse', 'sessionId'),
+              sessionId,
+              r'SessionStateResponse',
+              'sessionId',
+            ),
             status: BuiltValueNullFieldError.checkNotNull(
-                status, r'SessionStateResponse', 'status'),
+              status,
+              r'SessionStateResponse',
+              'status',
+            ),
             createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, r'SessionStateResponse', 'createdAt'),
+              createdAt,
+              r'SessionStateResponse',
+              'createdAt',
+            ),
             lastActivityAt: BuiltValueNullFieldError.checkNotNull(
-                lastActivityAt, r'SessionStateResponse', 'lastActivityAt'),
+              lastActivityAt,
+              r'SessionStateResponse',
+              'lastActivityAt',
+            ),
             caseSnapshot: caseSnapshot.build(),
             chatHistory: chatHistory.build(),
             nextCursor: nextCursor,
@@ -213,7 +226,10 @@ class SessionStateResponseBuilder
         _conclusions?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'SessionStateResponse', _$failedField, e.toString());
+          r'SessionStateResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

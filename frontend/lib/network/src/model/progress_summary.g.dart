@@ -16,7 +16,7 @@ class _$ProgressSummary extends ProgressSummary {
       (ProgressSummaryBuilder()..update(updates))._build();
 
   _$ProgressSummary._({required this.turnCount, required this.hasConclusions})
-      : super._();
+    : super._();
   @override
   ProgressSummary rebuild(void Function(ProgressSummaryBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -91,12 +91,19 @@ class ProgressSummaryBuilder
   ProgressSummary build() => _build();
 
   _$ProgressSummary _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$ProgressSummary._(
           turnCount: BuiltValueNullFieldError.checkNotNull(
-              turnCount, r'ProgressSummary', 'turnCount'),
+            turnCount,
+            r'ProgressSummary',
+            'turnCount',
+          ),
           hasConclusions: BuiltValueNullFieldError.checkNotNull(
-              hasConclusions, r'ProgressSummary', 'hasConclusions'),
+            hasConclusions,
+            r'ProgressSummary',
+            'hasConclusions',
+          ),
         );
     replace(_$result);
     return _$result;

@@ -16,20 +16,20 @@ class _$ManagementResponse extends ManagementResponse {
   @override
   final BuiltList<String> followUp;
 
-  factory _$ManagementResponse(
-          [void Function(ManagementResponseBuilder)? updates]) =>
-      (ManagementResponseBuilder()..update(updates))._build();
+  factory _$ManagementResponse([
+    void Function(ManagementResponseBuilder)? updates,
+  ]) => (ManagementResponseBuilder()..update(updates))._build();
 
-  _$ManagementResponse._(
-      {required this.diagnosticPlan,
-      required this.treatmentPlan,
-      required this.contraindications,
-      required this.followUp})
-      : super._();
+  _$ManagementResponse._({
+    required this.diagnosticPlan,
+    required this.treatmentPlan,
+    required this.contraindications,
+    required this.followUp,
+  }) : super._();
   @override
   ManagementResponse rebuild(
-          void Function(ManagementResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(ManagementResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   ManagementResponseBuilder toBuilder() =>
@@ -126,7 +126,8 @@ class ManagementResponseBuilder
   _$ManagementResponse _build() {
     _$ManagementResponse _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$ManagementResponse._(
             diagnosticPlan: diagnosticPlan.build(),
             treatmentPlan: treatmentPlan.build(),
@@ -146,7 +147,10 @@ class ManagementResponseBuilder
         followUp.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'ManagementResponse', _$failedField, e.toString());
+          r'ManagementResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

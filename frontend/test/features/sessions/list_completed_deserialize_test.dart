@@ -15,10 +15,14 @@ void main() {
         'progress_summary': {'turn_count': 0, 'has_conclusions': false},
       },
     ];
-    final result = g.standardSerializers.deserialize(
-      json,
-      specifiedType: const FullType(BuiltList, [FullType(g.ActiveSessionItem)]),
-    ) as BuiltList<g.ActiveSessionItem>;
+    final result =
+        g.standardSerializers.deserialize(
+              json,
+              specifiedType: const FullType(BuiltList, [
+                FullType(g.ActiveSessionItem),
+              ]),
+            )
+            as BuiltList<g.ActiveSessionItem>;
     expect(result, hasLength(1));
   });
 
@@ -32,10 +36,14 @@ void main() {
         'last_activity_at': '2026-06-29T08:01:09.709677Z',
       },
     ];
-    final result = g.standardSerializers.deserialize(
-      json,
-      specifiedType: const FullType(BuiltList, [FullType(g.SessionResponse)]),
-    ) as BuiltList<g.SessionResponse>;
+    final result =
+        g.standardSerializers.deserialize(
+              json,
+              specifiedType: const FullType(BuiltList, [
+                FullType(g.SessionResponse),
+              ]),
+            )
+            as BuiltList<g.SessionResponse>;
     expect(result, hasLength(1));
     expect(result.first.caseId, 'seed_em_stemi_001');
   });

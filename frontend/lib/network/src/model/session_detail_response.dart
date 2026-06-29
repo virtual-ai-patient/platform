@@ -42,8 +42,9 @@ abstract class SessionDetailResponse
 
   SessionDetailResponse._();
 
-  factory SessionDetailResponse(
-      [void updates(SessionDetailResponseBuilder b)]) = _$SessionDetailResponse;
+  factory SessionDetailResponse([
+    void updates(SessionDetailResponseBuilder b),
+  ]) = _$SessionDetailResponse;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(SessionDetailResponseBuilder b) => b;
@@ -58,7 +59,7 @@ class _$SessionDetailResponseSerializer
   @override
   final Iterable<Type> types = const [
     SessionDetailResponse,
-    _$SessionDetailResponse
+    _$SessionDetailResponse,
   ];
 
   @override
@@ -107,9 +108,11 @@ class _$SessionDetailResponseSerializer
     SessionDetailResponse object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(
+      serializers,
+      object,
+      specifiedType: specifiedType,
+    ).toList();
   }
 
   void _deserializeProperties(
@@ -125,46 +128,59 @@ class _$SessionDetailResponseSerializer
       final value = serializedList[i + 1];
       switch (key) {
         case r'session_id':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           result.sessionId = valueDes;
           break;
         case r'student_username':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           result.studentUsername = valueDes;
           break;
         case r'case_id':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           result.caseId = valueDes;
           break;
         case r'case_title':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           result.caseTitle = valueDes;
           break;
         case r'created_at':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(DateTime),
-          ) as DateTime;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(DateTime),
+                  )
+                  as DateTime;
           result.createdAt = valueDes;
           break;
         case r'action_log':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType:
-                const FullType(BuiltList, [FullType(ActionLogEntry)]),
-          ) as BuiltList<ActionLogEntry>;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(BuiltList, [
+                      FullType(ActionLogEntry),
+                    ]),
+                  )
+                  as BuiltList<ActionLogEntry>;
           result.actionLog.replace(valueDes);
           break;
         default:

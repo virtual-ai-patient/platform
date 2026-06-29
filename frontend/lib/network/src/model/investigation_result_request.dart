@@ -39,9 +39,9 @@ abstract class InvestigationResultRequest
 
   InvestigationResultRequest._();
 
-  factory InvestigationResultRequest(
-          [void updates(InvestigationResultRequestBuilder b)]) =
-      _$InvestigationResultRequest;
+  factory InvestigationResultRequest([
+    void updates(InvestigationResultRequestBuilder b),
+  ]) = _$InvestigationResultRequest;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(InvestigationResultRequestBuilder b) => b;
@@ -56,7 +56,7 @@ class _$InvestigationResultRequestSerializer
   @override
   final Iterable<Type> types = const [
     InvestigationResultRequest,
-    _$InvestigationResultRequest
+    _$InvestigationResultRequest,
   ];
 
   @override
@@ -104,9 +104,11 @@ class _$InvestigationResultRequestSerializer
     InvestigationResultRequest object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(
+      serializers,
+      object,
+      specifiedType: specifiedType,
+    ).toList();
   }
 
   void _deserializeProperties(
@@ -122,40 +124,51 @@ class _$InvestigationResultRequestSerializer
       final value = serializedList[i + 1];
       switch (key) {
         case r'test_name':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           result.testName = valueDes;
           break;
         case r'result_type':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType:
-                const FullType(InvestigationResultRequestResultTypeEnum),
-          ) as InvestigationResultRequestResultTypeEnum;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(
+                      InvestigationResultRequestResultTypeEnum,
+                    ),
+                  )
+                  as InvestigationResultRequestResultTypeEnum;
           result.resultType = valueDes;
           break;
         case r'value':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           result.value = valueDes;
           break;
         case r'unit':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType.nullable(String),
-          ) as String?;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType.nullable(String),
+                  )
+                  as String?;
           if (valueDes == null) continue;
           result.unit = valueDes;
           break;
         case r'reference_range':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType.nullable(String),
-          ) as String?;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType.nullable(String),
+                  )
+                  as String?;
           if (valueDes == null) continue;
           result.referenceRange = valueDes;
           break;

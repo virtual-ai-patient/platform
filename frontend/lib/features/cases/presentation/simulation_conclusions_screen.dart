@@ -36,9 +36,9 @@ class SimulationConclusionsScreen extends StatefulWidget {
 
 class _MedRow {
   _MedRow()
-      : name = TextEditingController(),
-        dose = TextEditingController(),
-        route = TextEditingController();
+    : name = TextEditingController(),
+      dose = TextEditingController(),
+      route = TextEditingController();
 
   final TextEditingController name;
   final TextEditingController dose;
@@ -223,8 +223,9 @@ class _SimulationConclusionsScreenState
     return generated.TreatmentPlan(
       (b) => b
         ..medications.replace(BuiltList<generated.Medication>(meds))
-        ..nonPharmacological
-            .replace(BuiltList<String>(stringLines(_nonPharmCtrls)))
+        ..nonPharmacological.replace(
+          BuiltList<String>(stringLines(_nonPharmCtrls)),
+        )
         ..referrals.replace(BuiltList<String>(stringLines(_referralCtrls)))
         ..followUp.replace(BuiltList<String>(stringLines(_followUpCtrls))),
     );
@@ -427,9 +428,7 @@ class _SimulationConclusionsScreenState
 
     setState(() => _busy = true);
     try {
-      await widget.sessionRepository.finishSession(
-        sessionId: widget.sessionId,
-      );
+      await widget.sessionRepository.finishSession(sessionId: widget.sessionId);
       if (!mounted) return;
       await Navigator.of(context).pushReplacement(
         MaterialPageRoute<void>(
@@ -505,7 +504,9 @@ class _SimulationConclusionsScreenState
                         const SizedBox(height: 16),
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 8),
+                            horizontal: 10,
+                            vertical: 8,
+                          ),
                           decoration: BoxDecoration(
                             color: AppColors.surfaceMuted,
                             borderRadius: BorderRadius.circular(8),
@@ -560,26 +561,20 @@ class _SimulationConclusionsScreenState
         if (_step == 0)
           OutlinedButton(
             onPressed: _busy ? null : _onBack,
-            style: OutlinedButton.styleFrom(
-              minimumSize: const Size(120, 44),
-            ),
+            style: OutlinedButton.styleFrom(minimumSize: const Size(120, 44)),
             child: const Text('Cancel'),
           )
         else
           OutlinedButton.icon(
             onPressed: _busy ? null : _onBack,
             icon: const Icon(Icons.arrow_back_rounded, size: 16),
-            style: OutlinedButton.styleFrom(
-              minimumSize: const Size(120, 44),
-            ),
+            style: OutlinedButton.styleFrom(minimumSize: const Size(120, 44)),
             label: const Text('Back'),
           ),
         if (!isFinalStep)
           FilledButton.icon(
             onPressed: _busy ? null : _onNext,
-            style: FilledButton.styleFrom(
-              minimumSize: const Size(160, 44),
-            ),
+            style: FilledButton.styleFrom(minimumSize: const Size(160, 44)),
             icon: _busy
                 ? const SizedBox(
                     width: 16,
@@ -642,12 +637,16 @@ class _SimulationConclusionsScreenState
                   side: const BorderSide(color: AppColors.borderSubtle),
                 ),
                 child: ListTile(
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   leading: ReorderableDragStartListener(
                     index: index,
-                    child: const Icon(Icons.drag_handle_rounded,
-                        color: AppColors.secondaryText),
+                    child: const Icon(
+                      Icons.drag_handle_rounded,
+                      color: AppColors.secondaryText,
+                    ),
                   ),
                   title: TextField(
                     controller: row.controller,
@@ -662,11 +661,13 @@ class _SimulationConclusionsScreenState
                     onPressed: _diffRows.length <= 1
                         ? null
                         : () => setState(() {
-                              row.dispose();
-                              _diffRows.removeAt(index);
-                            }),
-                    icon: const Icon(Icons.close_rounded,
-                        color: AppColors.danger),
+                            row.dispose();
+                            _diffRows.removeAt(index);
+                          }),
+                    icon: const Icon(
+                      Icons.close_rounded,
+                      color: AppColors.danger,
+                    ),
                   ),
                 ),
               );
@@ -690,10 +691,12 @@ class _SimulationConclusionsScreenState
     final filtered = _finalDiagnosisCtrl.text.trim().isEmpty
         ? suggestions.take(10)
         : suggestions
-            .where((s) => s
-                .toLowerCase()
-                .contains(_finalDiagnosisCtrl.text.trim().toLowerCase()))
-            .take(10);
+              .where(
+                (s) => s.toLowerCase().contains(
+                  _finalDiagnosisCtrl.text.trim().toLowerCase(),
+                ),
+              )
+              .take(10);
     return ListView(
       children: [
         Text(

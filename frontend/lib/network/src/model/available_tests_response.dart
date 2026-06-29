@@ -22,9 +22,9 @@ abstract class AvailableTestsResponse
 
   AvailableTestsResponse._();
 
-  factory AvailableTestsResponse(
-          [void updates(AvailableTestsResponseBuilder b)]) =
-      _$AvailableTestsResponse;
+  factory AvailableTestsResponse([
+    void updates(AvailableTestsResponseBuilder b),
+  ]) = _$AvailableTestsResponse;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(AvailableTestsResponseBuilder b) => b;
@@ -39,7 +39,7 @@ class _$AvailableTestsResponseSerializer
   @override
   final Iterable<Type> types = const [
     AvailableTestsResponse,
-    _$AvailableTestsResponse
+    _$AvailableTestsResponse,
   ];
 
   @override
@@ -63,9 +63,11 @@ class _$AvailableTestsResponseSerializer
     AvailableTestsResponse object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(
+      serializers,
+      object,
+      specifiedType: specifiedType,
+    ).toList();
   }
 
   void _deserializeProperties(
@@ -81,11 +83,14 @@ class _$AvailableTestsResponseSerializer
       final value = serializedList[i + 1];
       switch (key) {
         case r'tests':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType:
-                const FullType(BuiltList, [FullType(AvailableTestItem)]),
-          ) as BuiltList<AvailableTestItem>;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(BuiltList, [
+                      FullType(AvailableTestItem),
+                    ]),
+                  )
+                  as BuiltList<AvailableTestItem>;
           result.tests.replace(valueDes);
           break;
         default:

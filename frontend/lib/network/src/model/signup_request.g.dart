@@ -17,9 +17,11 @@ class _$SignupRequest extends SignupRequest {
   factory _$SignupRequest([void Function(SignupRequestBuilder)? updates]) =>
       (SignupRequestBuilder()..update(updates))._build();
 
-  _$SignupRequest._(
-      {required this.username, required this.email, required this.password})
-      : super._();
+  _$SignupRequest._({
+    required this.username,
+    required this.email,
+    required this.password,
+  }) : super._();
   @override
   SignupRequest rebuild(void Function(SignupRequestBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -101,14 +103,24 @@ class SignupRequestBuilder
   SignupRequest build() => _build();
 
   _$SignupRequest _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$SignupRequest._(
           username: BuiltValueNullFieldError.checkNotNull(
-              username, r'SignupRequest', 'username'),
+            username,
+            r'SignupRequest',
+            'username',
+          ),
           email: BuiltValueNullFieldError.checkNotNull(
-              email, r'SignupRequest', 'email'),
+            email,
+            r'SignupRequest',
+            'email',
+          ),
           password: BuiltValueNullFieldError.checkNotNull(
-              password, r'SignupRequest', 'password'),
+            password,
+            r'SignupRequest',
+            'password',
+          ),
         );
     replace(_$result);
     return _$result;

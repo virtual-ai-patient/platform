@@ -23,14 +23,14 @@ class _$ScoringRequest extends ScoringRequest {
   factory _$ScoringRequest([void Function(ScoringRequestBuilder)? updates]) =>
       (ScoringRequestBuilder()..update(updates))._build();
 
-  _$ScoringRequest._(
-      {required this.weightDiagnosis,
-      required this.weightDiagnostics,
-      required this.weightTreatment,
-      required this.weightSafety,
-      this.acceptableAnswers,
-      this.criticalSafetyErrors})
-      : super._();
+  _$ScoringRequest._({
+    required this.weightDiagnosis,
+    required this.weightDiagnostics,
+    required this.weightTreatment,
+    required this.weightSafety,
+    this.acceptableAnswers,
+    this.criticalSafetyErrors,
+  }) : super._();
   @override
   ScoringRequest rebuild(void Function(ScoringRequestBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -103,8 +103,8 @@ class ScoringRequestBuilder
   ListBuilder<AcceptableAnswerRequest> get acceptableAnswers =>
       _$this._acceptableAnswers ??= ListBuilder<AcceptableAnswerRequest>();
   set acceptableAnswers(
-          ListBuilder<AcceptableAnswerRequest>? acceptableAnswers) =>
-      _$this._acceptableAnswers = acceptableAnswers;
+    ListBuilder<AcceptableAnswerRequest>? acceptableAnswers,
+  ) => _$this._acceptableAnswers = acceptableAnswers;
 
   ListBuilder<String>? _criticalSafetyErrors;
   ListBuilder<String> get criticalSafetyErrors =>
@@ -146,16 +146,29 @@ class ScoringRequestBuilder
   _$ScoringRequest _build() {
     _$ScoringRequest _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$ScoringRequest._(
             weightDiagnosis: BuiltValueNullFieldError.checkNotNull(
-                weightDiagnosis, r'ScoringRequest', 'weightDiagnosis'),
+              weightDiagnosis,
+              r'ScoringRequest',
+              'weightDiagnosis',
+            ),
             weightDiagnostics: BuiltValueNullFieldError.checkNotNull(
-                weightDiagnostics, r'ScoringRequest', 'weightDiagnostics'),
+              weightDiagnostics,
+              r'ScoringRequest',
+              'weightDiagnostics',
+            ),
             weightTreatment: BuiltValueNullFieldError.checkNotNull(
-                weightTreatment, r'ScoringRequest', 'weightTreatment'),
+              weightTreatment,
+              r'ScoringRequest',
+              'weightTreatment',
+            ),
             weightSafety: BuiltValueNullFieldError.checkNotNull(
-                weightSafety, r'ScoringRequest', 'weightSafety'),
+              weightSafety,
+              r'ScoringRequest',
+              'weightSafety',
+            ),
             acceptableAnswers: _acceptableAnswers?.build(),
             criticalSafetyErrors: _criticalSafetyErrors?.build(),
           );
@@ -168,7 +181,10 @@ class ScoringRequestBuilder
         _criticalSafetyErrors?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'ScoringRequest', _$failedField, e.toString());
+          r'ScoringRequest',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

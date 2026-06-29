@@ -45,7 +45,7 @@ class _$ExpectedTestsRequestSerializer
   @override
   final Iterable<Type> types = const [
     ExpectedTestsRequest,
-    _$ExpectedTestsRequest
+    _$ExpectedTestsRequest,
   ];
 
   @override
@@ -79,9 +79,11 @@ class _$ExpectedTestsRequestSerializer
     ExpectedTestsRequest object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(
+      serializers,
+      object,
+      specifiedType: specifiedType,
+    ).toList();
   }
 
   void _deserializeProperties(
@@ -97,24 +99,36 @@ class _$ExpectedTestsRequestSerializer
       final value = serializedList[i + 1];
       switch (key) {
         case r'must_order':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(BuiltList, [FullType(String)]),
-          ) as BuiltList<String>;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(BuiltList, [
+                      FullType(String),
+                    ]),
+                  )
+                  as BuiltList<String>;
           result.mustOrder.replace(valueDes);
           break;
         case r'optional':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(BuiltList, [FullType(String)]),
-          ) as BuiltList<String>;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(BuiltList, [
+                      FullType(String),
+                    ]),
+                  )
+                  as BuiltList<String>;
           result.optional.replace(valueDes);
           break;
         case r'should_not_order':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(BuiltList, [FullType(String)]),
-          ) as BuiltList<String>;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(BuiltList, [
+                      FullType(String),
+                    ]),
+                  )
+                  as BuiltList<String>;
           result.shouldNotOrder.replace(valueDes);
           break;
         default:

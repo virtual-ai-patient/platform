@@ -10,15 +10,15 @@ class _$PasswordResetRequest extends PasswordResetRequest {
   @override
   final String email;
 
-  factory _$PasswordResetRequest(
-          [void Function(PasswordResetRequestBuilder)? updates]) =>
-      (PasswordResetRequestBuilder()..update(updates))._build();
+  factory _$PasswordResetRequest([
+    void Function(PasswordResetRequestBuilder)? updates,
+  ]) => (PasswordResetRequestBuilder()..update(updates))._build();
 
   _$PasswordResetRequest._({required this.email}) : super._();
   @override
   PasswordResetRequest rebuild(
-          void Function(PasswordResetRequestBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(PasswordResetRequestBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   PasswordResetRequestBuilder toBuilder() =>
@@ -40,9 +40,9 @@ class _$PasswordResetRequest extends PasswordResetRequest {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'PasswordResetRequest')
-          ..add('email', email))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'PasswordResetRequest',
+    )..add('email', email)).toString();
   }
 }
 
@@ -81,10 +81,14 @@ class PasswordResetRequestBuilder
   PasswordResetRequest build() => _build();
 
   _$PasswordResetRequest _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$PasswordResetRequest._(
           email: BuiltValueNullFieldError.checkNotNull(
-              email, r'PasswordResetRequest', 'email'),
+            email,
+            r'PasswordResetRequest',
+            'email',
+          ),
         );
     replace(_$result);
     return _$result;

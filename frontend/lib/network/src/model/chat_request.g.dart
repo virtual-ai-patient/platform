@@ -37,9 +37,9 @@ class _$ChatRequest extends ChatRequest {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'ChatRequest')
-          ..add('message', message))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'ChatRequest',
+    )..add('message', message)).toString();
   }
 }
 
@@ -77,10 +77,14 @@ class ChatRequestBuilder implements Builder<ChatRequest, ChatRequestBuilder> {
   ChatRequest build() => _build();
 
   _$ChatRequest _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$ChatRequest._(
           message: BuiltValueNullFieldError.checkNotNull(
-              message, r'ChatRequest', 'message'),
+            message,
+            r'ChatRequest',
+            'message',
+          ),
         );
     replace(_$result);
     return _$result;

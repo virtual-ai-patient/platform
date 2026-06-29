@@ -38,9 +38,9 @@ class FriendlyErrorCard extends StatelessWidget {
                 child: Text(
                   error.title,
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        color: const Color(0xFF92400E),
-                        fontWeight: FontWeight.w700,
-                      ),
+                    color: const Color(0xFF92400E),
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
             ],

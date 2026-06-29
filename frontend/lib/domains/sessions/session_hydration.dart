@@ -30,10 +30,12 @@ SimulationHydration hydrationFromSessionState(
   generated.SessionStateResponse state,
 ) {
   final snapshotMap = _builtMapToDynamicMap(state.caseSnapshot);
-  final caseItem = generated.standardSerializers.deserialize(
-    snapshotMap,
-    specifiedType: const FullType(generated.CaseResponse),
-  ) as generated.CaseResponse;
+  final caseItem =
+      generated.standardSerializers.deserialize(
+            snapshotMap,
+            specifiedType: const FullType(generated.CaseResponse),
+          )
+          as generated.CaseResponse;
 
   final chatMessages = <Message>[];
   var seq = 0;
@@ -66,9 +68,7 @@ SimulationHydration hydrationFromSessionState(
 
 bool _isChatRole(String role) => role == 'user' || role == 'assistant';
 
-Map<String, dynamic> _builtMapToDynamicMap(
-  BuiltMap<String, JsonObject?> map,
-) {
+Map<String, dynamic> _builtMapToDynamicMap(BuiltMap<String, JsonObject?> map) {
   final out = <String, dynamic>{};
   for (final e in map.entries) {
     out[e.key] = e.value?.value;
@@ -114,28 +114,30 @@ Future<void> persistChatMessagesToPrefs({
 }) async {
   final prefs = await SharedPreferences.getInstance();
   final key = 'chat-history-$sessionId';
-  final data =
-      messages.where((m) => m is TextMessage || m is SystemMessage).map((m) {
-    if (m is TextMessage) {
-      return <String, dynamic>{
-        'type': 'text',
-        'id': m.id,
-        'authorId': m.authorId,
-        'text': m.text,
-        'createdAt': m.createdAt?.millisecondsSinceEpoch,
-        'sentAt': m.sentAt?.millisecondsSinceEpoch,
-        'metadata': m.metadata,
-      };
-    }
-    final s = m as SystemMessage;
-    return <String, dynamic>{
-      'type': 'system',
-      'id': s.id,
-      'authorId': s.authorId,
-      'text': s.text,
-      'createdAt': s.createdAt?.millisecondsSinceEpoch,
-      'metadata': s.metadata,
-    };
-  }).toList(growable: false);
+  final data = messages
+      .where((m) => m is TextMessage || m is SystemMessage)
+      .map((m) {
+        if (m is TextMessage) {
+          return <String, dynamic>{
+            'type': 'text',
+            'id': m.id,
+            'authorId': m.authorId,
+            'text': m.text,
+            'createdAt': m.createdAt?.millisecondsSinceEpoch,
+            'sentAt': m.sentAt?.millisecondsSinceEpoch,
+            'metadata': m.metadata,
+          };
+        }
+        final s = m as SystemMessage;
+        return <String, dynamic>{
+          'type': 'system',
+          'id': s.id,
+          'authorId': s.authorId,
+          'text': s.text,
+          'createdAt': s.createdAt?.millisecondsSinceEpoch,
+          'metadata': s.metadata,
+        };
+      })
+      .toList(growable: false);
   await prefs.setString(key, jsonEncode(data));
 }

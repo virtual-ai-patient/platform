@@ -40,7 +40,7 @@ class _$PasswordResetConfirmSerializer
   @override
   final Iterable<Type> types = const [
     PasswordResetConfirm,
-    _$PasswordResetConfirm
+    _$PasswordResetConfirm,
   ];
 
   @override
@@ -69,9 +69,11 @@ class _$PasswordResetConfirmSerializer
     PasswordResetConfirm object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(
+      serializers,
+      object,
+      specifiedType: specifiedType,
+    ).toList();
   }
 
   void _deserializeProperties(
@@ -87,17 +89,21 @@ class _$PasswordResetConfirmSerializer
       final value = serializedList[i + 1];
       switch (key) {
         case r'token':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           result.token = valueDes;
           break;
         case r'new_password':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           result.newPassword = valueDes;
           break;
         default:

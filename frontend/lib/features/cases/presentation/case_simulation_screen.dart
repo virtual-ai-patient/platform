@@ -161,27 +161,28 @@ class _CaseSimulationScreenState extends State<CaseSimulationScreen>
     final data = _chatController.messages
         .where((m) => m is TextMessage || m is SystemMessage)
         .map((m) {
-      if (m is TextMessage) {
-        return <String, dynamic>{
-          'type': 'text',
-          'id': m.id,
-          'authorId': m.authorId,
-          'text': m.text,
-          'createdAt': m.createdAt?.millisecondsSinceEpoch,
-          'sentAt': m.sentAt?.millisecondsSinceEpoch,
-          'metadata': m.metadata,
-        };
-      }
-      final s = m as SystemMessage;
-      return <String, dynamic>{
-        'type': 'system',
-        'id': s.id,
-        'authorId': s.authorId,
-        'text': s.text,
-        'createdAt': s.createdAt?.millisecondsSinceEpoch,
-        'metadata': s.metadata,
-      };
-    }).toList(growable: false);
+          if (m is TextMessage) {
+            return <String, dynamic>{
+              'type': 'text',
+              'id': m.id,
+              'authorId': m.authorId,
+              'text': m.text,
+              'createdAt': m.createdAt?.millisecondsSinceEpoch,
+              'sentAt': m.sentAt?.millisecondsSinceEpoch,
+              'metadata': m.metadata,
+            };
+          }
+          final s = m as SystemMessage;
+          return <String, dynamic>{
+            'type': 'system',
+            'id': s.id,
+            'authorId': s.authorId,
+            'text': s.text,
+            'createdAt': s.createdAt?.millisecondsSinceEpoch,
+            'metadata': s.metadata,
+          };
+        })
+        .toList(growable: false);
     await prefs.setString(_historyStorageKey, jsonEncode(data));
   }
 
@@ -402,10 +403,7 @@ class _CaseSimulationScreenState extends State<CaseSimulationScreen>
       ),
       body: Column(
         children: [
-          _SimulationHeader(
-            caseItem: c,
-            sessionId: widget.sessionId,
-          ),
+          _SimulationHeader(caseItem: c, sessionId: widget.sessionId),
           Expanded(
             child: LayoutBuilder(
               builder: (context, constraints) {
@@ -471,18 +469,19 @@ class _CaseSimulationScreenState extends State<CaseSimulationScreen>
             textMessageBuilder: _buildMarkdownTextMessage,
             systemMessageBuilder: _buildMarkdownSystemMessage,
           ),
-          onMessageLongPress: (context, message,
-              {required index, required details}) {
-            _showMessageActions(message);
-          },
+          onMessageLongPress:
+              (context, message, {required index, required details}) {
+                _showMessageActions(message);
+              },
           onMessageSecondaryTap: (context, message, {required index, details}) {
             _showMessageActions(message);
           },
           resolveUser: (id) async => User(id: id, name: _displayName(id)),
           theme: ChatTheme.fromThemeData(
             Theme.of(context).copyWith(
-              textTheme:
-                  GoogleFonts.interTextTheme(Theme.of(context).textTheme),
+              textTheme: GoogleFonts.interTextTheme(
+                Theme.of(context).textTheme,
+              ),
             ),
           ),
         ),
@@ -531,8 +530,9 @@ class _CaseSimulationScreenState extends State<CaseSimulationScreen>
     MessageGroupStatus? groupStatus,
   }) {
     final isDoctorMessage = message.authorId == _doctorUserId;
-    final bubbleColor =
-        isDoctorMessage ? AppColors.doctorBubbleBg : AppColors.patientBubbleBg;
+    final bubbleColor = isDoctorMessage
+        ? AppColors.doctorBubbleBg
+        : AppColors.patientBubbleBg;
     final textColor = isDoctorMessage ? Colors.white : AppColors.primaryText;
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4),
@@ -540,26 +540,17 @@ class _CaseSimulationScreenState extends State<CaseSimulationScreen>
       decoration: BoxDecoration(
         color: bubbleColor,
         borderRadius: BorderRadius.circular(12),
-        border:
-            isDoctorMessage ? null : Border.all(color: AppColors.borderSubtle),
+        border: isDoctorMessage
+            ? null
+            : Border.all(color: AppColors.borderSubtle),
       ),
       child: MarkdownBody(
         data: message.text,
         selectable: true,
         styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
-          p: GoogleFonts.inter(
-            fontSize: 14,
-            height: 1.4,
-            color: textColor,
-          ),
-          code: GoogleFonts.robotoMono(
-            fontSize: 12,
-            color: textColor,
-          ),
-          listBullet: GoogleFonts.inter(
-            fontSize: 14,
-            color: textColor,
-          ),
+          p: GoogleFonts.inter(fontSize: 14, height: 1.4, color: textColor),
+          code: GoogleFonts.robotoMono(fontSize: 12, color: textColor),
+          listBullet: GoogleFonts.inter(fontSize: 14, color: textColor),
         ),
       ),
     );
@@ -596,10 +587,7 @@ class _CaseSimulationScreenState extends State<CaseSimulationScreen>
 }
 
 class _SimulationHeader extends StatelessWidget {
-  const _SimulationHeader({
-    required this.caseItem,
-    required this.sessionId,
-  });
+  const _SimulationHeader({required this.caseItem, required this.sessionId});
 
   final generated.CaseResponse caseItem;
   final String sessionId;
@@ -607,8 +595,9 @@ class _SimulationHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sexAbb = caseItem.sex.isNotEmpty ? caseItem.sex[0].toUpperCase() : '';
-    final shortSession =
-        sessionId.length > 8 ? sessionId.substring(0, 8) : sessionId;
+    final shortSession = sessionId.length > 8
+        ? sessionId.substring(0, 8)
+        : sessionId;
     return Material(
       color: AppColors.surface,
       child: Container(
@@ -716,8 +705,10 @@ class _SimulationSidebar extends StatelessWidget {
               labelColor: AppColors.primaryBlue,
               unselectedLabelColor: AppColors.secondaryText,
               indicatorColor: AppColors.primaryBlue,
-              labelStyle:
-                  GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 12),
+              labelStyle: GoogleFonts.inter(
+                fontWeight: FontWeight.w600,
+                fontSize: 12,
+              ),
               tabs: const [
                 Tab(text: 'Patient Summary'),
                 Tab(text: 'Orders'),
@@ -780,8 +771,10 @@ class _SummaryTab extends StatelessWidget {
         const SizedBox(height: 6),
         Text(
           caseItem.chiefComplaint,
-          style:
-              GoogleFonts.inter(fontSize: 13, color: AppColors.secondaryText),
+          style: GoogleFonts.inter(
+            fontSize: 13,
+            color: AppColors.secondaryText,
+          ),
         ),
         const SizedBox(height: 16),
         Container(
@@ -794,14 +787,19 @@ class _SummaryTab extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(Icons.warning_amber_rounded,
-                  color: AppColors.danger, size: 20),
+              Icon(
+                Icons.warning_amber_rounded,
+                color: AppColors.danger,
+                size: 20,
+              ),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
                   'Review red flags and key history points in the full case definition.',
                   style: GoogleFonts.inter(
-                      fontSize: 12, color: AppColors.primaryText),
+                    fontSize: 12,
+                    color: AppColors.primaryText,
+                  ),
                 ),
               ),
             ],
@@ -877,8 +875,10 @@ class _OrdersTab extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(testsError!,
-                  style: GoogleFonts.inter(color: AppColors.danger)),
+              Text(
+                testsError!,
+                style: GoogleFonts.inter(color: AppColors.danger),
+              ),
               const SizedBox(height: 8),
               OutlinedButton(
                 onPressed: onRetryLoadTests,
@@ -890,11 +890,13 @@ class _OrdersTab extends StatelessWidget {
       );
     }
     final q = testsQuery.trim().toLowerCase();
-    final visibleTests = availableTests.where((t) {
-      if (q.isEmpty) return true;
-      return t.testName.toLowerCase().contains(q) ||
-          t.category.toLowerCase().contains(q);
-    }).toList(growable: false);
+    final visibleTests = availableTests
+        .where((t) {
+          if (q.isEmpty) return true;
+          return t.testName.toLowerCase().contains(q) ||
+              t.category.toLowerCase().contains(q);
+        })
+        .toList(growable: false);
     final grouped = <String, List<generated.AvailableTestItem>>{};
     for (final test in visibleTests) {
       grouped.putIfAbsent(test.category, () => <generated.AvailableTestItem>[]);
@@ -943,15 +945,17 @@ class _OrdersTab extends StatelessWidget {
               margin: const EdgeInsets.only(bottom: 6),
               child: ListTile(
                 dense: true,
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 2,
+                ),
                 title: Text(t.testName, style: GoogleFonts.inter(fontSize: 12)),
                 subtitle: Text(
                   pendingTests.contains(t.testName)
                       ? 'Pending'
                       : completedResults.any((r) => r.testName == t.testName)
-                          ? 'Completed'
-                          : 'Not ordered',
+                      ? 'Completed'
+                      : 'Not ordered',
                   style: GoogleFonts.inter(
                     fontSize: 11,
                     color: pendingTests.contains(t.testName)
@@ -1008,8 +1012,10 @@ class _OrdersTab extends StatelessWidget {
             ),
             child: Text(
               'Latest: ${lastResult!.testName}\n${lastResult!.value}${lastResult!.unit == null ? '' : ' ${lastResult!.unit}'}${lastResult!.referenceRange == null ? '' : '\nRef: ${lastResult!.referenceRange}'}',
-              style:
-                  GoogleFonts.inter(fontSize: 12, color: AppColors.primaryText),
+              style: GoogleFonts.inter(
+                fontSize: 12,
+                color: AppColors.primaryText,
+              ),
             ),
           ),
         ],
@@ -1073,8 +1079,9 @@ class _LabReportsTab extends StatelessWidget {
               margin: const EdgeInsets.only(bottom: 8),
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color:
-                    isAbnormal ? AppColors.warningBg : AppColors.surfaceMuted,
+                color: isAbnormal
+                    ? AppColors.warningBg
+                    : AppColors.surfaceMuted,
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
                   color: isAbnormal
@@ -1111,8 +1118,9 @@ class _LabReportsTab extends StatelessWidget {
                     style: GoogleFonts.inter(
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
-                      color:
-                          isAbnormal ? AppColors.danger : AppColors.successTeal,
+                      color: isAbnormal
+                          ? AppColors.danger
+                          : AppColors.successTeal,
                     ),
                   ),
                 ],

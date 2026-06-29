@@ -59,10 +59,7 @@ Future<void> resumeSessionAndNavigate({
     Navigator.of(context).pop();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(
-          'Could not resume session.',
-          style: GoogleFonts.inter(),
-        ),
+        content: Text('Could not resume session.', style: GoogleFonts.inter()),
       ),
     );
   }

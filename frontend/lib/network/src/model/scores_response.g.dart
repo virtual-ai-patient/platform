@@ -27,16 +27,16 @@ class _$ScoresResponse extends ScoresResponse {
   factory _$ScoresResponse([void Function(ScoresResponseBuilder)? updates]) =>
       (ScoresResponseBuilder()..update(updates))._build();
 
-  _$ScoresResponse._(
-      {required this.sessionId,
-      required this.caseVersion,
-      required this.totalScore,
-      required this.scoreDiagnosis,
-      required this.scoreDiagnostics,
-      required this.scoreTreatment,
-      required this.scoreSafety,
-      required this.scoredAt})
-      : super._();
+  _$ScoresResponse._({
+    required this.sessionId,
+    required this.caseVersion,
+    required this.totalScore,
+    required this.scoreDiagnosis,
+    required this.scoreDiagnostics,
+    required this.scoreTreatment,
+    required this.scoreSafety,
+    required this.scoredAt,
+  }) : super._();
   @override
   ScoresResponse rebuild(void Function(ScoresResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -161,24 +161,49 @@ class ScoresResponseBuilder
   ScoresResponse build() => _build();
 
   _$ScoresResponse _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$ScoresResponse._(
           sessionId: BuiltValueNullFieldError.checkNotNull(
-              sessionId, r'ScoresResponse', 'sessionId'),
+            sessionId,
+            r'ScoresResponse',
+            'sessionId',
+          ),
           caseVersion: BuiltValueNullFieldError.checkNotNull(
-              caseVersion, r'ScoresResponse', 'caseVersion'),
+            caseVersion,
+            r'ScoresResponse',
+            'caseVersion',
+          ),
           totalScore: BuiltValueNullFieldError.checkNotNull(
-              totalScore, r'ScoresResponse', 'totalScore'),
+            totalScore,
+            r'ScoresResponse',
+            'totalScore',
+          ),
           scoreDiagnosis: BuiltValueNullFieldError.checkNotNull(
-              scoreDiagnosis, r'ScoresResponse', 'scoreDiagnosis'),
+            scoreDiagnosis,
+            r'ScoresResponse',
+            'scoreDiagnosis',
+          ),
           scoreDiagnostics: BuiltValueNullFieldError.checkNotNull(
-              scoreDiagnostics, r'ScoresResponse', 'scoreDiagnostics'),
+            scoreDiagnostics,
+            r'ScoresResponse',
+            'scoreDiagnostics',
+          ),
           scoreTreatment: BuiltValueNullFieldError.checkNotNull(
-              scoreTreatment, r'ScoresResponse', 'scoreTreatment'),
+            scoreTreatment,
+            r'ScoresResponse',
+            'scoreTreatment',
+          ),
           scoreSafety: BuiltValueNullFieldError.checkNotNull(
-              scoreSafety, r'ScoresResponse', 'scoreSafety'),
+            scoreSafety,
+            r'ScoresResponse',
+            'scoreSafety',
+          ),
           scoredAt: BuiltValueNullFieldError.checkNotNull(
-              scoredAt, r'ScoresResponse', 'scoredAt'),
+            scoredAt,
+            r'ScoresResponse',
+            'scoredAt',
+          ),
         );
     replace(_$result);
     return _$result;

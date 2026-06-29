@@ -36,7 +36,7 @@ class _$StartSessionRequestSerializer
   @override
   final Iterable<Type> types = const [
     StartSessionRequest,
-    _$StartSessionRequest
+    _$StartSessionRequest,
   ];
 
   @override
@@ -60,9 +60,11 @@ class _$StartSessionRequestSerializer
     StartSessionRequest object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(
+      serializers,
+      object,
+      specifiedType: specifiedType,
+    ).toList();
   }
 
   void _deserializeProperties(
@@ -78,10 +80,12 @@ class _$StartSessionRequestSerializer
       final value = serializedList[i + 1];
       switch (key) {
         case r'case_id':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           result.caseId = valueDes;
           break;
         default:

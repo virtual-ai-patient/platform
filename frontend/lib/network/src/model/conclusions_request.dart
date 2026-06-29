@@ -59,8 +59,9 @@ class _$ConclusionsRequestSerializer
       yield r'differential_diagnoses';
       yield serializers.serialize(
         object.differentialDiagnoses,
-        specifiedType: const FullType.nullable(
-            BuiltList, [FullType(DifferentialDiagnosisItem)]),
+        specifiedType: const FullType.nullable(BuiltList, [
+          FullType(DifferentialDiagnosisItem),
+        ]),
       );
     }
     if (object.finalDiagnosis != null) {
@@ -85,9 +86,11 @@ class _$ConclusionsRequestSerializer
     ConclusionsRequest object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(
+      serializers,
+      object,
+      specifiedType: specifiedType,
+    ).toList();
   }
 
   void _deserializeProperties(
@@ -103,27 +106,34 @@ class _$ConclusionsRequestSerializer
       final value = serializedList[i + 1];
       switch (key) {
         case r'differential_diagnoses':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType.nullable(
-                BuiltList, [FullType(DifferentialDiagnosisItem)]),
-          ) as BuiltList<DifferentialDiagnosisItem>?;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType.nullable(BuiltList, [
+                      FullType(DifferentialDiagnosisItem),
+                    ]),
+                  )
+                  as BuiltList<DifferentialDiagnosisItem>?;
           if (valueDes == null) continue;
           result.differentialDiagnoses.replace(valueDes);
           break;
         case r'final_diagnosis':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType.nullable(String),
-          ) as String?;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType.nullable(String),
+                  )
+                  as String?;
           if (valueDes == null) continue;
           result.finalDiagnosis = valueDes;
           break;
         case r'treatment_plan':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType.nullable(TreatmentPlan),
-          ) as TreatmentPlan?;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType.nullable(TreatmentPlan),
+                  )
+                  as TreatmentPlan?;
           if (valueDes == null) continue;
           result.treatmentPlan.replace(valueDes);
           break;

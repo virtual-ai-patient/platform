@@ -16,20 +16,20 @@ class _$CommunicationCriterionResponse extends CommunicationCriterionResponse {
   @override
   final String quote;
 
-  factory _$CommunicationCriterionResponse(
-          [void Function(CommunicationCriterionResponseBuilder)? updates]) =>
-      (CommunicationCriterionResponseBuilder()..update(updates))._build();
+  factory _$CommunicationCriterionResponse([
+    void Function(CommunicationCriterionResponseBuilder)? updates,
+  ]) => (CommunicationCriterionResponseBuilder()..update(updates))._build();
 
-  _$CommunicationCriterionResponse._(
-      {required this.criterion,
-      required this.score,
-      required this.rationale,
-      required this.quote})
-      : super._();
+  _$CommunicationCriterionResponse._({
+    required this.criterion,
+    required this.score,
+    required this.rationale,
+    required this.quote,
+  }) : super._();
   @override
   CommunicationCriterionResponse rebuild(
-          void Function(CommunicationCriterionResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(CommunicationCriterionResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   CommunicationCriterionResponseBuilder toBuilder() =>
@@ -69,8 +69,10 @@ class _$CommunicationCriterionResponse extends CommunicationCriterionResponse {
 
 class CommunicationCriterionResponseBuilder
     implements
-        Builder<CommunicationCriterionResponse,
-            CommunicationCriterionResponseBuilder> {
+        Builder<
+          CommunicationCriterionResponse,
+          CommunicationCriterionResponseBuilder
+        > {
   _$CommunicationCriterionResponse? _$v;
 
   String? _criterion;
@@ -119,16 +121,29 @@ class CommunicationCriterionResponseBuilder
   CommunicationCriterionResponse build() => _build();
 
   _$CommunicationCriterionResponse _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$CommunicationCriterionResponse._(
           criterion: BuiltValueNullFieldError.checkNotNull(
-              criterion, r'CommunicationCriterionResponse', 'criterion'),
+            criterion,
+            r'CommunicationCriterionResponse',
+            'criterion',
+          ),
           score: BuiltValueNullFieldError.checkNotNull(
-              score, r'CommunicationCriterionResponse', 'score'),
+            score,
+            r'CommunicationCriterionResponse',
+            'score',
+          ),
           rationale: BuiltValueNullFieldError.checkNotNull(
-              rationale, r'CommunicationCriterionResponse', 'rationale'),
+            rationale,
+            r'CommunicationCriterionResponse',
+            'rationale',
+          ),
           quote: BuiltValueNullFieldError.checkNotNull(
-              quote, r'CommunicationCriterionResponse', 'quote'),
+            quote,
+            r'CommunicationCriterionResponse',
+            'quote',
+          ),
         );
     replace(_$result);
     return _$result;

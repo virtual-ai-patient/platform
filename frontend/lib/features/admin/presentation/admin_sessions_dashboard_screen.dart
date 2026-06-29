@@ -172,10 +172,7 @@ class _AdminSessionsDashboardScreenState
           Expanded(
             child: Row(
               children: [
-                SizedBox(
-                  width: 420,
-                  child: _buildSessionListPane(),
-                ),
+                SizedBox(width: 420, child: _buildSessionListPane()),
                 const VerticalDivider(width: 1),
                 Expanded(child: _buildDetailPane()),
               ],
@@ -284,8 +281,10 @@ class _AdminSessionsDashboardScreenState
                     : null,
                 icon: const Icon(Icons.chevron_left_rounded),
               ),
-              Text('$_page/$totalPages',
-                  style: GoogleFonts.inter(fontSize: 12)),
+              Text(
+                '$_page/$totalPages',
+                style: GoogleFonts.inter(fontSize: 12),
+              ),
               IconButton(
                 onPressed: _page < totalPages
                     ? () {
@@ -380,8 +379,9 @@ class _AdminSessionsDashboardScreenState
                         child: Text(
                           e.content,
                           style: GoogleFonts.inter(
-                            color:
-                                fromUser ? Colors.white : AppColors.primaryText,
+                            color: fromUser
+                                ? Colors.white
+                                : AppColors.primaryText,
                           ),
                         ),
                       ),
@@ -493,10 +493,7 @@ class _AdminSessionsDashboardScreenState
       decoration: const BoxDecoration(
         border: Border(bottom: BorderSide(color: AppColors.borderSubtle)),
       ),
-      child: Text(
-        title,
-        style: GoogleFonts.inter(fontWeight: FontWeight.w700),
-      ),
+      child: Text(title, style: GoogleFonts.inter(fontWeight: FontWeight.w700)),
     );
   }
 }
@@ -512,12 +509,16 @@ class _ConclusionsSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final differential = _asList(conclusions['differential_diagnoses'])
-        .whereType<Map>()
-        .map((e) => Map<String, dynamic>.from(e))
-        .toList(growable: false)
-      ..sort((a, b) => ((a['rank'] as num?)?.toInt() ?? 999)
-          .compareTo((b['rank'] as num?)?.toInt() ?? 999));
+    final differential =
+        _asList(conclusions['differential_diagnoses'])
+            .whereType<Map>()
+            .map((e) => Map<String, dynamic>.from(e))
+            .toList(growable: false)
+          ..sort(
+            (a, b) => ((a['rank'] as num?)?.toInt() ?? 999).compareTo(
+              (b['rank'] as num?)?.toInt() ?? 999,
+            ),
+          );
     final finalDx = (conclusions['final_diagnosis'] ?? '').toString().trim();
     final treatment = _asMap(conclusions['treatment_plan']);
 
@@ -528,17 +529,20 @@ class _ConclusionsSummary extends StatelessWidget {
           children: [
             Text(
               'Submitted conclusions',
-              style:
-                  GoogleFonts.inter(fontWeight: FontWeight.w700, fontSize: 12),
+              style: GoogleFonts.inter(
+                fontWeight: FontWeight.w700,
+                fontSize: 12,
+              ),
             ),
             const SizedBox(width: 8),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
               decoration: BoxDecoration(
-                color: (isFinished
-                        ? AppColors.successTeal
-                        : AppColors.warningBorder)
-                    .withValues(alpha: 0.15),
+                color:
+                    (isFinished
+                            ? AppColors.successTeal
+                            : AppColors.warningBorder)
+                        .withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(999),
               ),
               child: Text(
@@ -563,10 +567,14 @@ class _ConclusionsSummary extends StatelessWidget {
           const SizedBox(height: 6),
           Text(
             'Differential:',
-            style:
-                GoogleFonts.inter(fontSize: 11, color: AppColors.secondaryText),
+            style: GoogleFonts.inter(
+              fontSize: 11,
+              color: AppColors.secondaryText,
+            ),
           ),
-          ...differential.take(3).map(
+          ...differential
+              .take(3)
+              .map(
                 (d) => Text(
                   '${(d['rank'] ?? '?')}. ${(d['condition'] ?? '').toString()}',
                   style: GoogleFonts.inter(fontSize: 11),
@@ -577,8 +585,10 @@ class _ConclusionsSummary extends StatelessWidget {
           const SizedBox(height: 6),
           Text(
             'Treatment plan submitted',
-            style:
-                GoogleFonts.inter(fontSize: 11, color: AppColors.secondaryText),
+            style: GoogleFonts.inter(
+              fontSize: 11,
+              color: AppColors.secondaryText,
+            ),
           ),
         ],
       ],

@@ -18,8 +18,10 @@ part 'communication_criterion_response.g.dart';
 @BuiltValue()
 abstract class CommunicationCriterionResponse
     implements
-        Built<CommunicationCriterionResponse,
-            CommunicationCriterionResponseBuilder> {
+        Built<
+          CommunicationCriterionResponse,
+          CommunicationCriterionResponseBuilder
+        > {
   @BuiltValueField(wireName: r'criterion')
   String get criterion;
 
@@ -34,9 +36,9 @@ abstract class CommunicationCriterionResponse
 
   CommunicationCriterionResponse._();
 
-  factory CommunicationCriterionResponse(
-          [void updates(CommunicationCriterionResponseBuilder b)]) =
-      _$CommunicationCriterionResponse;
+  factory CommunicationCriterionResponse([
+    void updates(CommunicationCriterionResponseBuilder b),
+  ]) = _$CommunicationCriterionResponse;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(CommunicationCriterionResponseBuilder b) => b;
@@ -51,7 +53,7 @@ class _$CommunicationCriterionResponseSerializer
   @override
   final Iterable<Type> types = const [
     CommunicationCriterionResponse,
-    _$CommunicationCriterionResponse
+    _$CommunicationCriterionResponse,
   ];
 
   @override
@@ -90,9 +92,11 @@ class _$CommunicationCriterionResponseSerializer
     CommunicationCriterionResponse object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(
+      serializers,
+      object,
+      specifiedType: specifiedType,
+    ).toList();
   }
 
   void _deserializeProperties(
@@ -108,31 +112,36 @@ class _$CommunicationCriterionResponseSerializer
       final value = serializedList[i + 1];
       switch (key) {
         case r'criterion':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           result.criterion = valueDes;
           break;
         case r'score':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          ) as int;
+          final valueDes =
+              serializers.deserialize(value, specifiedType: const FullType(int))
+                  as int;
           result.score = valueDes;
           break;
         case r'rationale':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           result.rationale = valueDes;
           break;
         case r'quote':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           result.quote = valueDes;
           break;
         default:

@@ -33,19 +33,19 @@ class _$DebriefResponse extends DebriefResponse {
   factory _$DebriefResponse([void Function(DebriefResponseBuilder)? updates]) =>
       (DebriefResponseBuilder()..update(updates))._build();
 
-  _$DebriefResponse._(
-      {required this.sessionId,
-      required this.caseVersion,
-      required this.totalScore,
-      required this.scoreDiagnosis,
-      required this.scoreDiagnostics,
-      required this.scoreTreatment,
-      required this.scoreSafety,
-      required this.scoredAt,
-      required this.findings,
-      required this.referenceSolution,
-      required this.conclusions})
-      : super._();
+  _$DebriefResponse._({
+    required this.sessionId,
+    required this.caseVersion,
+    required this.totalScore,
+    required this.scoreDiagnosis,
+    required this.scoreDiagnostics,
+    required this.scoreTreatment,
+    required this.scoreSafety,
+    required this.scoredAt,
+    required this.findings,
+    required this.referenceSolution,
+    required this.conclusions,
+  }) : super._();
   @override
   DebriefResponse rebuild(void Function(DebriefResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -202,24 +202,49 @@ class DebriefResponseBuilder
   _$DebriefResponse _build() {
     _$DebriefResponse _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$DebriefResponse._(
             sessionId: BuiltValueNullFieldError.checkNotNull(
-                sessionId, r'DebriefResponse', 'sessionId'),
+              sessionId,
+              r'DebriefResponse',
+              'sessionId',
+            ),
             caseVersion: BuiltValueNullFieldError.checkNotNull(
-                caseVersion, r'DebriefResponse', 'caseVersion'),
+              caseVersion,
+              r'DebriefResponse',
+              'caseVersion',
+            ),
             totalScore: BuiltValueNullFieldError.checkNotNull(
-                totalScore, r'DebriefResponse', 'totalScore'),
+              totalScore,
+              r'DebriefResponse',
+              'totalScore',
+            ),
             scoreDiagnosis: BuiltValueNullFieldError.checkNotNull(
-                scoreDiagnosis, r'DebriefResponse', 'scoreDiagnosis'),
+              scoreDiagnosis,
+              r'DebriefResponse',
+              'scoreDiagnosis',
+            ),
             scoreDiagnostics: BuiltValueNullFieldError.checkNotNull(
-                scoreDiagnostics, r'DebriefResponse', 'scoreDiagnostics'),
+              scoreDiagnostics,
+              r'DebriefResponse',
+              'scoreDiagnostics',
+            ),
             scoreTreatment: BuiltValueNullFieldError.checkNotNull(
-                scoreTreatment, r'DebriefResponse', 'scoreTreatment'),
+              scoreTreatment,
+              r'DebriefResponse',
+              'scoreTreatment',
+            ),
             scoreSafety: BuiltValueNullFieldError.checkNotNull(
-                scoreSafety, r'DebriefResponse', 'scoreSafety'),
+              scoreSafety,
+              r'DebriefResponse',
+              'scoreSafety',
+            ),
             scoredAt: BuiltValueNullFieldError.checkNotNull(
-                scoredAt, r'DebriefResponse', 'scoredAt'),
+              scoredAt,
+              r'DebriefResponse',
+              'scoredAt',
+            ),
             findings: findings.build(),
             referenceSolution: referenceSolution.build(),
             conclusions: conclusions.build(),
@@ -235,7 +260,10 @@ class DebriefResponseBuilder
         conclusions.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'DebriefResponse', _$failedField, e.toString());
+          r'DebriefResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

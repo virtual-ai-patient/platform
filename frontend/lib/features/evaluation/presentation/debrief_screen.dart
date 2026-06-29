@@ -157,43 +157,43 @@ class _DebriefScreenState extends State<DebriefScreen>
       body: switch (_state) {
         _LoadState.loading => _LoadingBody(),
         _LoadState.success => TabBarView(
-            controller: _tabController,
-            children: [
-              _SuccessBody(
-                caseItem: widget.caseItem,
-                sessionId: widget.sessionId,
-                debrief: _debrief!,
-              ),
-              CommunicationPanel(
-                sessionId: widget.sessionId,
-                communicationRepository: widget.communicationRepository,
-              ),
-            ],
-          ),
+          controller: _tabController,
+          children: [
+            _SuccessBody(
+              caseItem: widget.caseItem,
+              sessionId: widget.sessionId,
+              debrief: _debrief!,
+            ),
+            CommunicationPanel(
+              sessionId: widget.sessionId,
+              communicationRepository: widget.communicationRepository,
+            ),
+          ],
+        ),
         _LoadState.forbidden => _ErrorPanel(
-            title: 'Access denied',
-            message: "You don't have access to this evaluation.",
-            detail: _errorDetail,
-            onRetry: _load,
-          ),
+          title: 'Access denied',
+          message: "You don't have access to this evaluation.",
+          detail: _errorDetail,
+          onRetry: _load,
+        ),
         _LoadState.notFound => _ErrorPanel(
-            title: 'Session not found',
-            message: 'Session not found.',
-            detail: _errorDetail,
-            onRetry: _load,
-          ),
+          title: 'Session not found',
+          message: 'Session not found.',
+          detail: _errorDetail,
+          onRetry: _load,
+        ),
         _LoadState.conflict => _ErrorPanel(
-            title: 'Evaluation unavailable',
-            message: _conflictUserMessage(_errorDetail),
-            detail: _errorDetail,
-            onRetry: _load,
-          ),
+          title: 'Evaluation unavailable',
+          message: _conflictUserMessage(_errorDetail),
+          detail: _errorDetail,
+          onRetry: _load,
+        ),
         _LoadState.unknown => _ErrorPanel(
-            title: 'Something went wrong',
-            message: 'Could not load the evaluation.',
-            detail: _errorDetail,
-            onRetry: _load,
-          ),
+          title: 'Something went wrong',
+          message: 'Could not load the evaluation.',
+          detail: _errorDetail,
+          onRetry: _load,
+        ),
       },
     );
   }
@@ -284,8 +284,11 @@ class _ErrorPanel extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Icon(Icons.info_outline_rounded,
-                      size: 40, color: AppColors.danger),
+                  Icon(
+                    Icons.info_outline_rounded,
+                    size: 40,
+                    color: AppColors.danger,
+                  ),
                   const SizedBox(height: 12),
                   Text(
                     title,
@@ -313,10 +316,7 @@ class _ErrorPanel extends StatelessWidget {
                     ),
                   ],
                   const SizedBox(height: 20),
-                  FilledButton(
-                    onPressed: onRetry,
-                    child: const Text('Retry'),
-                  ),
+                  FilledButton(onPressed: onRetry, child: const Text('Retry')),
                   const SizedBox(height: 10),
                   OutlinedButton(
                     onPressed: () => _goToCaseLibrary(context),
@@ -411,14 +411,18 @@ class _SuccessBody extends StatelessWidget {
                     'Reference solution',
                     style: GoogleFonts.inter(fontWeight: FontWeight.w700),
                   ),
-                  childrenPadding:
-                      const EdgeInsets.only(left: 8, right: 8, bottom: 12),
+                  childrenPadding: const EdgeInsets.only(
+                    left: 8,
+                    right: 8,
+                    bottom: 12,
+                  ),
                   children: [
                     if (debrief.referenceSolution.isEmpty)
                       Text(
                         'No reference data.',
-                        style:
-                            GoogleFonts.inter(color: AppColors.secondaryText),
+                        style: GoogleFonts.inter(
+                          color: AppColors.secondaryText,
+                        ),
                       )
                     else
                       ...debrief.referenceSolution.entries.map(
@@ -515,8 +519,10 @@ class _ScoresCard extends StatelessWidget {
           children: [
             Text(
               'Scores',
-              style:
-                  GoogleFonts.inter(fontWeight: FontWeight.w700, fontSize: 15),
+              style: GoogleFonts.inter(
+                fontWeight: FontWeight.w700,
+                fontSize: 15,
+              ),
             ),
             const SizedBox(height: 12),
             Text(
@@ -567,10 +573,7 @@ class _ScoresCard extends StatelessWidget {
         ),
         Text(
           '$v',
-          style: GoogleFonts.inter(
-            fontWeight: FontWeight.w700,
-            fontSize: 15,
-          ),
+          style: GoogleFonts.inter(fontWeight: FontWeight.w700, fontSize: 15),
         ),
       ],
     );
@@ -670,8 +673,10 @@ class _JsonValueWidget extends StatelessWidget {
     if (value == null) {
       return Padding(
         padding: pad,
-        child: Text('null',
-            style: GoogleFonts.inter(color: AppColors.tertiaryText)),
+        child: Text(
+          'null',
+          style: GoogleFonts.inter(color: AppColors.tertiaryText),
+        ),
       );
     }
     if (value is Map) {

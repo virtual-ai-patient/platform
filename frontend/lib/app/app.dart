@@ -36,12 +36,15 @@ class _VirtualAiPatientAppState extends State<VirtualAiPatientApp> {
     );
     _caseRepository = CaseRepository(openapi: _authRepository.openapiClient);
     _adminRepository = AdminRepository(openapi: _authRepository.openapiClient);
-    _sessionRepository =
-        SessionRepository(openapi: _authRepository.openapiClient);
-    _evaluationRepository =
-        EvaluationRepository(openapi: _authRepository.openapiClient);
-    _communicationRepository =
-        CommunicationRepository(openapi: _authRepository.openapiClient);
+    _sessionRepository = SessionRepository(
+      openapi: _authRepository.openapiClient,
+    );
+    _evaluationRepository = EvaluationRepository(
+      openapi: _authRepository.openapiClient,
+    );
+    _communicationRepository = CommunicationRepository(
+      openapi: _authRepository.openapiClient,
+    );
     _bootstrap();
   }
 
@@ -78,12 +81,9 @@ class _VirtualAiPatientAppState extends State<VirtualAiPatientApp> {
       title: 'Virtual AI Patient',
       theme: AppTheme.light,
       navigatorObservers: [appRouteObserver],
-      home: _home ??
-          const Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
-            ),
-          ),
+      home:
+          _home ??
+          const Scaffold(body: Center(child: CircularProgressIndicator())),
     );
   }
 }

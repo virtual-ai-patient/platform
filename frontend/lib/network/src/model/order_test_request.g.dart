@@ -10,9 +10,9 @@ class _$OrderTestRequest extends OrderTestRequest {
   @override
   final String testId;
 
-  factory _$OrderTestRequest(
-          [void Function(OrderTestRequestBuilder)? updates]) =>
-      (OrderTestRequestBuilder()..update(updates))._build();
+  factory _$OrderTestRequest([
+    void Function(OrderTestRequestBuilder)? updates,
+  ]) => (OrderTestRequestBuilder()..update(updates))._build();
 
   _$OrderTestRequest._({required this.testId}) : super._();
   @override
@@ -39,9 +39,9 @@ class _$OrderTestRequest extends OrderTestRequest {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'OrderTestRequest')
-          ..add('testId', testId))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'OrderTestRequest',
+    )..add('testId', testId)).toString();
   }
 }
 
@@ -80,10 +80,14 @@ class OrderTestRequestBuilder
   OrderTestRequest build() => _build();
 
   _$OrderTestRequest _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$OrderTestRequest._(
           testId: BuiltValueNullFieldError.checkNotNull(
-              testId, r'OrderTestRequest', 'testId'),
+            testId,
+            r'OrderTestRequest',
+            'testId',
+          ),
         );
     replace(_$result);
     return _$result;

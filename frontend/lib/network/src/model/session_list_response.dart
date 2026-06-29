@@ -50,7 +50,7 @@ class _$SessionListResponseSerializer
   @override
   final Iterable<Type> types = const [
     SessionListResponse,
-    _$SessionListResponse
+    _$SessionListResponse,
   ];
 
   @override
@@ -89,9 +89,11 @@ class _$SessionListResponseSerializer
     SessionListResponse object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object,
-            specifiedType: specifiedType)
-        .toList();
+    return _serializeProperties(
+      serializers,
+      object,
+      specifiedType: specifiedType,
+    ).toList();
   }
 
   void _deserializeProperties(
@@ -107,32 +109,32 @@ class _$SessionListResponseSerializer
       final value = serializedList[i + 1];
       switch (key) {
         case r'sessions':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType:
-                const FullType(BuiltList, [FullType(SessionSummary)]),
-          ) as BuiltList<SessionSummary>;
+          final valueDes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(BuiltList, [
+                      FullType(SessionSummary),
+                    ]),
+                  )
+                  as BuiltList<SessionSummary>;
           result.sessions.replace(valueDes);
           break;
         case r'total':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          ) as int;
+          final valueDes =
+              serializers.deserialize(value, specifiedType: const FullType(int))
+                  as int;
           result.total = valueDes;
           break;
         case r'page':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          ) as int;
+          final valueDes =
+              serializers.deserialize(value, specifiedType: const FullType(int))
+                  as int;
           result.page = valueDes;
           break;
         case r'page_size':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          ) as int;
+          final valueDes =
+              serializers.deserialize(value, specifiedType: const FullType(int))
+                  as int;
           result.pageSize = valueDes;
           break;
         default:

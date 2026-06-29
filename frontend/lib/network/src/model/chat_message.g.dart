@@ -17,9 +17,11 @@ class _$ChatMessage extends ChatMessage {
   factory _$ChatMessage([void Function(ChatMessageBuilder)? updates]) =>
       (ChatMessageBuilder()..update(updates))._build();
 
-  _$ChatMessage._(
-      {required this.role, required this.content, required this.loggedAt})
-      : super._();
+  _$ChatMessage._({
+    required this.role,
+    required this.content,
+    required this.loggedAt,
+  }) : super._();
   @override
   ChatMessage rebuild(void Function(ChatMessageBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -100,14 +102,24 @@ class ChatMessageBuilder implements Builder<ChatMessage, ChatMessageBuilder> {
   ChatMessage build() => _build();
 
   _$ChatMessage _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$ChatMessage._(
           role: BuiltValueNullFieldError.checkNotNull(
-              role, r'ChatMessage', 'role'),
+            role,
+            r'ChatMessage',
+            'role',
+          ),
           content: BuiltValueNullFieldError.checkNotNull(
-              content, r'ChatMessage', 'content'),
+            content,
+            r'ChatMessage',
+            'content',
+          ),
           loggedAt: BuiltValueNullFieldError.checkNotNull(
-              loggedAt, r'ChatMessage', 'loggedAt'),
+            loggedAt,
+            r'ChatMessage',
+            'loggedAt',
+          ),
         );
     replace(_$result);
     return _$result;

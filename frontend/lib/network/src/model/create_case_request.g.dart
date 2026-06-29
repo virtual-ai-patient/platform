@@ -10,7 +10,8 @@ const CreateCaseRequestLanguageEnum _$createCaseRequestLanguageEnum_en =
     const CreateCaseRequestLanguageEnum._('en');
 
 CreateCaseRequestLanguageEnum _$createCaseRequestLanguageEnumValueOf(
-    String name) {
+  String name,
+) {
   switch (name) {
     case 'en':
       return _$createCaseRequestLanguageEnum_en;
@@ -20,10 +21,9 @@ CreateCaseRequestLanguageEnum _$createCaseRequestLanguageEnumValueOf(
 }
 
 final BuiltSet<CreateCaseRequestLanguageEnum>
-    _$createCaseRequestLanguageEnumValues = BuiltSet<
-        CreateCaseRequestLanguageEnum>(const <CreateCaseRequestLanguageEnum>[
-  _$createCaseRequestLanguageEnum_en,
-]);
+_$createCaseRequestLanguageEnumValues = BuiltSet<CreateCaseRequestLanguageEnum>(
+  const <CreateCaseRequestLanguageEnum>[_$createCaseRequestLanguageEnum_en],
+);
 
 const CreateCaseRequestDifficultyEnum _$createCaseRequestDifficultyEnum_easy =
     const CreateCaseRequestDifficultyEnum._('easy');
@@ -33,7 +33,8 @@ const CreateCaseRequestDifficultyEnum _$createCaseRequestDifficultyEnum_hard =
     const CreateCaseRequestDifficultyEnum._('hard');
 
 CreateCaseRequestDifficultyEnum _$createCaseRequestDifficultyEnumValueOf(
-    String name) {
+  String name,
+) {
   switch (name) {
     case 'easy':
       return _$createCaseRequestDifficultyEnum_easy;
@@ -47,12 +48,14 @@ CreateCaseRequestDifficultyEnum _$createCaseRequestDifficultyEnumValueOf(
 }
 
 final BuiltSet<CreateCaseRequestDifficultyEnum>
-    _$createCaseRequestDifficultyEnumValues = BuiltSet<
-        CreateCaseRequestDifficultyEnum>(const <CreateCaseRequestDifficultyEnum>[
-  _$createCaseRequestDifficultyEnum_easy,
-  _$createCaseRequestDifficultyEnum_medium,
-  _$createCaseRequestDifficultyEnum_hard,
-]);
+_$createCaseRequestDifficultyEnumValues =
+    BuiltSet<CreateCaseRequestDifficultyEnum>(
+      const <CreateCaseRequestDifficultyEnum>[
+        _$createCaseRequestDifficultyEnum_easy,
+        _$createCaseRequestDifficultyEnum_medium,
+        _$createCaseRequestDifficultyEnum_hard,
+      ],
+    );
 
 const CreateCaseRequestSexEnum _$createCaseRequestSexEnum_female =
     const CreateCaseRequestSexEnum._('female');
@@ -76,10 +79,10 @@ CreateCaseRequestSexEnum _$createCaseRequestSexEnumValueOf(String name) {
 
 final BuiltSet<CreateCaseRequestSexEnum> _$createCaseRequestSexEnumValues =
     BuiltSet<CreateCaseRequestSexEnum>(const <CreateCaseRequestSexEnum>[
-  _$createCaseRequestSexEnum_female,
-  _$createCaseRequestSexEnum_male,
-  _$createCaseRequestSexEnum_other,
-]);
+      _$createCaseRequestSexEnum_female,
+      _$createCaseRequestSexEnum_male,
+      _$createCaseRequestSexEnum_other,
+    ]);
 
 const CreateCaseRequestStatusEnum _$createCaseRequestStatusEnum_draft =
     const CreateCaseRequestStatusEnum._('draft');
@@ -102,30 +105,28 @@ CreateCaseRequestStatusEnum _$createCaseRequestStatusEnumValueOf(String name) {
 }
 
 final BuiltSet<CreateCaseRequestStatusEnum>
-    _$createCaseRequestStatusEnumValues =
+_$createCaseRequestStatusEnumValues =
     BuiltSet<CreateCaseRequestStatusEnum>(const <CreateCaseRequestStatusEnum>[
-  _$createCaseRequestStatusEnum_draft,
-  _$createCaseRequestStatusEnum_review,
-  _$createCaseRequestStatusEnum_published,
-]);
+      _$createCaseRequestStatusEnum_draft,
+      _$createCaseRequestStatusEnum_review,
+      _$createCaseRequestStatusEnum_published,
+    ]);
 
 Serializer<CreateCaseRequestLanguageEnum>
-    _$createCaseRequestLanguageEnumSerializer =
+_$createCaseRequestLanguageEnumSerializer =
     _$CreateCaseRequestLanguageEnumSerializer();
 Serializer<CreateCaseRequestDifficultyEnum>
-    _$createCaseRequestDifficultyEnumSerializer =
+_$createCaseRequestDifficultyEnumSerializer =
     _$CreateCaseRequestDifficultyEnumSerializer();
 Serializer<CreateCaseRequestSexEnum> _$createCaseRequestSexEnumSerializer =
     _$CreateCaseRequestSexEnumSerializer();
 Serializer<CreateCaseRequestStatusEnum>
-    _$createCaseRequestStatusEnumSerializer =
+_$createCaseRequestStatusEnumSerializer =
     _$CreateCaseRequestStatusEnumSerializer();
 
 class _$CreateCaseRequestLanguageEnumSerializer
     implements PrimitiveSerializer<CreateCaseRequestLanguageEnum> {
-  static const Map<String, Object> _toWire = const <String, Object>{
-    'en': 'en',
-  };
+  static const Map<String, Object> _toWire = const <String, Object>{'en': 'en'};
   static const Map<Object, String> _fromWire = const <Object, String>{
     'en': 'en',
   };
@@ -137,16 +138,19 @@ class _$CreateCaseRequestLanguageEnumSerializer
 
   @override
   Object serialize(
-          Serializers serializers, CreateCaseRequestLanguageEnum object,
-          {FullType specifiedType = FullType.unspecified}) =>
-      _toWire[object.name] ?? object.name;
+    Serializers serializers,
+    CreateCaseRequestLanguageEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
 
   @override
   CreateCaseRequestLanguageEnum deserialize(
-          Serializers serializers, Object serialized,
-          {FullType specifiedType = FullType.unspecified}) =>
-      CreateCaseRequestLanguageEnum.valueOf(
-          _fromWire[serialized] ?? (serialized is String ? serialized : ''));
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => CreateCaseRequestLanguageEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
 }
 
 class _$CreateCaseRequestDifficultyEnumSerializer
@@ -169,16 +173,19 @@ class _$CreateCaseRequestDifficultyEnumSerializer
 
   @override
   Object serialize(
-          Serializers serializers, CreateCaseRequestDifficultyEnum object,
-          {FullType specifiedType = FullType.unspecified}) =>
-      _toWire[object.name] ?? object.name;
+    Serializers serializers,
+    CreateCaseRequestDifficultyEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
 
   @override
   CreateCaseRequestDifficultyEnum deserialize(
-          Serializers serializers, Object serialized,
-          {FullType specifiedType = FullType.unspecified}) =>
-      CreateCaseRequestDifficultyEnum.valueOf(
-          _fromWire[serialized] ?? (serialized is String ? serialized : ''));
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => CreateCaseRequestDifficultyEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
 }
 
 class _$CreateCaseRequestSexEnumSerializer
@@ -200,16 +207,20 @@ class _$CreateCaseRequestSexEnumSerializer
   final String wireName = 'CreateCaseRequestSexEnum';
 
   @override
-  Object serialize(Serializers serializers, CreateCaseRequestSexEnum object,
-          {FullType specifiedType = FullType.unspecified}) =>
-      _toWire[object.name] ?? object.name;
+  Object serialize(
+    Serializers serializers,
+    CreateCaseRequestSexEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
 
   @override
   CreateCaseRequestSexEnum deserialize(
-          Serializers serializers, Object serialized,
-          {FullType specifiedType = FullType.unspecified}) =>
-      CreateCaseRequestSexEnum.valueOf(
-          _fromWire[serialized] ?? (serialized is String ? serialized : ''));
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => CreateCaseRequestSexEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
 }
 
 class _$CreateCaseRequestStatusEnumSerializer
@@ -231,16 +242,20 @@ class _$CreateCaseRequestStatusEnumSerializer
   final String wireName = 'CreateCaseRequestStatusEnum';
 
   @override
-  Object serialize(Serializers serializers, CreateCaseRequestStatusEnum object,
-          {FullType specifiedType = FullType.unspecified}) =>
-      _toWire[object.name] ?? object.name;
+  Object serialize(
+    Serializers serializers,
+    CreateCaseRequestStatusEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
 
   @override
   CreateCaseRequestStatusEnum deserialize(
-          Serializers serializers, Object serialized,
-          {FullType specifiedType = FullType.unspecified}) =>
-      CreateCaseRequestStatusEnum.valueOf(
-          _fromWire[serialized] ?? (serialized is String ? serialized : ''));
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => CreateCaseRequestStatusEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
 }
 
 class _$CreateCaseRequest extends CreateCaseRequest {
@@ -285,32 +300,32 @@ class _$CreateCaseRequest extends CreateCaseRequest {
   @override
   final CreateCaseRequestStatusEnum? status;
 
-  factory _$CreateCaseRequest(
-          [void Function(CreateCaseRequestBuilder)? updates]) =>
-      (CreateCaseRequestBuilder()..update(updates))._build();
+  factory _$CreateCaseRequest([
+    void Function(CreateCaseRequestBuilder)? updates,
+  ]) => (CreateCaseRequestBuilder()..update(updates))._build();
 
-  _$CreateCaseRequest._(
-      {required this.caseId,
-      required this.title,
-      required this.language,
-      required this.difficulty,
-      required this.specialty,
-      this.tags,
-      required this.age,
-      required this.sex,
-      required this.persona,
-      this.tonePresets,
-      required this.chiefComplaint,
-      required this.historyOfPresentIllness,
-      required this.keyHistoryPoints,
-      required this.finalDiagnosis,
-      this.differential,
-      this.severityOrStage,
-      required this.investigations,
-      required this.management,
-      required this.scoring,
-      this.status})
-      : super._();
+  _$CreateCaseRequest._({
+    required this.caseId,
+    required this.title,
+    required this.language,
+    required this.difficulty,
+    required this.specialty,
+    this.tags,
+    required this.age,
+    required this.sex,
+    required this.persona,
+    this.tonePresets,
+    required this.chiefComplaint,
+    required this.historyOfPresentIllness,
+    required this.keyHistoryPoints,
+    required this.finalDiagnosis,
+    this.differential,
+    this.severityOrStage,
+    required this.investigations,
+    required this.management,
+    required this.scoring,
+    this.status,
+  }) : super._();
   @override
   CreateCaseRequest rebuild(void Function(CreateCaseRequestBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -548,35 +563,67 @@ class CreateCaseRequestBuilder
   _$CreateCaseRequest _build() {
     _$CreateCaseRequest _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$CreateCaseRequest._(
             caseId: BuiltValueNullFieldError.checkNotNull(
-                caseId, r'CreateCaseRequest', 'caseId'),
+              caseId,
+              r'CreateCaseRequest',
+              'caseId',
+            ),
             title: BuiltValueNullFieldError.checkNotNull(
-                title, r'CreateCaseRequest', 'title'),
+              title,
+              r'CreateCaseRequest',
+              'title',
+            ),
             language: BuiltValueNullFieldError.checkNotNull(
-                language, r'CreateCaseRequest', 'language'),
+              language,
+              r'CreateCaseRequest',
+              'language',
+            ),
             difficulty: BuiltValueNullFieldError.checkNotNull(
-                difficulty, r'CreateCaseRequest', 'difficulty'),
+              difficulty,
+              r'CreateCaseRequest',
+              'difficulty',
+            ),
             specialty: BuiltValueNullFieldError.checkNotNull(
-                specialty, r'CreateCaseRequest', 'specialty'),
+              specialty,
+              r'CreateCaseRequest',
+              'specialty',
+            ),
             tags: _tags?.build(),
             age: BuiltValueNullFieldError.checkNotNull(
-                age, r'CreateCaseRequest', 'age'),
+              age,
+              r'CreateCaseRequest',
+              'age',
+            ),
             sex: BuiltValueNullFieldError.checkNotNull(
-                sex, r'CreateCaseRequest', 'sex'),
+              sex,
+              r'CreateCaseRequest',
+              'sex',
+            ),
             persona: BuiltValueNullFieldError.checkNotNull(
-                persona, r'CreateCaseRequest', 'persona'),
+              persona,
+              r'CreateCaseRequest',
+              'persona',
+            ),
             tonePresets: _tonePresets?.build(),
             chiefComplaint: BuiltValueNullFieldError.checkNotNull(
-                chiefComplaint, r'CreateCaseRequest', 'chiefComplaint'),
+              chiefComplaint,
+              r'CreateCaseRequest',
+              'chiefComplaint',
+            ),
             historyOfPresentIllness: BuiltValueNullFieldError.checkNotNull(
-                historyOfPresentIllness,
-                r'CreateCaseRequest',
-                'historyOfPresentIllness'),
+              historyOfPresentIllness,
+              r'CreateCaseRequest',
+              'historyOfPresentIllness',
+            ),
             keyHistoryPoints: keyHistoryPoints.build(),
             finalDiagnosis: BuiltValueNullFieldError.checkNotNull(
-                finalDiagnosis, r'CreateCaseRequest', 'finalDiagnosis'),
+              finalDiagnosis,
+              r'CreateCaseRequest',
+              'finalDiagnosis',
+            ),
             differential: _differential?.build(),
             severityOrStage: severityOrStage,
             investigations: investigations.build(),
@@ -607,7 +654,10 @@ class CreateCaseRequestBuilder
         scoring.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'CreateCaseRequest', _$failedField, e.toString());
+          r'CreateCaseRequest',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

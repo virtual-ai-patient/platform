@@ -16,16 +16,16 @@ class _$ManagementRequest extends ManagementRequest {
   @override
   final BuiltList<String> followUp;
 
-  factory _$ManagementRequest(
-          [void Function(ManagementRequestBuilder)? updates]) =>
-      (ManagementRequestBuilder()..update(updates))._build();
+  factory _$ManagementRequest([
+    void Function(ManagementRequestBuilder)? updates,
+  ]) => (ManagementRequestBuilder()..update(updates))._build();
 
-  _$ManagementRequest._(
-      {required this.diagnosticPlan,
-      required this.treatmentPlan,
-      required this.contraindications,
-      required this.followUp})
-      : super._();
+  _$ManagementRequest._({
+    required this.diagnosticPlan,
+    required this.treatmentPlan,
+    required this.contraindications,
+    required this.followUp,
+  }) : super._();
   @override
   ManagementRequest rebuild(void Function(ManagementRequestBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -125,7 +125,8 @@ class ManagementRequestBuilder
   _$ManagementRequest _build() {
     _$ManagementRequest _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$ManagementRequest._(
             diagnosticPlan: diagnosticPlan.build(),
             treatmentPlan: treatmentPlan.build(),
@@ -145,7 +146,10 @@ class ManagementRequestBuilder
         followUp.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'ManagementRequest', _$failedField, e.toString());
+          r'ManagementRequest',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

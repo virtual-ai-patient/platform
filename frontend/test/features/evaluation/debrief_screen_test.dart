@@ -15,26 +15,24 @@ import '../../support/fake_communication_repository.dart';
 g.DebriefResponse _minimalDebrief({
   BuiltList<g.EvaluationFindingResponse>? findings,
 }) {
-  return g.DebriefResponse((b) => b
-    ..sessionId = 'ses-1'
-    ..caseVersion = 1
-    ..totalScore = 88
-    ..scoreDiagnosis = 22
-    ..scoreDiagnostics = 22
-    ..scoreTreatment = 22
-    ..scoreSafety = 22
-    ..scoredAt = DateTime.utc(2026, 6, 1, 12)
-    ..findings.replace(findings ?? BuiltList<g.EvaluationFindingResponse>([]))
-    ..referenceSolution.replace(BuiltMap<String, JsonObject?>.of({}))
-    ..conclusions.replace(BuiltMap<String, JsonObject?>.of({})));
+  return g.DebriefResponse(
+    (b) => b
+      ..sessionId = 'ses-1'
+      ..caseVersion = 1
+      ..totalScore = 88
+      ..scoreDiagnosis = 22
+      ..scoreDiagnostics = 22
+      ..scoreTreatment = 22
+      ..scoreSafety = 22
+      ..scoredAt = DateTime.utc(2026, 6, 1, 12)
+      ..findings.replace(findings ?? BuiltList<g.EvaluationFindingResponse>([]))
+      ..referenceSolution.replace(BuiltMap<String, JsonObject?>.of({}))
+      ..conclusions.replace(BuiltMap<String, JsonObject?>.of({})),
+  );
 }
 
 class _FakeEval implements EvaluationRepositoryContract {
-  _FakeEval({
-    this.debrief,
-    this.error,
-    this.awaitGate,
-  });
+  _FakeEval({this.debrief, this.error, this.awaitGate});
 
   final g.DebriefResponse? debrief;
   final DioException? error;
@@ -60,10 +58,7 @@ class _FakeEval implements EvaluationRepositoryContract {
 void main() {
   testWidgets('shows loading then success', (WidgetTester tester) async {
     final gate = Completer<void>();
-    final repo = _FakeEval(
-      debrief: _minimalDebrief(),
-      awaitGate: gate,
-    );
+    final repo = _FakeEval(debrief: _minimalDebrief(), awaitGate: gate);
 
     await tester.pumpWidget(
       MaterialApp(
@@ -98,10 +93,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    expect(
-      find.text('No findings recorded for this run.'),
-      findsOneWidget,
-    );
+    expect(find.text('No findings recorded for this run.'), findsOneWidget);
   });
 
   testWidgets('403 panel', (WidgetTester tester) async {

@@ -34,7 +34,7 @@ class CommunicationEvaluationApi {
   /// Returns a [Future] containing a [Response] with a [CommunicationEvaluationResponse] as data
   /// Throws [DioException] if API call or serialization fails
   Future<Response<CommunicationEvaluationResponse>>
-      getCommunicationEvaluationSessionsSessionIdCommunicationEvaluationGet({
+  getCommunicationEvaluationSessionsSessionIdCommunicationEvaluationGet({
     required String sessionId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -44,20 +44,21 @@ class CommunicationEvaluationApi {
     ProgressCallback? onReceiveProgress,
   }) async {
     final _path = r'/sessions/{session_id}/communication-evaluation'.replaceAll(
-        '{' r'session_id' '}',
-        encodeQueryParameter(_serializers, sessionId, const FullType(String))
-            .toString());
+      '{'
+      r'session_id'
+      '}',
+      encodeQueryParameter(
+        _serializers,
+        sessionId,
+        const FullType(String),
+      ).toString(),
+    );
     final _options = Options(
       method: r'GET',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
+      headers: <String, dynamic>{...?headers},
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
-          {
-            'type': 'oauth2',
-            'name': 'OAuth2PasswordBearer',
-          },
+          {'type': 'oauth2', 'name': 'OAuth2PasswordBearer'},
         ],
         ...?extra,
       },
@@ -79,9 +80,12 @@ class CommunicationEvaluationApi {
       _responseData = rawResponse == null
           ? null
           : _serializers.deserialize(
-              rawResponse,
-              specifiedType: const FullType(CommunicationEvaluationResponse),
-            ) as CommunicationEvaluationResponse;
+                  rawResponse,
+                  specifiedType: const FullType(
+                    CommunicationEvaluationResponse,
+                  ),
+                )
+                as CommunicationEvaluationResponse;
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
@@ -119,7 +123,7 @@ class CommunicationEvaluationApi {
   /// Returns a [Future] containing a [Response] with a [CommunicationEvaluationResponse] as data
   /// Throws [DioException] if API call or serialization fails
   Future<Response<CommunicationEvaluationResponse>>
-      triggerCommunicationEvaluationSessionsSessionIdCommunicationEvaluationPost({
+  triggerCommunicationEvaluationSessionsSessionIdCommunicationEvaluationPost({
     required String sessionId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -129,20 +133,21 @@ class CommunicationEvaluationApi {
     ProgressCallback? onReceiveProgress,
   }) async {
     final _path = r'/sessions/{session_id}/communication-evaluation'.replaceAll(
-        '{' r'session_id' '}',
-        encodeQueryParameter(_serializers, sessionId, const FullType(String))
-            .toString());
+      '{'
+      r'session_id'
+      '}',
+      encodeQueryParameter(
+        _serializers,
+        sessionId,
+        const FullType(String),
+      ).toString(),
+    );
     final _options = Options(
       method: r'POST',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
+      headers: <String, dynamic>{...?headers},
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
-          {
-            'type': 'oauth2',
-            'name': 'OAuth2PasswordBearer',
-          },
+          {'type': 'oauth2', 'name': 'OAuth2PasswordBearer'},
         ],
         ...?extra,
       },
@@ -164,9 +169,12 @@ class CommunicationEvaluationApi {
       _responseData = rawResponse == null
           ? null
           : _serializers.deserialize(
-              rawResponse,
-              specifiedType: const FullType(CommunicationEvaluationResponse),
-            ) as CommunicationEvaluationResponse;
+                  rawResponse,
+                  specifiedType: const FullType(
+                    CommunicationEvaluationResponse,
+                  ),
+                )
+                as CommunicationEvaluationResponse;
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
