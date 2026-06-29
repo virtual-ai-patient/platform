@@ -301,7 +301,7 @@ class _AdminSessionsDashboardScreenState
         Expanded(
           child: ListView.separated(
             itemCount: sessions.length,
-            separatorBuilder: (_, __) => const Divider(height: 1),
+            separatorBuilder: (_, _) => const Divider(height: 1),
             itemBuilder: (context, index) {
               final s = sessions[index];
               final selected = _selected?.sessionId == s.sessionId;
