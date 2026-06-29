@@ -58,6 +58,14 @@ async def list_active_sessions(
     return await service.list_active_sessions(current_user.id, session_repo, log_repo)
 
 
+@router.get("/completed", response_model=list[SessionResponse])
+async def list_completed_sessions(
+    current_user: User = Depends(get_current_user),
+    session_repo: SessionRepository = Depends(get_session_repo),
+) -> list[SessionResponse]:
+    return await service.list_completed_sessions(current_user.id, session_repo)
+
+
 @router.post(
     "/start",
     response_model=SessionResponse,

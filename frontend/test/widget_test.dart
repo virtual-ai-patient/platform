@@ -195,6 +195,9 @@ class _FakeSessionRepository implements SessionRepositoryContract {
   Future<List<generated.ActiveSessionItem>> listActive() async => [];
 
   @override
+  Future<List<generated.SessionResponse>> listCompleted() async => [];
+
+  @override
   Future<generated.SessionStateResponse> getState({
     required String sessionId,
     int cursor = 0,

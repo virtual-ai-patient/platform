@@ -164,6 +164,58 @@ def test_list_active_sessions_excludes_completed(
     assert r2.json() == []
 
 
+# ---------------------------------------------------------------------------
+# GET /sessions/completed
+# ---------------------------------------------------------------------------
+
+
+def test_list_completed_sessions_returns_finished_only(
+    client: TestClient,
+    learner_headers: dict[str, str],
+    published_case_id: str,
+) -> None:
+    r = client.post(
+        "/sessions/start",
+        json={"case_id": published_case_id},
+        headers=learner_headers,
+    )
+    sid = r.json()["session_id"]
+    client.patch(
+        f"/sessions/{sid}/conclusions",
+        json={"final_diagnosis": "Tension headache"},
+        headers=learner_headers,
+    )
+    client.post(f"/sessions/{sid}/finish", headers=learner_headers)
+
+    r2 = client.get("/sessions/completed", headers=learner_headers)
+    assert r2.status_code == 200
+    items = r2.json()
+    assert len(items) == 1
+    assert items[0]["session_id"] == sid
+    assert items[0]["case_id"] == published_case_id
+    assert items[0]["status"] == "completed"
+
+
+def test_list_completed_sessions_excludes_active(
+    client: TestClient,
+    learner_headers: dict[str, str],
+    published_case_id: str,
+) -> None:
+    client.post(
+        "/sessions/start",
+        json={"case_id": published_case_id},
+        headers=learner_headers,
+    )
+    r = client.get("/sessions/completed", headers=learner_headers)
+    assert r.status_code == 200
+    assert r.json() == []
+
+
+def test_list_completed_sessions_unauthenticated(client: TestClient) -> None:
+    r = client.get("/sessions/completed")
+    assert r.status_code == 401
+
+
 def test_list_active_sessions_unauthenticated(client: TestClient) -> None:
     r = client.get("/sessions/active")
     assert r.status_code == 401

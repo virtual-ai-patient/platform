@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/app/app_route_observer.dart';
 import 'package:frontend/app/app_session_router.dart';
 import 'package:frontend/common/theme/app_theme.dart';
 import 'package:frontend/domains/admin/admin_repository.dart';
@@ -76,6 +77,7 @@ class _VirtualAiPatientAppState extends State<VirtualAiPatientApp> {
     return MaterialApp(
       title: 'Virtual AI Patient',
       theme: AppTheme.light,
+      navigatorObservers: [appRouteObserver],
       home: _home ??
           const Scaffold(
             body: Center(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/common/session_completion_prefs.dart';
+import 'package:frontend/app/app_route_observer.dart';
 import 'package:frontend/common/theme/app_colors.dart';
 import 'package:frontend/common/widgets/app_library_top_bar.dart';
 import 'package:frontend/common/widgets/app_page_footer.dart';
@@ -45,7 +45,7 @@ class CaseLibraryScreen extends StatefulWidget {
   State<CaseLibraryScreen> createState() => _CaseLibraryScreenState();
 }
 
-class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
+class _CaseLibraryScreenState extends State<CaseLibraryScreen> with RouteAware {
   final _searchController = TextEditingController();
   Future<List<generated.CaseResponse>>? _load;
   Map<String, String> _completedSessionsByCaseId = {};
@@ -74,13 +74,31 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
     _load = widget.caseRepository
         .listCases(status: _isCaseManager ? null : 'published');
     _searchController.addListener(() => setState(() {}));
-    SessionCompletionPrefs.loadAll().then((m) {
-      if (mounted) {
-        setState(() => _completedSessionsByCaseId = m);
-      }
-    });
+    _loadCompletedSessions();
     WidgetsBinding.instance
         .addPostFrameCallback((_) => _maybeShowUnfinishedSessions());
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final route = ModalRoute.of(context);
+    if (route is PageRoute<void>) {
+      appRouteObserver.unsubscribe(this);
+      appRouteObserver.subscribe(this, route);
+    }
+  }
+
+  @override
+  void dispose() {
+    appRouteObserver.unsubscribe(this);
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didPopNext() {
+    _loadCompletedSessions();
   }
 
   Future<void> _maybeShowUnfinishedSessions() async {
@@ -92,12 +110,7 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
       evaluationRepository: widget.evaluationRepository,
       communicationRepository: widget.communicationRepository,
     );
-  }
-
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
+    if (mounted) await _loadCompletedSessions();
   }
 
   Future<void> _refresh() async {
@@ -107,9 +120,24 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
       _page = 0;
     });
     await _load;
-    final prefs = await SessionCompletionPrefs.loadAll();
-    if (mounted) {
-      setState(() => _completedSessionsByCaseId = prefs);
+    await _loadCompletedSessions();
+  }
+
+  /// Most recent completed session per case, from the server.
+  Future<void> _loadCompletedSessions() async {
+    try {
+      final completed = await widget.sessionRepository.listCompleted();
+      final byCaseId = <String, String>{};
+      for (final session in completed) {
+        byCaseId.putIfAbsent(session.caseId, () => session.sessionId);
+      }
+      if (mounted) {
+        setState(() => _completedSessionsByCaseId = byCaseId);
+      }
+    } catch (_) {
+      if (mounted) {
+        setState(() => _completedSessionsByCaseId = {});
+      }
     }
   }
 
@@ -199,21 +227,27 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
                     _isCaseManager && widget.adminRepository != null;
 
                 void openBriefing(generated.CaseResponse c) {
-                  Navigator.of(context).push(
+                  Navigator.of(context)
+                      .push(
                     MaterialPageRoute<void>(
                       builder: (_) => CaseBriefingScreen(
                         caseItem: c,
                         sessionRepository: widget.sessionRepository,
                         evaluationRepository: widget.evaluationRepository,
-                        communicationRepository: widget.communicationRepository,
+                        communicationRepository:
+                            widget.communicationRepository,
                       ),
                     ),
-                  );
+                  )
+                      .then((_) {
+                    if (mounted) _loadCompletedSessions();
+                  });
                 }
 
                 void openEvaluation(
                     generated.CaseResponse c, String sessionId) {
-                  Navigator.of(context).push(
+                  Navigator.of(context)
+                      .push(
                     MaterialPageRoute<void>(
                       builder: (_) => DebriefScreen(
                         caseItem: c,
@@ -222,7 +256,10 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> {
                         communicationRepository: widget.communicationRepository,
                       ),
                     ),
-                  );
+                  )
+                      .then((_) {
+                    if (mounted) _loadCompletedSessions();
+                  });
                 }
 
                 void openAdminTrace() {

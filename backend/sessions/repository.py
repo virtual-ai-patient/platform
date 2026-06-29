@@ -41,6 +41,14 @@ class SessionRepository:
         )
         return list(result.scalars().all())
 
+    async def list_completed_by_user(self, user_id: str) -> list[CaseSession]:
+        result = await self._session.execute(
+            select(CaseSession)
+            .where(CaseSession.user_id == user_id, CaseSession.status == "completed")
+            .order_by(CaseSession.last_activity_at.desc())
+        )
+        return list(result.scalars().all())
+
     async def get_active_by_user_and_case(
         self, user_id: str, clinical_case_id: str
     ) -> CaseSession | None:

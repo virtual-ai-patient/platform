@@ -7,6 +7,7 @@ abstract class SessionRepositoryContract {
     bool force = false,
   });
   Future<List<generated.ActiveSessionItem>> listActive();
+  Future<List<generated.SessionResponse>> listCompleted();
   Future<generated.SessionStateResponse> getState({
     required String sessionId,
     int cursor = 0,
@@ -59,6 +60,12 @@ class SessionRepository implements SessionRepositoryContract {
   @override
   Future<List<generated.ActiveSessionItem>> listActive() async {
     final response = await _api.listActiveSessionsSessionsActiveGet();
+    return response.data?.toList(growable: false) ?? const [];
+  }
+
+  @override
+  Future<List<generated.SessionResponse>> listCompleted() async {
+    final response = await _api.listCompletedSessionsSessionsCompletedGet();
     return response.data?.toList(growable: false) ?? const [];
   }
 

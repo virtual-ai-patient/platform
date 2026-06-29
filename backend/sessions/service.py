@@ -89,6 +89,23 @@ async def list_active_sessions(
     return items
 
 
+async def list_completed_sessions(
+    user_id: str,
+    session_repo: SessionRepository,
+) -> list[SessionResponse]:
+    sessions = await session_repo.list_completed_by_user(user_id)
+    return [
+        SessionResponse(
+            session_id=s.session_id,
+            case_id=str(s.frozen_case_snapshot.get("case_id", "")),
+            status=s.status,
+            created_at=s.created_at,
+            last_activity_at=s.last_activity_at,
+        )
+        for s in sessions
+    ]
+
+
 async def get_session_state(
     session_id: str,
     current_user: User,

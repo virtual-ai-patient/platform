@@ -83,6 +83,7 @@ void main() {
     expect(find.text('Scores'), findsOneWidget);
     expect(find.text('Clinical'), findsOneWidget);
     expect(find.text('Communication'), findsOneWidget);
+    expect(find.text('Case library'), findsOneWidget);
   });
 
   testWidgets('success with empty findings', (WidgetTester tester) async {

@@ -2,7 +2,6 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/json_object.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/common/session_completion_prefs.dart';
 import 'package:frontend/common/theme/app_colors.dart';
 import 'package:frontend/domains/evaluation/communication_repository.dart';
 import 'package:frontend/domains/evaluation/evaluation_repository.dart';
@@ -429,11 +428,6 @@ class _SimulationConclusionsScreenState
     setState(() => _busy = true);
     try {
       await widget.sessionRepository.finishSession(
-        sessionId: widget.sessionId,
-      );
-      if (!mounted) return;
-      await SessionCompletionPrefs.rememberCompletedSession(
-        caseId: widget.caseItem.caseId,
         sessionId: widget.sessionId,
       );
       if (!mounted) return;

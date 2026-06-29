@@ -33,6 +33,12 @@ class FakeSessionRepository implements SessionRepositoryContract {
   }
 
   @override
+  Future<List<g.SessionResponse>> listCompleted() async {
+    if (listError != null) throw listError!;
+    return const [];
+  }
+
+  @override
   Future<g.ConclusionsResponse> abandonSession(
       {required String sessionId}) async {
     onAbandon?.call(sessionId);

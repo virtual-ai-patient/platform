@@ -9,8 +9,6 @@ parent: Sprint 11 Overview
 
 ## Action Points
 
-### Action Points
-
 |  | Task | Owner | Due Date | Status |
 |:---|:---|:---|:---|:---|
 | **AP-01** | Finalize communication evaluation backend: complete the integration so that LLM can assess doctor-patient dialogue based on criteria (empathy, leading questions, structured history, etc.). | Ilnar, Aizat | June 29 | 🔄 In progress |

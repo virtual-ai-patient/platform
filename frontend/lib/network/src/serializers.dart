@@ -134,6 +134,10 @@ Serializers serializers = (_$serializers.toBuilder()
         const FullType(BuiltList, [FullType(CaseResponse)]),
         () => ListBuilder<CaseResponse>(),
       )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(SessionResponse)]),
+        () => ListBuilder<SessionResponse>(),
+      )
       ..add(const OneOfSerializer())
       ..add(const AnyOfSerializer())
       ..add(const DateSerializer())

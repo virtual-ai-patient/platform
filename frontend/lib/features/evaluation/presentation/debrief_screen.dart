@@ -9,6 +9,10 @@ import 'package:frontend/features/evaluation/presentation/communication_panel.da
 import 'package:frontend/network/openapi.dart' as generated;
 import 'package:google_fonts/google_fonts.dart';
 
+void _goToCaseLibrary(BuildContext context) {
+  Navigator.of(context).popUntil((route) => route.isFirst);
+}
+
 /// Loads and displays server evaluation (scores, findings, reference, conclusions).
 class DebriefScreen extends StatefulWidget {
   const DebriefScreen({
@@ -124,6 +128,17 @@ class _DebriefScreenState extends State<DebriefScreen>
           'Evaluation',
           style: GoogleFonts.inter(fontWeight: FontWeight.w700, fontSize: 18),
         ),
+        actions: [
+          TextButton.icon(
+            onPressed: () => _goToCaseLibrary(context),
+            icon: const Icon(Icons.grid_view_rounded, size: 20),
+            label: Text(
+              'Case library',
+              style: GoogleFonts.inter(fontWeight: FontWeight.w600),
+            ),
+          ),
+          const SizedBox(width: 8),
+        ],
         bottom: _state == _LoadState.success
             ? TabBar(
                 controller: _tabController,
@@ -302,6 +317,11 @@ class _ErrorPanel extends StatelessWidget {
                     onPressed: onRetry,
                     child: const Text('Retry'),
                   ),
+                  const SizedBox(height: 10),
+                  OutlinedButton(
+                    onPressed: () => _goToCaseLibrary(context),
+                    child: const Text('Case library'),
+                  ),
                 ],
               ),
             ),
@@ -434,9 +454,7 @@ class _SuccessBody extends StatelessWidget {
                 ...structuredConclusionsFromBuiltMap(debrief.conclusions),
                 const SizedBox(height: 24),
                 FilledButton(
-                  onPressed: () {
-                    Navigator.of(context).popUntil((route) => route.isFirst);
-                  },
+                  onPressed: () => _goToCaseLibrary(context),
                   child: Text(
                     'Back to case library',
                     style: GoogleFonts.inter(fontWeight: FontWeight.w600),
