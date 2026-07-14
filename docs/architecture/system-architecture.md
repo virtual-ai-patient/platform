@@ -1,45 +1,42 @@
 # System Architecture
 
-## Architectural challenges and goals
+**Scope note.** This document describes the architecture of the Virtual AI
+Patient **prototype**. The project's target is a documented, reproducible
+prototype delivered to Innopolis University (IU). It is not designed for
+clinical deployment, multi-tenant hosting, or high-availability operation —
+those decisions are explicitly left open for whoever picks the codebase up
+next (see [What IU receives](#what-iu-receives) at the bottom).
 
-- **Portability across clients**
-  - The Virtual AI Patient must be accessible from multiple clients: web, Telegram bot, and potentially mobile or other channels.
-  - The architecture therefore centralizes logic in the backend and exposes channel-agnostic APIs, so new clients can be added without changing the core domain logic.
+## Architectural goals
 
-- **LLM-agnostic AI Patient**
-  - The AI Patient is based on an LLM, but the concrete provider can vary.
-  - The LLM interface in the dependencies layer abstracts provider-specific details (API shape, auth, rate limits), enabling swapping between different LLMs with minimal impact on the backend.
+- **LLM-agnostic AI Patient.** The AI Patient is driven by an LLM, but the concrete provider is behind a single `AIProvider` interface. The prototype ships with an OpenAI-compatible adapter and a deterministic **Mock LLM** so the demo runs end-to-end without a paid API key.
+- **Reproducibility for a cold reader.** A fresh clone plus `docker compose up` must reach a working demo. There are no manual infrastructure steps, no cluster, no external services required beyond an LLM API key (and even that is optional via the mock).
+- **Maintainability and testability.** Backend, client, and dependencies (DB, LLM) are separated so business logic can be tested against mocks. The AI provider and database interfaces both have first-class mock implementations.
+- **Traceable demo runs.** Every learner action lands in an `action_logs` table so any reviewer can replay a session — this is what makes the evaluation and debrief reproducible.
 
-- **Per-client AI Patients**
-  - Different clients (e.g. different clinics, teams, or deployments) should be able to have their *own* Virtual AI Patients (separate configuration, prompts, and possibly models).
-  - This requires multi-tenancy support in the backend and persistence layer (e.g. tenant-aware storage for patient configurations, conversations, and audit data).
+Out of scope, deliberately: multi-tenancy, per-tenant model configuration, horizontal scaling, HA / failover, TLS termination inside the stack, SSO, and clinical-grade audit compliance.
 
-- **Maintainability and testability**
-  - Clear separation between clients, backend, and the dependency layer allows the business logic to be tested independently of infrastructure.
-  - Mock implementations for both the database and LLM are first-class parts of the design, so automated tests can run deterministically without relying on external services or real data stores.
+## Diagram 1 — Static component view
 
-## High-level architecture
+Shows the pieces that make up the prototype and how they connect. This is a **structural diagram**: it says nothing about time or sequence — only which component talks to which.
 
 ```mermaid
 flowchart TB
-    subgraph Clients
-        TG["Telegram bot\n(primary client)"]
-        WEB["Web frontend\n(secondary client)"]
+    subgraph Client
+        WEB["Flutter client<br/>(web build)"]
     end
 
-    TG --> NGINX[nginx]
-    WEB --> NGINX
-    NGINX --> BE[Backend]
+    WEB --> BE[FastAPI backend]
 
-    subgraph Dependencies layer
-        subgraph DBLayer[Database interaction interface]
-            MOCKDB[Mock database]
-            PG[("PostgreSQL\n(internal dependency)")]
+    subgraph Dependencies
+        subgraph DBLayer["Database interface"]
+            MOCKDB[Mock DB]
+            PG[("PostgreSQL<br/>(single container)")]
         end
 
-        subgraph LLMLayer["LLM interface\n(external dependency)"]
-            LLM[LLM]
-            MOCKLLM[Mock LLM]
+        subgraph LLMLayer["AIProvider interface"]
+            LLM["LLM<br/>(OpenAI-compatible)"]
+            MOCKLLM["Mock LLM<br/>(deterministic)"]
         end
     end
 
@@ -52,86 +49,99 @@ flowchart TB
     LLMLayer --> MOCKLLM
 ```
 
-## Dependencies layer
+### Component responsibilities
 
-- **Database interaction interface**
-  - **Responsibility**: Provides an abstraction for all data-access operations so the backend does not depend on a concrete database implementation.
-  - **Production dependency**: **PostgreSQL (internal dependency)** – primary data store for persistent application data.
-  - **Testing/development dependency**: **Mock database** – in-memory or lightweight storage used for tests and local runs without a real Postgres instance.
+- **Flutter client (web build).** Chat UI, investigations ordering UI, submission forms (DDx / diagnosis / plan), debrief view. The prototype ships as a web build; other targets (mobile, desktop) are Flutter's out-of-the-box concern and not part of the prototype's scope.
+- **FastAPI backend.** Auth with role-based access, case catalog, session state machine, AI orchestration (patient dialogue + investigation generation), evaluation and scoring, action logging.
+- **Database interface.** Abstraction over data-access operations. Production dependency: single-node **PostgreSQL** in a Docker container. Testing dependency: **Mock DB** for offline / unit tests.
+- **AIProvider interface.** Abstraction over the LLM. Production dependency: any **OpenAI-compatible endpoint** (real OpenAI, a self-hosted model behind an OpenAI-compatible façade, etc.). Testing / no-key dependency: **Mock LLM** with canned responses.
 
-- **LLM interface (external dependency)**
-  - **Responsibility**: Wraps all interactions with the external LLM provider behind a stable internal API.
-  - **Production dependency**: **LLM** – external large language model service used in the main deployment.
-  - **Testing/development dependency**: **Mock LLM** – deterministic or simplified implementation used for tests and offline development.
+The Telegram bot present in rev1 of this document has been removed from the codebase and the diagram — the current client surface is Flutter only.
 
-## Components
-- **Flutter Client**
-  - Chat UI
-  - Investigations ordering UI
-  - Submission forms (DDx/diagnosis/plan)
-  - Debriefing view
+## Diagram 2 — Dynamic session flow
 
-- **FastAPI Backend**
-  - Auth / SSO integration
-  - Case catalog and access control
-  - Session state machine
-  - AI orchestration (patient dialogue + investigation generation)
-  - Evaluation and scoring
-  - Analytics export
+Shows what happens **over time** during one learner session, from launch to debrief. This is a **behavioural / sequence diagram**: components on the top, time flowing downward, arrows are messages. It does not describe structure — components appear only if they participate in the flow.
 
-- **AI Provider (OpenAI-compatible)**
-  - OpenAI-style REST API
-  - Token-based authentication
-  - Model routing configurable per environment
-
-- **Storage**
-  - Case content store (versioned cases)
-  - Session store (messages, orders, submissions)
-  - Evaluation artifacts (scores, evidence)
-
-## Data flow (typical session)
 ```mermaid
 sequenceDiagram
-  autonumber
-  participant U as Learner (Flutter)
-  participant B as Backend (FastAPI)
-  participant A as AI Provider (OpenAI-compatible)
-  participant S as Storage
+    autonumber
+    participant U as Learner
+    participant B as Backend
+    participant A as AIProvider
+    participant S as Storage
 
-  U->>B: Launch case session
-  B->>S: Load case (versioned)
-  B-->>U: Session created + initial patient message
+    U->>B: Launch case session
+    B->>S: Load versioned case
+    B-->>U: Session created, initial patient message
 
-  loop Dialogue
-    U->>B: Send user message
-    B->>A: Generate patient response (grounded)
-    A-->>B: Patient response
-    B->>S: Persist message turn
-    B-->>U: Patient response
-  end
+    loop Dialogue
+        U->>B: Send user message
+        B->>A: Generate patient response, grounded
+        A-->>B: Patient response
+        B->>S: Persist message turn to action_logs
+        B-->>U: Patient response
+    end
 
-  U->>B: Order investigation(s)
-  B->>S: Check if case has predefined result
-  alt predefined
-    B-->>U: Return stored result
-  else generate
-    B->>A: Generate plausible result (grounded + consistent)
-    A-->>B: Result text/values
-    B->>S: Persist result
-    B-->>U: Return result
-  end
+    U->>B: Order investigation
+    B->>S: Check for predefined result
+    alt Predefined
+        B-->>U: Return stored result
+    else Generated
+        B->>A: Generate plausible result, grounded
+        A-->>B: Result text or values
+        B->>S: Persist result
+        B-->>U: Return result
+    end
 
-  U->>B: Submit DDx/diagnosis/plan
-  B->>S: Persist submission
-  B->>B: Evaluate vs gold standard (rules + AI-assisted where allowed)
-  B->>S: Persist scoring artifacts
-  B-->>U: Debrief + scores
+    U->>B: Submit DDx, diagnosis, plan
+    B->>S: Persist submission
+    B->>B: Evaluate vs gold standard
+    B->>S: Persist scoring artifacts
+    B-->>U: Debrief and scores
 ```
 
-## Architectural principles
-- **Case-grounded generation**: the AI layer must not invent facts that contradict the case truth.
-- **Reproducible scoring**: cases are versioned; scoring references a specific case version.
-- **Provider-agnostic AI adapter**: only one integration layer speaks OpenAI-compatible API.
-- **Auditable evaluation**: every score deduction has evidence and rationale for debriefing.
-- **Security by design**: no real patient data; strict separation of case content vs user data.
+## Diagram 3 — Deployment view
 
+Shows how the prototype is packaged and runs on **one machine**, via `docker compose`. This is a **deployment diagram**: boxes are containers, arrows are network calls between them. It says nothing about internal component structure — that is Diagram 1's job.
+
+```mermaid
+flowchart LR
+    subgraph Host["Reviewer's machine (single host)"]
+        FE["frontend<br/>Flutter web build<br/>(static files)"]
+        BE["backend<br/>FastAPI (uvicorn)"]
+        DB[("db<br/>PostgreSQL 16")]
+    end
+
+    LLM[["External LLM API<br/>(optional — mock by default)"]]
+
+    FE --> BE
+    BE --> DB
+    BE -.->|only if OPENAI_API_KEY set| LLM
+```
+
+There is no reverse proxy, no orchestrator, no cluster. The reviewer runs `docker compose up`, opens the frontend port in a browser, and has a working demo. Switching to a real LLM is a single environment variable (`OPENAI_API_KEY` + `AI_PROVIDER=openai`); the default is the mock.
+
+## Architectural principles
+
+- **Case-grounded generation.** The AI layer must not invent facts that contradict the case truth.
+- **Reproducible scoring.** Cases are versioned; the LLM-as-judge runs at `temperature=0` against a versioned rubric prompt so re-runs of the same session yield the same score.
+- **Provider-agnostic AI adapter.** Only one integration layer speaks the OpenAI-compatible API; everything else in the backend talks to the `AIProvider` interface.
+- **Traceable evaluation.** Every score deduction has evidence and rationale attached — enough for a reviewer (not an auditor) to see why the debrief said what it did.
+- **Prototype safety, not compliance.** Basic guardrails (no real medical advice, resistance to trivial prompt injection) are in place. Compliance-grade safety monitoring, incident review, and PHI handling are explicitly out of scope.
+
+## What IU receives
+
+The handoff bundle consists of:
+
+- The Git repository — backend (FastAPI + SQLAlchemy + Alembic), frontend (Flutter web), and `docker-compose.yml`.
+- A seed script that populates the case catalog with a small set of demo cases on first startup.
+- The `docs/` tree — this architecture document, the current QA revision, product spec, project-management artifacts (epics, features, tasks), and sprint history.
+- A root-level `README.md` with a ≤ 10-minute quickstart.
+
+**Explicitly out of scope of the handoff** (open questions for a future integrator):
+
+- Choice of LLM provider and per-tenant model routing in a real deployment.
+- Any production hosting decision — reverse proxy, TLS termination, autoscaling, HA, backups.
+- SSO / directory integration with a specific medical institution's identity provider.
+- Regulatory posture (data-residency, PHI handling, audit retention).
+- A commercial-grade case authoring workflow — the prototype has enough authoring surface to demonstrate the concept, not to run a case-content team.
