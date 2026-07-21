@@ -19,6 +19,7 @@ from config import (
 )
 from repositories.user_repository import UserRepository
 from admin.router import router as admin_router
+from analytics.router import router as analytics_router
 from cases.router import router as cases_router
 from routers import login, refresh, reset_password, signup, verify
 from sessions.router import router as sessions_router
@@ -89,3 +90,4 @@ app.include_router(reset_password.router, prefix="/auth", tags=["auth"])
 app.include_router(cases_router)
 app.include_router(sessions_router)
 app.include_router(admin_router)
+app.include_router(analytics_router)
