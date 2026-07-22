@@ -19,11 +19,11 @@ Copy this block for every new entry. Keep key insights to five items or fewer.
 
 - **Date:** YYYY-MM-DD
 - **Participant:** P-XX
-- **Method:** interview | corridor test | expert session
+- **Method:** interview, corridor test, or expert session
 - **Context:** One line describing what the participant was shown or asked.
 - **Key insights:**
   - Insight stated as an observation, not an unsupported conclusion.
-- **Linked hypothesis:** H1 | H2 | H3 | none
+- **Linked hypothesis:** H1, H2, H3, or none
 - **Follow-up issues:** GitHub issue links, or none yet.
 
 ## Anonymisation guideline
