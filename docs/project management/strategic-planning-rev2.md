@@ -46,7 +46,7 @@ March          April–May        June–July       August
 **Goal:** Understand the problem space well enough to form falsifiable hypotheses.
 
 **Exit criteria (all must be met):**
-- Domain expert session conducted; findings written up in `docs/proposal/user-insights.md`.
+- ≥ 2 domain expert sessions conducted; findings written up in `docs/proposal/user-insights.md` (entries P-01, P-02 satisfy this criterion).
 - Value Proposition Canvas drafted.
 - Three hypotheses formalised in `docs/proposal/hypotheses.md` with owner, validation method, and status = *open*.
 - Seed case library with ≥ 3 demo cases available in the repo.
@@ -64,10 +64,10 @@ Each iteration runs 2–4 weeks. It closes when its hypothesis is explicitly con
 | | |
 |---|---|
 | **Hypothesis** | An LLM can convincingly simulate lying, forgetting, and emotional states in a clinical conversation. |
-| **Validation method** | Domain expert rates believability ≥ 4/5 on a structured rubric. |
+| **Validation method** | Domain expert rates believability ≥ 4/5 on each of five rubric dimensions: (1) lying / deliberate concealment, (2) forgetting / partial recall, (3) hesitation and delayed disclosure, (4) emotional tone, (5) health-literacy variation. Rubric grounded in expert insights P-01 and P-02 (`docs/proposal/user-insights.md`). |
 | **Owner** | Aizat |
 | **Entry criterion** | P0 exit criteria met; seed case available to test against. |
-| **Exit criterion** | Expert rating recorded in `docs/proposal/user-insights.md`; H1 status updated to *confirmed* or *refuted* in `docs/proposal/hypotheses.md`; commit tagged `P1-tag`. |
+| **Exit criterion** | Expert rating recorded per rubric in `docs/proposal/user-insights.md`; H1 status updated to *confirmed* or *refuted* in `docs/proposal/hypotheses.md`; commit tagged `P1-tag`. |
 
 **Risks for P1:**
 
@@ -101,11 +101,11 @@ Each iteration runs 2–4 weeks. It closes when its hypothesis is explicitly con
 
 | | |
 |---|---|
-| **Hypothesis** | The complete flow (conversation → tests → diagnosis → debrief) feels like a game, not a form. |
-| **Validation method** | User feedback session (≥ 5 participants) + Alina's structured interview summary. |
+| **Hypothesis** | The complete flow (conversation → tests → diagnosis → debrief) feels like a game, not a form, and the debrief surfaces the two critical clinical reasoning errors identified by domain experts. |
+| **Validation method** | User feedback session (≥ 5 participants) with structured protocol + Alina's interview summary. Two debrief-specific checks (grounded in P-01, `docs/proposal/user-insights.md`): (a) the debrief flags **missed escalation** of a critical presentation when the learner failed to act on it; (b) the debrief flags **confirmation bias** when the learner forced evidence to fit an early hypothesis. |
 | **Owner** | All |
 | **Entry criterion** | P2 hypothesis closed; full end-to-end flow running stably (`docker compose up`). |
-| **Exit criterion** | Interview summary written by Alina; majority of participants describe the experience as engaging rather than form-filling; H3 status updated; commit tagged `P3-tag`. |
+| **Exit criterion** | Interview summary written by Alina; majority of participants describe the experience as engaging rather than form-filling; debrief correctly identifies missed escalation and confirmation bias in at least one recorded test session; H3 status updated; commit tagged `P3-tag`. |
 
 **Risks for P3:**
 
@@ -194,4 +194,5 @@ Changes propagate **downward**: a change in a milestone date or hypothesis state
 
 | Date | Author | Trigger | Changes |
 |:---|:---|:---|:---|
+| July 2026 | Karim Abdulkin | Expert session entries P-01 and P-02 added to `docs/proposal/user-insights.md` by Alina | (1) H1 validation rubric expanded to five explicit dimensions traceable to P-01/P-02. (2) H3 hypothesis and exit criterion extended with two debrief-specific checks: missed escalation and confirmation bias (from P-01). (3) Discovery exit criteria updated to reference P-01/P-02 as satisfying the expert-session requirement. |
 | March 2026 | Karim Abdulkin | Industry partner engagement did not progress; course coordinator approved new goal | Initial version — replaced 5-month feature roadmap with three-phase hypothesis-driven plan aligned to startup proposal goal. |
