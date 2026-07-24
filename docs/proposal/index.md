@@ -9,6 +9,8 @@ has_children: true
 This section contains the evidence and working documents behind the startup
 proposal for Virtual AI Patient.
 
+- [Hypotheses](hypotheses.md) tracks H1 / H2 / H3 with owner, validation
+  method, status, and evidence link.
 - [User insights](user-insights.md) records interviews and corridor-test
   findings in a traceable format.
 - [Patient role research](patient-role-research.md) consolidates the LLM
