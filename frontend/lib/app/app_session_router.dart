@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/domains/admin/admin_repository.dart';
+import 'package:frontend/domains/analytics/export_repository.dart';
 import 'package:frontend/domains/auth/auth_repository.dart';
 import 'package:frontend/domains/cases/case_repository.dart';
 import 'package:frontend/domains/evaluation/communication_repository.dart';
@@ -19,6 +20,7 @@ class AppSessionRouter {
     required SessionRepositoryContract sessionRepository,
     required EvaluationRepositoryContract evaluationRepository,
     required CommunicationRepositoryContract communicationRepository,
+    required ExportRepositoryContract exportRepository,
     AdminRepositoryContract? adminRepository,
   }) {
     return LoginScreen(
@@ -27,6 +29,7 @@ class AppSessionRouter {
       sessionRepository: sessionRepository,
       evaluationRepository: evaluationRepository,
       communicationRepository: communicationRepository,
+      exportRepository: exportRepository,
       adminRepository: adminRepository,
     );
   }
@@ -38,6 +41,7 @@ class AppSessionRouter {
     required SessionRepositoryContract sessionRepository,
     required EvaluationRepositoryContract evaluationRepository,
     required CommunicationRepositoryContract communicationRepository,
+    required ExportRepositoryContract exportRepository,
     AdminRepositoryContract? adminRepository,
   }) {
     LoginScreen createLoginScreen() => loginScreen(
@@ -46,6 +50,7 @@ class AppSessionRouter {
       sessionRepository: sessionRepository,
       evaluationRepository: evaluationRepository,
       communicationRepository: communicationRepository,
+      exportRepository: exportRepository,
       adminRepository: adminRepository,
     );
     if (session.user.role == 'admin' && adminRepository != null) {
@@ -53,6 +58,7 @@ class AppSessionRouter {
         session: session,
         adminRepository: adminRepository,
         authRepository: authRepository,
+        exportRepository: exportRepository,
         buildLoginPage: createLoginScreen,
       );
     }
@@ -64,6 +70,7 @@ class AppSessionRouter {
       communicationRepository: communicationRepository,
       authRepository: authRepository,
       adminRepository: adminRepository,
+      exportRepository: exportRepository,
       buildLoginPage: createLoginScreen,
     );
   }

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/common/theme/app_colors.dart';
+import 'package:frontend/domains/analytics/export_repository.dart';
 import 'package:frontend/domains/evaluation/communication_repository.dart';
 import 'package:frontend/domains/evaluation/evaluation_repository.dart';
 import 'package:frontend/domains/sessions/session_repository.dart';
@@ -18,6 +19,7 @@ Future<void> showDuplicateStartDialog({
   required SessionRepositoryContract sessionRepository,
   required EvaluationRepositoryContract evaluationRepository,
   required CommunicationRepositoryContract communicationRepository,
+  ExportRepositoryContract? exportRepository,
 }) async {
   await showDialog<void>(
     context: context,
@@ -27,6 +29,7 @@ Future<void> showDuplicateStartDialog({
       sessionRepository: sessionRepository,
       evaluationRepository: evaluationRepository,
       communicationRepository: communicationRepository,
+      exportRepository: exportRepository,
     ),
   );
 }
@@ -38,6 +41,7 @@ class _DuplicateStartDialog extends StatefulWidget {
     required this.sessionRepository,
     required this.evaluationRepository,
     required this.communicationRepository,
+    this.exportRepository,
   });
 
   final generated.CaseResponse caseItem;
@@ -45,6 +49,7 @@ class _DuplicateStartDialog extends StatefulWidget {
   final SessionRepositoryContract sessionRepository;
   final EvaluationRepositoryContract evaluationRepository;
   final CommunicationRepositoryContract communicationRepository;
+  final ExportRepositoryContract? exportRepository;
 
   @override
   State<_DuplicateStartDialog> createState() => _DuplicateStartDialogState();
@@ -68,6 +73,7 @@ class _DuplicateStartDialogState extends State<_DuplicateStartDialog> {
       sessionRepository: widget.sessionRepository,
       evaluationRepository: widget.evaluationRepository,
       communicationRepository: widget.communicationRepository,
+      exportRepository: widget.exportRepository,
     );
   }
 
@@ -91,6 +97,7 @@ class _DuplicateStartDialogState extends State<_DuplicateStartDialog> {
             sessionRepository: widget.sessionRepository,
             evaluationRepository: widget.evaluationRepository,
             communicationRepository: widget.communicationRepository,
+            exportRepository: widget.exportRepository,
           ),
         ),
       );

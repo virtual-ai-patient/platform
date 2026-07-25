@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:frontend/common/theme/app_colors.dart';
 import 'package:frontend/common/widgets/app_logo_mark.dart';
 import 'package:frontend/domains/admin/admin_repository.dart';
+import 'package:frontend/domains/analytics/export_repository.dart';
 import 'package:frontend/domains/auth/auth_repository.dart';
+import 'package:frontend/features/analytics/presentation/analytics_screen.dart';
 import 'package:frontend/network/openapi.dart' as generated;
 import 'package:google_fonts/google_fonts.dart';
 
@@ -15,12 +17,14 @@ class AdminSessionsDashboardScreen extends StatefulWidget {
     required this.adminRepository,
     required this.authRepository,
     required this.buildLoginPage,
+    this.exportRepository,
   });
 
   final AuthSession session;
   final AdminRepositoryContract adminRepository;
   final AuthRepositoryContract authRepository;
   final Widget Function() buildLoginPage;
+  final ExportRepositoryContract? exportRepository;
 
   @override
   State<AdminSessionsDashboardScreen> createState() =>
@@ -147,6 +151,27 @@ class _AdminSessionsDashboardScreenState
         ),
         automaticallyImplyLeading: true,
         actions: [
+          if (widget.exportRepository != null)
+            TextButton.icon(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                    builder: (_) => AnalyticsScreen(
+                      session: widget.session,
+                      exportRepository: widget.exportRepository!,
+                    ),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.insights_outlined, size: 18),
+              label: Text(
+                'Analytics',
+                style: GoogleFonts.inter(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 13,
+                ),
+              ),
+            ),
           IconButton(
             tooltip: 'Refresh',
             onPressed: _loading ? null : _loadSessions,

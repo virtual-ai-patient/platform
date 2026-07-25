@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/common/theme/app_colors.dart';
+import 'package:frontend/domains/analytics/export_repository.dart';
 import 'package:frontend/domains/evaluation/communication_repository.dart';
 import 'package:frontend/domains/evaluation/evaluation_repository.dart';
 import 'package:frontend/domains/sessions/session_repository.dart';
@@ -16,6 +17,7 @@ Future<void> showUnfinishedSessionsSheet({
   required SessionRepositoryContract sessionRepository,
   required EvaluationRepositoryContract evaluationRepository,
   required CommunicationRepositoryContract communicationRepository,
+  ExportRepositoryContract? exportRepository,
 }) async {
   final maxHeight = MediaQuery.sizeOf(context).height * 0.62;
   await showModalBottomSheet<void>(
@@ -28,6 +30,7 @@ Future<void> showUnfinishedSessionsSheet({
       sessionRepository: sessionRepository,
       evaluationRepository: evaluationRepository,
       communicationRepository: communicationRepository,
+      exportRepository: exportRepository,
     ),
   );
 }
@@ -37,11 +40,13 @@ class _UnfinishedSessionsBody extends StatefulWidget {
     required this.sessionRepository,
     required this.evaluationRepository,
     required this.communicationRepository,
+    this.exportRepository,
   });
 
   final SessionRepositoryContract sessionRepository;
   final EvaluationRepositoryContract evaluationRepository;
   final CommunicationRepositoryContract communicationRepository;
+  final ExportRepositoryContract? exportRepository;
 
   @override
   State<_UnfinishedSessionsBody> createState() =>
@@ -110,6 +115,7 @@ class _UnfinishedSessionsBodyState extends State<_UnfinishedSessionsBody> {
       sessionRepository: widget.sessionRepository,
       evaluationRepository: widget.evaluationRepository,
       communicationRepository: widget.communicationRepository,
+      exportRepository: widget.exportRepository,
     );
     if (mounted) {
       setState(() => _busySessionIds.remove(item.sessionId));

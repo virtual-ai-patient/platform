@@ -70,6 +70,35 @@ _admin_query_new = """    // Omit optional filters when unset — encodeQueryPar
       if (onDate != null) r'on_date': encodeQueryParameter(_serializers, onDate, const FullType(Date)),
     };"""
 
+_analytics_actions_query_old = """    final _queryParameters = <String, dynamic>{
+      if (format != null) r'format': encodeQueryParameter(_serializers, format, const FullType(String)),
+      r'session_id': encodeQueryParameter(_serializers, sessionId, const FullType(String)),
+      r'since': encodeQueryParameter(_serializers, since, const FullType(DateTime)),
+      r'until': encodeQueryParameter(_serializers, until, const FullType(DateTime)),
+    };"""
+_analytics_actions_query_new = """    // Omit optional filters when unset — encodeQueryParameter(null) becomes ''.
+    final _queryParameters = <String, dynamic>{
+      if (format != null) r'format': encodeQueryParameter(_serializers, format, const FullType(String)),
+      if (sessionId != null && sessionId.isNotEmpty)
+        r'session_id': encodeQueryParameter(_serializers, sessionId, const FullType(String)),
+      if (since != null) r'since': encodeQueryParameter(_serializers, since, const FullType(DateTime)),
+      if (until != null) r'until': encodeQueryParameter(_serializers, until, const FullType(DateTime)),
+    };"""
+
+_analytics_sessions_query_old = """    final _queryParameters = <String, dynamic>{
+      if (format != null) r'format': encodeQueryParameter(_serializers, format, const FullType(String)),
+      if (scope != null) r'scope': encodeQueryParameter(_serializers, scope, const FullType(String)),
+      r'since': encodeQueryParameter(_serializers, since, const FullType(DateTime)),
+      r'until': encodeQueryParameter(_serializers, until, const FullType(DateTime)),
+    };"""
+_analytics_sessions_query_new = """    // Omit optional filters when unset — encodeQueryParameter(null) becomes ''.
+    final _queryParameters = <String, dynamic>{
+      if (format != null) r'format': encodeQueryParameter(_serializers, format, const FullType(String)),
+      if (scope != null) r'scope': encodeQueryParameter(_serializers, scope, const FullType(String)),
+      if (since != null) r'since': encodeQueryParameter(_serializers, since, const FullType(DateTime)),
+      if (until != null) r'until': encodeQueryParameter(_serializers, until, const FullType(DateTime)),
+    };"""
+
 for file in target.rglob("*.dart"):
     text = file.read_text()
     text = text.replace(
@@ -80,6 +109,9 @@ for file in target.rglob("*.dart"):
         text = text.replace(_cases_query_old, _cases_query_new)
     if file.name == "admin_api.dart":
         text = text.replace(_admin_query_old, _admin_query_new)
+    if file.name == "analytics_api.dart":
+        text = text.replace(_analytics_actions_query_old, _analytics_actions_query_new)
+        text = text.replace(_analytics_sessions_query_old, _analytics_sessions_query_new)
     file.write_text(text)
 PY
 

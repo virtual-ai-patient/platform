@@ -3,8 +3,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/common/theme/app_colors.dart';
 import 'package:frontend/common/widgets/structured_conclusions_summary.dart';
+import 'package:frontend/domains/analytics/export_repository.dart';
 import 'package:frontend/domains/evaluation/communication_repository.dart';
 import 'package:frontend/domains/evaluation/evaluation_repository.dart';
+import 'package:frontend/features/analytics/presentation/export_controls.dart';
 import 'package:frontend/features/evaluation/presentation/communication_panel.dart';
 import 'package:frontend/network/openapi.dart' as generated;
 import 'package:google_fonts/google_fonts.dart';
@@ -21,12 +23,16 @@ class DebriefScreen extends StatefulWidget {
     required this.sessionId,
     required this.evaluationRepository,
     required this.communicationRepository,
+    this.exportRepository,
   });
 
   final generated.CaseResponse caseItem;
   final String sessionId;
   final EvaluationRepositoryContract evaluationRepository;
   final CommunicationRepositoryContract communicationRepository;
+
+  /// When set, shows **Export actions** for the current session (owner / staff).
+  final ExportRepositoryContract? exportRepository;
 
   @override
   State<DebriefScreen> createState() => _DebriefScreenState();
@@ -129,6 +135,11 @@ class _DebriefScreenState extends State<DebriefScreen>
           style: GoogleFonts.inter(fontWeight: FontWeight.w700, fontSize: 18),
         ),
         actions: [
+          if (widget.exportRepository != null)
+            SessionActionsExportButton(
+              sessionId: widget.sessionId,
+              exportRepository: widget.exportRepository!,
+            ),
           TextButton.icon(
             onPressed: () => _goToCaseLibrary(context),
             icon: const Icon(Icons.grid_view_rounded, size: 20),

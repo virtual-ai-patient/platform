@@ -120,44 +120,48 @@ class _$TreatmentPlanSerializer implements PrimitiveSerializer<TreatmentPlan> {
           final valueDes =
               serializers.deserialize(
                     value,
-                    specifiedType: const FullType(BuiltList, [
+                    specifiedType: const FullType.nullable(BuiltList, [
                       FullType(Medication),
                     ]),
                   )
-                  as BuiltList<Medication>;
+                  as BuiltList<Medication>?;
+          if (valueDes == null) continue;
           result.medications.replace(valueDes);
           break;
         case r'non_pharmacological':
           final valueDes =
               serializers.deserialize(
                     value,
-                    specifiedType: const FullType(BuiltList, [
+                    specifiedType: const FullType.nullable(BuiltList, [
                       FullType(String),
                     ]),
                   )
-                  as BuiltList<String>;
+                  as BuiltList<String>?;
+          if (valueDes == null) continue;
           result.nonPharmacological.replace(valueDes);
           break;
         case r'referrals':
           final valueDes =
               serializers.deserialize(
                     value,
-                    specifiedType: const FullType(BuiltList, [
+                    specifiedType: const FullType.nullable(BuiltList, [
                       FullType(String),
                     ]),
                   )
-                  as BuiltList<String>;
+                  as BuiltList<String>?;
+          if (valueDes == null) continue;
           result.referrals.replace(valueDes);
           break;
         case r'follow_up':
           final valueDes =
               serializers.deserialize(
                     value,
-                    specifiedType: const FullType(BuiltList, [
+                    specifiedType: const FullType.nullable(BuiltList, [
                       FullType(String),
                     ]),
                   )
-                  as BuiltList<String>;
+                  as BuiltList<String>?;
+          if (valueDes == null) continue;
           result.followUp.replace(valueDes);
           break;
         default:

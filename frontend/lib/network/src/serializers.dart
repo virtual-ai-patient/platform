@@ -128,16 +128,85 @@ part 'serializers.g.dart';
 Serializers serializers =
     (_$serializers.toBuilder()
           ..addBuilderFactory(
+            const FullType(BuiltList, [FullType(EvaluationFindingResponse)]),
+            () => ListBuilder<EvaluationFindingResponse>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, [FullType(SessionSummary)]),
+            () => ListBuilder<SessionSummary>(),
+          )
+          ..addBuilderFactory(
             const FullType(BuiltList, [FullType(ActiveSessionItem)]),
             () => ListBuilder<ActiveSessionItem>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, [FullType(AvailableTestItem)]),
+            () => ListBuilder<AvailableTestItem>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, [FullType(ActionLogEntry)]),
+            () => ListBuilder<ActionLogEntry>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, [FullType(InvestigationResultResponse)]),
+            () => ListBuilder<InvestigationResultResponse>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, [FullType(DifferentialDiagnosisItem)]),
+            () => ListBuilder<DifferentialDiagnosisItem>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, [FullType(ChatMessage)]),
+            () => ListBuilder<ChatMessage>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, [FullType(AcceptableAnswerResponse)]),
+            () => ListBuilder<AcceptableAnswerResponse>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, [FullType(InvestigationResultRequest)]),
+            () => ListBuilder<InvestigationResultRequest>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, [FullType(AcceptableAnswerRequest)]),
+            () => ListBuilder<AcceptableAnswerRequest>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, [FullType(LocationInner)]),
+            () => ListBuilder<LocationInner>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, [FullType(SessionResponse)]),
+            () => ListBuilder<SessionResponse>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltMap, [
+              FullType(String),
+              FullType.nullable(JsonObject),
+            ]),
+            () => MapBuilder<String, JsonObject?>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, [FullType(ValidationError)]),
+            () => ListBuilder<ValidationError>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, [FullType(CaseResponse)]),
             () => ListBuilder<CaseResponse>(),
           )
           ..addBuilderFactory(
-            const FullType(BuiltList, [FullType(SessionResponse)]),
-            () => ListBuilder<SessionResponse>(),
+            const FullType(BuiltList, [FullType(Medication)]),
+            () => ListBuilder<Medication>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, [FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, [
+              FullType(CommunicationCriterionResponse),
+            ]),
+            () => ListBuilder<CommunicationCriterionResponse>(),
           )
           ..add(const OneOfSerializer())
           ..add(const AnyOfSerializer())
