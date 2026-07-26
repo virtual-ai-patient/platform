@@ -11,3 +11,6 @@ proposal for Virtual AI Patient.
 
 - [User insights](user-insights.md) records interviews and corridor-test
   findings in a traceable format.
+- [Patient role research](patient-role-research.md) consolidates the LLM
+  patient-role findings (lying, forgetting, emotional states, hesitation) that
+  back the proposal's differentiator claims.
