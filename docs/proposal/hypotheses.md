@@ -41,6 +41,7 @@ must trace back to evidence in
 | **Owner** | Aizat |
 | **Validation method** | Domain expert rates believability ≥ 4/5 on each of five rubric dimensions: (1) lying / deliberate concealment, (2) forgetting / partial recall, (3) hesitation and delayed disclosure, (4) emotional tone, (5) health-literacy variation. |
 | **Rubric grounded in** | [user-insights.md — P-01](user-insights.md#2026-07-22--p-01), [P-02](user-insights.md#2026-07-22--p-02) |
+| **Preliminary evidence** | [patient-role-research.md](patient-role-research.md) — automated multi-model harness (25-turn scripted dialogues, 3 models). Lying ✓, forgetting ✓, emotional tone ✓ (indirect), hesitation ✗ (untested). All findings marked preliminary; expert rubric session pending. |
 | **Status** | `open` |
 | **Evidence** | — |
 
@@ -98,4 +99,5 @@ A hypothesis is **never silently dropped** — refutation is recorded just like 
 
 | Date | Author | Change |
 |:---|:---|:---|
+| 26-07-2026 | Karim Abdulkin | Added preliminary evidence link for H1: patient-role-research.md (automated harness, 3 models, 4 of 5 dimensions tested). |
 | March 2026 | Karim Abdulkin | Document created; H1, H2, H3 opened. Validation methods grounded in expert sessions P-01 and P-02. |
