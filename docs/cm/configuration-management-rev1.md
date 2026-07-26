@@ -1,3 +1,10 @@
+---
+layout: default
+title: CM — Rev 1 (Historical)
+parent: Configuration Management
+grand_parent: Current — Startup Proposal
+nav_order: 1
+---
 
 # Configuration Management — Revision 1 (pre-pivot)
 

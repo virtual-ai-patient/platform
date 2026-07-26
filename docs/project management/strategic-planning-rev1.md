@@ -1,3 +1,11 @@
+---
+layout: default
+title: Strategic Planning — Rev 1 (Historical)
+parent: Strategic Planning
+grand_parent: Current — Startup Proposal
+nav_order: 1
+---
+
 # Strategic Planning — Revision 1 (pre-pivot)
 
 > **Historical document.** This revision was written at project kickoff when the

@@ -1,3 +1,8 @@
+---
+layout: default
+nav_exclude: true
+---
+
 # Clinical Case – CASE-001: Acute Chest Pain (Suspected Myocardial Infarction)
 
 - **Case ID:** `CASE-001`

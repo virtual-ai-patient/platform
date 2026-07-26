@@ -1,3 +1,8 @@
+---
+layout: default
+nav_exclude: true
+---
+
 # Clinical Case – CASE-002: Severe Headache (Migraine with Aura)
 
 - **Case ID:** `CASE-002`
