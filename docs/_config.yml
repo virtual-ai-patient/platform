@@ -11,6 +11,10 @@ baseurl: "/platform"
 color_scheme: light
 
 nav_enabled: true
+
+mermaid:
+  version: "11"
+
 aux_links:
   "GitHub repository":
     - "https://github.com/virtual-ai-patient/platform"

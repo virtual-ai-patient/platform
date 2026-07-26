@@ -1,3 +1,10 @@
+---
+layout: default
+title: Product Description
+parent: Current — Startup Proposal
+nav_order: 7
+---
+
 # Technical Product Description — Virtual AI Patient
 
 ## 1. Problem statement

@@ -1,5 +1,7 @@
 # Strategic Planning — Revision 2 (post-pivot: startup proposal)
 
+> **[RETROSPECTIVE — Written July 2026]** This document describes the strategic plan as we believe it *should have been* defined from the start of the pivot in March 2026. In practice the project did not follow this framework from day one — this is our honest reconstruction of the correct approach, written for the startup proposal. See [About the Pivot](../about-the-pivot.md).
+
 ---
 
 ## 1. What is Strategic Planning?

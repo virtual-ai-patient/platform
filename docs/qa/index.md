@@ -1,7 +1,8 @@
 ---
 layout: default
 title: QA
-nav_order: 1
+parent: Current — Startup Proposal
+nav_order: 4
 has_children: true
 ---
 

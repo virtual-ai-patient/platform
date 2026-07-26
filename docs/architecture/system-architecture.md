@@ -1,3 +1,11 @@
+---
+layout: default
+title: System Architecture
+parent: Current — Startup Proposal
+nav_order: 2
+mermaid: true
+---
+
 # System Architecture
 
 ## Diagram legend

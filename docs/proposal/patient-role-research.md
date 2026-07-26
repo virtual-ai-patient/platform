@@ -1,6 +1,8 @@
 ---
+layout: default
 title: Patient role research
 parent: Proposal
+grand_parent: Current — Startup Proposal
 nav_order: 4
 ---
 

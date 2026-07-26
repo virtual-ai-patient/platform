@@ -1,5 +1,7 @@
 # Tactical Planning — Rev 2
 
+> **[RETROSPECTIVE — Written July 2026]** This document describes the tactical process as we believe it *should have been* run from the start of the pivot. In practice the team did not operate by this cycle initially — this is our honest reconstruction of the correct approach, written for the startup proposal. See [About the Pivot](../about-the-pivot.md).
+
 **Goal:** Deliver a startup proposal backed by a validated prototype.
 **Active since:** March 2026 (pivot)
 **Traceability:** [strategic-planning-rev2.md](strategic-planning-rev2.md) · [hypotheses.md](../proposal/hypotheses.md) · [configuration-management-rev2.md](../cm/configuration-management-rev2.md)

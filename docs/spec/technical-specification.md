@@ -1,3 +1,12 @@
+---
+layout: default
+title: Technical Specification
+parent: Historical — Product for Customer
+nav_order: 2
+---
+
+> **[HISTORICAL — Pre-pivot]** Written when the project goal was to deliver a product to an industry partner. Kept for traceability. See [Current — Startup Proposal](../current.md) for the active documents.
+
 # Technical Specification (with Quality Metrics) — Virtual AI Patient
 
 ## 0. Scope and goals

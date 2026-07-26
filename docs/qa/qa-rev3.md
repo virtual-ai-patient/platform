@@ -2,12 +2,15 @@
 layout: default
 title: QA Revision 3
 parent: QA
+grand_parent: Current — Startup Proposal
 nav_order: 3
 ---
 
 # Quality Attributes (QA) — Virtual AI Patient
 **Document Version:** 3.0 (Revision 3)
 **URL:** [Here](https://virtual-ai-patient.github.io/platform/qa/qa-rev3)
+
+> **[RETROSPECTIVE — Written July 2026]** This revision was written as part of the startup proposal preparation. It describes the quality attributes as they *should have been* defined at the time of the pivot in March 2026. In practice these constraints were not formally documented from day one of the pivot. See [About the Pivot](../about-the-pivot.md).
 
 ## 1. Overview
 

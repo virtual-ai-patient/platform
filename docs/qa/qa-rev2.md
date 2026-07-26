@@ -2,6 +2,7 @@
 layout: default
 title: QA Revision 2
 parent: QA
+grand_parent: Current — Startup Proposal
 nav_order: 2
 ---
 

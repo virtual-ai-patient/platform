@@ -2,6 +2,7 @@
 layout: default
 title: Pipeline
 parent: CI/CD
+grand_parent: Current — Startup Proposal
 nav_order: 1
 ---
 

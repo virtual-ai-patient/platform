@@ -1,5 +1,7 @@
 # Configuration Management — Revision 2 (post-pivot: startup proposal)
 
+> **[RETROSPECTIVE — Written July 2026]** This document describes the CM hierarchy and traceability policy as we believe it *should have been* defined from the start of the pivot. In practice the project did not operate by this framework from day one — this is our honest reconstruction of the correct approach, written for the startup proposal. See [About the Pivot](../about-the-pivot.md).
+
 ## 1. Artifact Hierarchy
 
 Every artifact in the repository traces back to the project goal through a five-level chain. No GitHub Issue may exist without a reference to a Level 2 or Level 3 artifact.

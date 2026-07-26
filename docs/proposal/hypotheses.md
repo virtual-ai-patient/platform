@@ -1,6 +1,8 @@
 ---
+layout: default
 title: Hypotheses
 parent: Proposal
+grand_parent: Current — Startup Proposal
 nav_order: 2
 ---
 
