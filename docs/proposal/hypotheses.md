@@ -41,9 +41,23 @@ must trace back to evidence in
 | **Owner** | Aizat |
 | **Validation method** | Domain expert rates believability ≥ 4/5 on each of five rubric dimensions: (1) lying / deliberate concealment, (2) forgetting / partial recall, (3) hesitation and delayed disclosure, (4) emotional tone, (5) health-literacy variation. |
 | **Rubric grounded in** | [user-insights.md — P-01](user-insights.md#2026-07-22--p-01), [P-02](user-insights.md#2026-07-22--p-02) |
-| **Preliminary evidence** | [patient-role-research.md](patient-role-research.md) — automated multi-model harness (25-turn scripted dialogues, 3 models). Lying ✓, forgetting ✓, emotional tone ✓ (indirect), hesitation ✗ (untested). All findings marked preliminary; expert rubric session pending. |
-| **Status** | `open` |
+| **Status** | `open — automated baseline complete, expert session pending` |
 | **Evidence** | — |
+
+#### Preliminary findings by dimension
+
+Automated multi-model harness: 3 models (Claude Sonnet 4.6, Qwen 2.5 72B, Ministral 8B), 25-turn scripted dialogues, 2 Russian-language clinical cases.
+Full methodology and raw results: [patient-role-research.md](patient-role-research.md).
+
+| Dimension | Automated result | Confidence | What remains |
+| :--- | :--- | :--- | :--- |
+| **1. Lying / deliberate concealment** | Concealment prompt works: zero forbidden-token failures across all models at t=0.3. Persona-consistent deflection style displaces assistant-register "Я не врач" responses. | Preliminary — keyword checks only | Expert rates believability of concealment in stored transcripts |
+| **2. Forgetting / partial recall** | Closed-world instruction with explicit negative inventory works: patient answers "не знаю / не помню" for out-of-scope facts in all tested runs. | Preliminary — keyword checks only | Expert rates plausibility of forgetting behaviour |
+| **3. Emotional tone** | No register-switch or meta-commentary failures on tone probes in case-1 runs. Tone stability is an impression from transcript reading, not a scored result. | Weak — no direct rubric check exists yet | Expert rates emotional plausibility; direct tone rubric check needed |
+| **4. Hesitation and delayed disclosure** | **Not tested.** No prompt variant instructs hesitation; harness has no hesitation check. Hedged phrasings observed are from case facts, not a hesitation strategy. | None | Prompt pattern + harness check to be designed before expert session |
+| **5. Health-literacy variation** | **Not tested.** Out of scope for the automated harness. | None | Prompt pattern + harness check to be designed before expert session |
+
+**To close H1:** dimensions 4 and 5 need a prompt strategy and an automated check before the expert session; then a domain expert rates all five dimensions on stored transcripts using the Likert rubric in [ai-patient-experimental-verification.md](../research/ai-patient-experimental-verification.md), section "Оценка ответов". All five must reach ≥ 4/5.
 
 ---
 
@@ -99,5 +113,5 @@ A hypothesis is **never silently dropped** — refutation is recorded just like 
 
 | Date | Author | Change |
 |:---|:---|:---|
-| 26-07-2026 | Karim Abdulkin | Added preliminary evidence link for H1: patient-role-research.md (automated harness, 3 models, 4 of 5 dimensions tested). |
+| 26-07-2026 | Karim Abdulkin | Expanded H1 with per-dimension preliminary findings table: dimensions 1–3 have automated baseline, dimensions 4–5 untested. Documented what remains for expert session closure. |
 | March 2026 | Karim Abdulkin | Document created; H1, H2, H3 opened. Validation methods grounded in expert sessions P-01 and P-02. |
