@@ -2,12 +2,15 @@
 layout: default
 title: QA Revision 4
 parent: QA
+grand_parent: Current — Startup Proposal
 nav_order: 4
 ---
 
 # Quality Attributes (QA) — Virtual AI Patient
 **Document Version:** 4.0 (Revision 4)
 **URL:** [Here](https://virtual-ai-patient.github.io/platform/qa/qa-rev4)
+
+> **[RETROSPECTIVE — Written July 2026]** This revision was written to capture hypothesis-validation exit criteria after expert sessions P-01 and P-02. It describes the quality attributes as they *should have been* formalised upon receiving that evidence. See [About the Pivot](../about-the-pivot.md).
 
 ## 1. Overview
 

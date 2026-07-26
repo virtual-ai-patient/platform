@@ -1,3 +1,10 @@
+---
+layout: default
+title: Configuration Management
+parent: Current — Startup Proposal
+nav_order: 5
+---
+
 # Configuration Management — History
 
 This document tracks the evolution of the CM & Traceability Policy.

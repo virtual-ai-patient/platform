@@ -1,3 +1,12 @@
+---
+layout: default
+title: Integration Overview
+parent: Historical — Product for Customer
+nav_order: 3
+---
+
+> **[HISTORICAL — Pre-pivot]** Written when the project goal was to deliver a product to an industry partner. Kept for traceability. See [Current — Startup Proposal](../current.md) for the active documents.
+
 # Integration Overview — Pilot on a Physician Platform
 
 This document describes the intended integration points for embedding Virtual AI Patient into an existing physician platform during the pilot.

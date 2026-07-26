@@ -1,3 +1,10 @@
+---
+layout: default
+title: Strategic Planning
+parent: Current — Startup Proposal
+nav_order: 8
+---
+
 # Strategic Planning — History
 
 This document tracks the evolution of the project's strategic plan.

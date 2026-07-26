@@ -1,3 +1,10 @@
+---
+layout: default
+title: Tactical Planning
+parent: Current — Startup Proposal
+nav_order: 9
+---
+
 # Tactical Planning — History
 
 This page is the history index for the Tactical Planning practice area.

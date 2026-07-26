@@ -69,4 +69,7 @@ yarn-error.log*
 # Cursor / editor-specific indices
 .cursorignore
 .cursorindexingignore
-.claude/
+.claude/docs/vendor/
+docs/.bundle/
+docs/_site/
+docs/vendor/

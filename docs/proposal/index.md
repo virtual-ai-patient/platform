@@ -1,6 +1,8 @@
 ---
+layout: default
 title: Proposal
-nav_order: 2
+parent: Current — Startup Proposal
+nav_order: 3
 has_children: true
 ---
 
