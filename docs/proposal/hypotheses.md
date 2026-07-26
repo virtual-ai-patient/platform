@@ -30,7 +30,7 @@ must trace back to evidence in
 
 ---
 
-## Hypotheses
+## H1 · H2 · H3
 
 ### H1 — Patient Role
 
