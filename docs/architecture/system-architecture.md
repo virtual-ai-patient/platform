@@ -146,7 +146,7 @@ The believability of the LLM patient role is the product's primary differentiato
   - **Tone modulation grounded in the case persona**: the case defines the emotional state ("тревожный — напуган, но старается чётко отвечать"), and the system prompt binds tone to that persona together with a reply-length constraint so emotion does not become monologue. See [Emotional states findings](../proposal/patient-role-research.md#emotional-states).
 
 - **State management**
-  - Per-turn state (facts already disclosed, current disclosure level, emotional state, faded facts) is maintained by the backend session state machine and **fed back into the prompt on every turn**: the system block carries the case facts and behaviour rules, while the full dialogue history is passed in `messages` (no truncation at tested lengths — truncation degraded cross-turn consistency in testing).
+  - Per-turn state (facts already disclosed, current disclosure level, emotional state, faded facts) is maintained by the backend session state machine and **fed back into the prompt on every turn**: the system block carries the case facts and behaviour rules, while the full dialogue history is passed in `messages` (no truncation at tested lengths of ~25 turns; truncation and summary policies remain untested).
   - This is what keeps repeated questions consistent with earlier answers (G4 class in the [failure catalogue](../research/ai-patient-problems-and-mitigations.md)); temperature is held near 0.3 in production since higher values introduced consistency failures.
 
 ## Architectural principles

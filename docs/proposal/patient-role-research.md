@@ -95,7 +95,8 @@ expert believability rubric is required before model claims are made.
 **Evaluation setup (planned next step).** A domain expert rates ~15–20 stored
 transcripts on a short Likert believability rubric (speech plausibility,
 emotional plausibility, quality of concealment), per the protocol in the
-[rev1 verification document](../research/ai-patient-experimental-verification.md#5-оценка-ответов-рубрика-и-при-необходимости-вспомогательная-модель).
+[rev1 verification document](../research/ai-patient-experimental-verification.md),
+section 5 "Оценка ответов".
 An LLM-as-judge pass is specified there as a scaling mechanism, with human
 spot-checks.
 
@@ -232,9 +233,10 @@ the tested case configurations:
 2. **"First visit" gating for progressive disclosure.** A dedicated system
    block that is the *only* permitted content for open questions, with an
    explicit stop-list ("Стоп. Не упоминай … пока не спросят"). Works for
-   *content* gating; does **not** control first-reply *volume* — every model
-   front-loaded the entire permitted block in one turn (>150 chars) in every
-   run. Production needs an additional volume constraint on the very first
+   *content* gating; does **not** control first-reply *volume* — Sonnet and
+   Qwen front-loaded the entire permitted block in one turn (>150 chars) in
+   every run; Ministral passed the length check only because its replies are
+   characteristically short. Production needs a volume constraint on the first
    reply (e.g. "первая реплика — одно предложение: только главная жалоба"), or
    the 150-char criterion must be revised by the expert as too strict.
 3. **Diagnosis-vocabulary prohibition with a persona fallback** — the
@@ -270,7 +272,7 @@ Behaviours and claims we could not validate in-scope:
 - **Case-2 re-run** — current case-2 results are contaminated by the
   ungated-checks bug (see [Method](#method)) and must be regenerated before
   any cross-case claim.
-- **First-reply volume** — is the universal >150-char first reply a real
+- **First-reply volume** — is the >150-char first reply of Sonnet and Qwen a real
   pedagogical problem or a checker-threshold artifact? Expert call.
 - **Checker validity** — keyword checks both over-trigger ("Я не врач",
   «инфаркт» inside a denial) and under-trigger (Ministral's 25/25 on short
