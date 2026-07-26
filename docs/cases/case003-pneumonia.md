@@ -1,3 +1,8 @@
+---
+layout: default
+nav_exclude: true
+---
+
 # Clinical Case – CASE-003: Productive Cough and Fever (Community‑Acquired Pneumonia)
 
 - **Case ID:** `CASE-003`

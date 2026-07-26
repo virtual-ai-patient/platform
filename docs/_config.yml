@@ -18,3 +18,15 @@ mermaid:
 aux_links:
   "GitHub repository":
     - "https://github.com/virtual-ai-patient/platform"
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - "project management/epic-analytics-export"
+  - "project management/epic-rest-api"
+  - "project management/epic-safety"
+  - "project management/feature-communication-evaluation"
+  - "project management/feature-persistent-sessions"
+  - "project management/pivot-startup-proposal"

@@ -1,3 +1,12 @@
+---
+layout: default
+title: Experimental verification protocol (rev1)
+parent: Proposal
+grand_parent: Current — Startup Proposal
+nav_order: 11
+nav_exclude: true
+---
+
 # Экспериментальная верификация поведения виртуального пациента (Anthropic API)
 
 ## Назначение документа

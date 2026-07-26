@@ -1,3 +1,11 @@
+---
+layout: default
+title: CM — Rev 2 (Current)
+parent: Configuration Management
+grand_parent: Current — Startup Proposal
+nav_order: 2
+---
+
 # Configuration Management — Revision 2 (post-pivot: startup proposal)
 
 > **[RETROSPECTIVE — Written July 2026]** This document describes the CM hierarchy and traceability policy as we believe it *should have been* defined from the start of the pivot. In practice the project did not operate by this framework from day one — this is our honest reconstruction of the correct approach, written for the startup proposal. See [About the Pivot](../about-the-pivot.md).

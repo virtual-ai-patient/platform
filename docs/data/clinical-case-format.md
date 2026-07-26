@@ -1,3 +1,8 @@
+---
+layout: default
+nav_exclude: true
+---
+
 # Clinical Case Data Format — MVP
 
 This document defines a **minimal, scalable** schema for clinical cases and the “gold standard” required for evaluation.

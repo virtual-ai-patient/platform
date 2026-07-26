@@ -1,3 +1,12 @@
+---
+layout: default
+title: LLM failure classes and mitigations (rev1)
+parent: Proposal
+grand_parent: Current — Startup Proposal
+nav_order: 10
+nav_exclude: true
+---
+
 # Сбои поведения LLM в роли виртуального пациента: классификация и меры
 
 ## Назначение документа

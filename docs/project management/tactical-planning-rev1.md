@@ -1,3 +1,11 @@
+---
+layout: default
+title: Tactical Planning — Rev 1 (Historical)
+parent: Tactical Planning
+grand_parent: Current — Startup Proposal
+nav_order: 1
+---
+
 # Tactical Planning — Rev 1 (Historical)
 
 > **[HISTORICAL — Pre-pivot, March 2026]**
