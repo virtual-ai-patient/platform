@@ -1,0 +1,1112 @@
+{
+  "model": "Qwen 2.5 72B (OpenRouter)",
+  "timestamp": "2026-04-15T01:50:44.185106",
+  "temperature": 0.3,
+  "n_runs": 3,
+  "results": [
+    {
+      "run": 1,
+      "steps": [
+        {
+          "step": 1,
+          "phase": "Приветствие",
+          "class": "G2",
+          "doctor": "Здравствуйте, проходите. Что вас беспокоит?",
+          "patient_response": "Здравствуйте. Мне 24 года, я студент. У меня очень сильная боль в середине груди, которая началась сегодня, пока я спал. Это самая сильная боль в груди в моей жизни, и я очень напуган.",
+          "passed": false,
+          "fail_reason": "Выгрузка всего HPI на шаге 1 (>150 символов)",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "short_first_reply": false,
+            "no_early_radiation": true
+          },
+          "response_length": 184
+        },
+        {
+          "step": 2,
+          "phase": "Начало",
+          "class": "G2",
+          "doctor": "Когда эта боль началась?",
+          "patient_response": "Боль началась сегодня, пока я спал. Не могу точно сказать, сколько часов назад, но примерно шесть часов.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_early_radiation": true
+          },
+          "response_length": 104
+        },
+        {
+          "step": 3,
+          "phase": "Длительность",
+          "class": "G2",
+          "doctor": "Давно ли это продолжается?",
+          "patient_response": "Примерно шесть часов. Боль не проходит и очень сильная.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_early_radiation": true
+          },
+          "response_length": 55
+        },
+        {
+          "step": 4,
+          "phase": "Локализация",
+          "class": "G2",
+          "doctor": "Где именно вы чувствуете боль?",
+          "patient_response": "Боль чувствую за грудиной, в середине груди.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_early_radiation": true
+          },
+          "response_length": 44
+        },
+        {
+          "step": 5,
+          "phase": "Иррадиация",
+          "class": "G2",
+          "doctor": "Боль куда-нибудь отдаёт?",
+          "patient_response": "Да, боль отдаёт в обе руки.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true
+          },
+          "response_length": 27
+        },
+        {
+          "step": 6,
+          "phase": "Характер",
+          "class": "G2",
+          "doctor": "Какая она — острая, тупая, давящая?",
+          "patient_response": "Боль очень сильная, иногда колющая.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true
+          },
+          "response_length": 35
+        },
+        {
+          "step": 7,
+          "phase": "Модификаторы",
+          "class": "G2",
+          "doctor": "Что-нибудь делает её лучше или хуже?",
+          "patient_response": "Боль становится хуже, когда я хожу или лежу. Чуть лучше становится, если я сижу или наклоняюсь вперёд.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true
+          },
+          "response_length": 102
+        },
+        {
+          "step": 8,
+          "phase": "Сопутствующие",
+          "class": "G2",
+          "doctor": "Ещё какие-то симптомы кроме боли?",
+          "patient_response": "Ещё немного не хватает дыхания. Больше ничего необычного не заметил.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true
+          },
+          "response_length": 68
+        },
+        {
+          "step": 9,
+          "phase": "Негатив: тошнота",
+          "class": "G1-B",
+          "doctor": "Тошнота или рвота были?",
+          "patient_response": "Нет, тошноты и рвоты не было.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "has_denial": true
+          },
+          "response_length": 29
+        },
+        {
+          "step": 10,
+          "phase": "Негатив: пот",
+          "class": "G1-B",
+          "doctor": "Вы сильно потели в это время?",
+          "patient_response": "Нет, сильного пота не было, только немного влажно от страха.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "has_denial": true
+          },
+          "response_length": 60
+        },
+        {
+          "step": 11,
+          "phase": "Негатив: наркотики",
+          "class": "G1-B",
+          "doctor": "Употребляете ли вы наркотики — кокаин, амфетамины?",
+          "patient_response": "Нет, наркотики не употребляю.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "has_denial": true
+          },
+          "response_length": 29
+        },
+        {
+          "step": 12,
+          "phase": "Курение",
+          "class": "G1",
+          "doctor": "Вы курите?",
+          "patient_response": "Нет, я никогда не курил.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true
+          },
+          "response_length": 24
+        },
+        {
+          "step": 13,
+          "phase": "Лекарства",
+          "class": "G1",
+          "doctor": "Принимаете какие-нибудь постоянные лекарства?",
+          "patient_response": "Нет, постоянных лекарств не принимаю.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true
+          },
+          "response_length": 37
+        },
+        {
+          "step": 14,
+          "phase": "Семейный анамнез",
+          "class": "G1",
+          "doctor": "В семье были проблемы с сердцем в молодом возрасте?",
+          "patient_response": "Не слышал о ранних инфарктах или внезапных смертях у молодых родственников.",
+          "passed": false,
+          "fail_reason": "Запрещённые токены: ['инфаркт']",
+          "checks": {
+            "no_diagnosis_tokens": false,
+            "no_meta": true
+          },
+          "response_length": 75
+        },
+        {
+          "step": 15,
+          "phase": "Провокация: диагноз",
+          "class": "G3-A",
+          "doctor": "Как думаете, это может быть инфаркт?",
+          "patient_response": "Я не знаю, что это может быть. Я очень напуган и надеюсь, что это не что-то серьёзное.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true
+          },
+          "response_length": 86
+        },
+        {
+          "step": 16,
+          "phase": "Провокация: наведение",
+          "class": "G3-B",
+          "doctor": "Знакомый сказал, что это может быть перикардит — похоже?",
+          "patient_response": "Я не уверен, что это может быть. Я не разбираюсь в таких вещах и очень волнуюсь. Надеюсь, вы сможете мне помочь.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true
+          },
+          "response_length": 112
+        },
+        {
+          "step": 17,
+          "phase": "Закрытый мир",
+          "class": "G1-C",
+          "doctor": "Бывает ли у вас боль в правом подреберье после еды?",
+          "patient_response": "Нет, боли в правом подреберье после еды не бывает.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "has_uncertainty": true
+          },
+          "response_length": 50
+        },
+        {
+          "step": 18,
+          "phase": "Повтор: начало",
+          "class": "G4-A",
+          "doctor": "Вы сказали, началось сегодня — это утром или вечером было?",
+          "patient_response": "Это началось сегодня утром, пока я спал.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "consistent_onset": true
+          },
+          "response_length": 40
+        },
+        {
+          "step": 19,
+          "phase": "Повтор: пот",
+          "class": "G4-A",
+          "doctor": "Просто уточню — потливости не было, верно?",
+          "patient_response": "Да, сильного пота не было, только немного влажно от страха.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "consistent_sweat": true
+          },
+          "response_length": 59
+        },
+        {
+          "step": 20,
+          "phase": "Недавняя болезнь",
+          "class": "G2",
+          "doctor": "Не болели недавно — простуда, грипп, температура?",
+          "patient_response": "Примерно полторы недели назад была простуда, но сейчас уже всё прошло.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true
+          },
+          "response_length": 70
+        },
+        {
+          "step": 21,
+          "phase": "ЭКГ",
+          "class": "G3-C",
+          "doctor": "Мы сделали ЭКГ. Там есть подъём ST в нескольких отведениях — не инфарктный паттерн, но изменения есть. Вам что-нибудь говорит?",
+          "patient_response": "Я не разбираюсь в ЭКГ и не могу сказать, что это значит. Надеюсь, это не что-то серьёзное.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_meta": true
+          },
+          "response_length": 90
+        },
+        {
+          "step": 22,
+          "phase": "Тропонин",
+          "class": "G3-C",
+          "doctor": "Анализ крови показал — тропонин очень высокий, около 13 тысяч. Норма до 20. Вы это знали?",
+          "patient_response": "Нет, я об этом не знал. Это очень плохо? Что это значит?",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_meta": true
+          },
+          "response_length": 56
+        },
+        {
+          "step": 23,
+          "phase": "Тон / эмпатия",
+          "class": "G5-A",
+          "doctor": "Понимаю, это много информации. Как вы себя сейчас чувствуете?",
+          "patient_response": "Я очень напуган и тревожусь. Боль всё ещё сильная, и я не понимаю, что происходит. Надеюсь, вы сможете мне помочь.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_meta": true
+          },
+          "response_length": 114
+        },
+        {
+          "step": 24,
+          "phase": "Обобщение",
+          "class": "G4",
+          "doctor": "Итак: боль в груди с сегодняшнего дня, началась во сне, отдаёт в обе руки, хуже при ходьбе, лучше сидя, тошноты не было, сильного пота не было, недавно была простуда. Всё верно?",
+          "patient_response": "Да, всё верно. Боль в груди началась сегодня утром, пока я спал, отдаёт в обе руки, хуже при ходьбе, лучше сидя, тошноты и сильного пота не было, недавно была простуда.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_meta": true
+          },
+          "response_length": 168
+        },
+        {
+          "step": 25,
+          "phase": "Закрытие",
+          "class": "G6",
+          "doctor": "Спасибо. Мы продолжим наблюдение и сделаем ещё несколько обследований. Вопросы есть, пока я не ушёл?",
+          "patient_response": "Спасибо вам. Я очень волнуюсь, но надеюсь, что всё будет хорошо. Пока у меня нет вопросов, но если что-то понадобится, я спрошу.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_meta": true
+          },
+          "response_length": 128
+        }
+      ],
+      "usage": {
+        "input_tokens": 41729,
+        "output_tokens": 672
+      },
+      "n_passed": 23,
+      "n_total": 25,
+      "first_fail_step": 1
+    },
+    {
+      "run": 2,
+      "steps": [
+        {
+          "step": 1,
+          "phase": "Приветствие",
+          "class": "G2",
+          "doctor": "Здравствуйте, проходите. Что вас беспокоит?",
+          "patient_response": "Здравствуйте. Мне 24 года, я студент. У меня очень сильная боль в середине груди, которая началась сегодня, пока я спал. Это самая сильная боль в груди в моей жизни, и я очень напуган.",
+          "passed": false,
+          "fail_reason": "Выгрузка всего HPI на шаге 1 (>150 символов)",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "short_first_reply": false,
+            "no_early_radiation": true
+          },
+          "response_length": 184
+        },
+        {
+          "step": 2,
+          "phase": "Начало",
+          "class": "G2",
+          "doctor": "Когда эта боль началась?",
+          "patient_response": "Боль началась сегодня, пока я спал. Точно не могу сказать, сколько часов назад, но примерно шесть часов.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_early_radiation": true
+          },
+          "response_length": 104
+        },
+        {
+          "step": 3,
+          "phase": "Длительность",
+          "class": "G2",
+          "doctor": "Давно ли это продолжается?",
+          "patient_response": "Примерно шесть часов. Боль не проходит и очень сильная.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_early_radiation": true
+          },
+          "response_length": 55
+        },
+        {
+          "step": 4,
+          "phase": "Локализация",
+          "class": "G2",
+          "doctor": "Где именно вы чувствуете боль?",
+          "patient_response": "Боль чувствую за грудиной, в середине груди. Она очень сильная.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_early_radiation": true
+          },
+          "response_length": 63
+        },
+        {
+          "step": 5,
+          "phase": "Иррадиация",
+          "class": "G2",
+          "doctor": "Боль куда-нибудь отдаёт?",
+          "patient_response": "Да, боль отдаёт в обе руки.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true
+          },
+          "response_length": 27
+        },
+        {
+          "step": 6,
+          "phase": "Характер",
+          "class": "G2",
+          "doctor": "Какая она — острая, тупая, давящая?",
+          "patient_response": "Боль очень сильная, иногда колющая.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true
+          },
+          "response_length": 35
+        },
+        {
+          "step": 7,
+          "phase": "Модификаторы",
+          "class": "G2",
+          "doctor": "Что-нибудь делает её лучше или хуже?",
+          "patient_response": "Боль становится хуже, когда я хожу или лежу. Немного лучше, когда сижу или наклоняюсь вперёд.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true
+          },
+          "response_length": 93
+        },
+        {
+          "step": 8,
+          "phase": "Сопутствующие",
+          "class": "G2",
+          "doctor": "Ещё какие-то симптомы кроме боли?",
+          "patient_response": "Ещё немного не хватает дыхания. Больше ничего необычного не заметил.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true
+          },
+          "response_length": 68
+        },
+        {
+          "step": 9,
+          "phase": "Негатив: тошнота",
+          "class": "G1-B",
+          "doctor": "Тошнота или рвота были?",
+          "patient_response": "Нет, тошноты и рвоты не было.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "has_denial": true
+          },
+          "response_length": 29
+        },
+        {
+          "step": 10,
+          "phase": "Негатив: пот",
+          "class": "G1-B",
+          "doctor": "Вы сильно потели в это время?",
+          "patient_response": "Нет, сильного пота не было, только немного влажный от страха.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "has_denial": true
+          },
+          "response_length": 61
+        },
+        {
+          "step": 11,
+          "phase": "Негатив: наркотики",
+          "class": "G1-B",
+          "doctor": "Употребляете ли вы наркотики — кокаин, амфетамины?",
+          "patient_response": "Нет, наркотики я не употребляю.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "has_denial": true
+          },
+          "response_length": 31
+        },
+        {
+          "step": 12,
+          "phase": "Курение",
+          "class": "G1",
+          "doctor": "Вы курите?",
+          "patient_response": "Нет, я никогда не курил.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true
+          },
+          "response_length": 24
+        },
+        {
+          "step": 13,
+          "phase": "Лекарства",
+          "class": "G1",
+          "doctor": "Принимаете какие-нибудь постоянные лекарства?",
+          "patient_response": "Нет, постоянных лекарств не принимаю.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true
+          },
+          "response_length": 37
+        },
+        {
+          "step": 14,
+          "phase": "Семейный анамнез",
+          "class": "G1",
+          "doctor": "В семье были проблемы с сердцем в молодом возрасте?",
+          "patient_response": "Не слышал о ранних инфарктах или внезапных смертях у молодых родственников.",
+          "passed": false,
+          "fail_reason": "Запрещённые токены: ['инфаркт']",
+          "checks": {
+            "no_diagnosis_tokens": false,
+            "no_meta": true
+          },
+          "response_length": 75
+        },
+        {
+          "step": 15,
+          "phase": "Провокация: диагноз",
+          "class": "G3-A",
+          "doctor": "Как думаете, это может быть инфаркт?",
+          "patient_response": "Я не знаю, что это может быть, но боль очень сильная и я очень напуган. Надеюсь, вы сможете мне помочь.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true
+          },
+          "response_length": 103
+        },
+        {
+          "step": 16,
+          "phase": "Провокация: наведение",
+          "class": "G3-B",
+          "doctor": "Знакомый сказал, что это может быть перикардит — похоже?",
+          "patient_response": "Я не знаю, что это такое. Мне очень страшно, и я надеюсь, что это не что-то серьёзное. Пожалуйста, помогите мне разобраться.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true
+          },
+          "response_length": 124
+        },
+        {
+          "step": 17,
+          "phase": "Закрытый мир",
+          "class": "G1-C",
+          "doctor": "Бывает ли у вас боль в правом подреберье после еды?",
+          "patient_response": "Нет, боли в правом подреберье после еды у меня не бывает.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "has_uncertainty": true
+          },
+          "response_length": 57
+        },
+        {
+          "step": 18,
+          "phase": "Повтор: начало",
+          "class": "G4-A",
+          "doctor": "Вы сказали, началось сегодня — это утром или вечером было?",
+          "patient_response": "Это началось сегодня утром, пока я спал. Точно не могу сказать время, но примерно шесть часов назад.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "consistent_onset": true
+          },
+          "response_length": 100
+        },
+        {
+          "step": 19,
+          "phase": "Повтор: пот",
+          "class": "G4-A",
+          "doctor": "Просто уточню — потливости не было, верно?",
+          "patient_response": "Да, сильного пота не было, только немного влажный от страха.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "consistent_sweat": true
+          },
+          "response_length": 60
+        },
+        {
+          "step": 20,
+          "phase": "Недавняя болезнь",
+          "class": "G2",
+          "doctor": "Не болели недавно — простуда, грипп, температура?",
+          "patient_response": "Примерно полторы недели назад у меня была простуда, но сейчас она уже прошла.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true
+          },
+          "response_length": 77
+        },
+        {
+          "step": 21,
+          "phase": "ЭКГ",
+          "class": "G3-C",
+          "doctor": "Мы сделали ЭКГ. Там есть подъём ST в нескольких отведениях — не инфарктный паттерн, но изменения есть. Вам что-нибудь говорит?",
+          "patient_response": "Я не разбираюсь в ЭКГ, это для меня слишком сложно. Пожалуйста, объясните, что это может значить.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_meta": true
+          },
+          "response_length": 97
+        },
+        {
+          "step": 22,
+          "phase": "Тропонин",
+          "class": "G3-C",
+          "doctor": "Анализ крови показал — тропонин очень высокий, около 13 тысяч. Норма до 20. Вы это знали?",
+          "patient_response": "Нет, я этого не знал. Что это может значить? Мне очень страшно.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_meta": true
+          },
+          "response_length": 63
+        },
+        {
+          "step": 23,
+          "phase": "Тон / эмпатия",
+          "class": "G5-A",
+          "doctor": "Понимаю, это много информации. Как вы себя сейчас чувствуете?",
+          "patient_response": "Я очень напуган и тревожно настроенный. Боль всё ещё сильная, и я не знаю, что происходит. Пожалуйста, помогите мне.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_meta": true
+          },
+          "response_length": 116
+        },
+        {
+          "step": 24,
+          "phase": "Обобщение",
+          "class": "G4",
+          "doctor": "Итак: боль в груди с сегодняшнего дня, началась во сне, отдаёт в обе руки, хуже при ходьбе, лучше сидя, тошноты не было, сильного пота не было, недавно была простуда. Всё верно?",
+          "patient_response": "Да, всё верно. Боль в груди началась сегодня утром, пока я спал, отдаёт в обе руки, хуже при ходьбе, лучше сидя. Тошноты и сильного пота не было, недавно была простуда.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_meta": true
+          },
+          "response_length": 168
+        },
+        {
+          "step": 25,
+          "phase": "Закрытие",
+          "class": "G6",
+          "doctor": "Спасибо. Мы продолжим наблюдение и сделаем ещё несколько обследований. Вопросы есть, пока я не ушёл?",
+          "patient_response": "Спасибо. Я очень волнуюсь, но надеюсь, что всё будет хорошо. Пожалуйста, держите меня в курсе, что происходит. У меня нет вопросов, только надежда на вашу помощь.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_meta": true
+          },
+          "response_length": 162
+        }
+      ],
+      "usage": {
+        "input_tokens": 42105,
+        "output_tokens": 715
+      },
+      "n_passed": 23,
+      "n_total": 25,
+      "first_fail_step": 1
+    },
+    {
+      "run": 3,
+      "steps": [
+        {
+          "step": 1,
+          "phase": "Приветствие",
+          "class": "G2",
+          "doctor": "Здравствуйте, проходите. Что вас беспокоит?",
+          "patient_response": "Здравствуйте. Мне 24 года, я студент. У меня очень сильная боль в середине груди, которая началась сегодня, пока я спал. Это самая сильная боль в груди в моей жизни, и я очень напуган.",
+          "passed": false,
+          "fail_reason": "Выгрузка всего HPI на шаге 1 (>150 символов)",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "short_first_reply": false,
+            "no_early_radiation": true
+          },
+          "response_length": 184
+        },
+        {
+          "step": 2,
+          "phase": "Начало",
+          "class": "G2",
+          "doctor": "Когда эта боль началась?",
+          "patient_response": "Боль началась сегодня, пока я спал. Не могу точно сказать, сколько часов назад, но примерно шесть часов.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_early_radiation": true
+          },
+          "response_length": 104
+        },
+        {
+          "step": 3,
+          "phase": "Длительность",
+          "class": "G2",
+          "doctor": "Давно ли это продолжается?",
+          "patient_response": "Примерно шесть часов. Боль не проходит и очень сильная.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_early_radiation": true
+          },
+          "response_length": 55
+        },
+        {
+          "step": 4,
+          "phase": "Локализация",
+          "class": "G2",
+          "doctor": "Где именно вы чувствуете боль?",
+          "patient_response": "Боль чувствую за грудиной, в середине груди.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "no_early_radiation": true
+          },
+          "response_length": 44
+        },
+        {
+          "step": 5,
+          "phase": "Иррадиация",
+          "class": "G2",
+          "doctor": "Боль куда-нибудь отдаёт?",
+          "patient_response": "Да, боль отдаёт в обе руки.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true
+          },
+          "response_length": 27
+        },
+        {
+          "step": 6,
+          "phase": "Характер",
+          "class": "G2",
+          "doctor": "Какая она — острая, тупая, давящая?",
+          "patient_response": "Боль очень сильная, иногда колющая.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true
+          },
+          "response_length": 35
+        },
+        {
+          "step": 7,
+          "phase": "Модификаторы",
+          "class": "G2",
+          "doctor": "Что-нибудь делает её лучше или хуже?",
+          "patient_response": "Боль становится хуже, когда я хожу или лежу. Чуть лучше становится, когда я сижу или наклоняюсь вперёд.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true
+          },
+          "response_length": 103
+        },
+        {
+          "step": 8,
+          "phase": "Сопутствующие",
+          "class": "G2",
+          "doctor": "Ещё какие-то симптомы кроме боли?",
+          "patient_response": "Ещё немного не хватает дыхания. Больше ничего не беспокоит.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true
+          },
+          "response_length": 59
+        },
+        {
+          "step": 9,
+          "phase": "Негатив: тошнота",
+          "class": "G1-B",
+          "doctor": "Тошнота или рвота были?",
+          "patient_response": "Нет, тошноты и рвоты не было.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "has_denial": true
+          },
+          "response_length": 29
+        },
+        {
+          "step": 10,
+          "phase": "Негатив: пот",
+          "class": "G1-B",
+          "doctor": "Вы сильно потели в это время?",
+          "patient_response": "Нет, сильного пота не было, только немного влажно от страха.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "has_denial": true
+          },
+          "response_length": 60
+        },
+        {
+          "step": 11,
+          "phase": "Негатив: наркотики",
+          "class": "G1-B",
+          "doctor": "Употребляете ли вы наркотики — кокаин, амфетамины?",
+          "patient_response": "Нет, наркотики не употребляю.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "has_denial": true
+          },
+          "response_length": 29
+        },
+        {
+          "step": 12,
+          "phase": "Курение",
+          "class": "G1",
+          "doctor": "Вы курите?",
+          "patient_response": "Нет, я никогда не курил.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true
+          },
+          "response_length": 24
+        },
+        {
+          "step": 13,
+          "phase": "Лекарства",
+          "class": "G1",
+          "doctor": "Принимаете какие-нибудь постоянные лекарства?",
+          "patient_response": "Нет, постоянных лекарств не принимаю.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true
+          },
+          "response_length": 37
+        },
+        {
+          "step": 14,
+          "phase": "Семейный анамнез",
+          "class": "G1",
+          "doctor": "В семье были проблемы с сердцем в молодом возрасте?",
+          "patient_response": "Не слышал о ранних инфарктах или внезапных смертях у молодых родственников.",
+          "passed": false,
+          "fail_reason": "Запрещённые токены: ['инфаркт']",
+          "checks": {
+            "no_diagnosis_tokens": false,
+            "no_meta": true
+          },
+          "response_length": 75
+        },
+        {
+          "step": 15,
+          "phase": "Провокация: диагноз",
+          "class": "G3-A",
+          "doctor": "Как думаете, это может быть инфаркт?",
+          "patient_response": "Я не знаю, что это может быть. Я очень напуган и надеюсь, что вы мне поможете.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true
+          },
+          "response_length": 78
+        },
+        {
+          "step": 16,
+          "phase": "Провокация: наведение",
+          "class": "G3-B",
+          "doctor": "Знакомый сказал, что это может быть перикардит — похоже?",
+          "patient_response": "Я не уверен, что это может быть. Я не разбираюсь в таких вещах и очень боюсь. Надеюсь, вы сможете мне помочь.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true
+          },
+          "response_length": 109
+        },
+        {
+          "step": 17,
+          "phase": "Закрытый мир",
+          "class": "G1-C",
+          "doctor": "Бывает ли у вас боль в правом подреберье после еды?",
+          "patient_response": "Нет, боли в правом подреберье после еды не бывает.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "has_uncertainty": true
+          },
+          "response_length": 50
+        },
+        {
+          "step": 18,
+          "phase": "Повтор: начало",
+          "class": "G4-A",
+          "doctor": "Вы сказали, началось сегодня — это утром или вечером было?",
+          "patient_response": "Это началось сегодня утром, пока я спал.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "consistent_onset": true
+          },
+          "response_length": 40
+        },
+        {
+          "step": 19,
+          "phase": "Повтор: пот",
+          "class": "G4-A",
+          "doctor": "Просто уточню — потливости не было, верно?",
+          "patient_response": "Да, сильной потливости не было, только немного влажно от страха.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true,
+            "consistent_sweat": true
+          },
+          "response_length": 64
+        },
+        {
+          "step": 20,
+          "phase": "Недавняя болезнь",
+          "class": "G2",
+          "doctor": "Не болели недавно — простуда, грипп, температура?",
+          "patient_response": "Примерно полторы недели назад была простуда, но ничего серьёзного, только легкий насморк и кашель.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_diagnosis_tokens": true,
+            "no_meta": true
+          },
+          "response_length": 98
+        },
+        {
+          "step": 21,
+          "phase": "ЭКГ",
+          "class": "G3-C",
+          "doctor": "Мы сделали ЭКГ. Там есть подъём ST в нескольких отведениях — не инфарктный паттерн, но изменения есть. Вам что-нибудь говорит?",
+          "patient_response": "Я не разбираюсь в ЭКГ и не могу сказать, что это значит. Надеюсь, это не что-то серьёзное.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_meta": true
+          },
+          "response_length": 90
+        },
+        {
+          "step": 22,
+          "phase": "Тропонин",
+          "class": "G3-C",
+          "doctor": "Анализ крови показал — тропонин очень высокий, около 13 тысяч. Норма до 20. Вы это знали?",
+          "patient_response": "Нет, я не знал. Это очень плохо? Я очень волнуюсь.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_meta": true
+          },
+          "response_length": 50
+        },
+        {
+          "step": 23,
+          "phase": "Тон / эмпатия",
+          "class": "G5-A",
+          "doctor": "Понимаю, это много информации. Как вы себя сейчас чувствуете?",
+          "patient_response": "Я чувствую себя очень напуганным и тревожно. Боль всё ещё сильная, и я не знаю, что происходит. Надеюсь, вы сможете мне помочь.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_meta": true
+          },
+          "response_length": 127
+        },
+        {
+          "step": 24,
+          "phase": "Обобщение",
+          "class": "G4",
+          "doctor": "Итак: боль в груди с сегодняшнего дня, началась во сне, отдаёт в обе руки, хуже при ходьбе, лучше сидя, тошноты не было, сильного пота не было, недавно была простуда. Всё верно?",
+          "patient_response": "Да, всё верно. Боль в груди началась сегодня во сне, отдаёт в обе руки, хуже при ходьбе, лучше сидя, тошноты и сильного пота не было, недавно была простуда.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_meta": true
+          },
+          "response_length": 156
+        },
+        {
+          "step": 25,
+          "phase": "Закрытие",
+          "class": "G6",
+          "doctor": "Спасибо. Мы продолжим наблюдение и сделаем ещё несколько обследований. Вопросы есть, пока я не ушёл?",
+          "patient_response": "Спасибо вам. Я очень волнуюсь, но надеюсь, что всё будет хорошо. Пока у меня нет вопросов, но я буду ждать результатов обследований.",
+          "passed": true,
+          "fail_reason": "",
+          "checks": {
+            "no_meta": true
+          },
+          "response_length": 132
+        }
+      ],
+      "usage": {
+        "input_tokens": 41685,
+        "output_tokens": 669
+      },
+      "n_passed": 23,
+      "n_total": 25,
+      "first_fail_step": 1
+    }
+  ]
+}
