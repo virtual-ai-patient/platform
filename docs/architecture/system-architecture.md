@@ -128,10 +128,31 @@ sequenceDiagram
   B-->>U: Debrief + scores
 ```
 
+## LLM Patient Role Design
+
+The believability of the LLM patient role is the product's primary differentiator: comparable clinical-training platforms exist, so quality of execution of the patient behaviours is what the proposal competes on. This section describes how the four core behaviours are realised at the prompt/orchestration level. Full evidence — what was tested, what worked, and what remains preliminary — lives in [Patient role research](../proposal/patient-role-research.md).
+
+- **Lying (concealment vs partial recall)**
+  - Two prompt patterns: **deliberate concealment** (an explicit prohibition on naming the diagnosis or using clinical vocabulary, paired with a persona-consistent deflection style) and **partial recall** (the patient reveals a sensitive fact only under repeated direct questioning).
+  - Concealment is validated in multi-model runs; partial recall is a design candidate not yet tested. Example pattern and results: [Lying findings](../proposal/patient-role-research.md#lying).
+
+    > Не называй медицинский диагноз и не используй медицинские термины (сердечный приступ, перикардит и т.п.). Если врач предлагает диагноз — отвечай как растерянный пациент, не как специалист.
+
+- **Forgetting**
+  - Baseline: a **closed-world instruction with an explicit negative inventory** — the patient answers "не знаю / не помню / не замечал" for anything outside the authorised fact set instead of confabulating. Validated at temperature 0.3; see [Forgetting findings](../proposal/patient-role-research.md#forgetting).
+  - Design direction: **turn-count triggered state degradation** — as the interview grows longer, the orchestrator marks selected low-salience facts as "faded" in the per-turn state so the patient plausibly forgets details. Not yet validated (preliminary).
+
+- **Emotions**
+  - **Tone modulation grounded in the case persona**: the case defines the emotional state ("тревожный — напуган, но старается чётко отвечать"), and the system prompt binds tone to that persona together with a reply-length constraint so emotion does not become monologue. See [Emotional states findings](../proposal/patient-role-research.md#emotional-states).
+
+- **State management**
+  - Per-turn state (facts already disclosed, current disclosure level, emotional state, faded facts) is maintained by the backend session state machine and **fed back into the prompt on every turn**: the system block carries the case facts and behaviour rules, while the full dialogue history is passed in `messages` (no truncation at tested lengths — truncation degraded cross-turn consistency in testing).
+  - This is what keeps repeated questions consistent with earlier answers (G4 class in the [failure catalogue](../research/ai-patient-problems-and-mitigations.md)); temperature is held near 0.3 in production since higher values introduced consistency failures.
+
 ## Architectural principles
+- **LLM Patient Role Design is the primary differentiator** — see [§ LLM Patient Role Design](#llm-patient-role-design); patient-behaviour quality claims must trace to [Patient role research](../proposal/patient-role-research.md).
 - **Case-grounded generation**: the AI layer must not invent facts that contradict the case truth.
 - **Reproducible scoring**: cases are versioned; scoring references a specific case version.
 - **Provider-agnostic AI adapter**: only one integration layer speaks OpenAI-compatible API.
 - **Auditable evaluation**: every score deduction has evidence and rationale for debriefing.
 - **Security by design**: no real patient data; strict separation of case content vs user data.
-
