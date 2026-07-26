@@ -18,10 +18,10 @@ It backs the differentiator claims in
 [technical-product-description.md](../product/technical-product-description.md)
 and the **LLM Patient Role Design** section of the
 [architecture document](../architecture/system-architecture.md#llm-patient-role-design).
-It is also the evidence base for hypothesis **H1** in
-`hypotheses.md` (created in issue
-[#88](https://github.com/virtual-ai-patient/platform/issues/88); the link will
-resolve once that document is merged).
+It is also the evidence base for the
+[**H1** row in hypotheses.md](hypotheses.md#h1) (that document is created in
+issue [#88](https://github.com/virtual-ai-patient/platform/issues/88); the
+link resolves once it is merged).
 
 > **Status of evidence.** All findings below are backed by **automated
 > multi-model runs** (pass/fail checks over scripted 25-turn dialogues). No
