@@ -320,11 +320,12 @@ class _$CreateCaseRequestSerializer
           final valueDes =
               serializers.deserialize(
                     value,
-                    specifiedType: const FullType(BuiltList, [
+                    specifiedType: const FullType.nullable(BuiltList, [
                       FullType(String),
                     ]),
                   )
-                  as BuiltList<String>;
+                  as BuiltList<String>?;
+          if (valueDes == null) continue;
           result.tags.replace(valueDes);
           break;
         case r'age':
@@ -355,11 +356,12 @@ class _$CreateCaseRequestSerializer
           final valueDes =
               serializers.deserialize(
                     value,
-                    specifiedType: const FullType(BuiltList, [
+                    specifiedType: const FullType.nullable(BuiltList, [
                       FullType(String),
                     ]),
                   )
-                  as BuiltList<String>;
+                  as BuiltList<String>?;
+          if (valueDes == null) continue;
           result.tonePresets.replace(valueDes);
           break;
         case r'chief_complaint':
@@ -402,11 +404,12 @@ class _$CreateCaseRequestSerializer
           final valueDes =
               serializers.deserialize(
                     value,
-                    specifiedType: const FullType(BuiltList, [
+                    specifiedType: const FullType.nullable(BuiltList, [
                       FullType(String),
                     ]),
                   )
-                  as BuiltList<String>;
+                  as BuiltList<String>?;
+          if (valueDes == null) continue;
           result.differential.replace(valueDes);
           break;
         case r'severity_or_stage':
@@ -450,9 +453,12 @@ class _$CreateCaseRequestSerializer
           final valueDes =
               serializers.deserialize(
                     value,
-                    specifiedType: const FullType(CreateCaseRequestStatusEnum),
+                    specifiedType: const FullType.nullable(
+                      CreateCaseRequestStatusEnum,
+                    ),
                   )
-                  as CreateCaseRequestStatusEnum;
+                  as CreateCaseRequestStatusEnum?;
+          if (valueDes == null) continue;
           result.status = valueDes;
           break;
         default:

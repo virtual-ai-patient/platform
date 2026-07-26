@@ -12,6 +12,7 @@ import 'package:frontend/network/openapi.dart' as generated;
 
 import 'support/fake_case_response.dart';
 import 'support/fake_communication_repository.dart';
+import 'support/fake_export_repository.dart';
 
 void main() {
   testWidgets('CaseSimulationScreen renders with chat UI', (
@@ -44,6 +45,7 @@ void main() {
           sessionRepository: _FakeSessionRepository(),
           evaluationRepository: _FakeEvaluationRepository(),
           communicationRepository: FakeCommunicationRepository(),
+          exportRepository: FakeExportRepository(),
         ),
       ),
     );
@@ -65,6 +67,7 @@ void main() {
           sessionRepository: _FakeSessionRepository(),
           evaluationRepository: _FakeEvaluationRepository(),
           communicationRepository: FakeCommunicationRepository(),
+          exportRepository: FakeExportRepository(),
         ),
       ),
     );
@@ -88,6 +91,7 @@ void main() {
           sessionRepository: _FakeSessionRepository(),
           evaluationRepository: _FakeEvaluationRepository(),
           communicationRepository: FakeCommunicationRepository(),
+          exportRepository: FakeExportRepository(),
         ),
       ),
     );
@@ -121,6 +125,7 @@ void main() {
           sessionRepository: _FakeSessionRepository(),
           evaluationRepository: _FakeEvaluationRepository(),
           communicationRepository: FakeCommunicationRepository(),
+          exportRepository: FakeExportRepository(),
         ),
       ),
     );
@@ -152,6 +157,7 @@ void main() {
           sessionRepository: _FakeSessionRepository(),
           evaluationRepository: _FakeEvaluationRepository(),
           communicationRepository: FakeCommunicationRepository(),
+          exportRepository: FakeExportRepository(),
         ),
       ),
     );

@@ -113,11 +113,12 @@ class _$InvestigationsRequestSerializer
           final valueDes =
               serializers.deserialize(
                     value,
-                    specifiedType: const FullType(BuiltList, [
+                    specifiedType: const FullType.nullable(BuiltList, [
                       FullType(String),
                     ]),
                   )
-                  as BuiltList<String>;
+                  as BuiltList<String>?;
+          if (valueDes == null) continue;
           result.catalogHints.replace(valueDes);
           break;
         case r'expected':
@@ -133,11 +134,12 @@ class _$InvestigationsRequestSerializer
           final valueDes =
               serializers.deserialize(
                     value,
-                    specifiedType: const FullType(BuiltList, [
+                    specifiedType: const FullType.nullable(BuiltList, [
                       FullType(InvestigationResultRequest),
                     ]),
                   )
-                  as BuiltList<InvestigationResultRequest>;
+                  as BuiltList<InvestigationResultRequest>?;
+          if (valueDes == null) continue;
           result.results.replace(valueDes);
           break;
         default:

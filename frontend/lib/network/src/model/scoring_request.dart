@@ -159,22 +159,24 @@ class _$ScoringRequestSerializer
           final valueDes =
               serializers.deserialize(
                     value,
-                    specifiedType: const FullType(BuiltList, [
+                    specifiedType: const FullType.nullable(BuiltList, [
                       FullType(AcceptableAnswerRequest),
                     ]),
                   )
-                  as BuiltList<AcceptableAnswerRequest>;
+                  as BuiltList<AcceptableAnswerRequest>?;
+          if (valueDes == null) continue;
           result.acceptableAnswers.replace(valueDes);
           break;
         case r'critical_safety_errors':
           final valueDes =
               serializers.deserialize(
                     value,
-                    specifiedType: const FullType(BuiltList, [
+                    specifiedType: const FullType.nullable(BuiltList, [
                       FullType(String),
                     ]),
                   )
-                  as BuiltList<String>;
+                  as BuiltList<String>?;
+          if (valueDes == null) continue;
           result.criticalSafetyErrors.replace(valueDes);
           break;
         default:

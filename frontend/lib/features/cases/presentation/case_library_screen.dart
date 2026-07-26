@@ -4,12 +4,14 @@ import 'package:frontend/common/theme/app_colors.dart';
 import 'package:frontend/common/widgets/app_library_top_bar.dart';
 import 'package:frontend/common/widgets/app_page_footer.dart';
 import 'package:frontend/domains/admin/admin_repository.dart';
+import 'package:frontend/domains/analytics/export_repository.dart';
 import 'package:frontend/domains/auth/auth_repository.dart';
 import 'package:frontend/domains/cases/case_repository.dart';
 import 'package:frontend/domains/evaluation/communication_repository.dart';
 import 'package:frontend/domains/evaluation/evaluation_repository.dart';
 import 'package:frontend/domains/sessions/session_repository.dart';
 import 'package:frontend/features/admin/presentation/admin_sessions_dashboard_screen.dart';
+import 'package:frontend/features/analytics/presentation/analytics_screen.dart';
 import 'package:frontend/features/cases/presentation/case_briefing_screen.dart';
 import 'package:frontend/features/cases/presentation/educator_case_manage_panel.dart';
 import 'package:frontend/features/evaluation/presentation/debrief_screen.dart';
@@ -29,6 +31,7 @@ class CaseLibraryScreen extends StatefulWidget {
     required this.communicationRepository,
     required this.authRepository,
     required this.adminRepository,
+    required this.exportRepository,
     required this.buildLoginPage,
   });
 
@@ -39,6 +42,7 @@ class CaseLibraryScreen extends StatefulWidget {
   final CommunicationRepositoryContract communicationRepository;
   final AuthRepositoryContract authRepository;
   final AdminRepositoryContract? adminRepository;
+  final ExportRepositoryContract exportRepository;
   final Widget Function() buildLoginPage;
 
   @override
@@ -111,6 +115,7 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> with RouteAware {
       sessionRepository: widget.sessionRepository,
       evaluationRepository: widget.evaluationRepository,
       communicationRepository: widget.communicationRepository,
+      exportRepository: widget.exportRepository,
     );
     if (mounted) await _loadCompletedSessions();
   }
@@ -132,7 +137,12 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> with RouteAware {
       final completed = await widget.sessionRepository.listCompleted();
       final byCaseId = <String, String>{};
       for (final session in completed) {
-        byCaseId.putIfAbsent(session.caseId, () => session.sessionId);
+        final caseId = session.caseId.trim();
+        final sessionId = session.sessionId.trim();
+        // Skip malformed rows so we never show Evaluation for the wrong card.
+        if (caseId.isEmpty || sessionId.isEmpty) continue;
+        if (session.status != 'completed') continue;
+        byCaseId.putIfAbsent(caseId, () => sessionId);
       }
       if (mounted) {
         setState(() => _completedSessionsByCaseId = byCaseId);
@@ -239,6 +249,7 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> with RouteAware {
                             evaluationRepository: widget.evaluationRepository,
                             communicationRepository:
                                 widget.communicationRepository,
+                            exportRepository: widget.exportRepository,
                           ),
                         ),
                       )
@@ -260,6 +271,7 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> with RouteAware {
                             evaluationRepository: widget.evaluationRepository,
                             communicationRepository:
                                 widget.communicationRepository,
+                            exportRepository: widget.exportRepository,
                           ),
                         ),
                       )
@@ -276,7 +288,20 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> with RouteAware {
                         session: widget.session,
                         adminRepository: widget.adminRepository!,
                         authRepository: widget.authRepository,
+                        exportRepository: widget.exportRepository,
                         buildLoginPage: widget.buildLoginPage,
+                      ),
+                    ),
+                  );
+                }
+
+                void openAnalytics() {
+                  if (!_isCaseManager) return;
+                  Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => AnalyticsScreen(
+                        session: widget.session,
+                        exportRepository: widget.exportRepository,
                       ),
                     ),
                   );
@@ -335,15 +360,33 @@ class _CaseLibraryScreenState extends State<CaseLibraryScreen> with RouteAware {
                           }
                         }),
                       ),
-                    if (canOpenAdminTrace)
+                    if (canOpenAdminTrace || _isCaseManager)
                       Align(
                         alignment: Alignment.centerRight,
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(12, 8, 12, 4),
-                          child: OutlinedButton.icon(
-                            onPressed: openAdminTrace,
-                            icon: const Icon(Icons.timeline_rounded, size: 18),
-                            label: const Text('Student Sessions'),
+                          child: Wrap(
+                            spacing: 8,
+                            children: [
+                              if (_isCaseManager)
+                                OutlinedButton.icon(
+                                  onPressed: openAnalytics,
+                                  icon: const Icon(
+                                    Icons.insights_outlined,
+                                    size: 18,
+                                  ),
+                                  label: const Text('Analytics'),
+                                ),
+                              if (canOpenAdminTrace)
+                                OutlinedButton.icon(
+                                  onPressed: openAdminTrace,
+                                  icon: const Icon(
+                                    Icons.timeline_rounded,
+                                    size: 18,
+                                  ),
+                                  label: const Text('Student Sessions'),
+                                ),
+                            ],
                           ),
                         ),
                       ),
@@ -931,17 +974,16 @@ class _MainPane extends StatelessWidget {
                         child: _LibraryCaseCard(
                           caseItem: item,
                           onStart: () => onOpenCase(item),
-                          evaluationSessionId:
-                              completedSessionsByCaseId[item.caseId],
-                          onOpenEvaluation: onOpenEvaluation == null
-                              ? null
-                              : () {
-                                  final sid =
-                                      completedSessionsByCaseId[item.caseId];
-                                  if (sid != null) {
-                                    onOpenEvaluation!(item, sid);
-                                  }
-                                },
+                          evaluationSessionId: _evaluationSessionIdFor(
+                            completedSessionsByCaseId,
+                            item.caseId,
+                          ),
+                          onOpenEvaluation: _evaluationCallbackFor(
+                            item: item,
+                            completedSessionsByCaseId:
+                                completedSessionsByCaseId,
+                            onOpenEvaluation: onOpenEvaluation,
+                          ),
                           showManageActions: showCardActions,
                           actionBusy: managingCaseId == item.id,
                           onEdit: onEducatorEdit == null
@@ -967,17 +1009,15 @@ class _MainPane extends StatelessWidget {
                       caseItem: item,
                       compact: true,
                       onStart: () => onOpenCase(item),
-                      evaluationSessionId:
-                          completedSessionsByCaseId[item.caseId],
-                      onOpenEvaluation: onOpenEvaluation == null
-                          ? null
-                          : () {
-                              final sid =
-                                  completedSessionsByCaseId[item.caseId];
-                              if (sid != null) {
-                                onOpenEvaluation!(item, sid);
-                              }
-                            },
+                      evaluationSessionId: _evaluationSessionIdFor(
+                        completedSessionsByCaseId,
+                        item.caseId,
+                      ),
+                      onOpenEvaluation: _evaluationCallbackFor(
+                        item: item,
+                        completedSessionsByCaseId: completedSessionsByCaseId,
+                        onOpenEvaluation: onOpenEvaluation,
+                      ),
                       showManageActions: showCardActions,
                       actionBusy: managingCaseId == item.id,
                       onEdit: onEducatorEdit == null
@@ -1002,6 +1042,27 @@ class _MainPane extends StatelessWidget {
       ],
     );
   }
+}
+
+String? _evaluationSessionIdFor(
+  Map<String, String> completedSessionsByCaseId,
+  String caseId,
+) {
+  final sid = completedSessionsByCaseId[caseId];
+  if (sid == null || sid.trim().isEmpty) return null;
+  return sid;
+}
+
+VoidCallback? _evaluationCallbackFor({
+  required generated.CaseResponse item,
+  required Map<String, String> completedSessionsByCaseId,
+  required void Function(generated.CaseResponse caseItem, String sessionId)?
+  onOpenEvaluation,
+}) {
+  if (onOpenEvaluation == null) return null;
+  final sid = _evaluationSessionIdFor(completedSessionsByCaseId, item.caseId);
+  if (sid == null) return null;
+  return () => onOpenEvaluation(item, sid);
 }
 
 class _SortDropdown extends StatelessWidget {
@@ -1320,74 +1381,110 @@ class _LibraryCaseCard extends StatelessWidget {
             ),
             const SizedBox(height: 10),
           ],
-          Row(
+          Wrap(
+            spacing: 12,
+            runSpacing: 10,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            alignment: WrapAlignment.spaceBetween,
             children: [
-              Icon(
-                Icons.schedule_rounded,
-                size: 16,
-                color: AppColors.tertiaryText,
+              Wrap(
+                spacing: 16,
+                runSpacing: 4,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.schedule_rounded,
+                        size: 16,
+                        color: AppColors.tertiaryText,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        '~${(caseItem.age / 10).ceil() * 5} min',
+                        style: GoogleFonts.inter(
+                          fontSize: 12,
+                          color: AppColors.tertiaryText,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.signal_cellular_alt_rounded,
+                        size: 16,
+                        color: _difficultyColor,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        _difficultyLabel,
+                        style: GoogleFonts.inter(
+                          fontSize: 12,
+                          color: AppColors.tertiaryText,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              const SizedBox(width: 4),
-              Text(
-                '~${(caseItem.age / 10).ceil() * 5} min',
-                style: GoogleFonts.inter(
-                  fontSize: 12,
-                  color: AppColors.tertiaryText,
-                ),
-              ),
-              const SizedBox(width: 16),
-              Icon(
-                Icons.signal_cellular_alt_rounded,
-                size: 16,
-                color: _difficultyColor,
-              ),
-              const SizedBox(width: 4),
-              Text(
-                _difficultyLabel,
-                style: GoogleFonts.inter(
-                  fontSize: 12,
-                  color: AppColors.tertiaryText,
-                ),
-              ),
-              const Spacer(),
-              if (!showManageActions &&
-                  evaluationSessionId != null &&
-                  onOpenEvaluation != null) ...[
-                TextButton(
-                  onPressed: actionBusy ? null : onOpenEvaluation,
-                  child: Text(
-                    'Evaluation',
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 13,
+              Wrap(
+                spacing: 4,
+                runSpacing: 4,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                alignment: WrapAlignment.end,
+                children: [
+                  if (_showEvaluationButton)
+                    TextButton(
+                      onPressed: actionBusy ? null : onOpenEvaluation,
+                      style: TextButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        minimumSize: Size.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      child: Text(
+                        'Evaluation',
+                        style: GoogleFonts.inter(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ),
+                  FilledButton(
+                    onPressed: actionBusy ? null : onStart,
+                    style: FilledButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 10,
+                      ),
+                      minimumSize: Size.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                    child: Text(
+                      'Start Case',
+                      style: GoogleFonts.inter(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 13,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 4),
-              ],
-              FilledButton(
-                onPressed: actionBusy ? null : onStart,
-                style: FilledButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 10,
-                  ),
-                  minimumSize: Size.zero,
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                ),
-                child: Text(
-                  'Start Case',
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 13,
-                  ),
-                ),
+                ],
               ),
             ],
           ),
         ],
       ),
     );
+  }
+
+  bool get _showEvaluationButton {
+    final sid = evaluationSessionId;
+    return !showManageActions &&
+        sid != null &&
+        sid.isNotEmpty &&
+        onOpenEvaluation != null;
   }
 }
 

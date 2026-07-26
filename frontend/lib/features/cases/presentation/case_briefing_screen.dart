@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/common/theme/app_colors.dart';
+import 'package:frontend/domains/analytics/export_repository.dart';
 import 'package:frontend/domains/evaluation/communication_repository.dart';
 import 'package:frontend/domains/evaluation/evaluation_repository.dart';
 import 'package:frontend/domains/sessions/session_repository.dart';
@@ -17,12 +18,14 @@ class CaseBriefingScreen extends StatefulWidget {
     required this.sessionRepository,
     required this.evaluationRepository,
     required this.communicationRepository,
+    this.exportRepository,
   });
 
   final generated.CaseResponse caseItem;
   final SessionRepositoryContract sessionRepository;
   final EvaluationRepositoryContract evaluationRepository;
   final CommunicationRepositoryContract communicationRepository;
+  final ExportRepositoryContract? exportRepository;
 
   @override
   State<CaseBriefingScreen> createState() => _CaseBriefingScreenState();
@@ -46,6 +49,7 @@ class _CaseBriefingScreenState extends State<CaseBriefingScreen> {
             sessionRepository: widget.sessionRepository,
             evaluationRepository: widget.evaluationRepository,
             communicationRepository: widget.communicationRepository,
+            exportRepository: widget.exportRepository,
           ),
         ),
       );
@@ -60,6 +64,7 @@ class _CaseBriefingScreenState extends State<CaseBriefingScreen> {
           sessionRepository: widget.sessionRepository,
           evaluationRepository: widget.evaluationRepository,
           communicationRepository: widget.communicationRepository,
+          exportRepository: widget.exportRepository,
         );
         return;
       }

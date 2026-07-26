@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/domains/analytics/export_repository.dart';
 import 'package:frontend/domains/evaluation/communication_repository.dart';
 import 'package:frontend/domains/evaluation/evaluation_repository.dart';
 import 'package:frontend/domains/sessions/session_hydration.dart';
@@ -14,6 +15,7 @@ Future<void> resumeSessionAndNavigate({
   required SessionRepositoryContract sessionRepository,
   required EvaluationRepositoryContract evaluationRepository,
   required CommunicationRepositoryContract communicationRepository,
+  ExportRepositoryContract? exportRepository,
 }) async {
   if (!context.mounted) return;
   showDialog<void>(
@@ -38,6 +40,7 @@ Future<void> resumeSessionAndNavigate({
           sessionRepository: sessionRepository,
           evaluationRepository: evaluationRepository,
           communicationRepository: communicationRepository,
+          exportRepository: exportRepository,
           initialHydration: hydration,
         ),
       ),

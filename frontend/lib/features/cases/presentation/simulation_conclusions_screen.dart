@@ -3,6 +3,7 @@ import 'package:built_value/json_object.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/common/theme/app_colors.dart';
+import 'package:frontend/domains/analytics/export_repository.dart';
 import 'package:frontend/domains/evaluation/communication_repository.dart';
 import 'package:frontend/domains/evaluation/evaluation_repository.dart';
 import 'package:frontend/domains/sessions/session_repository.dart';
@@ -19,6 +20,7 @@ class SimulationConclusionsScreen extends StatefulWidget {
     required this.sessionRepository,
     required this.evaluationRepository,
     required this.communicationRepository,
+    this.exportRepository,
     this.initialConclusions,
   });
 
@@ -27,6 +29,7 @@ class SimulationConclusionsScreen extends StatefulWidget {
   final SessionRepositoryContract sessionRepository;
   final EvaluationRepositoryContract evaluationRepository;
   final CommunicationRepositoryContract communicationRepository;
+  final ExportRepositoryContract? exportRepository;
   final BuiltMap<String, JsonObject?>? initialConclusions;
 
   @override
@@ -437,6 +440,7 @@ class _SimulationConclusionsScreenState
             sessionId: widget.sessionId,
             evaluationRepository: widget.evaluationRepository,
             communicationRepository: widget.communicationRepository,
+            exportRepository: widget.exportRepository,
           ),
         ),
       );

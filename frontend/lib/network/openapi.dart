@@ -11,6 +11,7 @@ export 'package:frontend/network/src/serializers.dart';
 export 'package:frontend/network/src/model/date.dart';
 
 export 'package:frontend/network/src/api/admin_api.dart';
+export 'package:frontend/network/src/api/analytics_api.dart';
 export 'package:frontend/network/src/api/auth_api.dart';
 export 'package:frontend/network/src/api/cases_api.dart';
 export 'package:frontend/network/src/api/communication_evaluation_api.dart';
