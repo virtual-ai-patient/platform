@@ -11,7 +11,7 @@ This document uses three diagram families, each answering a different question:
 ## Architectural challenges and goals
 
 - **Portability across clients**
-  - The Virtual AI Patient must be accessible from multiple clients: web, Telegram bot, and potentially mobile or other channels.
+  - The Virtual AI Patient must be accessible from multiple clients: web and potentially mobile or other channels.
   - The architecture therefore centralizes logic in the backend and exposes channel-agnostic APIs, so new clients can be added without changing the core domain logic.
 
 - **LLM-agnostic AI Patient**
@@ -23,7 +23,7 @@ This document uses three diagram families, each answering a different question:
   - This requires multi-tenancy support in the backend and persistence layer (e.g. tenant-aware storage for patient configurations, conversations, and audit data).
 
 - **Maintainability and testability**
-  - Clear separation between clients, backend, and the dependency layer allows the business logic to be tested independently of infrastructure.
+  - Clear separation between frontend, backend, and the dependency layer allows the business logic to be tested independently of infrastructure.
   - Mock implementations for both the database and LLM are first-class parts of the design, so automated tests can run deterministically without relying on external services or real data stores.
 
 ## Diagram 1 — High-level architecture
