@@ -1,4 +1,12 @@
 {
+  "ignores": [
+    "project management/epic-analytics-export/**",
+    "project management/epic-rest-api/**",
+    "project management/epic-safety/**",
+    "project management/feature-communication-evaluation/**",
+    "project management/feature-persistent-sessions/**",
+    "project management/pivot-startup-proposal/**"
+  ],
   "config": {
     "default": true,
     "MD012": false,
