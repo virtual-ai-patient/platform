@@ -33,12 +33,10 @@ This document uses three diagram families, each answering a different question:
 ```mermaid
 flowchart TB
     subgraph Clients
-        TG["Telegram bot\n(primary client)"]
-        WEB["Web frontend\n(secondary client)"]
+        WEB["Web frontend"]
     end
 
-    TG --> BE[Backend]
-    WEB --> BE
+    WEB --> BE[Backend]
 
     subgraph Dependencies layer
         subgraph DBLayer[Database interaction interface]
@@ -144,28 +142,24 @@ sequenceDiagram
 
 **Notation:** UML deployment diagram, rendered with mermaid `flowchart LR`.
 
-Reflects the current `docker-compose.yml`: a single Docker host runs three containers. There is no reverse proxy in front of them — the frontend and backend are each exposed directly on their own host port, and the browser talks to both. The Telegram bot has its own `Dockerfile` but is not wired into `docker-compose.yml` yet (commented out), so it is shown as not-yet-deployed.
+Reflects the current `docker-compose.yml`: a single Docker host runs three containers. There is no reverse proxy in front of them — the frontend and backend are each exposed directly on their own host port, and the browser talks to both.
 
 ```mermaid
 flowchart LR
     Browser["Learner's browser"]
-    TGClient["Telegram client"]
 
     subgraph Host["Docker host — docker compose up"]
         FE["frontend container\nnginx serves built Flutter web app\nhost :8080 -> container :80"]
         BE["backend container\nFastAPI / uvicorn\nhost :8000 -> container :8000"]
         PG[("postgres container\n:5432, volume: postgres_data")]
-        BOT["bot container\n(not yet deployed —\ncommented out in docker-compose.yml)"]
     end
 
     Browser -->|HTTP :8080| FE
     FE -->|BACKEND_BASE_URL, HTTP :8000| BE
     BE -->|DATABASE_URL| PG
-    TGClient -.->|planned| BOT
-    BOT -.->|planned| BE
 ```
 
-The nginx inside the frontend container is a **static-file server for the built web app** — a Dockerfile implementation detail, not the reverse proxy that used to sit in front of both clients in Diagram 1. That reverse-proxy nginx never had checked-in config in this repo; it was diagram-only and has been removed rather than relocated.
+The nginx inside the frontend container is a **static-file server for the built web app** — a Dockerfile implementation detail, not the reverse proxy that used to sit in front of the client in Diagram 1. That reverse-proxy nginx never had checked-in config in this repo; it was diagram-only and has been removed rather than relocated.
 
 ## LLM Patient Role Design
 
