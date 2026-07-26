@@ -45,6 +45,7 @@ software-engineering course scope.
 - [Market assessment](market/market-assessment.md)
 - [Technical specification](spec/technical-specification.md)
 - [Quality attributes](qa/)
+- [CI/CD pipeline](cicd/pipeline.md)
 - [Sprint documents](sprints/)
 - [System architecture](architecture/system-architecture.md)
 - [Clinical case data format](data/clinical-case-format.md)
