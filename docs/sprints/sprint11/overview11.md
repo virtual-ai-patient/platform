@@ -6,7 +6,7 @@ has_children: true
 nav_order: 1
 ---
 
-# Meeting Overview & Action Points
+# Meeting Overview
 
 ---
 
