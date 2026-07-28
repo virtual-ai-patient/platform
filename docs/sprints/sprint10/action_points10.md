@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Sprint 11 Action Points
+title: Sprint 10 Action Points
 section: sprints
-parent: Sprint 11 Overview
+parent: Sprint 10 Overview
 ---
 
-# Sprint 11 AP
+# Sprint 10AP
 
 ## Action Points
 

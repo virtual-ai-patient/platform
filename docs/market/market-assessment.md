@@ -1,11 +1,10 @@
 ---
 layout: default
 title: Market Assessment
-parent: Historical — Product for Customer
-nav_order: 1
+parent: Proposal
+grand_parent: Current — Startup Proposal
+nav_order: 5
 ---
-
-> **[HISTORICAL — Pre-pivot]** Written when the project goal was to deliver a product to an industry partner. Kept for traceability. See [Current — Startup Proposal](../current.md) for the active documents.
 
 # Market Assessment — Virtual AI Patient
 
