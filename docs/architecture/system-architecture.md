@@ -2,11 +2,14 @@
 
 ## Diagram legend
 
-This document uses three diagram families, each answering a different question:
+This document uses diagrams from three families, each answering a different question:
 
-- **Container diagram** (C4 model, Level 2) — "what are the running pieces and how do they talk to each other?" It shows components (clients, backend, external services) and the connections between them, but not runtime sequencing or physical deployment. Diagram 1 below.
-- **Sequence diagram** (UML) — "in what order do messages happen for one scenario?" It shows a single flow through time, across participants, for one representative session. Diagram 2 below. It is not a state machine and does not capture every possible branch.
-- **Deployment diagram** (UML) — "what physically runs where, and on what ports?" It shows processes/containers, host boundaries, and network exposure — not application logic. Diagram 3 below.
+- **C4 model** — the same system at three levels of zoom:
+  - **Context** (Level 1) — "who uses the system, and what external systems does it depend on?" Diagram 1 below.
+  - **Container** (Level 2) — "what are the running pieces and how do they talk to each other?" Diagram 2 below.
+  - **Component** (Level 3) — "what are the pieces inside one container, and how do they depend on each other?" Diagram 3 below, for the backend.
+- **Sequence diagram** (UML) — "in what order do messages happen for one scenario?" It shows a single flow through time, across participants, for one representative session. Diagram 4 below. It is not a state machine and does not capture every possible branch.
+- **Deployment diagram** (UML) — "what physically runs where, and on what ports?" It shows processes/containers, host boundaries, and network exposure — not application logic. Diagram 5 below.
 
 ## Architectural challenges and goals
 
@@ -26,7 +29,27 @@ This document uses three diagram families, each answering a different question:
   - Clear separation between frontend, backend, and the dependency layer allows the business logic to be tested independently of infrastructure.
   - Mock implementations for both the database and LLM are first-class parts of the design, so automated tests can run deterministically without relying on external services or real data stores.
 
-## Diagram 1 — High-level architecture
+## Diagram 1 — System context
+
+**Notation:** C4 model, Level 1 (Context diagram), rendered with mermaid `flowchart TB`.
+
+All three roles — learner, educator, admin — are the same person type reaching the platform through the same web client; there is no separate admin portal or bot channel in the current (post-pivot) scope.
+
+```mermaid
+flowchart TB
+    Learner((Learner))
+    Educator((Educator))
+    Admin((Admin))
+    Sys[Virtual AI Patient Platform]
+    LLM[["LLM Provider\n(OpenAI-compatible API)"]]
+
+    Learner -->|practices cases, chats with AI patient| Sys
+    Educator -->|reviews sessions, exports cohort analytics| Sys
+    Admin -->|manages users, exports full analytics| Sys
+    Sys -->|generates patient responses, scores submissions| LLM
+```
+
+## Diagram 2 — High-level architecture
 
 **Notation:** C4 model, Level 2 (Container diagram), rendered with mermaid `flowchart TB`.
 
@@ -96,7 +119,55 @@ flowchart TB
   - Session store (messages, orders, submissions)
   - Evaluation artifacts (scores, evidence)
 
-## Diagram 2 — Data flow (typical session)
+## Diagram 3 — Backend components
+
+**Notation:** C4 model, Level 3 (Component diagram), rendered with mermaid `flowchart TB`.
+
+Every feature module owns its own `router.py` plus `service.py`/`repository.py` — there is no shared "services" catch-all beyond auth helpers. The AI adapter is the one chokepoint (`core/provider.py`), so `mock`/`openai` providers are swappable without touching the modules that call them. `analytics` is a read-only consumer of the same tables every other module writes to — it does not own any tables itself.
+
+```mermaid
+flowchart TB
+    subgraph API["FastAPI app (server.py)"]
+        AUTH["auth routers\nlogin / signup / refresh /\nverify / reset_password"]
+        CASES["cases\nrouter + service + repository"]
+        SESSIONS["sessions\nrouter + chat_service +\ndiagnostics_service + repository"]
+        EVAL["evaluation\nrouter + scorer + service"]
+        COMMEVAL["communication_eval\nrouter + judge + service"]
+        ADMIN["admin\nrouter + repository"]
+        ANALYTICS["analytics\nrouter + repository + export"]
+    end
+
+    subgraph CORE["core (AI adapter layer)"]
+        ORCH["ai_orchestrator"]
+        PROVIDER["AIProvider interface"]
+        MOCK["MockProvider"]
+        OPENAI["OpenAIProvider"]
+    end
+
+    subgraph DATA["models + repositories"]
+        DB["models/db.py\nSQLAlchemy models\n(User, ClinicalCase, CaseSession,\nActionLog, Evaluation, ...)"]
+        REPOS["repositories/\n(user, reset_token)"]
+    end
+
+    SESSIONS --> ORCH
+    COMMEVAL --> ORCH
+    ORCH --> PROVIDER
+    PROVIDER --> MOCK
+    PROVIDER --> OPENAI
+    OPENAI -->|HTTPS| LLM[["LLM Provider"]]
+
+    AUTH --> REPOS
+    CASES --> DB
+    SESSIONS --> DB
+    EVAL --> DB
+    COMMEVAL --> DB
+    ADMIN --> DB
+    ANALYTICS --> DB
+
+    DB -->|asyncpg| PG[("PostgreSQL")]
+```
+
+## Diagram 4 — Data flow (typical session)
 
 **Notation:** UML sequence diagram, rendered with mermaid `sequenceDiagram`.
 
@@ -138,7 +209,7 @@ sequenceDiagram
   B-->>U: Debrief + scores
 ```
 
-## Diagram 3 — Deployment view
+## Diagram 5 — Deployment view
 
 **Notation:** UML deployment diagram, rendered with mermaid `flowchart LR`.
 
@@ -159,7 +230,7 @@ flowchart LR
     BE -->|DATABASE_URL| PG
 ```
 
-The nginx inside the frontend container is a **static-file server for the built web app** — a Dockerfile implementation detail, not the reverse proxy that used to sit in front of the client in Diagram 1. That reverse-proxy nginx never had checked-in config in this repo; it was diagram-only and has been removed rather than relocated.
+The nginx inside the frontend container is a **static-file server for the built web app** — a Dockerfile implementation detail, not the reverse proxy that used to sit in front of the client in Diagram 2. That reverse-proxy nginx never had checked-in config in this repo; it was diagram-only and has been removed rather than relocated.
 
 ## LLM Patient Role Design
 
@@ -190,7 +261,7 @@ Which QA-rev3 attribute each architectural decision satisfies (see [qa-rev3.md](
 | :--- | :--- |
 | LLM interface abstraction (dependencies layer) | [QA-ARCH-01](../qa/qa-rev3.md#5-architecture--observability-qa-arch) — pluggable AI adapter, no changes outside the adapter layer to swap providers |
 | Session state machine persists every message/order/submission to Storage | [QA-ARCH-02](../qa/qa-rev3.md#5-architecture--observability-qa-arch) — structured logging of all learner actions |
-| `docker compose up` brings up frontend, backend, and postgres with no manual steps (Diagram 3) | [QA-REPRO-01](../qa/qa-rev3.md#6-reproducibility-qa-repro) — one-command full-stack startup |
+| `docker compose up` brings up frontend, backend, and postgres with no manual steps (Diagram 5) | [QA-REPRO-01](../qa/qa-rev3.md#6-reproducibility-qa-repro) — one-command full-stack startup |
 | Mock LLM in the dependencies layer | [QA-REPRO-03](../qa/qa-rev3.md#6-reproducibility-qa-repro) — prototype runs without an external API key |
 | Mock database in the dependencies layer | [QA-REPRO-01](../qa/qa-rev3.md#6-reproducibility-qa-repro) — deterministic local runs without a real Postgres instance |
 | Case-grounded generation + versioned cases | [QA-SAFE-02](../qa/qa-rev3.md#4-ai-safety--guardrails-qa-safe) — output grounded in case data, not invented facts |
