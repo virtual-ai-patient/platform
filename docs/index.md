@@ -30,6 +30,7 @@ Documents that describe the project as it stands today.
 | [Tactical Planning Rev 2](project%20management/tactical-planning-rev2.md) | Two-week hypothesis-driven sprint cycle |
 | [CI/CD Pipeline](cicd/pipeline.md) | Demo-stability pipeline and prototype tagging |
 | [Product Description](product/technical-product-description.md) | What the product is and who it is for |
+| [Market Assessment](market/market-assessment.md) | Market sizing and competitive landscape |
 
 ---
 
@@ -40,7 +41,6 @@ Kept for traceability — **do not cite as current**.
 
 | Document | What it contains |
 | :--- | :--- |
-| [Market Assessment](market/market-assessment.md) | Market sizing and competitive landscape |
 | [Technical Specification](spec/technical-specification.md) | Full-featured product spec with QA metrics |
 | [Integration Overview](integrations/integration-overview.md) | Partner platform integration plan |
 | [QA Rev 1](qa/qa-rev1.md) · [QA Rev 2](qa/qa-rev2.md) | Original scalability and security thresholds |

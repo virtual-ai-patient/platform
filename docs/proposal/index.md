@@ -18,3 +18,5 @@ proposal for Virtual AI Patient.
 - [Patient role research](patient-role-research.md) consolidates the LLM
   patient-role findings (lying, forgetting, emotional states, hesitation) that
   back the proposal's differentiator claims.
+- [Market Assessment](../market/market-assessment.md) covers market sizing,
+  competitive landscape, and GTM hypothesis for the startup proposal.
