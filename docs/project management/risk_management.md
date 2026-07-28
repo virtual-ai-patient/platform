@@ -27,7 +27,7 @@ All risks are documented using the **condition → consequence** format, with as
 - **Impact:** High
 - **Owner:** Alina (PM)
 - **Status:** Closed (mitigated)
-- **Mitigation:** The team pivoted to a “startup proposal” approach, redefining the goal independently and validating it with a medical expert and student interviews.
+- **Mitigation:** The team pivoted to a “startup proposal” approach, redefining the goal independently and validating H1–H3 with a medical expert and student interviews.
 - **Last Updated:** 2026-07-28
 
 ---
@@ -52,7 +52,7 @@ All risks are documented using the **condition → consequence** format, with as
 - **Owner:** Alina (PM), All team members
 - **Status:** Active
 - **Mitigation:** Cross‑training on key roles; assigning backup owners for critical tasks; regular check‑ins to identify early signs of struggle.
-- **Contingency:** Reduce project scope; reassign tasks; prioritise MVP features.
+- **Contingency:** Adjust hypothesis validation scope; focus on most critical evidence (H1 first).
 - **Last Updated:** 2026-07-28
 
 ---
@@ -64,8 +64,8 @@ All risks are documented using the **condition → consequence** format, with as
 - **Impact:** Medium
 - **Owner:** Ilnar (Backend Developer)
 - **Status:** Active
-- **Mitigation:** Track actual vs. estimated time per task; adjust future estimates based on historical data; prioritise MVP features.
-- **Contingency:** Cut non‑essential features; reduce scope for the final prototype.
+- **Mitigation:** Track actual vs. estimated time per task; adjust future estimates based on historical data; prioritise validation tasks for H1 (most critical).
+- **Contingency:**  Reduce depth of validation for H2/H3 if time is insufficient; focus on qualitative evidence.
 - **Last Updated:** 2026-07-28
 
 ---
@@ -81,7 +81,7 @@ All risks are documented using the **condition → consequence** format, with as
 - **Status:** Active
 - **Mitigation:** Case‑grounded prompts on every turn; diagnosis hidden until debrief; validation hooks on test results.
 - **Contingency:** Retrieval over case JSON per turn; lower temperature; flagged sessions escalated to human review.
-- **Trade‑off:** Fallback adds latency and infrastructure complexity — but better fidelity is worth it for safety‑critical content.
+- **Trade‑off:** Fallback adds latency and infrastructure complexity — but better fidelity is worth it for H1 validation.
 - **Last Updated:** 2026-07-28
 
 ---
